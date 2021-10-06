@@ -45,8 +45,7 @@ import java.util.Comparator;
  * }
  * </pre>
  *
- *TODO 待整理
- * 来自于Apache-icefrogs-Lang3
+ * 来自于Apache-commons-Lang3
  * @author Looly
  * @author wh
  * @since 1.0.0

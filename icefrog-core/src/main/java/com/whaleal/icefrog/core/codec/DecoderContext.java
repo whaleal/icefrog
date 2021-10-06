@@ -17,6 +17,8 @@
 package com.whaleal.icefrog.core.codec;
 
 
+import com.whaleal.icefrog.core.builder.Builder;
+
 import static com.whaleal.icefrog.core.lang.Assert.notNull;
 
 /**
@@ -65,7 +67,7 @@ public final class DecoderContext {
 	/**
 	 * A builder for {@code DecoderContext} instances.
 	 */
-	public static final class Builder {
+	public static final class Builder implements com.whaleal.icefrog.core.builder.Builder<DecoderContext> {
 		private boolean checkedDiscriminator;
 
 		private Builder() {
@@ -94,6 +96,7 @@ public final class DecoderContext {
 		 *
 		 * @return the decoder context
 		 */
+		@Override
 		public DecoderContext build() {
 			return new DecoderContext(this);
 		}

@@ -21,6 +21,7 @@ package com.whaleal.icefrog.core.codec;
  * Thrown when there is a failure condition during the encoding process. This exception is thrown when an
  * {@link Encoder} encounters a encoding specific exception such as invalid data, inability to calculate a checksum,
  * characters outside of the expected range.
+ * @author wh
  */
 public class EncoderException extends Exception {
 
@@ -35,7 +36,6 @@ public class EncoderException extends Exception {
 	 * Constructs a new exception with {@code null} as its detail message. The cause is not initialized, and may
 	 * subsequently be initialized by a call to {@link #initCause}.
 	 *
-	 * @since 1.4
 	 */
 	public EncoderException() {
 	}
@@ -61,7 +61,6 @@ public class EncoderException extends Exception {
 	 * @param message The detail message which is saved for later retrieval by the {@link #getMessage()} method.
 	 * @param cause   The cause which is saved for later retrieval by the {@link #getCause()} method. A {@code null}
 	 *                value is permitted, and indicates that the cause is nonexistent or unknown.
-	 * @since 1.4
 	 */
 	public EncoderException(final String message, final Throwable cause) {
 		super(message, cause);
@@ -74,7 +73,6 @@ public class EncoderException extends Exception {
 	 *
 	 * @param cause The cause which is saved for later retrieval by the {@link #getCause()} method. A {@code null}
 	 *              value is permitted, and indicates that the cause is nonexistent or unknown.
-	 * @since 1.4
 	 */
 	public EncoderException(final Throwable cause) {
 		super(cause);

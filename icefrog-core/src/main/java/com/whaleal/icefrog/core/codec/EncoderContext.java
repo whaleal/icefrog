@@ -17,16 +17,21 @@
 package com.whaleal.icefrog.core.codec;
 
 
+import com.whaleal.icefrog.core.builder.Builder;
+
 /**
  * The context for encoding values to yours
  *
  * @see Encoder
+ *
+ * @author wh
+ *
  */
 public final class EncoderContext {
 
 	private static final EncoderContext DEFAULT_CONTEXT = EncoderContext.builder().build();
 
-	//  一个标记
+	//  一个标记  Collectible means 有价值的 可以用于编码的等级
 	private final boolean encodingCollectibleObject;
 
 	private EncoderContext(final Builder builder) {
@@ -77,7 +82,7 @@ public final class EncoderContext {
 	/**
 	 * A builder for {@code EncoderContext} instances.
 	 */
-	public static final class Builder {
+	public static final class Builder implements com.whaleal.icefrog.core.builder.Builder<EncoderContext> {
 		private boolean encodingCollectibleObject;
 
 		private Builder() {
@@ -99,6 +104,7 @@ public final class EncoderContext {
 		 *
 		 * @return the encoder context
 		 */
+		@Override
 		public EncoderContext build() {
 			return new EncoderContext(this);
 		}

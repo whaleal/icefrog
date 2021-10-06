@@ -30,9 +30,9 @@ public class PunyCode {
 	 *
 	 * @param input      字符串
 	 * @return PunyCode字符串
-	 * @throws UtilException 计算异常
+	 * @throws EncoderException 计算异常
 	 */
-	public static String encode(String input) throws UtilException {
+	public static String encode(String input) throws EncoderException {
 		return encode(input, false);
 	}
 
@@ -42,9 +42,9 @@ public class PunyCode {
 	 * @param input      字符串
 	 * @param withPrefix 是否包含 "xn--"前缀
 	 * @return PunyCode字符串
-	 * @throws UtilException 计算异常
+	 * @throws EncoderException 计算异常
 	 */
-	public static String encode(String input, boolean withPrefix) throws UtilException {
+	public static String encode(String input, boolean withPrefix) throws EncoderException {
 		int n = INITIAL_N;
 		int delta = 0;
 		int bias = INITIAL_BIAS;
@@ -74,7 +74,7 @@ public class PunyCode {
 				}
 			}
 			if (m - n > (Integer.MAX_VALUE - delta) / (h + 1)) {
-				throw new UtilException("OVERFLOW");
+				throw new EncoderException("OVERFLOW");
 			}
 			delta = delta + (m - n) * (h + 1);
 			n = m;
@@ -83,7 +83,7 @@ public class PunyCode {
 				if (c < n) {
 					delta++;
 					if (0 == delta) {
-						throw new UtilException("OVERFLOW");
+						throw new EncoderException("OVERFLOW");
 					}
 				}
 				if (c == n) {
@@ -124,9 +124,9 @@ public class PunyCode {
 	 *
 	 * @param input PunyCode
 	 * @return 字符串
-	 * @throws UtilException 计算异常
+	 * @throws DecoderException 计算异常
 	 */
-	public static String decode(String input) throws UtilException {
+	public static String decode(String input) throws DecoderException {
 		input = StrUtil.removePrefixIgnoreCase(input, PUNY_CODE_PREFIX);
 
 		int n = INITIAL_N;
@@ -151,12 +151,12 @@ public class PunyCode {
 			int w = 1;
 			for (int k = BASE; ; k += BASE) {
 				if (d == length) {
-					throw new UtilException("BAD_INPUT");
+					throw new DecoderException("BAD_INPUT");
 				}
 				int c = input.charAt(d++);
 				int digit = codepoint2digit(c);
 				if (digit > (Integer.MAX_VALUE - i) / w) {
-					throw new UtilException("OVERFLOW");
+					throw new DecoderException("OVERFLOW");
 				}
 				i = i + digit * w;
 				int t;
@@ -174,7 +174,7 @@ public class PunyCode {
 			}
 			bias = adapt(i - oldi, output.length() + 1, oldi == 0);
 			if (i / (output.length() + 1) > Integer.MAX_VALUE - n) {
-				throw new UtilException("OVERFLOW");
+				throw new DecoderException("OVERFLOW");
 			}
 			n = n + i / (output.length() + 1);
 			i = i % (output.length() + 1);

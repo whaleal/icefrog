@@ -19,7 +19,7 @@ package com.whaleal.icefrog.core.codec;
 
 
 /**
- * Instances of this class are capable of encoding an instance of the type parameter {@code T} into a BSON value.
+ * Instances of this class are capable of encoding an instance of the type parameter {@code T} into a target value.
  * .
  *
  * @param <T> the type that the instance can encode into BSON

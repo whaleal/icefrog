@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * 此对象用于消除小概率下System.identityHashCode()产生的ID重复问题。
  *
- * 来自于Apache-icefrogs-Lang3
+ * 来自于Apache-commons-Lang3
  * @author Looly
  * @author wh
  * @since 1.0.0

@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * 比较器链。此链包装了多个比较器，最终比较结果按照比较器顺序综合多个比较器结果。<br>
  * 按照比较器链的顺序分别比较，如果比较出相等则转向下一个比较器，否则直接返回<br>
- * 此类copy from Apache-icefrogs-collections
+ * 此类copy from Apache-commons-collections
  *
  * @author Looly
  * @author wh

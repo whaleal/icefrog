@@ -26,7 +26,6 @@ package com.whaleal.icefrog.core.codec;
  * TODO: may want to add more bit vector functions like and/or/xor/nand
  * TODO: also might be good to generate boolean[] from byte[] et cetera.
  *
- * @since 1.3
  */
 public class BinaryCodec {
 	/*

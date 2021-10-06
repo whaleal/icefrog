@@ -40,7 +40,7 @@ import java.util.Set;
  * }
  * </pre>
  * <p>
- * 来自Apache icefrogs Lang改造
+ * 来自Apache commons Lang改造
  */
 public class EqualsBuilder implements Builder<Boolean> {
 	private static final long serialVersionUID = 1L;

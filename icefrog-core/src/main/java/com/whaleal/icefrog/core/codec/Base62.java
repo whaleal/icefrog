@@ -21,6 +21,9 @@ public class Base62 {
 	private Base62(){}
 
 	private static final Charset DEFAULT_CHARSET = CharsetUtil.CHARSET_UTF_8;
+	/**
+	 * 内部变量 使用的是 Base62Codec
+	 */
 	private static final Base62Codec CODEC = Base62Codec.createGmp();
 
 	// -------------------------------------------------------------------- encode
