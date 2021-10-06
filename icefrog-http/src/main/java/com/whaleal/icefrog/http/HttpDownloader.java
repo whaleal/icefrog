@@ -64,6 +64,7 @@ public class HttpDownloader {
 	 * @param tempFileSuffix  临时文件后缀，默认".temp"
 	 * @param timeout         超时，单位毫秒，-1表示默认超时
 	 * @param streamProgress  进度条
+	 * @return long long
 	 * @since 1.0.0
 	 */
 	public long downloadFile(String url, File targetFileOrDir, String tempFileSuffix, int timeout, StreamProgress streamProgress) {
@@ -77,7 +78,7 @@ public class HttpDownloader {
 	 * @param targetFileOrDir 目标文件或目录，当为目录时，取URL中的文件名，取不到使用编码后的URL做为文件名
 	 * @param timeout         超时，单位毫秒，-1表示默认超时
 	 * @param streamProgress  进度条
-	 * @return 文件
+	 * @return 文件 下载的文件
 	 */
 	public static File downloadForFile(String url, File targetFileOrDir, int timeout, StreamProgress streamProgress) {
 		return requestDownload(url, timeout).writeBodyForFile(targetFileOrDir, streamProgress);
