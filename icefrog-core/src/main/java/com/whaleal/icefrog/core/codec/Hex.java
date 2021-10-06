@@ -18,6 +18,7 @@ import java.nio.charset.Charset;
  * @see com.whaleal.icefrog.core.util.HexUtil  本质与调用 HexUtil 相同
  * @see Charset
  *
+ * @author wh
  * @since 1.0
  */
 public class Hex {
@@ -124,7 +125,7 @@ public class Hex {
 		return encodeHex(data, true);
 	}
 
-	
+
 	/**
 	 *
 	 * 将字节数组转换为十六进制字符串

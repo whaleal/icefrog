@@ -1,11 +1,7 @@
 package com.whaleal.icefrog.core.util;
 
-import com.whaleal.icefrog.core.codec.DecoderException;
 import com.whaleal.icefrog.core.codec.Hex;
 
-import java.awt.Color;
-import java.math.BigInteger;
-import java.nio.charset.Charset;
 
 /**
  * 十六进制（简写为hex或下标16）在数学中是一种逢16进1的进位制，一般用数字0到9和字母A到F表示（其中:A~F即10~15）。<br>
@@ -17,7 +13,6 @@ import java.nio.charset.Charset;
  * @see com.whaleal.icefrog.core.codec.Hex
  * 内部调用使用Hex的相关操作
  *
- * @author Looly
  * @author wh
  */
 public class HexUtil  extends Hex{
