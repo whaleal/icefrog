@@ -1,0 +1,7 @@
+com.whaleal.icefrog.extra.template.engine.beetl.BeetlEngine
+com.whaleal.icefrog.extra.template.engine.freemarker.FreemarkerEngine
+com.whaleal.icefrog.extra.template.engine.velocity.VelocityEngine
+com.whaleal.icefrog.extra.template.engine.rythm.RythmEngine
+com.whaleal.icefrog.extra.template.engine.enjoy.EnjoyEngine
+com.whaleal.icefrog.extra.template.engine.thymeleaf.ThymeleafEngine
+com.whaleal.icefrog.extra.template.engine.wit.WitEngine

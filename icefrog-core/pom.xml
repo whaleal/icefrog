@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>com.whaleal.icefrog</groupId>
+		<artifactId>icefrog-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>icefrog-core</artifactId>
+	<name>${project.artifactId}</name>
+	<description>icefrog核心，包括集合、字符串、Bean等工具</description>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations -->
+			<dependency>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-annotations</artifactId>
+				<version>4.4.1</version>
+				<scope>compile</scope>
+			</dependency>
+
+	</dependencies>
+
+</project>

@@ -1,0 +1,3 @@
+com.whaleal.icefrog.aop.proxy.CglibProxyFactory
+com.whaleal.icefrog.aop.proxy.SpringCglibProxyFactory
+com.whaleal.icefrog.aop.proxy.JdkProxyFactory

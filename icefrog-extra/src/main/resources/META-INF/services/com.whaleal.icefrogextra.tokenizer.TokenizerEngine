@@ -1,0 +1,9 @@
+com.whaleal.icefrog.extra.tokenizer.engine.ansj.AnsjEngine
+com.whaleal.icefrog.extra.tokenizer.engine.hanlp.HanLPEngine
+com.whaleal.icefrog.extra.tokenizer.engine.ikanalyzer.IKAnalyzerEngine
+com.whaleal.icefrog.extra.tokenizer.engine.jcseg.JcsegEngine
+com.whaleal.icefrog.extra.tokenizer.engine.jieba.JiebaEngine
+com.whaleal.icefrog.extra.tokenizer.engine.mmseg.MmsegEngine
+com.whaleal.icefrog.extra.tokenizer.engine.word.WordEngine
+com.whaleal.icefrog.extra.tokenizer.engine.analysis.SmartcnEngine
+com.whaleal.icefrog.extra.tokenizer.engine.mynlp.MynlpEngine

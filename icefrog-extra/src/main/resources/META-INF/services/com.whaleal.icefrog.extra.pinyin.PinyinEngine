@@ -1,0 +1,5 @@
+com.whaleal.icefrog.extra.pinyin.engine.tinypinyin.TinyPinyinEngine
+com.whaleal.icefrog.extra.pinyin.engine.jpinyin.JPinyinEngine
+com.whaleal.icefrog.extra.pinyin.engine.pinyin4j.Pinyin4jEngine
+com.whaleal.icefrog.extra.pinyin.engine.bopomofo4j.Bopomofo4jEngine
+com.whaleal.icefrog.extra.pinyin.engine.houbbpinyin.HoubbPinyinEngine

@@ -1,0 +1,8 @@
+com.whaleal.icefrog.log.dialect.logtube.LogTubeLogFactory
+com.whaleal.icefrog.log.dialect.slf4j.Slf4jLogFactory
+com.whaleal.icefrog.log.dialect.log4j2.Log4j2LogFactory
+com.whaleal.icefrog.log.dialect.log4j.Log4jLogFactory
+com.whaleal.icefrog.log.dialect.commons.ApacheCommonsLogFactory
+com.whaleal.icefrog.log.dialect.tinylog.TinyLogFactory
+com.whaleal.icefrog.log.dialect.tinylog.TinyLog2Factory
+com.whaleal.icefrog.log.dialect.jboss.JbossLogFactory

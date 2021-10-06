@@ -1,0 +1,6 @@
+com.whaleal.icefrog.extra.expression.engine.aviator.AviatorEngine
+com.whaleal.icefrog.extra.expression.engine.jexl.JexlEngine
+com.whaleal.icefrog.extra.expression.engine.mvel.MvelEngine
+com.whaleal.icefrog.extra.expression.engine.jfireel.JfireELEngine
+com.whaleal.icefrog.extra.expression.engine.spel.SpELEngine
+com.whaleal.icefrog.extra.expression.engine.rhino.RhinoEngine
