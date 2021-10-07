@@ -152,6 +152,15 @@ When submitting feedback, please indicate which JDK version, icefrog version, an
 
 - [github issue](https://github.com/whaleal/icefrog/issues)
 
+##  how to contribute
+1. Find the issues that need to be fixed on github issues, or propose the feature content to be contributed
+2. Fork the project on github or Github to your own repo
+3. Clone the fork of the past project, which is your project, to your local
+4. Modify the code (remember to modify the v1-dev branch) and perform related tests
+5. Push to your own library after commit (v1-dev branch)
+6. Log in to github or Github and you can see a pull request button on your homepage. Click on it, select your own dev branch and the dev branch of this project, fill in some descriptive information, and then submit.
+7. Waiting for the maintainer to merge
+
 ### 🧬Principles of PR(pull request)
 
 icefrog welcomes anyone to contribute code to icefrog, but the author suffers from OCD and needs to submit a pr (pull request) that meets some specifications in order to care for the patient.：
@@ -160,6 +169,8 @@ icefrog welcomes anyone to contribute code to icefrog, but the author suffers fr
 2. Code indentation according to Eclipse.
 3. Newly added methods do not use third-party library methods，Unless the method tool is add to the '**extra module**'.
 4. Please pull request to the `v1-dev` branch. icefrog uses a new branch after 1.x: `v1-main` is the main branch, which indicates the version of the central library that has been released, and this branch does not allow pr or modifications.
+
+
 
 -------------------------------------------------------------------------------
 
