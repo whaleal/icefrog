@@ -151,13 +151,13 @@ icefrog的源码分为两个分支，功能如下：
 
 
 ### 🧬贡献代码的步骤
-1.在github issues 上找到需要修复的问题，或提出要贡献的特性内容
-2. 在github或者Github上fork项目到自己的repo
-3. 把fork过去的项目也就是你的项目clone到你的本地
-4. 修改代码（记得一定要修改v1-dev分支）并进行相关测试
-5. commit后push到自己的库（v1-dev分支）
-6. 登录github或Github在你首页可以看到一个 pull request 按钮，点击它，选择自己的dev 分支及本项目的dev 分支，填写一些说明信息，然后提交即可。
-7. 等待维护者合并
+1.在github issues 上找到需要修复的问题，或提出要贡献的特性内容  
+2. 在github或者Github上fork项目到自己的repo  
+3. 把fork过去的项目也就是你的项目clone到你的本地  
+4. 修改代码（记得一定要修改v1-dev分支）并进行相关测试  
+5. commit后push到自己的库（v1-dev分支）  
+6. 登录github或Github在你首页可以看到一个 pull request 按钮，点击它，选择自己的dev 分支及本项目的dev 分支，填写一些说明信息，然后提交即可。  
+7. 等待维护者合并  
 
 ### 📐PR遵照的原则
 
