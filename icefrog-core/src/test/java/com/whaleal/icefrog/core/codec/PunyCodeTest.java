@@ -6,7 +6,7 @@ import org.junit.Test;
 public class PunyCodeTest {
 
 	@Test
-	public void encodeDecodeTest(){
+	public void encodeDecodeTest() throws EncoderException, DecoderException {
 		String text = "icefrog编码器";
 		String strPunyCode = PunyCode.encode(text);
 		Assert.assertEquals("icefrog-ux9js33tgln", strPunyCode);

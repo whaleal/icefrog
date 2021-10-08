@@ -27,7 +27,7 @@ public class JiebaWord implements Word {
 
 	@Override
 	public String getText() {
-		return segToken.word;
+		return segToken.word.toString();
 	}
 
 	@Override
