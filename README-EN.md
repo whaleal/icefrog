@@ -102,7 +102,7 @@ Each module can be introduced individually, or all modules can be introduced by 
 ### 🍊Maven
 ```xml
 <dependency>
-    <groupId>com.whaleal.icefrog</groupId>
+    <groupId>io.github.whaleal</groupId>
     <artifactId>icefrog-all</artifactId>
     <version>1.0.0</version>
 </dependency>

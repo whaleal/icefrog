@@ -7,8 +7,8 @@
 	<packaging>jar</packaging>
 
 	<parent>
-		<groupId>com.whaleal.icefrog</groupId>
-		<artifactId>icefrog-parent</artifactId>
+		<groupId>io.github.whaleal</groupId>
+		<artifactId>icefrog</artifactId>
 		<version>1.0.0</version>
 	</parent>
 
@@ -18,12 +18,12 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.whaleal.icefrog</groupId>
+			<groupId>io.github.whaleal</groupId>
 			<artifactId>icefrog-core</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.whaleal.icefrog</groupId>
+			<groupId>io.github.whaleal</groupId>
 			<artifactId>icefrog-log</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
