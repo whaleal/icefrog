@@ -19,7 +19,7 @@
     </build>
 
     <parent>
-		<groupId>io.github.whaleal</groupId>
+		<groupId>com.whaleal.icefrog</groupId>
 		<artifactId>icefrog</artifactId>
 		<version>1.0.0</version>
 	</parent>

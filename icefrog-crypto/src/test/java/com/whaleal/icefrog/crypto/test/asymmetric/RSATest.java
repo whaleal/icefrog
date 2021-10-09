@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.crypto.test.asymmetric;
 
 import com.whaleal.icefrog.core.codec.Base64;
+import com.whaleal.icefrog.core.codec.DecoderException;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.HexUtil;
@@ -180,7 +181,7 @@ public class RSATest {
 	}
 
 	@Test
-	public void rsaDecodeTest() {
+	public void rsaDecodeTest() throws DecoderException {
 		String PRIVATE_KEY = "MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAIL7pbQ+5KKGYRhw7jE31hmA" //
 				+ "f8Q60ybd+xZuRmuO5kOFBRqXGxKTQ9TfQI+aMW+0lw/kibKzaD/EKV91107xE384qOy6IcuBfaR5lv39OcoqNZ"//
 				+ "5l+Dah5ABGnVkBP9fKOFhPgghBknTRo0/rZFGI6Q1UHXb+4atP++LNFlDymJcPAgMBAAECgYBammGb1alndta" //
