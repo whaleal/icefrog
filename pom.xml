@@ -79,7 +79,7 @@
         connection 和 developerConnection这两个我们也不太清楚，就按照这个格式去写吧
     -->
     <scm>
-        <tag>master</tag>
+        <tag>main</tag>
         <url>git@github.com:whaleal/icefrog.git</url>
         <connection>scm:git:git@github.com:whaleal/icefrog.git</connection>
         <developerConnection>scm:git:git@github.com:whaleal/icefrog.git</developerConnection>
