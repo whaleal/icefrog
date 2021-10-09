@@ -99,7 +99,7 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 
 ```xml
 <dependency>
-    <groupId>io.github.whaleal</groupId>
+    <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
     <version>1.0.0</version>
 </dependency>

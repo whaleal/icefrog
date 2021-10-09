@@ -6,7 +6,7 @@
 
     <packaging>pom</packaging>
 
-    <groupId>io.github.whaleal</groupId>
+    <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog</artifactId>
     <version>1.0.0</version>
     <name>icefrog</name>
