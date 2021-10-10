@@ -63,11 +63,11 @@
         </dependency>
     </dependencies>
 
-    <!--发布的标准，这个是按照mongodb的标准来做的-->
+    <!--发布的标准，这个是按照whaleal 项目内部的标准的标准来做的-->
     <licenses>
         <license>
-            <name>The Server Side Public License, Version 1</name>
-            <url>https://docs.whaleal.com/marsdocs/licensing/server-side-public-license</url>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
+            <url>https://docs.whaleal.com/licensing/GNU_LESSER_GENERAL_PUBLIC_LICENSE_Version_2.1</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
