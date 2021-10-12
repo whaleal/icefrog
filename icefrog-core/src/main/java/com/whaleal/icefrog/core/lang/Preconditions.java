@@ -159,6 +159,21 @@ public class Preconditions {
 		isTrue(expression, "[Assertion failed] - this expression must be true");
 	}
 
+
+	/**
+	 * Assert a boolean expression, throwing an {@code IllegalArgumentException}
+	 * if the expression evaluates to {@code false}.
+	 * <pre class="code">Assert.isTrue(i &gt; 0, "The value must be greater than zero");</pre>
+	 *
+	 * @param expression a boolean expression
+	 * @param message    the exception message to use if the assertion fails
+	 * @throws IllegalArgumentException if {@code expression} is {@code false}
+	 */
+	public static void isTrue(boolean expression, String message) {
+		isTrue(expression, () -> new IllegalArgumentException(StrUtil.format(message)));
+	}
+
+
 	/**
 	 * 断言是否为假，如果为 {@code true} 抛出指定类型异常<br>
 	 * 并使用指定的函数获取错误信息返回
@@ -1017,21 +1032,6 @@ public class Preconditions {
 		}
 	}
 
-
-	/**
-	 * Assert a boolean expression, throwing an {@code IllegalArgumentException}
-	 * if the expression evaluates to {@code false}.
-	 * <pre class="code">Assert.isTrue(i &gt; 0, "The value must be greater than zero");</pre>
-	 *
-	 * @param expression a boolean expression
-	 * @param message    the exception message to use if the assertion fails
-	 * @throws IllegalArgumentException if {@code expression} is {@code false}
-	 */
-	public static void isTrue(boolean expression, String message) {
-		if (!expression) {
-			throw new IllegalArgumentException(message);
-		}
-	}
 
 
 	/**
