@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.collection;
 
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Editor;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
@@ -608,7 +608,7 @@ public class IterUtil {
 	 * @since 1.0.0
 	 */
 	public static <T> T firstMatch(Iterator<T> iterator, Matcher<T> matcher) {
-		Assert.notNull(matcher, "Matcher must be not null !");
+		Preconditions.notNull(matcher, "Matcher must be not null !");
 		if (null != iterator) {
 			while(iterator.hasNext()){
 				final T next = iterator.next();

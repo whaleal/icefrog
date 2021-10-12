@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.date.format.DateParser;
 import com.whaleal.icefrog.core.date.format.DatePrinter;
 import com.whaleal.icefrog.core.date.format.FastDateFormat;
 import com.whaleal.icefrog.core.date.format.GlobalCustomFormat;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.PatternPool;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
@@ -14,7 +14,6 @@ import com.whaleal.icefrog.core.util.ReUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -1801,7 +1800,7 @@ public class DateUtil extends CalendarUtil {
 	 * @return 年龄
 	 */
 	public static int age(Date birthday, Date dateToCompare) {
-		Assert.notNull(birthday, "Birthday can not be null !");
+		Preconditions.notNull(birthday, "Birthday can not be null !");
 		if (null == dateToCompare) {
 			dateToCompare = date();
 		}

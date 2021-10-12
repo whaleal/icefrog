@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.comparator.IndexedComparator;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Console;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
@@ -706,7 +706,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @since 1.0.0
 	 */
 	public ExcelWriter merge(int lastColumn, Object content, boolean isSetHeaderStyle) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 
 		final int rowIndex = this.currentRow.get();
 		merge(rowIndex, rowIndex, 0, lastColumn, content, isSetHeaderStyle);
@@ -733,7 +733,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @since 1.0.0
 	 */
 	public ExcelWriter merge(int firstRow, int lastRow, int firstColumn, int lastColumn, Object content, boolean isSetHeaderStyle) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 
 		CellStyle style = null;
 		if (null != this.styleSet) {
@@ -757,7 +757,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @since 1.0.0
 	 */
 	public ExcelWriter merge(int firstRow, int lastRow, int firstColumn, int lastColumn, Object content, CellStyle cellStyle) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 
 		CellUtil.mergingCells(this.getSheet(), firstRow, lastRow, firstColumn, lastColumn, cellStyle);
 
@@ -813,7 +813,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @return this
 	 */
 	public ExcelWriter write(Iterable<?> data, boolean isWriteKeyAsHead) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 		boolean isFirst = true;
 		for (Object object : data) {
 			writeRow(object, isFirst && isWriteKeyAsHead);
@@ -842,7 +842,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public ExcelWriter write(Iterable<?> data, Comparator<String> comparator) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 		boolean isFirstRow = true;
 		Map<?, ?> map;
 		for (Object obj : data) {
@@ -870,7 +870,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @return this
 	 */
 	public ExcelWriter writeHeadRow(Iterable<?> rowData) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 		this.headLocationCache = new ConcurrentHashMap<>();
 		final Row row = this.sheet.createRow(this.currentRow.getAndIncrement());
 		int i = 0;
@@ -971,7 +971,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @return this
 	 */
 	public ExcelWriter writeRow(Map<?, ?> rowMap, boolean isWriteKeyAsHead) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 		if (MapUtil.isEmpty(rowMap)) {
 			// 如果写出数据为null或空，跳过当前行
 			return passCurrentRow();
@@ -1009,7 +1009,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @return this
 	 */
 	public ExcelWriter writeRow(Iterable<?> rowData) {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 		RowUtil.writeRow(this.sheet.createRow(this.currentRow.getAndIncrement()), rowData, this.styleSet, false);
 		return this;
 	}
@@ -1189,7 +1189,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @since 1.0.0
 	 */
 	public ExcelWriter flush(File destFile) throws IORuntimeException {
-		Assert.notNull(destFile, "[destFile] is null, and you must call setDestFile(File) first or call flush(OutputStream).");
+		Preconditions.notNull(destFile, "[destFile] is null, and you must call setDestFile(File) first or call flush(OutputStream).");
 		return flush(FileUtil.getOutputStream(destFile), true);
 	}
 
@@ -1214,7 +1214,7 @@ public class ExcelWriter extends ExcelBase<ExcelWriter> {
 	 * @since 1.0.0
 	 */
 	public ExcelWriter flush(OutputStream out, boolean isCloseOut) throws IORuntimeException {
-		Assert.isFalse(this.isClosed, "ExcelWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "ExcelWriter has been closed!");
 		try {
 			this.workbook.write(out);
 			out.flush();

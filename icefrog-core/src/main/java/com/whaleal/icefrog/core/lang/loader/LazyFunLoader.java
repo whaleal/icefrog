@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.lang.loader;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -31,7 +31,7 @@ public class LazyFunLoader<T> extends LazyLoader<T> {
 	 * @param supplier 用于生成对象的函数
 	 */
 	public LazyFunLoader(Supplier<T> supplier) {
-		Assert.notNull(supplier);
+		Preconditions.notNull(supplier);
 		this.supplier = supplier;
 	}
 
@@ -57,7 +57,7 @@ public class LazyFunLoader<T> extends LazyLoader<T> {
 	 * @param consumer 待执行函数
 	 */
 	public void ifInitialized(Consumer<T> consumer) {
-		Assert.notNull(consumer);
+		Preconditions.notNull(consumer);
 
 		//	已经初始化
 		if (this.isInitialize()) {

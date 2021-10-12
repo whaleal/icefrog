@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.socket;
 
 import com.whaleal.icefrog.core.io.IORuntimeException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 
 import javax.net.ServerSocketFactory;
 import java.io.IOException;
@@ -330,9 +330,9 @@ public class SocketUtil {
 		 * @throws IllegalStateException if no available port could be found
 		 */
 		int findAvailablePort(int minPort, int maxPort) {
-			Assert.isTrue(minPort > 0, "'minPort' must be greater than 0");
-			Assert.isTrue(maxPort >= minPort, "'maxPort' must be greater than or equal to 'minPort'");
-			Assert.isTrue(maxPort <= PORT_RANGE_MAX, "'maxPort' must be less than or equal to " + PORT_RANGE_MAX);
+			Preconditions.isTrue(minPort > 0, "'minPort' must be greater than 0");
+			Preconditions.isTrue(maxPort >= minPort, "'maxPort' must be greater than or equal to 'minPort'");
+			Preconditions.isTrue(maxPort <= PORT_RANGE_MAX, "'maxPort' must be less than or equal to " + PORT_RANGE_MAX);
 
 			int portRange = maxPort - minPort;
 			int candidatePort;
@@ -362,11 +362,11 @@ public class SocketUtil {
 		 * @throws IllegalStateException if the requested number of available ports could not be found
 		 */
 		SortedSet<Integer> findAvailablePorts(int numRequested, int minPort, int maxPort) {
-			Assert.isTrue(minPort > 0, "'minPort' must be greater than 0");
-			Assert.isTrue(maxPort > minPort, "'maxPort' must be greater than 'minPort'");
-			Assert.isTrue(maxPort <= PORT_RANGE_MAX, "'maxPort' must be less than or equal to " + PORT_RANGE_MAX);
-			Assert.isTrue(numRequested > 0, "'numRequested' must be greater than 0");
-			Assert.isTrue((maxPort - minPort) >= numRequested,
+			Preconditions.isTrue(minPort > 0, "'minPort' must be greater than 0");
+			Preconditions.isTrue(maxPort > minPort, "'maxPort' must be greater than 'minPort'");
+			Preconditions.isTrue(maxPort <= PORT_RANGE_MAX, "'maxPort' must be less than or equal to " + PORT_RANGE_MAX);
+			Preconditions.isTrue(numRequested > 0, "'numRequested' must be greater than 0");
+			Preconditions.isTrue((maxPort - minPort) >= numRequested,
 					"'numRequested' must not be greater than 'maxPort' - 'minPort'");
 
 			SortedSet<Integer> availablePorts = new TreeSet<>();

@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.codec;
 
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.StrUtil;
 
 /**
@@ -220,7 +220,7 @@ public class PunyCode {
 	 * @throws UtilException 无效字符
 	 */
 	private static int digit2codepoint(int d) throws UtilException {
-		Assert.checkBetween(d, 0, 35);
+		Preconditions.checkBetween(d, 0, 35);
 		if (d < 26) {
 			// 0..25 : 'a'..'z'
 			return d + 'a';

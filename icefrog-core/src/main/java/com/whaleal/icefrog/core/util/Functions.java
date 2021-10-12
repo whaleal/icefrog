@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.whaleal.icefrog.core.util.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.util.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 /**
  * Static utility methods pertaining to {@code com.google.icefrog.base.Function} instances; see that

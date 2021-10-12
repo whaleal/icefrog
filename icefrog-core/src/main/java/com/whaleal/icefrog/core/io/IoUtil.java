@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.io.copy.ReaderWriterCopier;
 import com.whaleal.icefrog.core.io.copy.StreamCopier;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.HexUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -141,8 +141,8 @@ public class IoUtil extends NioUtil {
 	 */
 	public static long copy(InputStream in, OutputStream out, int bufferSize, long count, StreamProgress streamProgress) throws IORuntimeException {
 
-		Assert.notNull(in, "No InputStream specified");
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(in, "No InputStream specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 
 		return new StreamCopier(bufferSize, count, streamProgress).copy(in, out);
 	}
@@ -156,8 +156,8 @@ public class IoUtil extends NioUtil {
 	 * @throws IORuntimeException IO异常
 	 */
 	public static long copy(FileInputStream in, FileOutputStream out) throws IORuntimeException {
-		Assert.notNull(in, "FileInputStream  must be not null!");
-		Assert.notNull(out, "FileOutputStream  must be not null!");
+		Preconditions.notNull(in, "FileInputStream  must be not null!");
+		Preconditions.notNull(out, "FileOutputStream  must be not null!");
 
 		FileChannel inChannel = null;
 		FileChannel outChannel = null;
@@ -699,8 +699,8 @@ public class IoUtil extends NioUtil {
 	 * @throws IORuntimeException IO异常
 	 */
 	public static void readLines(Reader reader, LineHandler lineHandler) throws IORuntimeException {
-		Assert.notNull(reader,"Reader must be not null!");
-		Assert.notNull(lineHandler,"LineHandler must be not null!");
+		Preconditions.notNull(reader,"Reader must be not null!");
+		Preconditions.notNull(lineHandler,"LineHandler must be not null!");
 
 		for (String line : lineIter(reader)) {
 			lineHandler.handle(line);
@@ -797,7 +797,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedInputStream toBuffered(InputStream in) {
-		Assert.notNull(in, "InputStream must be not null!");
+		Preconditions.notNull(in, "InputStream must be not null!");
 		return (in instanceof BufferedInputStream) ? (BufferedInputStream) in : new BufferedInputStream(in);
 	}
 
@@ -810,7 +810,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedInputStream toBuffered(InputStream in, int bufferSize) {
-		Assert.notNull(in, "InputStream must be not null!");
+		Preconditions.notNull(in, "InputStream must be not null!");
 		return (in instanceof BufferedInputStream) ? (BufferedInputStream) in : new BufferedInputStream(in, bufferSize);
 	}
 
@@ -822,7 +822,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedOutputStream toBuffered(OutputStream out) {
-		Assert.notNull(out, "OutputStream must be not null!");
+		Preconditions.notNull(out, "OutputStream must be not null!");
 		return (out instanceof BufferedOutputStream) ? (BufferedOutputStream) out : new BufferedOutputStream(out);
 	}
 
@@ -835,7 +835,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedOutputStream toBuffered(OutputStream out, int bufferSize) {
-		Assert.notNull(out, "OutputStream must be not null!");
+		Preconditions.notNull(out, "OutputStream must be not null!");
 		return (out instanceof BufferedOutputStream) ? (BufferedOutputStream) out : new BufferedOutputStream(out, bufferSize);
 	}
 
@@ -847,7 +847,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedReader toBuffered(Reader reader) {
-		Assert.notNull(reader, "Reader must be not null!");
+		Preconditions.notNull(reader, "Reader must be not null!");
 		return (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader);
 	}
 
@@ -860,7 +860,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedReader toBuffered(Reader reader, int bufferSize) {
-		Assert.notNull(reader, "Reader must be not null!");
+		Preconditions.notNull(reader, "Reader must be not null!");
 		return (reader instanceof BufferedReader) ? (BufferedReader) reader : new BufferedReader(reader, bufferSize);
 	}
 
@@ -872,7 +872,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedWriter toBuffered(Writer writer) {
-		Assert.notNull(writer, "Writer must be not null!");
+		Preconditions.notNull(writer, "Writer must be not null!");
 		return (writer instanceof BufferedWriter) ? (BufferedWriter) writer : new BufferedWriter(writer);
 	}
 
@@ -885,7 +885,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static BufferedWriter toBuffered(Writer writer, int bufferSize) {
-		Assert.notNull(writer, "Writer must be not null!");
+		Preconditions.notNull(writer, "Writer must be not null!");
 		return (writer instanceof BufferedWriter) ? (BufferedWriter) writer : new BufferedWriter(writer, bufferSize);
 	}
 
@@ -1234,7 +1234,7 @@ public class IoUtil extends NioUtil {
 	 * @since 1.0.0
 	 */
 	public static Checksum checksum(InputStream in, Checksum checksum) throws IORuntimeException {
-		Assert.notNull(in, "InputStream is null !");
+		Preconditions.notNull(in, "InputStream is null !");
 		if (null == checksum) {
 			checksum = new CRC32();
 		}
@@ -1366,8 +1366,8 @@ public class IoUtil extends NioUtil {
 	 * @return the String that has been copied to (possibly empty)
 	 */
 	public static String copyToString(ByteArrayOutputStream baos, Charset charset) {
-		Assert.notNull(baos, "No ByteArrayOutputStream specified");
-		Assert.notNull(charset, "No Charset specified");
+		Preconditions.notNull(baos, "No ByteArrayOutputStream specified");
+		Preconditions.notNull(charset, "No Charset specified");
 		try {
 			// Can be replaced with toString(Charset) call in Java 10+
 			return baos.toString(charset.name());
@@ -1386,8 +1386,8 @@ public class IoUtil extends NioUtil {
 	 * @throws IOException in case of I/O errors
 	 */
 	public static void copy(byte[] in, OutputStream out) throws IOException {
-		Assert.notNull(in, "No input byte array specified");
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(in, "No input byte array specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 
 		out.write(in);
 		out.flush();
@@ -1403,9 +1403,9 @@ public class IoUtil extends NioUtil {
 	 * @throws IOException in case of I/O errors
 	 */
 	public static void copy(String in, Charset charset, OutputStream out) throws IOException {
-		Assert.notNull(in, "No input String specified");
-		Assert.notNull(charset, "No Charset specified");
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(in, "No input String specified");
+		Preconditions.notNull(charset, "No Charset specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 
 		Writer writer = new OutputStreamWriter(out, charset);
 		writer.write(in);
@@ -1428,8 +1428,8 @@ public class IoUtil extends NioUtil {
 	 * @throws IOException in case of I/O errors
 	 */
 	public static long copyRange(InputStream in, OutputStream out, long start, long end) throws IOException {
-		Assert.notNull(in, "No InputStream specified");
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(in, "No InputStream specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 
 		long skipped = in.skip(start);
 		if (skipped < start) {
@@ -1462,7 +1462,7 @@ public class IoUtil extends NioUtil {
 	 * @throws IOException in case of I/O errors
 	 */
 	public static int drain(InputStream in) throws IOException {
-		Assert.notNull(in, "No InputStream specified");
+		Preconditions.notNull(in, "No InputStream specified");
 		byte[] buffer = new byte[BUFFER_SIZE];
 		int bytesRead = -1;
 		int byteCount = 0;
@@ -1489,7 +1489,7 @@ public class IoUtil extends NioUtil {
 	 * @return a version of the InputStream that ignores calls to close
 	 */
 	public static InputStream nonClosing(InputStream in) {
-		Assert.notNull(in, "No InputStream specified");
+		Preconditions.notNull(in, "No InputStream specified");
 		return new NonClosingInputStream(in);
 	}
 
@@ -1501,7 +1501,7 @@ public class IoUtil extends NioUtil {
 	 * @return a version of the OutputStream that ignores calls to close
 	 */
 	public static OutputStream nonClosing(OutputStream out) {
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 		return new NonClosingOutputStream(out);
 	}
 

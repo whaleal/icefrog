@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.resource.Resource;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -510,9 +510,9 @@ public class ImgUtil {
 	 * @param destImageFile 目标图像文件
 	 */
 	public static void convert(File srcImageFile, File destImageFile) {
-		Assert.notNull(srcImageFile);
-		Assert.notNull(destImageFile);
-		Assert.isFalse(srcImageFile.equals(destImageFile), "Src file is equals to dest file!");
+		Preconditions.notNull(srcImageFile);
+		Preconditions.notNull(destImageFile);
+		Preconditions.isFalse(srcImageFile.equals(destImageFile), "Src file is equals to dest file!");
 
 		final String srcExtName = FileUtil.extName(srcImageFile);
 		final String destExtName = FileUtil.extName(destImageFile);

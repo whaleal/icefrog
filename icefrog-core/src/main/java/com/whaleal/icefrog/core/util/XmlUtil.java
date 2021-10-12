@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.BiMap;
 import com.whaleal.icefrog.core.map.MapUtil;
 import org.w3c.dom.Document;
@@ -150,7 +150,7 @@ public class XmlUtil {
 	 * @return XML文档对象
 	 */
 	public static Document readXML(File file) {
-		Assert.notNull(file, "Xml file is null !");
+		Preconditions.notNull(file, "Xml file is null !");
 		if (false == file.exists()) {
 			throw new UtilException("File [{}] not a exist!", file.getAbsolutePath());
 		}

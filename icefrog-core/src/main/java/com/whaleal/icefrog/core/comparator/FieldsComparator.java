@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.comparator;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ClassUtil;
 
 import java.lang.reflect.Field;
@@ -38,7 +38,7 @@ public class FieldsComparator<T> extends NullComparator<T> {
 			Field field;
 			for (String fieldName : fieldNames) {
 				field = ClassUtil.getDeclaredField(beanClass, fieldName);
-				Assert.notNull(field, "Field [{}] not found in Class [{}]", fieldName, beanClass.getName());
+				Preconditions.notNull(field, "Field [{}] not found in Class [{}]", fieldName, beanClass.getName());
 				final int compare = new FieldComparator<>(field).compare(a, b);
 				if (0 != compare) {
 					return compare;

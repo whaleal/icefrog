@@ -35,8 +35,8 @@ public interface Segment<T extends Number> {
 	 * @return 片段长度
 	 */
 	default T length() {
-		final T start = Assert.notNull(getStartIndex(), "Start index must be not null!");
-		final T end = Assert.notNull(getEndIndex(), "End index must be not null!");
+		final T start = Preconditions.notNull(getStartIndex(), "Start index must be not null!");
+		final T end = Preconditions.notNull(getEndIndex(), "End index must be not null!");
 		return Convert.convert((Type) start.getClass(), NumberUtil.sub(end, start).abs());
 	}
 }

@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.crypto.asymmetric;
 
 import com.whaleal.icefrog.core.codec.DecoderException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.HexUtil;
 import com.whaleal.icefrog.crypto.BCUtil;
 import com.whaleal.icefrog.crypto.CryptoException;
@@ -556,10 +556,10 @@ public class SM2 extends AbstractAsymmetricCrypto<SM2> {
 	private CipherParameters getCipherParameters(KeyType keyType) {
 		switch (keyType) {
 			case PublicKey:
-				Assert.notNull(this.publicKeyParams, "PublicKey must be not null !");
+				Preconditions.notNull(this.publicKeyParams, "PublicKey must be not null !");
 				return this.publicKeyParams;
 			case PrivateKey:
-				Assert.notNull(this.privateKeyParams, "PrivateKey must be not null !");
+				Preconditions.notNull(this.privateKeyParams, "PrivateKey must be not null !");
 				return this.privateKeyParams;
 		}
 
@@ -573,7 +573,7 @@ public class SM2 extends AbstractAsymmetricCrypto<SM2> {
 	 */
 	private SM2Engine getEngine() {
 		if (null == this.engine) {
-			Assert.notNull(this.digest, "digest must be not null !");
+			Preconditions.notNull(this.digest, "digest must be not null !");
 			this.engine = new SM2Engine(this.digest, this.mode);
 		}
 		this.digest.reset();
@@ -587,7 +587,7 @@ public class SM2 extends AbstractAsymmetricCrypto<SM2> {
 	 */
 	private SM2Signer getSigner() {
 		if (null == this.signer) {
-			Assert.notNull(this.digest, "digest must be not null !");
+			Preconditions.notNull(this.digest, "digest must be not null !");
 			this.signer = new SM2Signer(this.encoding, this.digest);
 		}
 		this.digest.reset();

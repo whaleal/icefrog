@@ -3,7 +3,7 @@ package com.whaleal.icefrog.extra.ftp;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
@@ -482,7 +482,7 @@ public class Ftp extends AbstractFtp {
 	 */
 	@Override
 	public boolean upload(String destPath, File file) {
-		Assert.notNull(file, "file to upload is null !");
+		Preconditions.notNull(file, "file to upload is null !");
 		return upload(destPath, file.getName(), file);
 	}
 

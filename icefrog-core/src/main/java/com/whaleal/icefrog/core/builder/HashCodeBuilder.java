@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 /**
@@ -543,8 +543,8 @@ public class HashCodeBuilder implements Builder<Integer> {
      *             if the number is even
      */
     public HashCodeBuilder(final int initialOddNumber, final int multiplierOddNumber) {
-        Assert.isTrue(initialOddNumber % 2 != 0, "HashCodeBuilder requires an odd initial value");
-        Assert.isTrue(multiplierOddNumber % 2 != 0, "HashCodeBuilder requires an odd multiplier");
+        Preconditions.isTrue(initialOddNumber % 2 != 0, "HashCodeBuilder requires an odd initial value");
+        Preconditions.isTrue(multiplierOddNumber % 2 != 0, "HashCodeBuilder requires an odd multiplier");
         iConstant = multiplierOddNumber;
         iTotal = initialOddNumber;
     }

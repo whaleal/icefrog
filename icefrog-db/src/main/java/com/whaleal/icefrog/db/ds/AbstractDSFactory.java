@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.db.ds;
 
 import com.whaleal.icefrog.core.io.resource.NoResourceException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.db.DbRuntimeException;
@@ -47,7 +47,7 @@ public abstract class AbstractDSFactory extends DSFactory {
 	public AbstractDSFactory(String dataSourceName, Class<? extends DataSource> dataSourceClass, Setting setting) {
 		super(dataSourceName);
 		//此参数的作用是在detectDSFactory方法自动检测所用连接池时，如果实现类不存在，调用此方法会自动抛出异常，从而切换到下一种连接池的检测。
-		Assert.notNull(dataSourceClass);
+		Preconditions.notNull(dataSourceClass);
 		if (null == setting) {
 			try {
 				setting = new Setting(DEFAULT_DB_SETTING_PATH, true);
