@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.lang.tree;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -235,7 +235,7 @@ public class Tree<T> extends LinkedHashMap<String, Object> implements Node<T> {
 	 * @param value 扩展值
 	 */
 	public void putExtra(String key, Object value) {
-		Assert.notEmpty(key, "Key must be not empty !");
+		Preconditions.notEmpty(key, "Key must be not empty !");
 		this.put(key, value);
 	}
 

@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.util;
 import com.whaleal.icefrog.core.date.DatePattern;
 import com.whaleal.icefrog.core.date.DateTime;
 import com.whaleal.icefrog.core.date.DateUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.PatternPool;
 import com.whaleal.icefrog.core.lang.Validator;
 
@@ -422,7 +422,7 @@ public class IdentityCardUtil {
 	 * @return 生日(yyyyMMdd)
 	 */
 	public static String getBirth(String idCard) {
-		Assert.notBlank(idCard, "id card must be not blank!");
+		Preconditions.notBlank(idCard, "id card must be not blank!");
 		final int len = idCard.length();
 		if (len < CHINA_ID_MIN_LENGTH) {
 			return null;
@@ -521,7 +521,7 @@ public class IdentityCardUtil {
 	 * @return 性别(1 : 男 ， 0 : 女)
 	 */
 	public static int getGenderByIdCard(String idcard) {
-		Assert.notBlank(idcard);
+		Preconditions.notBlank(idcard);
 		final int len = idcard.length();
 		if (len < CHINA_ID_MIN_LENGTH) {
 			throw new IllegalArgumentException("ID Card length must be 15 or 18");

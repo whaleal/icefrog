@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.file.visitor.CopyVisitor;
 import com.whaleal.icefrog.core.io.file.visitor.DelVisitor;
 import com.whaleal.icefrog.core.io.file.visitor.MoveVisitor;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 
 import java.io.BufferedInputStream;
@@ -181,8 +181,8 @@ public class PathUtil {
 	 * @since 1.0.0
 	 */
 	public static Path copyFile(Path src, Path target, CopyOption... options) throws IORuntimeException {
-		Assert.notNull(src, "Source File is null !");
-		Assert.notNull(target, "Destination File or directiory is null !");
+		Preconditions.notNull(src, "Source File is null !");
+		Preconditions.notNull(target, "Destination File or directiory is null !");
 
 		final Path targetPath = isDirectory(target) ? target.resolve(src.getFileName()) : target;
 		// 创建级联父目录
@@ -211,8 +211,8 @@ public class PathUtil {
 	 * @since 1.0.0
 	 */
 	public static Path copy(Path src, Path target, CopyOption... options) throws IORuntimeException {
-		Assert.notNull(src, "Src path must be not null !");
-		Assert.notNull(target, "Target path must be not null !");
+		Preconditions.notNull(src, "Src path must be not null !");
+		Preconditions.notNull(target, "Target path must be not null !");
 
 		if (isDirectory(src)) {
 			return copyContent(src, target.resolve(src.getFileName()), options);
@@ -235,8 +235,8 @@ public class PathUtil {
 	 * @since 1.0.0
 	 */
 	public static Path copyContent(Path src, Path target, CopyOption... options) throws IORuntimeException {
-		Assert.notNull(src, "Src path must be not null !");
-		Assert.notNull(target, "Target path must be not null !");
+		Preconditions.notNull(src, "Src path must be not null !");
+		Preconditions.notNull(target, "Target path must be not null !");
 
 		try {
 			Files.walkFileTree(src, new CopyVisitor(src, target, options));
@@ -472,8 +472,8 @@ public class PathUtil {
 	 * @since 1.0.0
 	 */
 	public static Path move(Path src, Path target, boolean isOverride) {
-		Assert.notNull(src, "Src path must be not null !");
-		Assert.notNull(target, "Target path must be not null !");
+		Preconditions.notNull(src, "Src path must be not null !");
+		Preconditions.notNull(target, "Target path must be not null !");
 
 		if (isDirectory(target)) {
 			target = target.resolve(src.getFileName());
@@ -495,8 +495,8 @@ public class PathUtil {
 	 * @since 1.0.0
 	 */
 	public static Path moveContent(Path src, Path target, boolean isOverride) {
-		Assert.notNull(src, "Src path must be not null !");
-		Assert.notNull(target, "Target path must be not null !");
+		Preconditions.notNull(src, "Src path must be not null !");
+		Preconditions.notNull(target, "Target path must be not null !");
 		final CopyOption[] options = isOverride ? new CopyOption[]{StandardCopyOption.REPLACE_EXISTING} : new CopyOption[]{};
 
 		// 自动创建目标的父目录
@@ -595,7 +595,7 @@ public class PathUtil {
 	 * @since 1.0.0
 	 */
 	public static Path toAbsNormal(Path path) {
-		Assert.notNull(path);
+		Preconditions.notNull(path);
 		return path.toAbsolutePath().normalize();
 	}
 

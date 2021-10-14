@@ -104,18 +104,18 @@ Each module can be introduced individually, or all modules can be introduced by 
 <dependency>
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'com.whaleal.icefrog:icefrog-all:1.0.0'
+implementation 'com.whaleal.icefrog:icefrog-all:1.0.1'
 ```
 
 ## 📥Download
 
-- [Maven Repo](https://repo1.maven.org/maven2/com/whaleal/icefrog/icefrog-all/1.0.0/)
+- [Maven Repo](https://repo1.maven.org/maven2/com/whaleal/icefrog/icefrog-all/1.0.1/)
 
 > 🔔️note:
 > icefrog 1.x supports JDK8+ and is not tested on Android platforms, and cannot guarantee that all tool classes or tool methods are available.

@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.core.util;
 
+import com.whaleal.icefrog.core.collection.CollectionUtil;
 import com.whaleal.icefrog.core.lang.Dict;
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +14,8 @@ import java.util.List;
  * @author wh
  */
 public class StrUtilTest {
+
+
 
 	@Test
 	public void isBlankTest() {
@@ -587,5 +590,30 @@ public class StrUtilTest {
 	public void isNumericTest(){
 		String a = "2142342422423423";
 		Assert.assertTrue(StrUtil.isNumeric(a));
+	}
+
+	@Test
+	public void toStringArrayTest(){
+		List<String>  stringList = CollectionUtil.newArrayList("1","4","2","3");
+		String[] strings = StrUtil.toStringArray(stringList);
+
+		Assert.assertEquals(strings.length,stringList.size());
+
+		Assert.assertEquals(strings[0],"1");
+		Assert.assertEquals(strings[1],"4");
+		Assert.assertEquals(strings[2],"2");
+		Assert.assertEquals(strings[3],"3");
+
+		stringList = CollectionUtil.newArrayList("1","2","3","4");
+		String[] strings2 = StrUtil.toStringArray(stringList);
+
+		Assert.assertEquals(strings2.length,stringList.size());
+
+		Assert.assertEquals(strings2[0],"1");
+		Assert.assertEquals(strings2[1],"2");
+		Assert.assertEquals(strings2[2],"3");
+		Assert.assertEquals(strings2[3],"4");
+
+
 	}
 }

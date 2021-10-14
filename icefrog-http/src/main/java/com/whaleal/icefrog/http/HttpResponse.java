@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.StreamProgress;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.ReUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -272,7 +272,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 	 * @since 1.0.0
 	 */
 	public long writeBody(OutputStream out, boolean isCloseOut, StreamProgress streamProgress) {
-		Assert.notNull(out, "[out] must be not null!");
+		Preconditions.notNull(out, "[out] must be not null!");
 		final long contentLength = contentLength();
 		try {
 			return copyBody(bodyStream(), out, contentLength, streamProgress);
@@ -295,7 +295,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 	 * @since 1.0.0
 	 */
 	public long writeBody(File targetFileOrDir, StreamProgress streamProgress) {
-		Assert.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
+		Preconditions.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
 
 		final File outFile = completeFileNameFromHeader(targetFileOrDir);
 		return writeBody(FileUtil.getOutputStream(outFile), true, streamProgress);
@@ -315,7 +315,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 	 * @since 1.0.0
 	 */
 	public long writeBody(File targetFileOrDir, String tempFileSuffix, StreamProgress streamProgress) {
-		Assert.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
+		Preconditions.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
 
 		File outFile = completeFileNameFromHeader(targetFileOrDir);
 
@@ -357,7 +357,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
 	 * @since 1.0.0
 	 */
 	public File writeBodyForFile(File targetFileOrDir, StreamProgress streamProgress) {
-		Assert.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
+		Preconditions.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
 
 		final File outFile = completeFileNameFromHeader(targetFileOrDir);
 		writeBody(FileUtil.getOutputStream(outFile), true, streamProgress);

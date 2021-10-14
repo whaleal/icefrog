@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.text.csv;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
@@ -163,7 +163,7 @@ public class CsvBaseReader implements Serializable {
 	 * @throws IORuntimeException IO异常
 	 */
 	public CsvData read(Path path, Charset charset) throws IORuntimeException {
-		Assert.notNull(path, "path must not be null");
+		Preconditions.notNull(path, "path must not be null");
 		return read(FileUtil.getReader(path, charset));
 	}
 

@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.comparator;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ClassUtil;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -46,7 +46,7 @@ public class FieldComparator<T> extends FuncComparator<T> {
 	public FieldComparator(boolean nullGreater, Field field) {
 		super(nullGreater, (bean) ->
 				(Comparable<?>) ReflectUtil.getFieldValue(bean,
-						Assert.notNull(field, "Field must be not null!")));
+						Preconditions.notNull(field, "Field must be not null!")));
 	}
 
 	/**

@@ -3,7 +3,9 @@ package com.whaleal.icefrog.core.util;
 
 import com.whaleal.icefrog.core.collection.CollectionUtil;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import static com.whaleal.icefrog.core.lang.Preconditions.*;
+
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.text.*;
 
 import java.io.ByteArrayOutputStream;
@@ -14,12 +16,8 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.logging.Logger;
 
-import static com.whaleal.icefrog.core.lang.Assert.notNull;
-import static com.whaleal.icefrog.core.util.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.util.Preconditions.checkNotNull;
-import static java.util.logging.Level.WARNING;
+
 
 /**
  * 字符串工具类
@@ -486,29 +484,8 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
         return StrFormatter.format(template, map, ignoreNull);
     }
 
-    /**
-     * Returns the given string if it is non-null; the empty string otherwise.
-     * nullToEmpty null  会返回"" 空字符串
-     *
-     * @param string the string to test and possibly return
-     * @return {@code string} itself if it is non-null; {@code ""} if it is null
-     */
-    public static String nullToEmpty(String string) {
-        return (string == null) ? "" : string;
-    }
 
-    /**
-     * Returns the given string if it is nonempty; {@code null} otherwise.
-     * 当给定String  为null  或者 isEmpty 时返回 为null
-     * 否则返回他自身
-     *
-     * @param string the string to test and possibly return
-     * @return {@code string} itself if it is nonempty; {@code null} if it is empty or null
-     */
 
-    public static String emptyToNull(String string) {
-        return isNullOrEmpty(string) ? null : string;
-    }
 
     /**
      * Returns {@code true} if the given string is null or is the empty string.
@@ -522,48 +499,10 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return {@code true} if the string is null or is the empty string
      */
     public static boolean isNullOrEmpty(String string) {
-        return string == null || string.isEmpty();
+        return isEmptyIfStr(string);
+        //return string == null || string.isEmpty();
     }
 
-
-    /**
-     * Returns a string consisting of a specific number of concatenated copies of an input string. For
-     * example, {@code repeat("hey", 3)} returns the string {@code "heyheyhey"}.
-     *
-     * <p><b>Java 11+ users:</b> use {@code string.repeat(count)} instead.
-     *
-     * @param string any non-null string
-     * @param count  the number of times to repeat it; a nonnegative integer
-     * @return a string containing {@code string} repeated {@code count} times (the empty string if
-     * {@code count} is zero)
-     * @throws IllegalArgumentException if {@code count} is negative
-     *
-     */
-    public static String repeat(String string, int count) {
-        checkNotNull(string);
-
-        if (count <= 1) {
-            checkArgument(count >= 0, "invalid count: %s", count);
-            return (count == 0) ? "" : string;
-        }
-
-        // IF YOU MODIFY THE CODE HERE, you must update StringsRepeatBenchmark
-        final int len = string.length();
-        final long longSize = (long) len * (long) count;
-        final int size = (int) longSize;
-        if (size != longSize) {
-            throw new ArrayIndexOutOfBoundsException("Required array size too large: " + longSize);
-        }
-
-        final char[] array = new char[size];
-        string.getChars(0, len, array, 0);
-        int n;
-        for (n = len; n < size - n; n <<= 1) {
-            System.arraycopy(array, 0, array, n, n);
-        }
-        System.arraycopy(array, 0, array, n, size - n);
-        return new String(array);
-    }
 
 
 
@@ -670,7 +609,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                              required by the Java platform specification.
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
-     * @since 1.11
+     *
      */
     public static ByteBuffer getByteBufferUtf8(final String string) {
         return getByteBuffer(string, StandardCharsets.UTF_8);
@@ -1681,18 +1620,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
         }
     }
 
-    /**
-     * Determine the RFC 3066 compliant language tag,
-     * as used for the HTTP "Accept-Language" header.
-     *
-     * @param locale the Locale to transform to a language tag
-     * @return the RFC 3066 compliant language tag as {@code String}
-     * @deprecated as of 5.0.4, in favor of {@link Locale#toLanguageTag()}
-     */
-    @Deprecated
-    public static String toLanguageTag(Locale locale) {
-        return locale.getLanguage() + (hasText(locale.getCountry()) ? "-" + locale.getCountry() : "");
-    }
 
     /**
      * Parse the given {@code timeZoneString} value into a {@link TimeZone}.
@@ -1853,7 +1780,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 
     /**
      * Remove duplicate strings from the given array.
-     * <p>As of 4.2, it preserves the original order, as it uses a {@link LinkedHashSet}.
+     * <p> it preserves the original order, as it uses a {@link LinkedHashSet}.
      *
      * @param array the {@code String} array (potentially empty)
      * @return an array without duplicates, in natural sort order

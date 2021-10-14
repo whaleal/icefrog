@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.comparator.CompareUtil;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
@@ -732,7 +732,7 @@ public class ObjectUtil {
 				return null;
 			}
 			Object result = optional.get();
-			Assert.isTrue(!(result instanceof Optional), "Multi-level Optional usage not supported");
+			Preconditions.isTrue(!(result instanceof Optional), "Multi-level Optional usage not supported");
 			return result;
 		}
 		return obj;

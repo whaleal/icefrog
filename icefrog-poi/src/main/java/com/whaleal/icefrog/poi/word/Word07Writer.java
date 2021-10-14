@@ -3,7 +3,7 @@ package com.whaleal.icefrog.poi.word;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.poi.exceptions.POIException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -235,7 +235,7 @@ public class Word07Writer implements Closeable {
 	 * @throws IORuntimeException IO异常
 	 */
 	public Word07Writer flush(File destFile) throws IORuntimeException {
-		Assert.notNull(destFile, "[destFile] is null, and you must call setDestFile(File) first or call flush(OutputStream).");
+		Preconditions.notNull(destFile, "[destFile] is null, and you must call setDestFile(File) first or call flush(OutputStream).");
 		return flush(FileUtil.getOutputStream(destFile), true);
 	}
 
@@ -259,7 +259,7 @@ public class Word07Writer implements Closeable {
 	 * @throws IORuntimeException IO异常
 	 */
 	public Word07Writer flush(OutputStream out, boolean isCloseOut) throws IORuntimeException {
-		Assert.isFalse(this.isClosed, "WordWriter has been closed!");
+		Preconditions.isFalse(this.isClosed, "WordWriter has been closed!");
 		try {
 			this.doc.write(out);
 			out.flush();

@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.bean.BeanUtil;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.MapUtil;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -41,7 +41,7 @@ public class TableUtil {
 	 * @return {@link XWPFTable}
 	 */
 	public static XWPFTable createTable(XWPFDocument doc, Iterable<?> data) {
-		Assert.notNull(doc, "XWPFDocument must be not null !");
+		Preconditions.notNull(doc, "XWPFDocument must be not null !");
 		final XWPFTable table = doc.createTable();
 		// 新建table的时候默认会新建一行，此处移除之
 		table.removeRow(0);
@@ -57,7 +57,7 @@ public class TableUtil {
 	 * @since 1.0.0
 	 */
 	public static XWPFTable writeTable(XWPFTable table, Iterable<?> data){
-		Assert.notNull(table, "XWPFTable must be not null !");
+		Preconditions.notNull(table, "XWPFTable must be not null !");
 		if (IterUtil.isEmpty(data)) {
 			// 数据为空，返回空表
 			return table;

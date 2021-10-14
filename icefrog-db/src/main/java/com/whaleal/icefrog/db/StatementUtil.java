@@ -3,7 +3,7 @@ package com.whaleal.icefrog.db;
 import com.whaleal.icefrog.core.collection.ArrayIter;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.db.handler.HandleHelper;
@@ -125,7 +125,7 @@ public class StatementUtil {
 	 * @since 1.0.0
 	 */
 	public static PreparedStatement prepareStatement(Connection conn, String sql, Object... params) throws SQLException {
-		Assert.notBlank(sql, "Sql String must be not blank!");
+		Preconditions.notBlank(sql, "Sql String must be not blank!");
 		sql = sql.trim();
 
 		if(ArrayUtil.isNotEmpty(params) && 1 == params.length && params[0] instanceof Map){
@@ -171,7 +171,7 @@ public class StatementUtil {
 	 * @since 1.0.0
 	 */
 	public static PreparedStatement prepareStatementForBatch(Connection conn, String sql, Iterable<Object[]> paramsBatch) throws SQLException {
-		Assert.notBlank(sql, "Sql String must be not blank!");
+		Preconditions.notBlank(sql, "Sql String must be not blank!");
 
 		sql = sql.trim();
 		SqlLog.INSTANCE.log(sql, paramsBatch);
@@ -196,7 +196,7 @@ public class StatementUtil {
 	 * @since 1.0.0
 	 */
 	public static PreparedStatement prepareStatementForBatch(Connection conn, String sql, List<String> fields, Entity... entities) throws SQLException {
-		Assert.notBlank(sql, "Sql String must be not blank!");
+		Preconditions.notBlank(sql, "Sql String must be not blank!");
 
 		sql = sql.trim();
 		SqlLog.INSTANCE.logForBatch(sql);
@@ -221,7 +221,7 @@ public class StatementUtil {
 	 * @since 1.0.0
 	 */
 	public static CallableStatement prepareCall(Connection conn, String sql, Object... params) throws SQLException {
-		Assert.notBlank(sql, "Sql String must be not blank!");
+		Preconditions.notBlank(sql, "Sql String must be not blank!");
 
 		sql = sql.trim();
 		SqlLog.INSTANCE.log(sql, params);
