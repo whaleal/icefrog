@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.util;
 
 import com.whaleal.icefrog.core.convert.BasicType;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.JarClassLoader;
 import com.whaleal.icefrog.core.lang.SimpleCache;
 
@@ -220,7 +220,7 @@ public class ClassLoaderUtil {
 	 * @throws UtilException 包装{@link ClassNotFoundException}，没有类名对应的类时抛出此异常
 	 */
 	public static Class<?> loadClass(String name, ClassLoader classLoader, boolean isInitialized) throws UtilException {
-		Assert.notNull(name, "Name must not be null");
+		Preconditions.notNull(name, "Name must not be null");
 
 		// 加载原始类型和缓存中的类
 		Class<?> clazz = loadPrimitiveClass(name);

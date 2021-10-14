@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.extra.ftp;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.net.NetUtil;
 import org.apache.ftpserver.ConnectionConfig;
 import org.apache.ftpserver.FtpServerFactory;
@@ -84,7 +84,7 @@ public class SimpleFtpServer {
 	 * @return this
 	 */
 	public SimpleFtpServer setPort(int port) {
-		Assert.isTrue(NetUtil.isValidPort(port), "Invalid port!");
+		Preconditions.isTrue(NetUtil.isValidPort(port), "Invalid port!");
 		this.listenerFactory.setPort(port);
 		return this;
 	}

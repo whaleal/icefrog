@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.bean.BeanUtil;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public abstract class BeanRowHandler<T> extends AbstractRowHandler<T> {
 	 */
 	public BeanRowHandler(int headerRowIndex, int startRowIndex, int endRowIndex, Class<T> clazz) {
 		super(startRowIndex, endRowIndex);
-		Assert.isTrue(headerRowIndex <= startRowIndex, "Header row must before the start row!");
+		Preconditions.isTrue(headerRowIndex <= startRowIndex, "Header row must before the start row!");
 		this.headerRowIndex = headerRowIndex;
 		this.convertFunc = (rowList) -> BeanUtil.toBean(IterUtil.toMap(headerList, rowList), clazz);
 	}

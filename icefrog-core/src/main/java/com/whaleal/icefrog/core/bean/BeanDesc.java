@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.bean;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.CaseInsensitiveMap;
 import com.whaleal.icefrog.core.util.BooleanUtil;
 import com.whaleal.icefrog.core.util.ModifierUtil;
@@ -47,7 +47,7 @@ public class BeanDesc implements Serializable {
 	 * @param beanClass Bean类
 	 */
 	public BeanDesc(Class<?> beanClass) {
-		Assert.notNull(beanClass);
+		Preconditions.notNull(beanClass);
 		this.beanClass = beanClass;
 		init();
 	}

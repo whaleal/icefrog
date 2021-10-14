@@ -3,7 +3,7 @@ package com.whaleal.icefrog.cron.pattern;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.date.DateUnit;
 import com.whaleal.icefrog.core.date.DateUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +87,7 @@ public class CronPatternUtil {
 	 * @return 日期列表
 	 */
 	public static List<Date> matchedDates(CronPattern pattern, long start, long end, int count, boolean isMatchSecond) {
-		Assert.isTrue(start < end, "Start date is later than end !");
+		Preconditions.isTrue(start < end, "Start date is later than end !");
 
 		final List<Date> result = new ArrayList<>(count);
 		long step = isMatchSecond ? DateUnit.SECOND.getMillis() : DateUnit.MINUTE.getMillis();

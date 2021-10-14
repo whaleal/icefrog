@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.bean.NullWrapperBean;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.SimpleCache;
 import com.whaleal.icefrog.core.lang.reflect.MethodHandleUtil;
@@ -83,7 +83,7 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Constructor<T>[] getConstructors(Class<T> beanClass) throws SecurityException {
-		Assert.notNull(beanClass);
+		Preconditions.notNull(beanClass);
 		Constructor<?>[] constructors = CONSTRUCTORS_CACHE.get(beanClass);
 		if (null != constructors) {
 			return (Constructor<T>[]) constructors;
@@ -101,7 +101,7 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Constructor<?>[] getConstructorsDirectly(Class<?> beanClass) throws SecurityException {
-		Assert.notNull(beanClass);
+		Preconditions.notNull(beanClass);
 		return beanClass.getDeclaredConstructors();
 	}
 
@@ -194,7 +194,7 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Field[] getFieldsDirectly(Class<?> beanClass, boolean withSuperClassFields) throws SecurityException {
-		Assert.notNull(beanClass);
+		Preconditions.notNull(beanClass);
 
 		Field[] allFields = null;
 		Class<?> searchType = beanClass;
@@ -300,11 +300,11 @@ public class ReflectUtil {
 	 * @throws UtilException 包装IllegalAccessException异常
 	 */
 	public static void setFieldValue(Object obj, String fieldName, Object value) throws UtilException {
-		Assert.notNull(obj);
-		Assert.notBlank(fieldName);
+		Preconditions.notNull(obj);
+		Preconditions.notBlank(fieldName);
 
 		final Field field = getField((obj instanceof Class) ? (Class<?>) obj : obj.getClass(), fieldName);
-		Assert.notNull(field, "Field [{}] is not exist in [{}]", fieldName, obj.getClass().getName());
+		Preconditions.notNull(field, "Field [{}] is not exist in [{}]", fieldName, obj.getClass().getName());
 		setFieldValue(obj, field, value);
 	}
 
@@ -317,7 +317,7 @@ public class ReflectUtil {
 	 * @throws UtilException UtilException 包装IllegalAccessException异常
 	 */
 	public static void setFieldValue(Object obj, Field field, Object value) throws UtilException {
-		Assert.notNull(field, "Field in [{}] not exist !", obj);
+		Preconditions.notNull(field, "Field in [{}] not exist !", obj);
 
 		final Class<?> fieldType = field.getType();
 		if (null != value) {
@@ -644,7 +644,7 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Method[] getMethodsDirectly(Class<?> beanClass, boolean withSuperClassMethods) throws SecurityException {
-		Assert.notNull(beanClass);
+		Preconditions.notNull(beanClass);
 
 		Method[] allMethods = null;
 		Class<?> searchType = beanClass;
@@ -778,7 +778,7 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T newInstanceIfPossible(Class<T> beanClass) {
-		Assert.notNull(beanClass);
+		Preconditions.notNull(beanClass);
 
 		// 某些特殊接口的实例化按照默认实现进行
 		if (beanClass.isAssignableFrom(AbstractMap.class)) {
@@ -847,7 +847,7 @@ public class ReflectUtil {
 	public static <T> T invokeWithCheck(Object obj, Method method, Object... args) throws UtilException {
 		final Class<?>[] types = method.getParameterTypes();
 		if (null != args) {
-			Assert.isTrue(args.length == types.length, "Params length [{}] is not fit for param length [{}] of method !", args.length, types.length);
+			Preconditions.isTrue(args.length == types.length, "Params length [{}] is not fit for param length [{}] of method !", args.length, types.length);
 			Class<?> type;
 			for (int i = 0; i < args.length; i++) {
 				type = types[i];
@@ -939,8 +939,8 @@ public class ReflectUtil {
 	 * @since 1.0.0
 	 */
 	public static <T> T invoke(Object obj, String methodName, Object... args) throws UtilException {
-		Assert.notNull(obj, "Object to get method must be not null!");
-		Assert.notBlank(methodName, "Method name must be not blank!");
+		Preconditions.notNull(obj, "Object to get method must be not null!");
+		Preconditions.notBlank(methodName, "Method name must be not blank!");
 
 		final Method method = getMethodOfObj(obj, methodName, args);
 		if (null == method) {

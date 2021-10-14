@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.text;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.comparator.VersionComparator;
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
 import com.whaleal.icefrog.core.lang.func.Func1;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import static com.whaleal.icefrog.core.util.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 /**
  * {@link CharSequence} 相关工具类封装
@@ -269,9 +269,11 @@ public class CharSequenceUtil {
 
 	/**
 	 * 当给定字符串为null时，转换为Empty
+	 * Returns the given string if it is non-null; the empty string otherwise.
+	 * nullToEmpty null  会返回"" 空字符串
 	 *
-	 * @param str 被转换的字符串
-	 * @return 转换后的字符串
+	 * @param str 被转换的字符串 the string to test and possibly return
+	 * @return 转换后的字符串  itself if it is non-null; {@code ""} if it is null
 	 */
 	public static String nullToEmpty(CharSequence str) {
 		return nullToDefault(str, EMPTY);
@@ -335,9 +337,12 @@ public class CharSequenceUtil {
 
 	/**
 	 * 当给定字符串为空字符串时，转换为{@code null}
+	 * Returns the given string if it is nonempty; {@code null} otherwise.
+	 * 当给定String  为null  或者 isEmpty 时返回 为null
+	 * 否则返回他自身
 	 *
-	 * @param str 被转换的字符串
-	 * @return 转换后的字符串
+	 * @param str 被转换的字符串  the string to test and possibly return
+	 * @return 转换后的字符串 {@code string} itself if it is nonempty; {@code null} if it is empty or null
 	 */
 	public static String emptyToNull(CharSequence str) {
 		return isEmpty(str) ? null : str.toString();
@@ -2425,11 +2430,17 @@ public class CharSequenceUtil {
 	}
 
 	/**
+	 * Returns a string consisting of a specific number of concatenated copies of an input string. For
+	 * example, {@code repeat("hey", 3)} returns the string {@code "heyheyhey"}.
+	 *
+	 * <p><b>Java 11+ users:</b> use {@code string.repeat(count)} instead.
 	 * 重复某个字符串
 	 *
-	 * @param str   被重复的字符
-	 * @param count 重复的数目
-	 * @return 重复字符字符串
+	 * @param str   被重复的字符 any non-null string
+	 * @param count 重复的数目 the number of times to repeat it; a nonnegative integer
+	 * @return 重复字符字符串 a string containing {@code string} repeated {@code count} times (the empty string if
+	 * {@code count} is zero)
+	 * @throws IllegalArgumentException if {@code count} is negative
 	 */
 	public static String repeat(CharSequence str, int count) {
 		if (null == str) {
@@ -2443,6 +2454,7 @@ public class CharSequenceUtil {
 		}
 
 		// 检查
+		// IF YOU MODIFY THE CODE HERE, you must update StringsRepeatBenchmarkhasLength
 		final int len = str.length();
 		final long longSize = (long) len * (long) count;
 		final int size = (int) longSize;
@@ -3815,7 +3827,7 @@ public class CharSequenceUtil {
 	 * @since 1.0.0
 	 */
 	public static String maxLength(CharSequence string, int length) {
-		Assert.isTrue(length > 0);
+		Preconditions.isTrue(length > 0);
 		if (null == string) {
 			return null;
 		}

@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.collection;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -31,8 +31,8 @@ public class TransCollection<F, T> extends AbstractCollection<T> {
 	 * @param function       转换函数
 	 */
 	public TransCollection(Collection<F> fromCollection, Function<? super F, ? extends T> function) {
-		this.fromCollection = Assert.notNull(fromCollection);
-		this.function = Assert.notNull(function);
+		this.fromCollection = Preconditions.notNull(fromCollection);
+		this.function = Preconditions.notNull(function);
 	}
 
 	@Override
@@ -52,13 +52,13 @@ public class TransCollection<F, T> extends AbstractCollection<T> {
 
 	@Override
 	public void forEach(Consumer<? super T> action) {
-		Assert.notNull(action);
+		Preconditions.notNull(action);
 		fromCollection.forEach((f) -> action.accept(function.apply(f)));
 	}
 
 	@Override
 	public boolean removeIf(Predicate<? super T> filter) {
-		Assert.notNull(filter);
+		Preconditions.notNull(filter);
 		return fromCollection.removeIf(element -> filter.test(function.apply(element)));
 	}
 

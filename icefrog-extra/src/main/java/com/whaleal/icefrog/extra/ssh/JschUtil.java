@@ -2,7 +2,7 @@ package com.whaleal.icefrog.extra.ssh;
 
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.net.LocalPortGenerater;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -157,7 +157,7 @@ public class JschUtil {
 	 * @since 1.0.0
 	 */
 	public static Session createSession(String sshHost, int sshPort, String sshUser, String privateKeyPath, byte[] passphrase) {
-		Assert.notEmpty(privateKeyPath, "PrivateKey Path must be not empty!");
+		Preconditions.notEmpty(privateKeyPath, "PrivateKey Path must be not empty!");
 
 		final JSch jsch = new JSch();
 		try {
@@ -180,8 +180,8 @@ public class JschUtil {
 	 * @since 1.0.0
 	 */
 	public static Session createSession(JSch jsch, String sshHost, int sshPort, String sshUser) {
-		Assert.notEmpty(sshHost, "SSH Host must be not empty!");
-		Assert.isTrue(sshPort > 0, "SSH port must be > 0");
+		Preconditions.notEmpty(sshHost, "SSH Host must be not empty!");
+		Preconditions.isTrue(sshPort > 0, "SSH port must be > 0");
 
 		// 默认root用户
 		if (StrUtil.isEmpty(sshUser)) {

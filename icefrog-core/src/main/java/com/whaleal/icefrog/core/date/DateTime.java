@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.date.format.DateParser;
 import com.whaleal.icefrog.core.date.format.DatePrinter;
 import com.whaleal.icefrog.core.date.format.FastDateFormat;
 import com.whaleal.icefrog.core.date.format.GlobalCustomFormat;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
@@ -999,7 +999,7 @@ public class DateTime extends Date {
 	 * @return {@link Date}
 	 */
 	private static Date parse(CharSequence dateStr, DateFormat dateFormat) {
-		Assert.notBlank(dateStr, "Date String must be not blank !");
+		Preconditions.notBlank(dateStr, "Date String must be not blank !");
 		try {
 			return dateFormat.parse(dateStr.toString());
 		} catch (Exception e) {
@@ -1021,8 +1021,8 @@ public class DateTime extends Date {
 	 * @return {@link Date}
 	 */
 	private static Date parse(CharSequence dateStr, DateParser parser) {
-		Assert.notNull(parser, "Parser or DateFromat must be not null !");
-		Assert.notBlank(dateStr, "Date String must be not blank !");
+		Preconditions.notNull(parser, "Parser or DateFromat must be not null !");
+		Preconditions.notBlank(dateStr, "Date String must be not blank !");
 		try {
 			return parser.parse(dateStr.toString());
 		} catch (Exception e) {

@@ -4,7 +4,7 @@ package com.whaleal.icefrog.core.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static com.whaleal.icefrog.core.util.Preconditions.checkState;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkState;
 
 /**
  * Note this class is a copy of {@link AbstractIterator} (for dependency

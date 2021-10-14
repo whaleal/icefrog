@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.io.unit;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.StrUtil;
 
 import java.math.BigDecimal;
@@ -184,10 +184,10 @@ public final class DataSize implements Comparable<DataSize> {
 	 * @return the parsed DataSize
 	 */
 	public static DataSize parse(CharSequence text, DataUnit defaultUnit) {
-		Assert.notNull(text, "Text must not be null");
+		Preconditions.notNull(text, "Text must not be null");
 		try {
 			final Matcher matcher = PATTERN.matcher(text);
-			Assert.state(matcher.matches(), "Does not match data size pattern");
+			Preconditions.state(matcher.matches(), "Does not match data size pattern");
 
 			final DataUnit unit = determineDataUnit(matcher.group(3), defaultUnit);
 			return DataSize.of(new BigDecimal(matcher.group(1)), unit);

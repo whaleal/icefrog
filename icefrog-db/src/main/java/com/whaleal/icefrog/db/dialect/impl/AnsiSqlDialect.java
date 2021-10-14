@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.db.dialect.impl;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.db.DbRuntimeException;
@@ -59,7 +59,7 @@ public class AnsiSqlDialect implements Dialect {
 
 	@Override
 	public PreparedStatement psForDelete(Connection conn, Query query) throws SQLException {
-		Assert.notNull(query, "query must be not null !");
+		Preconditions.notNull(query, "query must be not null !");
 
 		final Condition[] where = query.getWhere();
 		if (ArrayUtil.isEmpty(where)) {
@@ -73,7 +73,7 @@ public class AnsiSqlDialect implements Dialect {
 
 	@Override
 	public PreparedStatement psForUpdate(Connection conn, Entity entity, Query query) throws SQLException {
-		Assert.notNull(query, "query must be not null !");
+		Preconditions.notNull(query, "query must be not null !");
 
 		final Condition[] where = query.getWhere();
 		if (ArrayUtil.isEmpty(where)) {
@@ -93,7 +93,7 @@ public class AnsiSqlDialect implements Dialect {
 
 	@Override
 	public PreparedStatement psForPage(Connection conn, Query query) throws SQLException {
-		Assert.notNull(query, "query must be not null !");
+		Preconditions.notNull(query, "query must be not null !");
 		if (StrUtil.hasBlank(query.getTableNames())) {
 			throw new DbRuntimeException("Table name must be not empty !");
 		}

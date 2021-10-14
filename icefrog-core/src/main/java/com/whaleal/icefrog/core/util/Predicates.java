@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.util.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Preconditions.*;
 
 
 /**

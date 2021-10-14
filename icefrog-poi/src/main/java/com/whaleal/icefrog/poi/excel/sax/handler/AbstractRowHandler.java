@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.poi.excel.sax.handler;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.func.Func1;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public abstract class AbstractRowHandler<T> implements RowHandler {
 
 	@Override
 	public void handle(int sheetIndex, long rowIndex, List<Object> rowList) {
-		Assert.notNull(convertFunc);
+		Preconditions.notNull(convertFunc);
 		if (rowIndex < this.startRowIndex || rowIndex > this.endRowIndex) {
 			return;
 		}

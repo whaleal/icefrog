@@ -3,7 +3,7 @@ package com.whaleal.icefrog.db.handler;
 import com.whaleal.icefrog.core.bean.BeanUtil;
 import com.whaleal.icefrog.core.bean.PropDesc;
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -60,7 +60,7 @@ public class HandleHelper {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T handleRow(int columnCount, ResultSetMetaData meta, ResultSet rs, Class<T> beanClass) throws SQLException {
-		Assert.notNull(beanClass, "Bean Class must be not null !");
+		Preconditions.notNull(beanClass, "Bean Class must be not null !");
 
 		if(beanClass.isArray()) {
 			//返回数组

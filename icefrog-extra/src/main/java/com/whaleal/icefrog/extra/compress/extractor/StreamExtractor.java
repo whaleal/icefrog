@@ -3,7 +3,7 @@ package com.whaleal.icefrog.extra.compress.extractor;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.compress.CompressException;
@@ -105,7 +105,7 @@ public class StreamExtractor implements Extractor{
 	 * @throws IOException IO异常
 	 */
 	private void extractInternal(File targetDir, Filter<ArchiveEntry> filter) throws IOException {
-		Assert.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
+		Preconditions.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
 		final ArchiveInputStream in = this.in;
 		ArchiveEntry entry;
 		File outItemFile;

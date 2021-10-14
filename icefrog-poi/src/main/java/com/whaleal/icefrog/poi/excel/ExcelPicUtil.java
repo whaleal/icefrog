@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.poi.excel;
 
 import com.whaleal.icefrog.core.collection.CollectionUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.StrUtil;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
@@ -39,7 +39,7 @@ public class ExcelPicUtil {
 	 * @return 图片映射，键格式：行_列，值：{@link PictureData}
 	 */
 	public static Map<String, PictureData> getPicMap(Workbook workbook, int sheetIndex) {
-		Assert.notNull(workbook, "Workbook must be not null !");
+		Preconditions.notNull(workbook, "Workbook must be not null !");
 		if (sheetIndex < 0) {
 			sheetIndex = 0;
 		}
