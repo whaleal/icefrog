@@ -34,7 +34,6 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  *
  * @author Mike Bostock
  * @author Jared Levy
- * @since 2.0
  */
 
 
