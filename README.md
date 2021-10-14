@@ -101,20 +101,20 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 <dependency>
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'com.whaleal.icefrog:icefrog-all:1.0.0'
+implementation 'com.whaleal.icefrog:icefrog-all:1.0.1'
 ```
 
 ### 📥下载jar
 
 点击以下链接，下载`icefrog-all-X.X.X.jar`即可：
 
-- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.0.0/)
+- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.0.1/)
 
 > 🔔️注意
 > icefrog 1.x支持JDK8+，对Android平台没有测试，不能保证所有工具类或工具方法可用。
