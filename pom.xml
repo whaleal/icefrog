@@ -35,6 +35,7 @@
         <module>icefrog-captcha</module>
         <module>icefrog-socket</module>
         <module>icefrog-jwt</module>
+        <module>icefrog-collections</module>
     </modules>
 
     <properties>

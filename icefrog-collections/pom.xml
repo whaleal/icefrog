@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>jar</packaging>
+
+    <parent>
+        <artifactId>icefrog</artifactId>
+        <groupId>com.whaleal.icefrog</groupId>
+        <version>1.0.1</version>
+    </parent>
+
+    <artifactId>icefrog-collections</artifactId>
+    <name>${project.artifactId}</name>
+    <description>icefrog  集合类相关拓展</description>
+
+
+</project>
