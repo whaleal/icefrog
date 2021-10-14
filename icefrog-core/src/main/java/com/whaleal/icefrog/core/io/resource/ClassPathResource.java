@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.io.resource;
 
 import com.whaleal.icefrog.core.io.FileUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ClassUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -64,7 +64,7 @@ public class ClassPathResource extends UrlResource {
 	 */
 	public ClassPathResource(String pathBaseClassLoader, ClassLoader classLoader, Class<?> clazz) {
 		super((URL) null);
-		Assert.notNull(pathBaseClassLoader, "Path must not be null");
+		Preconditions.notNull(pathBaseClassLoader, "Path must not be null");
 
 		final String path = normalizePath(pathBaseClassLoader);
 		this.path = path;
@@ -140,7 +140,7 @@ public class ClassPathResource extends UrlResource {
 		path = FileUtil.normalize(path);
 		path = StrUtil.removePrefix(path, StrUtil.SLASH);
 
-		Assert.isFalse(FileUtil.isAbsolutePath(path), "Path [{}] must be a relative path !", path);
+		Preconditions.isFalse(FileUtil.isAbsolutePath(path), "Path [{}] must be a relative path !", path);
 		return path;
 	}
 }

@@ -3,7 +3,7 @@ package com.whaleal.icefrog.setting;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.resource.Resource;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.ReUtil;
@@ -182,7 +182,7 @@ public class SettingLoader {
 	 * @since 1.0.0
 	 */
 	public void store(File file) {
-		Assert.notNull(file, "File to store must be not null !");
+		Preconditions.notNull(file, "File to store must be not null !");
 		log.debug("Store Setting to [{}]...", file.getAbsolutePath());
 		PrintWriter writer = null;
 		try {

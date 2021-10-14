@@ -17,9 +17,7 @@
 package com.whaleal.icefrog.core.codec;
 
 
-import com.whaleal.icefrog.core.builder.Builder;
-
-import static com.whaleal.icefrog.core.lang.Assert.notNull;
+import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
 
 /**
  * The context for decoding values to your type.

@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.CollectionUtil;
 import com.whaleal.icefrog.core.comparator.CompareUtil;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Editor;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
@@ -210,7 +210,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> int matchIndex(Matcher<T> matcher, int beginIndexInclude, T... array) {
-        Assert.notNull(matcher, "Matcher must be not null !");
+        Preconditions.notNull(matcher, "Matcher must be not null !");
         if (isNotEmpty(array)) {
             for (int i = beginIndexInclude; i < array.length; i++) {
                 if (matcher.match(array[i])) {
@@ -1670,8 +1670,8 @@ public class ArrayUtil extends PrimitiveArrayUtil {
             return false;
         }
 
-        Assert.isTrue(isArray(array1), "First is not a Array !");
-        Assert.isTrue(isArray(array2), "Second is not a Array !");
+        Preconditions.isTrue(isArray(array1), "First is not a Array !");
+        Preconditions.isTrue(isArray(array2), "Second is not a Array !");
 
         if (array1 instanceof long[]) {
             return Arrays.equals((long[]) array1, (long[]) array2);

@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.setting.profile;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.setting.Setting;
 
@@ -137,7 +137,7 @@ public class Profile implements Serializable {
 	 * @return 修正后的文件名
 	 */
 	private String fixNameForProfile(String name) {
-		Assert.notBlank(name, "Setting name must be not blank !");
+		Preconditions.notBlank(name, "Setting name must be not blank !");
 		final String actralProfile = StrUtil.nullToEmpty(this.profile);
 		if (false == name.contains(StrUtil.DOT)) {
 			return StrUtil.format("{}/{}.setting", actralProfile, name);

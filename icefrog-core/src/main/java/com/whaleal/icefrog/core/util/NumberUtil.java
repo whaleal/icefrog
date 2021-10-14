@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.util;
 
 
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.math.Calculator;
 
 import java.math.BigDecimal;
@@ -749,7 +749,7 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static BigDecimal div(BigDecimal v1, BigDecimal v2, int scale, RoundingMode roundingMode) {
-		Assert.notNull(v2, "Divisor must be not null !");
+		Preconditions.notNull(v2, "Divisor must be not null !");
 		if (null == v1) {
 			return BigDecimal.ZERO;
 		}
@@ -877,7 +877,7 @@ public class NumberUtil {
 	 * @return 新值
 	 */
 	public static BigDecimal round(String numberStr, int scale, RoundingMode roundingMode) {
-		Assert.notBlank(numberStr);
+		Preconditions.notBlank(numberStr);
 		if (scale < 0) {
 			scale = 0;
 		}
@@ -1014,7 +1014,7 @@ public class NumberUtil {
 	 * @return 格式化后的值
 	 */
 	public static String decimalFormat(String pattern, double value) {
-		Assert.isTrue(isValid(value), "value is NaN or Infinite!");
+		Preconditions.isTrue(isValid(value), "value is NaN or Infinite!");
 		return new DecimalFormat(pattern).format(value);
 	}
 
@@ -1086,7 +1086,7 @@ public class NumberUtil {
 	 */
 	public static String decimalFormat(String pattern, Object value, RoundingMode roundingMode) {
 		if (value instanceof Number) {
-			Assert.isTrue(isValidNumber((Number) value), "value is NaN or Infinite!");
+			Preconditions.isTrue(isValidNumber((Number) value), "value is NaN or Infinite!");
 		}
 		final DecimalFormat decimalFormat = new DecimalFormat(pattern);
 		if (null != roundingMode) {
@@ -1290,7 +1290,7 @@ public class NumberUtil {
 	 * @return 是否是质数
 	 */
 	public static boolean isPrimes(int n) {
-		Assert.isTrue(n > 1, "The number must be > 1");
+		Preconditions.isTrue(n > 1, "The number must be > 1");
 		for (int i = 2; i <= Math.sqrt(n); i++) {
 			if (n % i == 0) {
 				return false;
@@ -1332,8 +1332,8 @@ public class NumberUtil {
 			end = temp;
 		}
 		// 加入逻辑判断，确保begin<end并且size不能大于该表示范围
-		Assert.isTrue((end - begin) >= size, "Size is larger than range between begin and end!");
-		Assert.isTrue(seed.length >= size, "Size is larger than seed size!");
+		Preconditions.isTrue((end - begin) >= size, "Size is larger than range between begin and end!");
+		Preconditions.isTrue(seed.length >= size, "Size is larger than seed size!");
 
 		final int[] ranArr = new int[size];
 		// 数量你可以自己定义。
@@ -1495,8 +1495,8 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static BigInteger factorial(BigInteger start, BigInteger end) {
-		Assert.notNull(start, "Factorial start must be not null!");
-		Assert.notNull(end, "Factorial end must be not null!");
+		Preconditions.notNull(start, "Factorial start must be not null!");
+		Preconditions.notNull(end, "Factorial end must be not null!");
 		if (start.compareTo(BigInteger.ZERO) < 0 || end.compareTo(BigInteger.ZERO) < 0) {
 			throw new IllegalArgumentException(StrUtil.format("Factorial start and end both must be > 0, but got start={}, end={}", start, end));
 		}
@@ -1762,8 +1762,8 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static boolean isGreater(BigDecimal bigNum1, BigDecimal bigNum2) {
-		Assert.notNull(bigNum1);
-		Assert.notNull(bigNum2);
+		Preconditions.notNull(bigNum1);
+		Preconditions.notNull(bigNum2);
 		return bigNum1.compareTo(bigNum2) > 0;
 	}
 
@@ -1776,8 +1776,8 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static boolean isGreaterOrEqual(BigDecimal bigNum1, BigDecimal bigNum2) {
-		Assert.notNull(bigNum1);
-		Assert.notNull(bigNum2);
+		Preconditions.notNull(bigNum1);
+		Preconditions.notNull(bigNum2);
 		return bigNum1.compareTo(bigNum2) >= 0;
 	}
 
@@ -1790,8 +1790,8 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static boolean isLess(BigDecimal bigNum1, BigDecimal bigNum2) {
-		Assert.notNull(bigNum1);
-		Assert.notNull(bigNum2);
+		Preconditions.notNull(bigNum1);
+		Preconditions.notNull(bigNum2);
 		return bigNum1.compareTo(bigNum2) < 0;
 	}
 
@@ -1804,8 +1804,8 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static boolean isLessOrEqual(BigDecimal bigNum1, BigDecimal bigNum2) {
-		Assert.notNull(bigNum1);
-		Assert.notNull(bigNum2);
+		Preconditions.notNull(bigNum1);
+		Preconditions.notNull(bigNum2);
 		return bigNum1.compareTo(bigNum2) <= 0;
 	}
 
@@ -2075,14 +2075,14 @@ public class NumberUtil {
 	 * @return A String.
 	 */
 	public static String toStr(Number number, boolean isStripTrailingZeros) {
-		Assert.notNull(number, "Number is null !");
+		Preconditions.notNull(number, "Number is null !");
 
 		// BigDecimal单独处理，使用非科学计数法
 		if (number instanceof BigDecimal) {
 			return toStr((BigDecimal) number, isStripTrailingZeros);
 		}
 
-		Assert.isTrue(isValidNumber(number), "Number is non-finite!");
+		Preconditions.isTrue(isValidNumber(number), "Number is non-finite!");
 		// 去掉小数点儿后多余的0
 		String string = number.toString();
 		if (isStripTrailingZeros) {
@@ -2120,7 +2120,7 @@ public class NumberUtil {
 	 * @since 1.0.0
 	 */
 	public static String toStr(BigDecimal bigDecimal, boolean isStripTrailingZeros) {
-		Assert.notNull(bigDecimal, "BigDecimal is null !");
+		Preconditions.notNull(bigDecimal, "BigDecimal is null !");
 		if (isStripTrailingZeros) {
 			bigDecimal = bigDecimal.stripTrailingZeros();
 		}
@@ -2755,8 +2755,8 @@ public class NumberUtil {
 	public static <T extends Number> T convertNumberToTargetClass(Number number, Class<T> targetClass)
 			throws IllegalArgumentException {
 
-		Assert.notNull(number, "Number must not be null");
-		Assert.notNull(targetClass, "Target class must not be null");
+		Preconditions.notNull(number, "Number must not be null");
+		Preconditions.notNull(targetClass, "Target class must not be null");
 
 		if (targetClass.isInstance(number)) {
 			return (T) number;
@@ -2863,8 +2863,8 @@ public class NumberUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Number> T parseNumber(String text, Class<T> targetClass) {
-		Assert.notNull(text, "Text must not be null");
-		Assert.notNull(targetClass, "Target class must not be null");
+		Preconditions.notNull(text, "Text must not be null");
+		Preconditions.notNull(targetClass, "Target class must not be null");
 		String trimmed = StrUtil.trimAllWhitespace(text);
 
 		if (Byte.class == targetClass) {
@@ -2910,8 +2910,8 @@ public class NumberUtil {
 			String text, Class<T> targetClass,  NumberFormat numberFormat) {
 
 		if (numberFormat != null) {
-			Assert.notNull(text, "Text must not be null");
-			Assert.notNull(targetClass, "Target class must not be null");
+			Preconditions.notNull(text, "Text must not be null");
+			Preconditions.notNull(targetClass, "Target class must not be null");
 			DecimalFormat decimalFormat = null;
 			boolean resetBigDecimal = false;
 			if (numberFormat instanceof DecimalFormat) {

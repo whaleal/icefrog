@@ -101,20 +101,20 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 <dependency>
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'com.whaleal.icefrog:icefrog-all:1.0.0'
+implementation 'com.whaleal.icefrog:icefrog-all:1.0.1'
 ```
 
 ### 📥下载jar
 
 点击以下链接，下载`icefrog-all-X.X.X.jar`即可：
 
-- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.0.0/)
+- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.0.1/)
 
 > 🔔️注意
 > icefrog 1.x支持JDK8+，对Android平台没有测试，不能保证所有工具类或工具方法可用。
@@ -140,7 +140,8 @@ icefrog的源码分为两个分支，功能如下：
 
 | 分支       | 作用                                                          |
 |-----------|---------------------------------------------------------------|
-| v1-main | 主分支，release版本使用的分支，与中央库提交的jar一致，不接收任何pr或修改 |
+| main  | 主分支，release版本使用的分支，与中央库提交的jar一致，不接收任何pr或修改 |
+| v1-main | 大版本主分支，不同大版本具有不同vxx-main, 用于合并v1-dev,观察特性,不接收任何pr或修改 |
 | v1-dev    | 开发分支，默认为下个版本的SNAPSHOT版本，接受修改或pr                 |
 
 ### 🐞提供bug反馈或建议

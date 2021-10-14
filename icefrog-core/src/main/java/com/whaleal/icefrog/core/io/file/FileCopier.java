@@ -3,9 +3,8 @@ package com.whaleal.icefrog.core.io.file;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.copier.SrcToDestCopier;
-import com.whaleal.icefrog.core.stream.StreamUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
@@ -173,11 +172,11 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 		final File src = this.src;
 		final File dest = this.dest;
 		// check
-		Assert.notNull(src, "Source File is null !");
+		Preconditions.notNull(src, "Source File is null !");
 		if (false == src.exists()) {
 			throw new IORuntimeException("File not exist: " + src);
 		}
-		Assert.notNull(dest, "Destination File or directiory is null !");
+		Preconditions.notNull(dest, "Destination File or directiory is null !");
 		if (FileUtil.equals(src, dest)) {
 			throw new IORuntimeException("Files '{}' and '{}' are equal", src, dest);
 		}
@@ -219,8 +218,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static long copy(File in, File out) throws IOException {
-		Assert.notNull(in, "No input File specified");
-		Assert.notNull(out, "No output File specified");
+		Preconditions.notNull(in, "No input File specified");
+		Preconditions.notNull(out, "No output File specified");
 		return copy(Files.newInputStream(in.toPath()), Files.newOutputStream(out.toPath()));
 	}
 
@@ -232,8 +231,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static void copy(byte[] in, File out) throws IOException {
-		Assert.notNull(in, "No input byte array specified");
-		Assert.notNull(out, "No output File specified");
+		Preconditions.notNull(in, "No input byte array specified");
+		Preconditions.notNull(out, "No output File specified");
 		copy(new ByteArrayInputStream(in), Files.newOutputStream(out.toPath()));
 	}
 
@@ -245,7 +244,7 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static byte[] copyToByteArray(File in) throws IOException {
-		Assert.notNull(in, "No input File specified");
+		Preconditions.notNull(in, "No input File specified");
 		return copyToByteArray(Files.newInputStream(in.toPath()));
 	}
 
@@ -264,8 +263,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static long copy(InputStream in, OutputStream out) throws IOException {
-		Assert.notNull(in, "No InputStream specified");
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(in, "No InputStream specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 
 		try {
 			return IoUtil.copy(in, out);
@@ -284,8 +283,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static void copy(byte[] in, OutputStream out) throws IOException {
-		Assert.notNull(in, "No input byte array specified");
-		Assert.notNull(out, "No OutputStream specified");
+		Preconditions.notNull(in, "No input byte array specified");
+		Preconditions.notNull(out, "No OutputStream specified");
 
 		try {
 			out.write(in);
@@ -327,8 +326,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static int copy(Reader in, Writer out) throws IOException {
-		Assert.notNull(in, "No Reader specified");
-		Assert.notNull(out, "No Writer specified");
+		Preconditions.notNull(in, "No Reader specified");
+		Preconditions.notNull(out, "No Writer specified");
 
 		try {
 			int charCount = 0;
@@ -355,8 +354,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier>{
 	 * @throws IOException in case of I/O errors
 	 */
 	public static void copy(String in, Writer out) throws IOException {
-		Assert.notNull(in, "No input String specified");
-		Assert.notNull(out, "No Writer specified");
+		Preconditions.notNull(in, "No input String specified");
+		Preconditions.notNull(out, "No Writer specified");
 
 		try {
 			out.write(in);

@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.thread;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,7 +27,7 @@ public class DelegatedExecutorService extends AbstractExecutorService {
 	 * @param executor {@link ExecutorService}
 	 */
 	DelegatedExecutorService(ExecutorService executor) {
-		Assert.notNull(executor, "executor must be not null !");
+		Preconditions.notNull(executor, "executor must be not null !");
 		e = executor;
 	}
 

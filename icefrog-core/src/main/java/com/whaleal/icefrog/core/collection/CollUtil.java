@@ -15,6 +15,7 @@ import com.whaleal.icefrog.core.lang.hash.Hash32;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.*;
 
+import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -22,6 +23,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 /**
  * 集合相关工具类
@@ -3679,6 +3683,55 @@ public class CollUtil {
 		@Override
 		public void remove() throws UnsupportedOperationException {
 			throw new UnsupportedOperationException("Not supported");
+		}
+	}
+
+
+	/**
+	 * Returns a collection that applies {@code function} to each element of {@code fromCollection}.
+	 * The returned collection is a live view of {@code fromCollection}; changes to one affect the
+	 * other.
+	 *
+	 * <p>The returned collection's {@code add()} and {@code addAll()} methods throw an {@link
+	 * UnsupportedOperationException}. All other collection methods are supported, as long as {@code
+	 * fromCollection} supports them.
+	 *
+	 * <p>The returned collection isn't threadsafe or serializable, even if {@code fromCollection} is.
+	 *
+	 * <p>When a live view is <i>not</i> needed, it may be faster to copy the transformed collection
+	 * and use the copy.
+	 *
+	 * <p>If the input {@code Collection} is known to be a {@code List}, consider }.
+	 * If only an {@code Iterable} is available,
+	 *
+	 * <p><b>{@code Stream} equivalent:</b> {@link java.util.stream.Stream#map Stream.map}.
+	 */
+	public static <F extends Object, T extends Object> Collection<T> transform(
+			Collection<F> fromCollection, Function<? super F, T> function) {
+		checkNotNull(fromCollection);
+		checkNotNull(function);
+
+
+		return fromCollection.stream().map(function).collect(Collectors.toList());
+
+	}
+
+
+
+	/**
+	 * Delegates to {@link Collection#remove}. Returns {@code false} if the {@code remove} method
+	 * throws a {@code ClassCastException} or {@code NullPointerException}.
+	 *
+	 * @param collection  collection
+	 * @param object object
+	 * @return return
+	 */
+	public static boolean safeRemove(Collection<?> collection, @CheckForNull Object object) {
+		checkNotNull(collection);
+		try {
+			return collection.remove(object);
+		} catch (ClassCastException | NullPointerException e) {
+			return false;
 		}
 	}
 

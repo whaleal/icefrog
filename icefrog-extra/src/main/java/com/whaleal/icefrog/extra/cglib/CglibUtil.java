@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.extra.cglib;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.beans.BeanMap;
@@ -69,8 +69,8 @@ public class CglibUtil {
 	 * @param converter 转换器，无需可传{@code null}
 	 */
 	public static void copy(Object source, Object target, Converter converter) {
-		Assert.notNull(source, "Source bean must be not null.");
-		Assert.notNull(target, "Target bean must be not null.");
+		Preconditions.notNull(source, "Source bean must be not null.");
+		Preconditions.notNull(target, "Target bean must be not null.");
 
 		final Class<?> sourceClass = source.getClass();
 		final Class<?> targetClass = target.getClass();

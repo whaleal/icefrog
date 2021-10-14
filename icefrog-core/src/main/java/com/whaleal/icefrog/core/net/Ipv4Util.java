@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.net;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Validator;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -246,7 +246,7 @@ public class Ipv4Util {
 	public static String getMaskByIpRange(String fromIp, String toIp) {
 		long toIpLong = ipv4ToLong(toIp);
 		long fromIpLong = ipv4ToLong(fromIp);
-		Assert.isTrue(fromIpLong < toIpLong, "to IP must be greater than from IP!");
+		Preconditions.isTrue(fromIpLong < toIpLong, "to IP must be greater than from IP!");
 
 		String[] fromIpSplit = StrUtil.splitToArray(fromIp, CharUtil.DOT);
 		String[] toIpSplit = StrUtil.splitToArray(toIp, CharUtil.DOT);

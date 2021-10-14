@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.bean;
 
 import com.whaleal.icefrog.core.clone.CloneSupport;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ClassUtil;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 
@@ -81,7 +81,7 @@ public class DynaBean extends CloneSupport<DynaBean> implements Serializable {
 	 * @param bean 原始Bean
 	 */
 	public DynaBean(Object bean) {
-		Assert.notNull(bean);
+		Preconditions.notNull(bean);
 		if (bean instanceof DynaBean) {
 			bean = ((DynaBean) bean).getBean();
 		}

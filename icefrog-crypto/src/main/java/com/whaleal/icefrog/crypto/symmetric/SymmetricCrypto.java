@@ -2,7 +2,7 @@ package com.whaleal.icefrog.crypto.symmetric;
 
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.HexUtil;
 import com.whaleal.icefrog.core.util.RandomUtil;
@@ -144,7 +144,7 @@ public class SymmetricCrypto implements SymmetricEncryptor, SymmetricDecryptor, 
 	 * @return SymmetricCrypto的子对象，即子对象自身
 	 */
 	public SymmetricCrypto init(String algorithm, SecretKey key) {
-		Assert.notBlank(algorithm, "'algorithm' must be not blank !");
+		Preconditions.notBlank(algorithm, "'algorithm' must be not blank !");
 		this.secretKey = key;
 
 		// 检查是否为ZeroPadding，是则替换为NoPadding，并标记以便单独处理

@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.io.watch.watchers;
 
 import com.whaleal.icefrog.core.collection.ConcurrentHashSet;
 import com.whaleal.icefrog.core.io.watch.Watcher;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.thread.ThreadUtil;
 
 import java.nio.file.Path;
@@ -38,7 +38,7 @@ public class DelayWatcher implements Watcher {
 	 * @param delay 延迟时间，单位毫秒
 	 */
 	public DelayWatcher(Watcher watcher, long delay) {
-		Assert.notNull(watcher);
+		Preconditions.notNull(watcher);
 		if(watcher instanceof DelayWatcher) {
 			throw new IllegalArgumentException("Watcher must not be a DelayWatcher");
 		}

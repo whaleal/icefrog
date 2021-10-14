@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
@@ -123,7 +123,7 @@ public class Morse {
 	 * @return 密文
 	 */
 	public String encode(String text) {
-		Assert.notNull(text, "Text should not be null.");
+		Preconditions.notNull(text, "Text should not be null.");
 
 		text = text.toUpperCase();
 		final StringBuilder morseBuilder = new StringBuilder();
@@ -146,7 +146,7 @@ public class Morse {
 	 * @return 明文
 	 */
 	public String decode(String morse) {
-		Assert.notNull(morse, "Morse should not be null.");
+		Preconditions.notNull(morse, "Morse should not be null.");
 
 		final char dit = this.dit;
 		final char dah = this.dah;

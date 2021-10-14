@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.jwt;
 
 import com.whaleal.icefrog.core.codec.Base64;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.json.JSONConfig;
 import com.whaleal.icefrog.json.JSONObject;
@@ -34,7 +34,7 @@ public class Claims implements Serializable {
 	 */
 	protected void setClaim(String name, Object value) {
 		init();
-		Assert.notNull(name, "Name must be not null!");
+		Preconditions.notNull(name, "Name must be not null!");
 		if (value == null) {
 			claimJSON.remove(name);
 			return;

@@ -254,7 +254,7 @@ public class Dict extends LinkedHashMap<String, Object> implements BasicTypeGett
 	 * @return 自己
 	 */
 	public <T> Dict parseBean(T bean) {
-		Assert.notNull(bean, "Bean class must be not null");
+		Preconditions.notNull(bean, "Bean class must be not null");
 		this.putAll(BeanUtil.beanToMap(bean));
 		return this;
 	}
@@ -270,7 +270,7 @@ public class Dict extends LinkedHashMap<String, Object> implements BasicTypeGett
 	 * @return 自己
 	 */
 	public <T> Dict parseBean(T bean, boolean isToUnderlineCase, boolean ignoreNullValue) {
-		Assert.notNull(bean, "Bean class must be not null");
+		Preconditions.notNull(bean, "Bean class must be not null");
 		this.putAll(BeanUtil.beanToMap(bean, isToUnderlineCase, ignoreNullValue));
 		return this;
 	}

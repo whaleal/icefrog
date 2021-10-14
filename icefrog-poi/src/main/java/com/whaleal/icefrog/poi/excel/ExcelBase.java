@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.poi.excel;
 
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Assert;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.poi.excel.cell.CellLocation;
 import com.whaleal.icefrog.poi.excel.cell.CellUtil;
 import com.whaleal.icefrog.poi.excel.style.StyleUtil;
@@ -46,7 +46,7 @@ public class ExcelBase<T extends ExcelBase<T>> implements Closeable {
 	 * @param sheet Excel中的sheet
 	 */
 	public ExcelBase(Sheet sheet) {
-		Assert.notNull(sheet, "No Sheet provided.");
+		Preconditions.notNull(sheet, "No Sheet provided.");
 		this.sheet = sheet;
 		this.workbook = sheet.getWorkbook();
 	}
