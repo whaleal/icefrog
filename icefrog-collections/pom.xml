@@ -16,5 +16,13 @@
     <name>${project.artifactId}</name>
     <description>icefrog  集合类相关拓展</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.whaleal.icefrog</groupId>
+            <artifactId>icefrog-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+    </dependencies>
 
 </project>
