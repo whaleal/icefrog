@@ -149,13 +149,13 @@ public class MathUtil {
 		return result;
 	}
 
-	static void checkNoOverflow(boolean condition, String methodName, int a, int b) {
+	public static void checkNoOverflow(boolean condition, String methodName, int a, int b) {
 		if (!condition) {
 			throw new ArithmeticException("overflow: " + methodName + "(" + a + ", " + b + ")");
 		}
 	}
 
-	static void checkNoOverflow(boolean condition, String methodName, long a, long b) {
+	public static void checkNoOverflow(boolean condition, String methodName, long a, long b) {
 		if (!condition) {
 			throw new ArithmeticException("overflow: " + methodName + "(" + a + ", " + b + ")");
 		}
@@ -198,12 +198,18 @@ public class MathUtil {
 				throw new AssertionError();
 		}
 	}
-	static int lessThanBranchFree(int x, int y) {
+	public static int lessThanBranchFree(int x, int y) {
 		// The double negation is optimized away by normal Java, but is necessary for GWT
 		// to make sure bit twiddling works as expected.
 		return ~~(x - y) >>> (Integer.SIZE - 1);
 	}
-	static void checkRoundingUnnecessary(boolean condition) {
+
+	public static int lessThanBranchFree(long x, long y) {
+		// Returns the sign bit of x - y.
+		return (int) (~~(x - y) >>> (Long.SIZE - 1));
+	}
+
+	public static void checkRoundingUnnecessary(boolean condition) {
 		if (!condition) {
 			throw new ArithmeticException("mode was UNNECESSARY, but rounding was necessary");
 		}

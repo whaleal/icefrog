@@ -1502,12 +1502,12 @@ public class MapUtil {
 
 
     @SuppressWarnings("unchecked")
-    static <K extends Object> Function<Entry<K, ?>, K> keyFunction() {
+    public static <K extends Object> Function<Entry<K, ?>, K> keyFunction() {
         return (Function) EntryFunction.KEY;
     }
 
     @SuppressWarnings("unchecked")
-    static <V extends Object> Function<Entry<?, V>, V> valueFunction() {
+    public static <V extends Object> Function<Entry<?, V>, V> valueFunction() {
         return (Function) EntryFunction.VALUE;
     }
 
@@ -1539,6 +1539,16 @@ public class MapUtil {
         };
     }
 
+
+    @CheckForNull
+    public static <V extends Object> V valueOrNull(@CheckForNull Entry<?, V> entry) {
+        return (entry == null) ? null : entry.getValue();
+    }
+
+    @CheckForNull
+    public static <K extends  Object> K keyOrNull(@CheckForNull Entry<K, ?> entry) {
+        return (entry == null) ? null : entry.getKey();
+    }
 
 
 

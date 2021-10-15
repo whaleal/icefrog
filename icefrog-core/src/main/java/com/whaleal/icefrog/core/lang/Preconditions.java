@@ -2933,6 +2933,27 @@ public class Preconditions {
 		return value;
 	}
 
+	public static int checkPositive(String role, int x) {
+		if (x <= 0) {
+			throw new IllegalArgumentException(role + " (" + x + ") must be > 0");
+		}
+		return x;
+	}
+
+	public static long checkPositive(String role, long x) {
+		if (x <= 0) {
+			throw new IllegalArgumentException(role + " (" + x + ") must be > 0");
+		}
+		return x;
+	}
+
+	public static BigInteger checkPositive(String role, BigInteger x) {
+		if (x.signum() <= 0) {
+			throw new IllegalArgumentException(role + " (" + x + ") must be > 0");
+		}
+		return x;
+	}
+
 	/**
 	 *
 	 * @param value  value

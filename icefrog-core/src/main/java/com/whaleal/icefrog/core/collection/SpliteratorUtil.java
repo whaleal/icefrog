@@ -93,11 +93,11 @@ public class SpliteratorUtil {
 		return indexed(size, extraCharacteristics, function, null);
 	}
 
-	static <T extends Object> Spliterator<T> indexed(
-			int size,
-			int extraCharacteristics,
-			IntFunction<T> function,
-			@CheckForNull Comparator<? super T> comparator) {
+	public static <T extends Object> Spliterator<T> indexed(
+            int size,
+            int extraCharacteristics,
+            IntFunction<T> function,
+            @CheckForNull Comparator<? super T> comparator) {
 		if (comparator != null) {
 			checkArgument((extraCharacteristics & Spliterator.SORTED) != 0);
 		}

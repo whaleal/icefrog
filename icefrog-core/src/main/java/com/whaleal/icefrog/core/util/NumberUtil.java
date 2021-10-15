@@ -15,6 +15,7 @@ import java.util.*;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNonNegative;
+import static com.whaleal.icefrog.core.math.MathUtil.*;
 
 /**
  *
@@ -47,7 +48,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNonNegative;
  */
 public class NumberUtil {
 
-	/**
+    public static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
+    /**
 	 * 默认除法运算精度
 	 */
 	private static final int DEFAULT_DIV_SCALE = 10;
@@ -3121,6 +3123,31 @@ public class NumberUtil {
 		return Math.min(Math.max(value, min), max);
 	}
 
+	/**
+	 * Returns the sum of {@code a} and {@code b}, provided it does not overflow.
+	 *
+	 * @throws ArithmeticException if {@code a + b} overflows in signed {@code int} arithmetic
+	 */
+	public static int checkedAdd(int a, int b) {
+		long result = (long) a + b;
+		checkNoOverflow(result == (int) result, "checkedAdd", a, b);
+		return (int) result;
+	}
+
+	/**
+	 * Returns the {@code int} value that is equal to {@code value}, if possible.
+	 *
+	 * @param value any value in the range of the {@code int} type
+	 * @return the {@code int} value that equals {@code value}
+	 * @throws IllegalArgumentException if {@code value} is greater than {@link Integer#MAX_VALUE} or
+	 *     less than {@link Integer#MIN_VALUE}
+	 */
+	public static int checkedCast(long value) {
+		int result = (int) value;
+		checkArgument(result == value, "Out of range: %s", value);
+		return result;
+	}
+
 
 
 
@@ -3140,5 +3167,125 @@ public class NumberUtil {
 			return selectNum * mathNode(selectNum - 1);
 		}
 	}
+
 	// ------------------------------------------------------------------------------------------- Private method end
+
+
+	/**
+	 * Returns the square root of {@code x}, rounded with the specified rounding mode.
+	 *
+	 * @throws IllegalArgumentException if {@code x < 0}
+	 * @throws ArithmeticException if {@code mode} is {@link RoundingMode#UNNECESSARY} and {@code
+	 *     sqrt(x)} is not an integer
+	 */
+	@SuppressWarnings("fallthrough")
+	public static int sqrt(int x, RoundingMode mode) {
+		checkNonNegative("x", x);
+		int sqrtFloor = sqrtFloor(x);
+		switch (mode) {
+			case UNNECESSARY:
+				checkRoundingUnnecessary(sqrtFloor * sqrtFloor == x); // fall through
+			case FLOOR:
+			case DOWN:
+				return sqrtFloor;
+			case CEILING:
+			case UP:
+				return sqrtFloor + lessThanBranchFree(sqrtFloor * sqrtFloor, x);
+			case HALF_DOWN:
+			case HALF_UP:
+			case HALF_EVEN:
+				int halfSquare = sqrtFloor * sqrtFloor + sqrtFloor;
+				/*
+				 * We wish to test whether or not x <= (sqrtFloor + 0.5)^2 = halfSquare + 0.25. Since both x
+				 * and halfSquare are integers, this is equivalent to testing whether or not x <=
+				 * halfSquare. (We have to deal with overflow, though.)
+				 *
+				 * If we treat halfSquare as an unsigned int, we know that
+				 *            sqrtFloor^2 <= x < (sqrtFloor + 1)^2
+				 * halfSquare - sqrtFloor <= x < halfSquare + sqrtFloor + 1
+				 * so |x - halfSquare| <= sqrtFloor.  Therefore, it's safe to treat x - halfSquare as a
+				 * signed int, so lessThanBranchFree is safe for use.
+				 */
+				return sqrtFloor + lessThanBranchFree(halfSquare, x);
+			default:
+				throw new AssertionError();
+		}
+	}
+
+	private static int sqrtFloor(int x) {
+		// There is no loss of precision in converting an int to a double, according to
+		// http://java.sun.com/docs/books/jls/third_edition/html/conversions.html#5.1.2
+		return (int) Math.sqrt(x);
+	}
+
+	public static boolean fitsInInt(long x) {
+		return (int) x == x;
+	}
+
+	@SuppressWarnings("fallthrough")
+	public static long sqrt(long x, RoundingMode mode) {
+		checkNonNegative("x", x);
+		if (fitsInInt(x)) {
+			return sqrt((int) x, mode);
+		}
+		/*
+		 * Let k be the true value of floor(sqrt(x)), so that
+		 *
+		 *            k * k <= x          <  (k + 1) * (k + 1)
+		 * (double) (k * k) <= (double) x <= (double) ((k + 1) * (k + 1))
+		 *          since casting to double is nondecreasing.
+		 *          Note that the right-hand inequality is no longer strict.
+		 * Math.sqrt(k * k) <= Math.sqrt(x) <= Math.sqrt((k + 1) * (k + 1))
+		 *          since Math.sqrt is monotonic.
+		 * (long) Math.sqrt(k * k) <= (long) Math.sqrt(x) <= (long) Math.sqrt((k + 1) * (k + 1))
+		 *          since casting to long is monotonic
+		 * k <= (long) Math.sqrt(x) <= k + 1
+		 *          since (long) Math.sqrt(k * k) == k, as checked exhaustively in
+		 *          {@link LongMathTest#testSqrtOfPerfectSquareAsDoubleIsPerfect}
+		 */
+		long guess = (long) Math.sqrt(x);
+		// Note: guess is always <= FLOOR_SQRT_MAX_LONG.
+		long guessSquared = guess * guess;
+		// Note (2013-2-26): benchmarks indicate that, inscrutably enough, using if statements is
+		// faster here than using lessThanBranchFree.
+		switch (mode) {
+			case UNNECESSARY:
+				checkRoundingUnnecessary(guessSquared == x);
+				return guess;
+			case FLOOR:
+			case DOWN:
+				if (x < guessSquared) {
+					return guess - 1;
+				}
+				return guess;
+			case CEILING:
+			case UP:
+				if (x > guessSquared) {
+					return guess + 1;
+				}
+				return guess;
+			case HALF_DOWN:
+			case HALF_UP:
+			case HALF_EVEN:
+				long sqrtFloor = guess - ((x < guessSquared) ? 1 : 0);
+				long halfSquare = sqrtFloor * sqrtFloor + sqrtFloor;
+				/*
+				 * We wish to test whether or not x <= (sqrtFloor + 0.5)^2 = halfSquare + 0.25. Since both x
+				 * and halfSquare are integers, this is equivalent to testing whether or not x <=
+				 * halfSquare. (We have to deal with overflow, though.)
+				 *
+				 * If we treat halfSquare as an unsigned long, we know that
+				 *            sqrtFloor^2 <= x < (sqrtFloor + 1)^2
+				 * halfSquare - sqrtFloor <= x < halfSquare + sqrtFloor + 1
+				 * so |x - halfSquare| <= sqrtFloor.  Therefore, it's safe to treat x - halfSquare as a
+				 * signed long, so lessThanBranchFree is safe for use.
+				 */
+				return sqrtFloor + lessThanBranchFree(halfSquare, x);
+			default:
+				throw new AssertionError();
+		}
+	}
+
+
+
 }
