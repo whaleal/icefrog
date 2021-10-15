@@ -6,6 +6,7 @@ import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -3007,6 +3008,36 @@ public class Preconditions {
 		// end < start
 		return lenientFormat("end index (%s) must not be less than start index (%s)", end, start);
 	}
+
+	public static int checkNonNegative(String role, int x) {
+		if (x < 0) {
+			throw new IllegalArgumentException(role + " (" + x + ") must be >= 0");
+		}
+		return x;
+	}
+
+	public static long checkNonNegative(String role, long x) {
+		if (x < 0) {
+			throw new IllegalArgumentException(role + " (" + x + ") must be >= 0");
+		}
+		return x;
+	}
+
+	public static BigInteger checkNonNegative(String role, BigInteger x) {
+		if (x.signum() < 0) {
+			throw new IllegalArgumentException(role + " (" + x + ") must be >= 0");
+		}
+		return x;
+	}
+
+	public static double checkNonNegative(String role, double x) {
+		if (!(x >= 0)) { // not x < 0, to work with NaN.
+			throw new IllegalArgumentException(role + " (" + x + ") must be >= 0");
+		}
+		return x;
+	}
+
+
 
 
 
