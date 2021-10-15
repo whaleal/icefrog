@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
+
 
 /**
  * 使用给定的转换函数，转换源集合为新类型的集合
