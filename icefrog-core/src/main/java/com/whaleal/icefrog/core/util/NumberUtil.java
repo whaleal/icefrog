@@ -13,6 +13,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
 
+import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNonNegative;
+
 /**
  *
  * Miscellaneous utility methods for number conversion and parsing.
@@ -2979,8 +2982,144 @@ public class NumberUtil {
 		return (negative ? result.negate() : result);
 	}
 
+	/**
+	 * Returns the {@code int} nearest in value to {@code value}.
+	 *
+	 * @param value any {@code long} value
+	 * @return the same value cast to {@code int} if it is in the range of the {@code int} type,
+	 *     {@link Integer#MAX_VALUE} if it is too large, or {@link Integer#MIN_VALUE} if it is too
+	 *     small
+	 */
+	public static int saturatedCast(long value) {
+		if (value > Integer.MAX_VALUE) {
+			return Integer.MAX_VALUE;
+		}
+		if (value < Integer.MIN_VALUE) {
+			return Integer.MIN_VALUE;
+		}
+		return (int) value;
+	}
+
+	/**
+	 * Returns the sum of {@code a} and {@code b} unless it would overflow or underflow in which case
+	 * {@code Long.MAX_VALUE} or {@code Long.MIN_VALUE} is returned, respectively.
+	 *
+	 *
+	 */
+	public static long saturatedAdd(long a, long b) {
+		long naiveSum = a + b;
+		if ((a ^ b) < 0 | (a ^ naiveSum) >= 0) {
+			// If a and b have different signs or a has the same sign as the result then there was no
+			// overflow, return.
+			return naiveSum;
+		}
+		// we did over/under flow, if the sign is negative we should return MAX otherwise MIN
+		return Long.MAX_VALUE + ((naiveSum >>> (Long.SIZE - 1)) ^ 1);
+	}
+
+	public static int saturatedMultiply(int a, int b) {
+		return saturatedCast((long) a * b);
+	}
+
+	/**
+	 * Returns {@code n} choose {@code k}, also known as the binomial coefficient of {@code n} and
+	 * {@code k}, or {@link Integer#MAX_VALUE} if the result does not fit in an {@code int}.
+	 *
+	 * @throws IllegalArgumentException if {@code n < 0}, {@code k < 0} or {@code k > n}
+	 */
+	public static int binomial(int n, int k) {
+		checkNonNegative("n", n);
+		checkNonNegative("k", k);
+		checkArgument(k <= n, "k (%s) > n (%s)", k, n);
+		if (k > (n >> 1)) {
+			k = n - k;
+		}
+		if (k >= biggestBinomials.length || n > biggestBinomials[k]) {
+			return Integer.MAX_VALUE;
+		}
+		switch (k) {
+			case 0:
+				return 1;
+			case 1:
+				return n;
+			default:
+				long result = 1;
+				for (int i = 0; i < k; i++) {
+					result *= n - i;
+					result /= i + 1;
+				}
+				return (int) result;
+		}
+	}
 
 
+	// binomial(biggestBinomials[k], k) fits in an int, but not binomial(biggestBinomials[k]+1,k).
+	static int[] biggestBinomials = {
+			Integer.MAX_VALUE,
+			Integer.MAX_VALUE,
+			65536,
+			2345,
+			477,
+			193,
+			110,
+			75,
+			58,
+			49,
+			43,
+			39,
+			37,
+			35,
+			34,
+			34,
+			33
+	};
+
+	/**
+	 * Returns {@code n!}, that is, the product of the first {@code n} positive integers, {@code 1} if
+	 * {@code n == 0}, or {@link Integer#MAX_VALUE} if the result does not fit in a {@code int}.
+	 *
+	 * @throws IllegalArgumentException if {@code n < 0}
+	 */
+	public static int factorial(int n) {
+		checkNonNegative("n", n);
+		return (n < factorials.length) ? factorials[n] : Integer.MAX_VALUE;
+	}
+
+
+	private static final int[] factorials = {
+			1,
+			1,
+			1 * 2,
+			1 * 2 * 3,
+			1 * 2 * 3 * 4,
+			1 * 2 * 3 * 4 * 5,
+			1 * 2 * 3 * 4 * 5 * 6,
+			1 * 2 * 3 * 4 * 5 * 6 * 7,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12
+	};
+
+	/**
+	 * Returns the value nearest to {@code value} which is within the closed range {@code [min..max]}.
+	 *
+	 * <p>If {@code value} is within the range {@code [min..max]}, {@code value} is returned
+	 * unchanged. If {@code value} is less than {@code min}, {@code min} is returned, and if {@code
+	 * value} is greater than {@code max}, {@code max} is returned.
+	 *
+	 * @param value the {@code int} value to constrain
+	 * @param min the lower bound (inclusive) of the range to constrain {@code value} to
+	 * @param max the upper bound (inclusive) of the range to constrain {@code value} to
+	 * @throws IllegalArgumentException if {@code min > max}
+	 *
+	 */
+
+	public static int constrainToRange(int value, int min, int max) {
+		checkArgument(min <= max, "min (%s) must be less than or equal to max (%s)", min, max);
+		return Math.min(Math.max(value, min), max);
+	}
 
 
 
