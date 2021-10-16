@@ -23,7 +23,8 @@ package com.whaleal.icefrog.core.util;
  * href="https://github.com/google/guava/wiki/FunctionalExplained">the use of {@code Predicate}</a>.
  *
  * @author Kevin Bourrillion
- * @since 2.0
+ * @author wh
+ * @since 1.0
  */
 @FunctionalInterface
 public interface Predicate<T extends Object> extends java.util.function.Predicate<T> {

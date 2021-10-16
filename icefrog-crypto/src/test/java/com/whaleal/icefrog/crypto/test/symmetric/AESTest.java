@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.crypto.test.symmetric;
 
 import com.whaleal.icefrog.core.codec.Base64;
+import com.whaleal.icefrog.core.codec.DecoderException;
 import com.whaleal.icefrog.core.util.HexUtil;
 import com.whaleal.icefrog.core.util.RandomUtil;
 import com.whaleal.icefrog.crypto.KeyUtil;
@@ -63,7 +64,7 @@ public class AESTest {
 	 * https://the-x.cn/cryptography/Aes.aspx
 	 */
 	@Test
-	public void encryptPKCS7Test2() {
+	public void encryptPKCS7Test2() throws DecoderException {
 		// 构建
 		AES aes = new AES(Mode.ECB.name(), "pkcs7padding",
 				HexUtil.decodeHex("0102030405060708090a0b0c0d0e0f10"));

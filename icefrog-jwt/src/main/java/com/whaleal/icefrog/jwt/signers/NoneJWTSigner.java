@@ -13,7 +13,7 @@ public class NoneJWTSigner implements JWTSigner {
 
 	public static final String ID_NONE = "none";
 
-	public static NoneJWTSigner NONE = new NoneJWTSigner();
+	public static final NoneJWTSigner NONE = new NoneJWTSigner();
 
 	@Override
 	public String sign(String headerBase64, String payloadBase64) {

@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.crypto.test.asymmetric;
 
 import com.whaleal.icefrog.core.codec.Base64;
+import com.whaleal.icefrog.core.codec.DecoderException;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.HexUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -129,7 +130,7 @@ public class SM2Test {
 	}
 
 	@Test
-	public void sm2VerifyTest(){
+	public void sm2VerifyTest() throws DecoderException {
 		//指定的公钥
 		String publicKeyHex = "04db9629dd33ba568e9507add5df6587a0998361a03d3321948b448c653c2c1b7056434884ab6f3d1c529501f166a336e86f045cea10dffe58aa82ea13d7253763";
 		//需要加密的明文,得到明文对应的字节数组

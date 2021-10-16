@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.core.lang;
 
 import com.whaleal.icefrog.core.lang.func.Func0;
+import com.whaleal.icefrog.core.util.Predicate;
 
 import java.io.Serializable;
 import java.util.Iterator;

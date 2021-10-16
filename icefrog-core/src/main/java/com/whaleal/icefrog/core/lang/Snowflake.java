@@ -56,11 +56,11 @@ public class Snowflake implements Serializable {
 	/**
 	 * 默认的起始时间，为Thu, 04 Nov 2010 01:42:54 GMT
 	 */
-	public static long DEFAULT_TWEPOCH = 1288834974657L;
+	public static final long DEFAULT_TWEPOCH = 1288834974657L;
 	/**
 	 * 默认回拨时间，2S
 	 */
-	public static long DEFAULT_TIME_OFFSET = 2000L;
+	public static  final long DEFAULT_TIME_OFFSET = 2000L;
 	private final long twepoch;
 	private final long workerId;
 	private final long dataCenterId;
