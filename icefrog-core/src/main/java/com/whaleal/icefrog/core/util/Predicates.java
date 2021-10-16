@@ -26,7 +26,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  *
  */
 public final class Predicates {
-  private Predicates() {}
+
 
   // TODO(kevinb): considering having these implement a VisitablePredicate
   // interface which specifies an accept(PredicateVisitor) method.

@@ -7,10 +7,7 @@ import com.whaleal.icefrog.core.lang.Editor;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Pair;
 import com.whaleal.icefrog.core.lang.TypeReference;
-import com.whaleal.icefrog.core.util.ArrayUtil;
-import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.ReflectUtil;
-import com.whaleal.icefrog.core.util.StrUtil;
+import com.whaleal.icefrog.core.util.*;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -19,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.util.Predicates.compose;
 
 /**
  * Map相关工具类
@@ -1489,19 +1487,70 @@ public class MapUtil {
     }
 
 
-    /**
-     * Returns a map from the ith element of list to i.
-     *
-     * @param list  list
-     * @param <E>  e
-     * @return return
-     */
-    public static <E> Map<E, Integer> indexMap(Collection<E> list) {
-        AbstractMap  map = newHashMap(list.size());
-        int i = 0;
-        for (E e : list) {
-            map.put(e, i++);
-        }
-        return map;
+
+    public static <K extends Object, V extends Object> Iterator<K> keyIterator(
+            Map<K,V>  map) {
+
+        return map.keySet().iterator();
     }
+
+    public static <K extends Object, V extends Object> Iterator<V> valueIterator(
+            Map<K,V>  map) {
+
+        return map.values().iterator();
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public static <K extends Object> Function<Entry<K, ?>, K> keyFunction() {
+        return (Function) EntryFunction.KEY;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <V extends Object> Function<Entry<?, V>, V> valueFunction() {
+        return (Function) EntryFunction.VALUE;
+    }
+
+    public static <K extends Object> Predicate<Entry<K, ?>> keyPredicateOnEntries(
+            Predicate<? super K> keyPredicate) {
+        return compose(keyPredicate, MapUtil.<K>keyFunction());
+    }
+
+
+   public static <V extends Object> Predicate<Entry<?, V>> valuePredicateOnEntries(
+            Predicate<? super V> valuePredicate) {
+        return compose(valuePredicate, MapUtil.<V>valueFunction());
+    }
+
+    private enum EntryFunction implements Function<Entry<?, ?>, Object> {
+        KEY {
+            @Override
+            @CheckForNull
+            public Object apply(Entry<?, ?> entry) {
+                return entry.getKey();
+            }
+        },
+        VALUE {
+            @Override
+            @CheckForNull
+            public Object apply(Entry<?, ?> entry) {
+                return entry.getValue();
+            }
+        };
+    }
+
+
+    @CheckForNull
+    public static <V extends Object> V valueOrNull(@CheckForNull Entry<?, V> entry) {
+        return (entry == null) ? null : entry.getValue();
+    }
+
+    @CheckForNull
+    public static <K extends  Object> K keyOrNull(@CheckForNull Entry<K, ?> entry) {
+        return (entry == null) ? null : entry.getKey();
+    }
+
+
+
+
 }

@@ -16,19 +16,19 @@ public class JWTHeader extends Claims {
 	/**
 	 * 加密算法，通常为HMAC SHA256（HS256）
 	 */
-	public static String ALGORITHM = "alg";
+	public static final String ALGORITHM = "alg";
 	/**
 	 * 声明类型，一般为jwt
 	 */
-	public static String TYPE = "typ";
+	public static final String TYPE = "typ";
 	/**
 	 * 内容类型（content type）
 	 */
-	public static String CONTENT_TYPE = "cty";
+	public static final String CONTENT_TYPE = "cty";
 	/**
 	 * jwk的ID编号
 	 */
-	public static String KEY_ID = "kid";
+	public static final String KEY_ID = "kid";
 
 	/**
 	 * 构造，初始化默认(typ=JWT)

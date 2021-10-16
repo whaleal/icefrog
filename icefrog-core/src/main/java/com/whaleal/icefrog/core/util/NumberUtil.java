@@ -3,6 +3,7 @@ package com.whaleal.icefrog.core.util;
 
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.intern.Interner;
 import com.whaleal.icefrog.core.math.Calculator;
 
 import java.math.BigDecimal;
@@ -12,6 +13,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.*;
+
+import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNonNegative;
+import static com.whaleal.icefrog.core.math.MathUtil.*;
 
 /**
  *
@@ -44,7 +49,8 @@ import java.util.*;
  */
 public class NumberUtil {
 
-	/**
+    public static final int MAX_POWER_OF_TWO = 1 << (Integer.SIZE - 2);
+    /**
 	 * 默认除法运算精度
 	 */
 	private static final int DEFAULT_DIV_SCALE = 10;
@@ -2517,7 +2523,6 @@ public class NumberUtil {
 		try {
 			final NumberFormat format = NumberFormat.getInstance();
 			if(format instanceof DecimalFormat){
-				// issue#1818@Github
 				// 当字符串数字超出double的长度时，会导致截断，此处使用BigDecimal接收
 				((DecimalFormat) format).setParseBigDecimal(true);
 			}
@@ -2527,6 +2532,7 @@ public class NumberUtil {
 			nfe.initCause(e);
 			throw nfe;
 		}
+
 	}
 
 	/**
@@ -2736,12 +2742,17 @@ public class NumberUtil {
 	/**
 	 * Convert the given number into an instance of the given target class.
 	 *
+	 * 将指定Number 转换为 具体的类 {@link Number} 对象
 	 * @param number      the number to convert
 	 * @param targetClass the target class to convert to
 	 * @param <T>  T
 	 * @return the converted number
 	 * @throws IllegalArgumentException if the target class is not supported
 	 *                                  (i.e. not a standard Number subclass as included in the JDK)
+	 *
+
+	 *
+	 *
 	 * @see Byte
 	 * @see Short
 	 * @see Integer
@@ -2750,6 +2761,7 @@ public class NumberUtil {
 	 * @see Float
 	 * @see Double
 	 * @see BigDecimal
+	 * @since 1.0.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Number> T convertNumberToTargetClass(Number number, Class<T> targetClass)
@@ -2979,8 +2991,214 @@ public class NumberUtil {
 		return (negative ? result.negate() : result);
 	}
 
+	/**
+	 * Returns the {@code int} nearest in value to {@code value}.
+	 * 返回该值的邻近值
+	 *
+	 * @param castClass 传入的数据类型值   以该类型值的最大最小作为比较
+	 * @param value any {@code long} value
+	 * @return the same value cast to {@code int} if it is in the range of the {@code int} type,
+	 *     {@link Integer#MAX_VALUE} if it is too large, or {@link Integer#MIN_VALUE} if it is too
+	 *     small
+	 */
+	public static  long  saturatedCast(long value,Class<?> castClass) {
+		Preconditions.checkNotNull(castClass);
+		if(Byte.class == castClass){
+			if (value > Byte.MAX_VALUE) {
+				return Byte.MAX_VALUE;
+			}
+			if (value < Byte.MIN_VALUE) {
+				return Byte.MIN_VALUE;
+			}
+			return (byte) value;
+		}else if(Short.class ==castClass){
+			if (value > Short.MAX_VALUE) {
+				return Short.MAX_VALUE;
+			}
+			if (value < Short.MIN_VALUE) {
+				return Short.MIN_VALUE;
+			}
+			return (short) value;
+
+		}else if(Integer.class ==castClass){
+
+			if (value > Integer.MAX_VALUE) {
+				return Integer.MAX_VALUE;
+			}
+			if (value < Integer.MIN_VALUE) {
+				return Integer.MIN_VALUE;
+			}
+			return (int) value;
+		}else if(Character.class ==castClass){
+			if (value > Character.MAX_VALUE) {
+				return Character.MAX_VALUE;
+			}
+			if (value < Character.MIN_VALUE) {
+				return Character.MIN_VALUE;
+			}
+			return (char) value;
+
+		} else if(Long.class == castClass) {
+			if (value > Long.MAX_VALUE) {
+				return Long.MAX_VALUE;
+			}
+			if (value < Long.MIN_VALUE) {
+				return Long.MIN_VALUE;
+			}
+			return (long) value;
+
+		}else {
+			throw new IllegalArgumentException(
+					"Cannot saturatedCast long [" + value + "] to target class [" + castClass.getName() + "]");
+		}
+
+	}
+
+	/**
+	 * Returns the sum of {@code a} and {@code b} unless it would overflow or underflow in which case
+	 * {@code Long.MAX_VALUE} or {@code Long.MIN_VALUE} is returned, respectively.
+	 *
+	 *
+	 */
+	public static long saturatedAdd(long a, long b) {
+		long naiveSum = a + b;
+		if ((a ^ b) < 0 | (a ^ naiveSum) >= 0) {
+			// If a and b have different signs or a has the same sign as the result then there was no
+			// overflow, return.
+			return naiveSum;
+		}
+		// we did over/under flow, if the sign is negative we should return MAX otherwise MIN
+		return Long.MAX_VALUE + ((naiveSum >>> (Long.SIZE - 1)) ^ 1);
+	}
+
+	public static int saturatedMultiply(int a, int b) {
+		return (int)saturatedCast((long) a * b, Integer.class);
+	}
+
+	/**
+	 * Returns {@code n} choose {@code k}, also known as the binomial coefficient of {@code n} and
+	 * {@code k}, or {@link Integer#MAX_VALUE} if the result does not fit in an {@code int}.
+	 *
+	 * @throws IllegalArgumentException if {@code n < 0}, {@code k < 0} or {@code k > n}
+	 */
+	public static int binomial(int n, int k) {
+		checkNonNegative("n", n);
+		checkNonNegative("k", k);
+		checkArgument(k <= n, "k (%s) > n (%s)", k, n);
+		if (k > (n >> 1)) {
+			k = n - k;
+		}
+		if (k >= biggestBinomials.length || n > biggestBinomials[k]) {
+			return Integer.MAX_VALUE;
+		}
+		switch (k) {
+			case 0:
+				return 1;
+			case 1:
+				return n;
+			default:
+				long result = 1;
+				for (int i = 0; i < k; i++) {
+					result *= n - i;
+					result /= i + 1;
+				}
+				return (int) result;
+		}
+	}
 
 
+	// binomial(biggestBinomials[k], k) fits in an int, but not binomial(biggestBinomials[k]+1,k).
+	static int[] biggestBinomials = {
+			Integer.MAX_VALUE,
+			Integer.MAX_VALUE,
+			65536,
+			2345,
+			477,
+			193,
+			110,
+			75,
+			58,
+			49,
+			43,
+			39,
+			37,
+			35,
+			34,
+			34,
+			33
+	};
+
+	/**
+	 * Returns {@code n!}, that is, the product of the first {@code n} positive integers, {@code 1} if
+	 * {@code n == 0}, or {@link Integer#MAX_VALUE} if the result does not fit in a {@code int}.
+	 *
+	 * @throws IllegalArgumentException if {@code n < 0}
+	 */
+	public static int factorial(int n) {
+		checkNonNegative("n", n);
+		return (n < factorials.length) ? factorials[n] : Integer.MAX_VALUE;
+	}
+
+
+	private static final int[] factorials = {
+			1,
+			1,
+			1 * 2,
+			1 * 2 * 3,
+			1 * 2 * 3 * 4,
+			1 * 2 * 3 * 4 * 5,
+			1 * 2 * 3 * 4 * 5 * 6,
+			1 * 2 * 3 * 4 * 5 * 6 * 7,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11,
+			1 * 2 * 3 * 4 * 5 * 6 * 7 * 8 * 9 * 10 * 11 * 12
+	};
+
+	/**
+	 * Returns the value nearest to {@code value} which is within the closed range {@code [min..max]}.
+	 *
+	 * <p>If {@code value} is within the range {@code [min..max]}, {@code value} is returned
+	 * unchanged. If {@code value} is less than {@code min}, {@code min} is returned, and if {@code
+	 * value} is greater than {@code max}, {@code max} is returned.
+	 *
+	 * @param value the {@code int} value to constrain
+	 * @param min the lower bound (inclusive) of the range to constrain {@code value} to
+	 * @param max the upper bound (inclusive) of the range to constrain {@code value} to
+	 * @throws IllegalArgumentException if {@code min > max}
+	 *
+	 */
+
+	public static int constrainToRange(int value, int min, int max) {
+		checkArgument(min <= max, "min (%s) must be less than or equal to max (%s)", min, max);
+		return Math.min(Math.max(value, min), max);
+	}
+
+	/**
+	 * Returns the sum of {@code a} and {@code b}, provided it does not overflow.
+	 *
+	 * @throws ArithmeticException if {@code a + b} overflows in signed {@code int} arithmetic
+	 */
+	public static int checkedAdd(int a, int b) {
+		long result = (long) a + b;
+		checkNoOverflow(result == (int) result, "checkedAdd", a, b);
+		return (int) result;
+	}
+
+	/**
+	 * Returns the {@code int} value that is equal to {@code value}, if possible.
+	 *
+	 * @param value any value in the range of the {@code int} type
+	 * @return the {@code int} value that equals {@code value}
+	 * @throws IllegalArgumentException if {@code value} is greater than {@link Integer#MAX_VALUE} or
+	 *     less than {@link Integer#MIN_VALUE}
+	 */
+	public static int checkedCast(long value) {
+		int result = (int) value;
+		checkArgument(result == value, "Out of range: %s", value);
+		return result;
+	}
 
 
 
@@ -3001,5 +3219,125 @@ public class NumberUtil {
 			return selectNum * mathNode(selectNum - 1);
 		}
 	}
+
 	// ------------------------------------------------------------------------------------------- Private method end
+
+
+	/**
+	 * Returns the square root of {@code x}, rounded with the specified rounding mode.
+	 *
+	 * @throws IllegalArgumentException if {@code x < 0}
+	 * @throws ArithmeticException if {@code mode} is {@link RoundingMode#UNNECESSARY} and {@code
+	 *     sqrt(x)} is not an integer
+	 */
+	@SuppressWarnings("fallthrough")
+	public static int sqrt(int x, RoundingMode mode) {
+		checkNonNegative("x", x);
+		int sqrtFloor = sqrtFloor(x);
+		switch (mode) {
+			case UNNECESSARY:
+				checkRoundingUnnecessary(sqrtFloor * sqrtFloor == x); // fall through
+			case FLOOR:
+			case DOWN:
+				return sqrtFloor;
+			case CEILING:
+			case UP:
+				return sqrtFloor + lessThanBranchFree(sqrtFloor * sqrtFloor, x);
+			case HALF_DOWN:
+			case HALF_UP:
+			case HALF_EVEN:
+				int halfSquare = sqrtFloor * sqrtFloor + sqrtFloor;
+				/*
+				 * We wish to test whether or not x <= (sqrtFloor + 0.5)^2 = halfSquare + 0.25. Since both x
+				 * and halfSquare are integers, this is equivalent to testing whether or not x <=
+				 * halfSquare. (We have to deal with overflow, though.)
+				 *
+				 * If we treat halfSquare as an unsigned int, we know that
+				 *            sqrtFloor^2 <= x < (sqrtFloor + 1)^2
+				 * halfSquare - sqrtFloor <= x < halfSquare + sqrtFloor + 1
+				 * so |x - halfSquare| <= sqrtFloor.  Therefore, it's safe to treat x - halfSquare as a
+				 * signed int, so lessThanBranchFree is safe for use.
+				 */
+				return sqrtFloor + lessThanBranchFree(halfSquare, x);
+			default:
+				throw new AssertionError();
+		}
+	}
+
+	private static int sqrtFloor(int x) {
+		// There is no loss of precision in converting an int to a double, according to
+		// http://java.sun.com/docs/books/jls/third_edition/html/conversions.html#5.1.2
+		return (int) Math.sqrt(x);
+	}
+
+	public static boolean fitsInInt(long x) {
+		return (int) x == x;
+	}
+
+	@SuppressWarnings("fallthrough")
+	public static long sqrt(long x, RoundingMode mode) {
+		checkNonNegative("x", x);
+		if (fitsInInt(x)) {
+			return sqrt((int) x, mode);
+		}
+		/*
+		 * Let k be the true value of floor(sqrt(x)), so that
+		 *
+		 *            k * k <= x          <  (k + 1) * (k + 1)
+		 * (double) (k * k) <= (double) x <= (double) ((k + 1) * (k + 1))
+		 *          since casting to double is nondecreasing.
+		 *          Note that the right-hand inequality is no longer strict.
+		 * Math.sqrt(k * k) <= Math.sqrt(x) <= Math.sqrt((k + 1) * (k + 1))
+		 *          since Math.sqrt is monotonic.
+		 * (long) Math.sqrt(k * k) <= (long) Math.sqrt(x) <= (long) Math.sqrt((k + 1) * (k + 1))
+		 *          since casting to long is monotonic
+		 * k <= (long) Math.sqrt(x) <= k + 1
+		 *          since (long) Math.sqrt(k * k) == k, as checked exhaustively in
+		 *          {@link LongMathTest#testSqrtOfPerfectSquareAsDoubleIsPerfect}
+		 */
+		long guess = (long) Math.sqrt(x);
+		// Note: guess is always <= FLOOR_SQRT_MAX_LONG.
+		long guessSquared = guess * guess;
+		// Note (2013-2-26): benchmarks indicate that, inscrutably enough, using if statements is
+		// faster here than using lessThanBranchFree.
+		switch (mode) {
+			case UNNECESSARY:
+				checkRoundingUnnecessary(guessSquared == x);
+				return guess;
+			case FLOOR:
+			case DOWN:
+				if (x < guessSquared) {
+					return guess - 1;
+				}
+				return guess;
+			case CEILING:
+			case UP:
+				if (x > guessSquared) {
+					return guess + 1;
+				}
+				return guess;
+			case HALF_DOWN:
+			case HALF_UP:
+			case HALF_EVEN:
+				long sqrtFloor = guess - ((x < guessSquared) ? 1 : 0);
+				long halfSquare = sqrtFloor * sqrtFloor + sqrtFloor;
+				/*
+				 * We wish to test whether or not x <= (sqrtFloor + 0.5)^2 = halfSquare + 0.25. Since both x
+				 * and halfSquare are integers, this is equivalent to testing whether or not x <=
+				 * halfSquare. (We have to deal with overflow, though.)
+				 *
+				 * If we treat halfSquare as an unsigned long, we know that
+				 *            sqrtFloor^2 <= x < (sqrtFloor + 1)^2
+				 * halfSquare - sqrtFloor <= x < halfSquare + sqrtFloor + 1
+				 * so |x - halfSquare| <= sqrtFloor.  Therefore, it's safe to treat x - halfSquare as a
+				 * signed long, so lessThanBranchFree is safe for use.
+				 */
+				return sqrtFloor + lessThanBranchFree(halfSquare, x);
+			default:
+				throw new AssertionError();
+		}
+	}
+
+
+
 }
