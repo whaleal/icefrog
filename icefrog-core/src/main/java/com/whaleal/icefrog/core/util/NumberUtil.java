@@ -3,6 +3,7 @@ package com.whaleal.icefrog.core.util;
 
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.intern.Interner;
 import com.whaleal.icefrog.core.math.Calculator;
 
 import java.math.BigDecimal;
@@ -2522,7 +2523,6 @@ public class NumberUtil {
 		try {
 			final NumberFormat format = NumberFormat.getInstance();
 			if(format instanceof DecimalFormat){
-				// issue#1818@Github
 				// 当字符串数字超出double的长度时，会导致截断，此处使用BigDecimal接收
 				((DecimalFormat) format).setParseBigDecimal(true);
 			}
@@ -2532,6 +2532,7 @@ public class NumberUtil {
 			nfe.initCause(e);
 			throw nfe;
 		}
+
 	}
 
 	/**
@@ -2741,12 +2742,17 @@ public class NumberUtil {
 	/**
 	 * Convert the given number into an instance of the given target class.
 	 *
+	 * 将指定Number 转换为 具体的类 {@link Number} 对象
 	 * @param number      the number to convert
 	 * @param targetClass the target class to convert to
 	 * @param <T>  T
 	 * @return the converted number
 	 * @throws IllegalArgumentException if the target class is not supported
 	 *                                  (i.e. not a standard Number subclass as included in the JDK)
+	 *
+
+	 *
+	 *
 	 * @see Byte
 	 * @see Short
 	 * @see Integer
@@ -2755,6 +2761,7 @@ public class NumberUtil {
 	 * @see Float
 	 * @see Double
 	 * @see BigDecimal
+	 * @since 1.0.0
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T extends Number> T convertNumberToTargetClass(Number number, Class<T> targetClass)
@@ -2986,20 +2993,65 @@ public class NumberUtil {
 
 	/**
 	 * Returns the {@code int} nearest in value to {@code value}.
+	 * 返回该值的邻近值
 	 *
+	 * @param castClass 传入的数据类型值   以该类型值的最大最小作为比较
 	 * @param value any {@code long} value
 	 * @return the same value cast to {@code int} if it is in the range of the {@code int} type,
 	 *     {@link Integer#MAX_VALUE} if it is too large, or {@link Integer#MIN_VALUE} if it is too
 	 *     small
 	 */
-	public static int saturatedCast(long value) {
-		if (value > Integer.MAX_VALUE) {
-			return Integer.MAX_VALUE;
+	public static  long  saturatedCast(long value,Class<?> castClass) {
+		Preconditions.checkNotNull(castClass);
+		if(Byte.class == castClass){
+			if (value > Byte.MAX_VALUE) {
+				return Byte.MAX_VALUE;
+			}
+			if (value < Byte.MIN_VALUE) {
+				return Byte.MIN_VALUE;
+			}
+			return (byte) value;
+		}else if(Short.class ==castClass){
+			if (value > Short.MAX_VALUE) {
+				return Short.MAX_VALUE;
+			}
+			if (value < Short.MIN_VALUE) {
+				return Short.MIN_VALUE;
+			}
+			return (short) value;
+
+		}else if(Integer.class ==castClass){
+
+			if (value > Integer.MAX_VALUE) {
+				return Integer.MAX_VALUE;
+			}
+			if (value < Integer.MIN_VALUE) {
+				return Integer.MIN_VALUE;
+			}
+			return (int) value;
+		}else if(Character.class ==castClass){
+			if (value > Character.MAX_VALUE) {
+				return Character.MAX_VALUE;
+			}
+			if (value < Character.MIN_VALUE) {
+				return Character.MIN_VALUE;
+			}
+			return (char) value;
+
+		} else if(Long.class == castClass) {
+			if (value > Long.MAX_VALUE) {
+				return Long.MAX_VALUE;
+			}
+			if (value < Long.MIN_VALUE) {
+				return Long.MIN_VALUE;
+			}
+			return (long) value;
+
+		}else {
+			throw new IllegalArgumentException(
+					"Cannot saturatedCast long [" + value + "] to target class [" + castClass.getName() + "]");
 		}
-		if (value < Integer.MIN_VALUE) {
-			return Integer.MIN_VALUE;
-		}
-		return (int) value;
+
 	}
 
 	/**
@@ -3020,7 +3072,7 @@ public class NumberUtil {
 	}
 
 	public static int saturatedMultiply(int a, int b) {
-		return saturatedCast((long) a * b);
+		return (int)saturatedCast((long) a * b, Integer.class);
 	}
 
 	/**
