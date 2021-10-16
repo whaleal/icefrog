@@ -1,11 +1,25 @@
 # 🚀Changelog
+#项目计划（on the way )
+对db 相关的 column  进行设计及优化 
+在现有的基础上 添加一些转换器 方便数据转换 
 
-#1.0.2 （on the way )
-新增 collections  module  针对集合类进行拓展   
-在现有的基础上 添加一些转换器 方便数据转换  
-对db 相关的 column  进行设计及优化  
-
-
+#1.1.0(2021-10-17)
+新增 collections  module  针对集合类进行拓展 主要来自guava   
+### 🐣新特性
+* 【system 】     
+* 【extra  】     
+* 【core   】       
+* 【setting】     
+* 【json   】     
+* 【crypto 】     
+* 【core   】     
+* 【all    】    
+* 【crypto 】     
+* 【db     】     
+* 【http   】
+* 【poi    】     
+* 【core   】
+* 【collections】 新增 主要用于对集合类的拓展 
 
 #1.0.1(2021-10-15)
 合并 Assert及 precondition   [issues#12](https://github.com/whaleal/icefrog/issues/12)    
@@ -34,7 +48,8 @@
 * 【db     】     
 * 【http   】
 * 【poi    】     
-* 【core   】     
+* 【core   】
+* 【collections】    
 
 
 -------------------------------------------------------------------------------------------------------------
