@@ -1055,7 +1055,13 @@ public class IterUtil {
 	 * Adds all elements in {@code iterator} to {@code collection}. The iterator will be left
 	 * exhausted: its {@code hasNext()} method will return {@code false}.
 	 *
+	 * 获取迭代器里的每一个元素 ，并将其元素 加入到collection  中
+	 *
+	 * @param addTo  原始的 Collection
+	 * @param iterator 有数据的迭代器
+	 * @param <T>
 	 * @return {@code true} if {@code collection} was modified as a result of this operation
+	 *
 	 */
 
 	public static <T extends Object> boolean addAll(

@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.core.lang;
 
 import com.whaleal.icefrog.core.lang.func.Func0;
+import com.whaleal.icefrog.core.util.Predicate;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.function.Predicate;
+
 
 /**
  * 简单缓存，无超时实现，默认使用{@link WeakHashMap}实现缓存自动清理
