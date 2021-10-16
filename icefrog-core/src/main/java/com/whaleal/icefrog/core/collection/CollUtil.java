@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.function.Function;
-import java.util.function.Predicate;
+
 import java.util.stream.Collectors;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;

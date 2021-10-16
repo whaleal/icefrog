@@ -79,6 +79,9 @@ public class ListUtil {
 		if (null == iterable) {
 			return list(isLinked);
 		}
+		if(iterable instanceof Collection){
+			return list(isLinked ,((Collection<T>) iterable));
+		}
 		return list(isLinked, iterable.iterator());
 	}
 
@@ -94,11 +97,8 @@ public class ListUtil {
 	 */
 	public static <T> List<T> list(boolean isLinked, Iterator<T> iter) {
 		final List<T> list = list(isLinked);
-		if (null != iter) {
-			while (iter.hasNext()) {
-				list.add(iter.next());
-			}
-		}
+
+		IterUtil.addAll(list,iter);
 		return list;
 	}
 
@@ -168,13 +168,31 @@ public class ListUtil {
 	 * 新建一个CopyOnWriteArrayList
 	 *
 	 * @param <T>        集合元素类型
-	 * @param collection 集合
+	 * @param collection 集合可以为空
 	 * @return {@link CopyOnWriteArrayList}
 	 */
 	public static <T> CopyOnWriteArrayList<T> toCopyOnWriteArrayList(Collection<T> collection) {
 		return (null == collection) ? (new CopyOnWriteArrayList<>()) : (new CopyOnWriteArrayList<>(collection));
 	}
 
+	/**
+	 * 新建一个CopyOnWriteArrayList
+	 *
+	 * @param iterable  迭代器
+	 * @param <T>  元素类型
+	 * @return
+	 */
+	// CopyOnWriteArrayList
+	public static <T> CopyOnWriteArrayList<T> toCopyOnWriteArrayList(
+			Iterable<T> iterable) {
+		// We copy elements to an ArrayList first, rather than incurring the
+		// quadratic cost of adding them to the COWAL directly.
+		Collection<T> elementsCollection =
+				(iterable instanceof Collection)
+						? (Collection<T>) iterable
+						: list(false ,iterable);
+		return new CopyOnWriteArrayList<>(elementsCollection);
+	}
 	/**
 	 * 新建一个ArrayList
 	 *
