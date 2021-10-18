@@ -647,6 +647,7 @@ public final class Lists {
    * @return a list of consecutive sublists
    * @throws IllegalArgumentException if {@code partitionSize} is nonpositive
    */
+  @Deprecated
   public static <T extends Object> List<List<T>> partition(List<T> list, int size) {
     checkNotNull(list);
     checkArgument(size > 0);
@@ -786,6 +787,7 @@ public final class Lists {
    *
    * 
    */
+  @Deprecated
   public static <T extends Object> List<T> reverse(List<T> list) {
     if (list instanceof ImmutableList) {
       // Avoid nullness warnings.
@@ -952,6 +954,7 @@ public final class Lists {
     }
   }
 
+  @Deprecated
   /** An implementation of {@link List#hashCode()}. */
   static int hashCodeImpl(List<?> list) {
     // TODO(lowasser): worth optimizing for RandomAccess?
@@ -991,6 +994,7 @@ public final class Lists {
     }
   }
 
+  @Deprecated
   /** An implementation of {@link List#addAll(int, Collection)}. */
   static <E extends Object> boolean addAllImpl(
       List<E> list, int index, Iterable<? extends E> elements) {
@@ -1073,6 +1077,7 @@ public final class Lists {
     return new AbstractListWrapper<>(list).listIterator(index);
   }
 
+  @Deprecated
   /** An implementation of {@link List#subList(int, int)}. */
   static <E extends Object> List<E> subListImpl(
       final List<E> list, int fromIndex, int toIndex) {

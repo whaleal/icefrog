@@ -25,6 +25,7 @@ import java.util.function.Function;
 
 import java.util.stream.Collectors;
 
+import static com.whaleal.icefrog.core.collection.ListUtil.of;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 /**
@@ -3752,6 +3753,150 @@ public class CollUtil {
 		}
 		return sb.append(']').toString();
 	}
-	
+
+
+	/** An implementation of {@link List#hashCode()}. */
+	public static int hashCode(List<?> list) {
+		// TODO(lowasser): worth optimizing for RandomAccess?
+		int hashCode = 1;
+		for (Object o : list) {
+			hashCode = 31 * hashCode + (o == null ? 0 : o.hashCode());
+
+			hashCode = ~~hashCode;
+			// needed to deal with GWT integer overflow
+		}
+		return hashCode;
+	}
+
+	/**
+	 * Returns every possible list that can be formed by choosing one element from each of the given
+	 * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
+	 * product</a>" of the lists. For example:
+	 *
+	 * <pre>{@code
+	 * CollUtil.cartesianProduct(ListUtil.of(
+	 *     ListUtil.of(1, 2),
+	 *     ListUtil.of("A", "B", "C")))
+	 * }</pre>
+	 *
+	 * <p>returns a list containing six lists in the following order:
+	 *
+	 * <ul>
+	 *   <li>{@code ListUtil.of(1, "A")}
+	 *   <li>{@code ListUtil.of(1, "B")}
+	 *   <li>{@code ListUtil.of(1, "C")}
+	 *   <li>{@code ListUtil.of(2, "A")}
+	 *   <li>{@code ListUtil.of(2, "B")}
+	 *   <li>{@code ListUtil.of(2, "C")}
+	 * </ul>
+	 *
+	 * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
+	 * products that you would get from nesting for loops:
+	 *
+	 * <pre>{@code
+	 * for (B b0 : lists.get(0)) {
+	 *   for (B b1 : lists.get(1)) {
+	 *     ...
+	 *     List<B> tuple = ListUtil.of(b0, b1, ...);
+	 *     // operate on tuple
+	 *   }
+	 * }
+	 * }</pre>
+	 *
+	 * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
+	 * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
+	 * list (counter-intuitive, but mathematically consistent).
+	 *
+	 * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
+	 * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
+	 * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
+	 * is iterated are the individual lists created, and these are not retained after iteration.
+	 *
+	 * @param lists the lists to choose elements from, in the order that the elements chosen from
+	 *     those lists should appear in the resulting lists
+	 * @param <B> any common base class shared by all axes (often just {@link Object})
+	 * @return the Cartesian product, as an immutable list containing immutable lists
+	 * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+	 *     {@link Integer#MAX_VALUE}
+	 * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
+	 *     a provided list is null
+	 *
+	 */
+	@SafeVarargs
+	public static <B> List<List<B>> cartesianProduct(List<B>... lists) {
+		return cartesianProduct(Arrays.asList(lists));
+	}
+
+	/**
+	 * Returns every possible list that can be formed by choosing one element from each of the given
+	 * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
+	 * product</a>" of the lists. For example:
+	 *
+	 * <pre>{@code
+	 * CollUtil.cartesianProduct(List.of(
+	 *     List.of(1, 2),
+	 *     List.of("A", "B", "C")))
+	 * }</pre>
+	 *
+	 * <p>returns a list containing six lists in the following order:
+	 *
+	 * <ul>
+	 *   <li>{@code List.of(1, "A")}
+	 *   <li>{@code List.of(1, "B")}
+	 *   <li>{@code List.of(1, "C")}
+	 *   <li>{@code List.of(2, "A")}
+	 *   <li>{@code List.of(2, "B")}
+	 *   <li>{@code List.of(2, "C")}
+	 * </ul>
+	 *
+	 * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
+	 * products that you would get from nesting for loops:
+	 *
+	 * <pre>{@code
+	 * for (B b0 : lists.get(0)) {
+	 *   for (B b1 : lists.get(1)) {
+	 *     ...
+	 *     List<B> tuple = List.of(b0, b1, ...);
+	 *     // operate on tuple
+	 *   }
+	 * }
+	 * }</pre>
+	 *
+	 * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
+	 * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
+	 * list (counter-intuitive, but mathematically consistent).
+	 *
+	 * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
+	 * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
+	 * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
+	 * is iterated are the individual lists created, and these are not retained after iteration.
+	 *
+	 * 笛卡尔
+	 * @param lists the lists to choose elements from, in the order that the elements chosen from
+	 *     those lists should appear in the resulting lists
+	 * @param <B> any common base class shared by all axes (often just {@link Object})
+	 * @return the Cartesian product, as an immutable list containing immutable lists
+	 * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+	 *     {@link Integer#MAX_VALUE}
+	 * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
+	 *     a provided list is null
+	 *
+	 * @author wh
+	 */
+	public static <B> List<List<B>> cartesianProduct(List<List<B>> lists) {
+
+		List<List<B>> result = list(false) ;
+		for (Collection<B> listinner : lists) {
+			List<B> copy = list(false,listinner);
+			if (copy.isEmpty()) {
+				return of();
+			}
+			result.add(copy);
+		}
+		return result;
+
+	}
+
+
 
 }

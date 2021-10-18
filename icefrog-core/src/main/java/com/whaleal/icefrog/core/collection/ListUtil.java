@@ -611,7 +611,7 @@ public class ListUtil {
 	 * @param limit 要均分成几个list
 	 * @return 分段列表
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @since 1.0.0
 	 */
 	public static <T> List<List<T>> splitAvg(List<T> list, int limit) {

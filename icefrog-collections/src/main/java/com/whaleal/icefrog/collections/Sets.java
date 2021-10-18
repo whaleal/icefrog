@@ -1295,6 +1295,7 @@ public final class Sets {
    * @throws IllegalArgumentException if the cartesian product size exceeds the {@code int} range
    * 
    */
+  @Deprecated
   public static <B> Set<List<B>> cartesianProduct(List<? extends Set<? extends B>> sets) {
     return CartesianSet.create(sets);
   }
@@ -1352,11 +1353,13 @@ public final class Sets {
    * @throws IllegalArgumentException if the cartesian product size exceeds the {@code int} range
    * 
    */
+  @Deprecated
   @SafeVarargs
   public static <B> Set<List<B>> cartesianProduct(Set<? extends B>... sets) {
     return cartesianProduct(Arrays.asList(sets));
   }
 
+  @Deprecated
   private static final class CartesianSet<E> extends ForwardingCollection<List<E>>
       implements Set<List<E>> {
     private final transient ImmutableList<ImmutableSet<E>> axes;
