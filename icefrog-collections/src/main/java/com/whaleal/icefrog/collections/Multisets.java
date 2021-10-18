@@ -456,6 +456,7 @@ public final class Multisets {
    *
    * 
    */
+  @Deprecated
   public static <E extends Object> Multiset<E> intersection(
       final Multiset<E> multiset1, final Multiset<?> multiset2) {
     checkNotNull(multiset1);

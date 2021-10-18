@@ -159,7 +159,6 @@ public class CollUtil {
 				result.addAll(otherColl);
 			}
 		}
-
 		return result;
 	}
 
@@ -2885,7 +2884,7 @@ public class CollUtil {
 	 *     <li>两个{@link Collection}必须长度相同</li>
 	 *     <li>两个{@link Collection}元素相同index的对象必须equals，满足{@link Objects#equals(Object, Object)}</li>
 	 * </ul>
-	 * 此方法来自Apache-icefrogs-Collections4。
+	 * 此方法来自Apache-commmons-Collections4。
 	 *
 	 * @param list1 列表1
 	 * @param list2 列表2
@@ -2895,6 +2894,9 @@ public class CollUtil {
 	public static boolean isEqualList(final Collection<?> list1, final Collection<?> list2) {
 		if (list1 == null || list2 == null || list1.size() != list2.size()) {
 			return false;
+		}
+		if(list1 == list2){
+			return true ;
 		}
 
 		return IterUtil.isEqualList(list1, list2);
@@ -3734,5 +3736,50 @@ public class CollUtil {
 			return false;
 		}
 	}
+
+
+	/**
+	 * Delegates to {@link Collection#contains}. Returns {@code false} if the {@code contains} method
+	 * throws a {@code ClassCastException} or {@code NullPointerException}.
+	 * @param collection  collection
+	 * @param object  object
+	 * @return  return
+	 */
+	public static boolean safeContains(Collection<?> collection, @CheckForNull Object object) {
+		checkNotNull(collection);
+		try {
+			return collection.contains(object);
+		} catch (ClassCastException | NullPointerException e) {
+			return false;
+		}
+	}
+
+
+	/**
+	 *
+	 * An implementation of {@link Collection#toString()}.
+	 * 将集合类相关转为 String
+	 * @param collection  collection
+	 * @return  return return
+	 */
+	public static String toString(final Collection<?> collection) {
+		StringBuilder sb = StrUtil.builder((int) Math.min(collection.size() * 8L, 1 << (Integer.SIZE - 2)));
+		sb.append('[');
+		
+		boolean first = true;
+		for (Object o : collection) {
+			if (!first) {
+				sb.append(", ");
+			}
+			first = false;
+			if (o == collection) {
+				sb.append("(this Collection)");
+			} else {
+				sb.append(o);
+			}
+		}
+		return sb.append(']').toString();
+	}
+	
 
 }
