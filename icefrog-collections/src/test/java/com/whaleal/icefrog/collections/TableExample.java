@@ -52,7 +52,7 @@ public class TableExample extends TestCase {
     System.out.println(table);
 
     Map<String, String> language = table.row("Language");
-    String s = table.row("Language").get("Java");
+    table.row("Language").get("Java")
 
     assertTrue(language.containsKey("Java"));
     assertTrue(table.row("Language").get("Java").equals("1.8"));
