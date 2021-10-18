@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.util.Predicate;
 import com.whaleal.icefrog.core.util.Predicates;
@@ -1466,9 +1467,9 @@ public final class Multimaps {
     Collection<V2> transform(@ParametricNullness K key, Collection<V1> values) {
       Function<? super V1, V2> function = Maps.asValueToValueFunction(transformer, key);
       if (values instanceof List) {
-        return Lists.transform((List<V1>) values, function);
+        return CollUtil.trans((List<V1>) values, function);
       } else {
-        return Collections2.transform(values, function);
+        return CollUtil.trans(values, function);
       }
     }
 
@@ -1580,7 +1581,7 @@ public final class Multimaps {
 
     @Override
     List<V2> transform(@ParametricNullness K key, Collection<V1> values) {
-      return Lists.transform((List<V1>) values, Maps.asValueToValueFunction(transformer, key));
+      return CollUtil.list(false,CollUtil.trans((List<V1>) values, Maps.asValueToValueFunction(transformer, key)));
     }
 
     @Override

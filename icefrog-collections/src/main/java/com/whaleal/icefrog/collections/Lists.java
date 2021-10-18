@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -185,6 +186,7 @@ public final class Lists {
    * syntax</a>.
    */
 
+  @Deprecated
   public static <E extends Object> LinkedList<E> newLinkedList() {
     return new LinkedList<>();
   }
@@ -223,6 +225,7 @@ public final class Lists {
    * @return a new, empty {@code CopyOnWriteArrayList}
    * 
    */
+  @Deprecated
  // CopyOnWriteArrayList
   public static <E extends Object> CopyOnWriteArrayList<E> newCopyOnWriteArrayList() {
     return new CopyOnWriteArrayList<>();
@@ -498,7 +501,9 @@ public final class Lists {
    * <p><b>Java 8 users:</b> many use cases for this method are better addressed by {@link
    * java.util.stream.Stream#map}. This method is not being deprecated, but we gently encourage you
    * to migrate to streams.
+   * @see com.whaleal.icefrog.core.collection.CollUtil#trans(Collection, Function) 
    */
+  @Deprecated
   public static <F extends Object, T extends Object> List<T> transform(
       List<F> fromList, Function<? super F, ? extends T> function) {
     return (fromList instanceof RandomAccess)
@@ -509,8 +514,9 @@ public final class Lists {
   /**
    * Implementation of a sequential transforming list.
    *
-   * @see Lists#transform
+   * @see CollUtil#trans
    */
+  @Deprecated
   private static class TransformingSequentialList<
           F extends Object, T extends Object>
       extends AbstractSequentialList<T> implements Serializable {
@@ -561,8 +567,9 @@ public final class Lists {
    * pass-through to the source list as possible so that the performance characteristics of the
    * source list and transformed list are similar.
    *
-   * @see Lists#transform
+   * @see CollUtil#trans
    */
+  @Deprecated
   private static class TransformingRandomAccessList<
           F extends Object, T extends Object>
       extends AbstractList<T> implements RandomAccess, Serializable {

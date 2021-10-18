@@ -395,6 +395,7 @@ public class CollUtil {
 	 * @param value      需要查找的值
 	 * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
 	 * @since 1.0.0
+	 *
 	 */
 	public static boolean contains(Collection<?> collection, Object value) {
 		return isNotEmpty(collection) && collection.contains(value);
@@ -3690,37 +3691,6 @@ public class CollUtil {
 
 
 	/**
-	 * Returns a collection that applies {@code function} to each element of {@code fromCollection}.
-	 * The returned collection is a live view of {@code fromCollection}; changes to one affect the
-	 * other.
-	 *
-	 * <p>The returned collection's {@code add()} and {@code addAll()} methods throw an {@link
-	 * UnsupportedOperationException}. All other collection methods are supported, as long as {@code
-	 * fromCollection} supports them.
-	 *
-	 * <p>The returned collection isn't threadsafe or serializable, even if {@code fromCollection} is.
-	 *
-	 * <p>When a live view is <i>not</i> needed, it may be faster to copy the transformed collection
-	 * and use the copy.
-	 *
-	 * <p>If the input {@code Collection} is known to be a {@code List}, consider }.
-	 * If only an {@code Iterable} is available,
-	 *
-	 * <p><b>{@code Stream} equivalent:</b> {@link java.util.stream.Stream#map Stream.map}.
-	 */
-	public static <F extends Object, T extends Object> Collection<T> transform(
-			Collection<F> fromCollection, Function<? super F, T> function) {
-		checkNotNull(fromCollection);
-		checkNotNull(function);
-
-
-		return fromCollection.stream().map(function).collect(Collectors.toList());
-
-	}
-
-
-
-	/**
 	 * Delegates to {@link Collection#remove}. Returns {@code false} if the {@code remove} method
 	 * throws a {@code ClassCastException} or {@code NullPointerException}.
 	 *
@@ -3741,6 +3711,8 @@ public class CollUtil {
 	/**
 	 * Delegates to {@link Collection#contains}. Returns {@code false} if the {@code contains} method
 	 * throws a {@code ClassCastException} or {@code NullPointerException}.
+	 * 安全的判断包含 contains ，在 collection 接口中调用  contains  方法的过程中 会抛出 两个异常
+	 * {@code ClassCastException } 和 {@code NullPointerException} 详见jdk
 	 * @param collection  collection
 	 * @param object  object
 	 * @return  return

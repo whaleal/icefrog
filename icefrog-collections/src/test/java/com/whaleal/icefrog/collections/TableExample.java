@@ -17,17 +17,12 @@
 package com.whaleal.icefrog.collections;
 
 
-
-
-import com.whaleal.icefrog.collections.HashBasedTable;
 import com.whaleal.icefrog.collections.Table.Cell;
-import com.whaleal.icefrog.collections.Tables;
 import junit.framework.TestCase;
 import org.junit.Test;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 
 /**
  * Tests for {@link Tables}.
@@ -52,7 +47,7 @@ public class TableExample extends TestCase {
     System.out.println(table);
 
     Map<String, String> language = table.row("Language");
-    table.row("Language").get("Java")
+    table.row("Language").get("Java");
 
     assertTrue(language.containsKey("Java"));
     assertTrue(table.row("Language").get("Java").equals("1.8"));
