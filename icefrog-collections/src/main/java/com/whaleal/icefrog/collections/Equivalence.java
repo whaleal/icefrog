@@ -31,7 +31,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * The type parameter is <T> rather than <T extends > so that we can use T in the
  * doEquivalent and doHash methods to indicate that the parameter cannot be null.
  */
-  
+
 public abstract class Equivalence<T> implements BiPredicate< T,  T> {
   /** Constructor for use by subclasses. */
   protected Equivalence() {}

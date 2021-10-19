@@ -19,7 +19,7 @@ import static com.whaleal.icefrog.core.math.MathUtil.checkedMultiply;
  * @author Louis Wasserman
  */
 
-
+@Deprecated
 final class CartesianList<E> extends AbstractList<List<E>> implements RandomAccess {
 
   private final transient ImmutableList<List<E>> axes;
