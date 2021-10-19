@@ -32,6 +32,7 @@ import com.whaleal.icefrog.core.util.Predicate;
  * @since 2.0
  */
 
+@Deprecated
 @ElementTypesAreNonnullByDefault
 public final class Iterators {
   private Iterators() {}

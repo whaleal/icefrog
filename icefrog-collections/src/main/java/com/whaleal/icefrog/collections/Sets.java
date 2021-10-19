@@ -36,7 +36,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * 
  */
 
-
+@Deprecated
 public final class Sets {
   private Sets() {}
 
@@ -1077,7 +1077,8 @@ public final class Sets {
    *
    * 
    */
- // NavigableSet
+  @Deprecated
+  // NavigableSet
   @SuppressWarnings("unchecked")
   public static <E extends Object> NavigableSet<E> filter(
       NavigableSet<E> unfiltered, Predicate<? super E> predicate) {
