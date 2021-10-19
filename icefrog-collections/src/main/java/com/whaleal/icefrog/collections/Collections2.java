@@ -80,6 +80,7 @@ public final class Collections2 {
    * Delegates to {@link Collection#contains}. Returns {@code false} if the {@code contains} method
    * throws a {@code ClassCastException} or {@code NullPointerException}.
    */
+  @Deprecated
   static boolean safeContains(Collection<?> collection, @CheckForNull Object object) {
     checkNotNull(collection);
     try {
@@ -93,6 +94,7 @@ public final class Collections2 {
    * Delegates to {@link Collection#remove}. Returns {@code false} if the {@code remove} method
    * throws a {@code ClassCastException} or {@code NullPointerException}.
    */
+  @Deprecated
   static boolean safeRemove(Collection<?> collection, @CheckForNull Object object) {
     checkNotNull(collection);
     try {
@@ -245,6 +247,7 @@ public final class Collections2 {
     return new TransformedCollection<>(fromCollection, function);
   }
 
+  @Deprecated
   static class TransformedCollection<F extends Object, T extends Object>
       extends AbstractCollection<T> {
     final Collection<F> fromCollection;
@@ -303,7 +306,11 @@ public final class Collections2 {
    *
    * @param self a collection which might contain all elements in {@code c}
    * @param c a collection whose elements might be contained by {@code self}
+   *
+   * @see com.whaleal.icefrog.core.collection.CollUtil#containsAll(Collection, Collection)
    */
+
+  @Deprecated
   static boolean containsAllImpl(Collection<?> self, Collection<?> c) {
     for (Object o : c) {
       if (!self.contains(o)) {
@@ -332,6 +339,7 @@ public final class Collections2 {
   }
 
   /** Returns best-effort-sized StringBuilder based on the given collection size. */
+
   static StringBuilder newStringBuilderForCollection(int size) {
     checkNonnegative(size, "size");
     return new StringBuilder((int) Math.min(size * 8L, 1 << (Integer.SIZE - 2)));

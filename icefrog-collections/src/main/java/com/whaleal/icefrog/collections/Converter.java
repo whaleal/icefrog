@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.function.Function;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
 
 
 /**
@@ -122,6 +123,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  *
  * [*] In annotating this class, we're ignoring LegacyConverter.
  */
+
+@Deprecated
 public abstract class Converter<A, B> implements Function<A, B> {
   private final boolean handleNullAutomatically;
 
@@ -226,12 +229,14 @@ public abstract class Converter<A, B> implements Function<A, B> {
 
   @CheckForNull
   private B unsafeDoForward(@CheckForNull A a) {
-    return doForward((a));
+    notNull(a);
+    return doForward(a);
   }
 
   @CheckForNull
   private A unsafeDoBackward(@CheckForNull B b) {
-    return doBackward((b));
+    notNull(b);
+    return doBackward(b);
   }
 
   /**

@@ -43,6 +43,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  */
 
 
+@Deprecated
 public final class Iterables {
   private Iterables() {}
 

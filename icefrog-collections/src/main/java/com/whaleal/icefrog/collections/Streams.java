@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull;
  *
  * 
  */
-
+@Deprecated
 
 public final class Streams {
   /**

@@ -18,7 +18,8 @@ import java.util.Set;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap">{@code BiMap}</a>.
  *
  * @author Kevin Bourrillion
- * 
+ * @author wh
+ *
  */
 
 

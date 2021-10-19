@@ -8,7 +8,7 @@
 
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <name>icefrog</name>
     <description>icefrog是一个小而全的Java工具类库，通过静态方法封装，降低相关API的学习成本，提高工作效率，使Java拥有函数式语言般的优雅，让Java语言也可以“甜甜的”。</description>
     <url>https://github.com/whaleal/icefrog</url>
@@ -100,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -153,7 +153,9 @@
 
             <!--部署-->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
                 <executions>
                     <execution>
                         <id>deploy</id>

@@ -16,7 +16,7 @@ import javax.annotation.CheckForNull;
  * @author Austin Appleby
  */
 
-
+@Deprecated
 final class Hashing {
   private Hashing() {}
 
