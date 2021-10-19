@@ -2,7 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import javax.annotation.CheckForNull;

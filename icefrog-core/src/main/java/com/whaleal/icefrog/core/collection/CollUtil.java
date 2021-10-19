@@ -25,6 +25,7 @@ import java.util.function.Function;
 
 import java.util.stream.Collectors;
 
+import static com.whaleal.icefrog.core.collection.ListUtil.of;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 /**
@@ -159,7 +160,6 @@ public class CollUtil {
 				result.addAll(otherColl);
 			}
 		}
-
 		return result;
 	}
 
@@ -396,6 +396,7 @@ public class CollUtil {
 	 * @param value      需要查找的值
 	 * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
 	 * @since 1.0.0
+	 *
 	 */
 	public static boolean contains(Collection<?> collection, Object value) {
 		return isNotEmpty(collection) && collection.contains(value);
@@ -2885,7 +2886,7 @@ public class CollUtil {
 	 *     <li>两个{@link Collection}必须长度相同</li>
 	 *     <li>两个{@link Collection}元素相同index的对象必须equals，满足{@link Objects#equals(Object, Object)}</li>
 	 * </ul>
-	 * 此方法来自Apache-icefrogs-Collections4。
+	 * 此方法来自Apache-commmons-Collections4。
 	 *
 	 * @param list1 列表1
 	 * @param list2 列表2
@@ -2895,6 +2896,9 @@ public class CollUtil {
 	public static boolean isEqualList(final Collection<?> list1, final Collection<?> list2) {
 		if (list1 == null || list2 == null || list1.size() != list2.size()) {
 			return false;
+		}
+		if(list1 == list2){
+			return true ;
 		}
 
 		return IterUtil.isEqualList(list1, list2);
@@ -3688,37 +3692,6 @@ public class CollUtil {
 
 
 	/**
-	 * Returns a collection that applies {@code function} to each element of {@code fromCollection}.
-	 * The returned collection is a live view of {@code fromCollection}; changes to one affect the
-	 * other.
-	 *
-	 * <p>The returned collection's {@code add()} and {@code addAll()} methods throw an {@link
-	 * UnsupportedOperationException}. All other collection methods are supported, as long as {@code
-	 * fromCollection} supports them.
-	 *
-	 * <p>The returned collection isn't threadsafe or serializable, even if {@code fromCollection} is.
-	 *
-	 * <p>When a live view is <i>not</i> needed, it may be faster to copy the transformed collection
-	 * and use the copy.
-	 *
-	 * <p>If the input {@code Collection} is known to be a {@code List}, consider }.
-	 * If only an {@code Iterable} is available,
-	 *
-	 * <p><b>{@code Stream} equivalent:</b> {@link java.util.stream.Stream#map Stream.map}.
-	 */
-	public static <F extends Object, T extends Object> Collection<T> transform(
-			Collection<F> fromCollection, Function<? super F, T> function) {
-		checkNotNull(fromCollection);
-		checkNotNull(function);
-
-
-		return fromCollection.stream().map(function).collect(Collectors.toList());
-
-	}
-
-
-
-	/**
 	 * Delegates to {@link Collection#remove}. Returns {@code false} if the {@code remove} method
 	 * throws a {@code ClassCastException} or {@code NullPointerException}.
 	 *
@@ -3734,5 +3707,196 @@ public class CollUtil {
 			return false;
 		}
 	}
+
+
+	/**
+	 * Delegates to {@link Collection#contains}. Returns {@code false} if the {@code contains} method
+	 * throws a {@code ClassCastException} or {@code NullPointerException}.
+	 * 安全的判断包含 contains ，在 collection 接口中调用  contains  方法的过程中 会抛出 两个异常
+	 * {@code ClassCastException } 和 {@code NullPointerException} 详见jdk
+	 * @param collection  collection
+	 * @param object  object
+	 * @return  return
+	 */
+	public static boolean safeContains(Collection<?> collection, @CheckForNull Object object) {
+		checkNotNull(collection);
+		try {
+			return collection.contains(object);
+		} catch (ClassCastException | NullPointerException e) {
+			return false;
+		}
+	}
+
+
+	/**
+	 *
+	 * An implementation of {@link Collection#toString()}.
+	 * 将集合类相关转为 String
+	 * @param collection  collection
+	 * @return  return return
+	 */
+	public static String toString(final Collection<?> collection) {
+		StringBuilder sb = StrUtil.builder((int) Math.min(collection.size() * 8L, 1 << (Integer.SIZE - 2)));
+		sb.append('[');
+		
+		boolean first = true;
+		for (Object o : collection) {
+			if (!first) {
+				sb.append(", ");
+			}
+			first = false;
+			if (o == collection) {
+				sb.append("(this Collection)");
+			} else {
+				sb.append(o);
+			}
+		}
+		return sb.append(']').toString();
+	}
+
+
+	/** An implementation of {@link List#hashCode()}. */
+	public static int hashCode(List<?> list) {
+		// TODO(lowasser): worth optimizing for RandomAccess?
+		int hashCode = 1;
+		for (Object o : list) {
+			hashCode = 31 * hashCode + (o == null ? 0 : o.hashCode());
+
+			hashCode = ~~hashCode;
+			// needed to deal with GWT integer overflow
+		}
+		return hashCode;
+	}
+
+	/**
+	 * Returns every possible list that can be formed by choosing one element from each of the given
+	 * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
+	 * product</a>" of the lists. For example:
+	 *
+	 * <pre>{@code
+	 * CollUtil.cartesianProduct(ListUtil.of(
+	 *     ListUtil.of(1, 2),
+	 *     ListUtil.of("A", "B", "C")))
+	 * }</pre>
+	 *
+	 * <p>returns a list containing six lists in the following order:
+	 *
+	 * <ul>
+	 *   <li>{@code ListUtil.of(1, "A")}
+	 *   <li>{@code ListUtil.of(1, "B")}
+	 *   <li>{@code ListUtil.of(1, "C")}
+	 *   <li>{@code ListUtil.of(2, "A")}
+	 *   <li>{@code ListUtil.of(2, "B")}
+	 *   <li>{@code ListUtil.of(2, "C")}
+	 * </ul>
+	 *
+	 * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
+	 * products that you would get from nesting for loops:
+	 *
+	 * <pre>{@code
+	 * for (B b0 : lists.get(0)) {
+	 *   for (B b1 : lists.get(1)) {
+	 *     ...
+	 *     List<B> tuple = ListUtil.of(b0, b1, ...);
+	 *     // operate on tuple
+	 *   }
+	 * }
+	 * }</pre>
+	 *
+	 * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
+	 * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
+	 * list (counter-intuitive, but mathematically consistent).
+	 *
+	 * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
+	 * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
+	 * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
+	 * is iterated are the individual lists created, and these are not retained after iteration.
+	 *
+	 * @param lists the lists to choose elements from, in the order that the elements chosen from
+	 *     those lists should appear in the resulting lists
+	 * @param <B> any common base class shared by all axes (often just {@link Object})
+	 * @return the Cartesian product, as an immutable list containing immutable lists
+	 * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+	 *     {@link Integer#MAX_VALUE}
+	 * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
+	 *     a provided list is null
+	 *
+	 */
+	@SafeVarargs
+	public static <B> List<List<B>> cartesianProduct(List<B>... lists) {
+		return cartesianProduct(Arrays.asList(lists));
+	}
+
+	/**
+	 * Returns every possible list that can be formed by choosing one element from each of the given
+	 * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
+	 * product</a>" of the lists. For example:
+	 *
+	 * <pre>{@code
+	 * CollUtil.cartesianProduct(List.of(
+	 *     List.of(1, 2),
+	 *     List.of("A", "B", "C")))
+	 * }</pre>
+	 *
+	 * <p>returns a list containing six lists in the following order:
+	 *
+	 * <ul>
+	 *   <li>{@code List.of(1, "A")}
+	 *   <li>{@code List.of(1, "B")}
+	 *   <li>{@code List.of(1, "C")}
+	 *   <li>{@code List.of(2, "A")}
+	 *   <li>{@code List.of(2, "B")}
+	 *   <li>{@code List.of(2, "C")}
+	 * </ul>
+	 *
+	 * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
+	 * products that you would get from nesting for loops:
+	 *
+	 * <pre>{@code
+	 * for (B b0 : lists.get(0)) {
+	 *   for (B b1 : lists.get(1)) {
+	 *     ...
+	 *     List<B> tuple = List.of(b0, b1, ...);
+	 *     // operate on tuple
+	 *   }
+	 * }
+	 * }</pre>
+	 *
+	 * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
+	 * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
+	 * list (counter-intuitive, but mathematically consistent).
+	 *
+	 * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
+	 * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
+	 * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
+	 * is iterated are the individual lists created, and these are not retained after iteration.
+	 *
+	 * 笛卡尔
+	 * @param lists the lists to choose elements from, in the order that the elements chosen from
+	 *     those lists should appear in the resulting lists
+	 * @param <B> any common base class shared by all axes (often just {@link Object})
+	 * @return the Cartesian product, as an immutable list containing immutable lists
+	 * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+	 *     {@link Integer#MAX_VALUE}
+	 * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
+	 *     a provided list is null
+	 *
+	 * @author wh
+	 */
+	public static <B> List<List<B>> cartesianProduct(List<List<B>> lists) {
+
+		List<List<B>> result = list(false) ;
+		for (Collection<B> listinner : lists) {
+			List<B> copy = list(false,listinner);
+			if (copy.isEmpty()) {
+				return of();
+			}
+			result.add(copy);
+		}
+		return result;
+
+	}
+
+
 
 }

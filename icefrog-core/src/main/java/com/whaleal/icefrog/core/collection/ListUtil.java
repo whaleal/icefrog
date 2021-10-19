@@ -6,10 +6,12 @@ import com.whaleal.icefrog.core.lang.Matcher;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.PageUtil;
+import javafx.collections.transformation.TransformationList;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * List相关工具类
@@ -162,6 +164,22 @@ public class ListUtil {
 			return Collections.emptyList();
 		}
 		return Collections.unmodifiableList(toList(ts));
+	}
+
+
+	/**
+	 * Creates an empty {@code CopyOnWriteArrayList} instance.
+	 * 新建一个CopyOnWriteArrayList
+	 *
+	 * <p><b>Note:</b> if you need an immutable empty {@link List}, use {@link Collections#emptyList}
+	 * instead.
+	 *
+	 * @return a new, empty {@code CopyOnWriteArrayList}
+	 *
+	 */
+	// CopyOnWriteArrayList
+	public static <E extends Object> CopyOnWriteArrayList<E> newCopyOnWriteArrayList() {
+		return new CopyOnWriteArrayList<>();
 	}
 
 	/**
@@ -593,7 +611,7 @@ public class ListUtil {
 	 * @param limit 要均分成几个list
 	 * @return 分段列表
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @since 1.0.0
 	 */
 	public static <T> List<List<T>> splitAvg(List<T> list, int limit) {
@@ -605,4 +623,5 @@ public class ListUtil {
 				? new RandomAccessAvgPartition<>(list, limit)
 				: new AvgPartition<>(list, limit);
 	}
+
 }

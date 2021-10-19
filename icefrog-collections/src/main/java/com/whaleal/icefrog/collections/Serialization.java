@@ -22,7 +22,7 @@ import java.util.Map;
  * @author Jared Levy
  */
 
-
+@Deprecated
 final class Serialization {
   private Serialization() {}
 

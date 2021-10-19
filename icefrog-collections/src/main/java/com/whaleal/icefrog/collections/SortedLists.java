@@ -30,7 +30,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  */
 
 
-
+@Deprecated
 final class SortedLists {
   private SortedLists() {}
 

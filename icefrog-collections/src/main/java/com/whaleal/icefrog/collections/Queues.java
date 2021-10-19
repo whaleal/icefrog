@@ -19,6 +19,7 @@ import java.util.concurrent.*;
  */
 
 
+@Deprecated
 public final class Queues {
   private Queues() {}
 
