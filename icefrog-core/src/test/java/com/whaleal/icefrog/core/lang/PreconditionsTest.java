@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.lang;
 
 import org.junit.Test;
 
-public class AssertTest {
+public class PreconditionsTest {
 
 	@Test
 	public void isNullTest() {

@@ -1248,7 +1248,7 @@ public class IterUtil {
 	 * @return the element at the specified position in {@code iterator} or {@code defaultValue} if
 	 *     {@code iterator} produces fewer than {@code position + 1} elements.
 	 * @throws IndexOutOfBoundsException if {@code position} is negative
-	 * @since 4.0
+	 *
 	 */
 
 	public static <T extends Object> T get(
@@ -1380,38 +1380,5 @@ public class IterUtil {
 			iterator.remove();
 		}
 	}
-
-
-
-
-	/**
-	 * Returns a view containing the result of applying {@code function} to each element of
-	 * fromIterator}.
-	 *
-	 * <p>The returned iterator supports {@code remove()} if {@code fromIterator} does. After a
-	 * successful {@code remove()} call, {@code fromIterator} no longer contains the corresponding
-	 * element.
-	 * @param fromIterator   from
-	 * @param function fuc
-	 * @param <F> f
-	 * @param <T> t
-	 * @return return
-	 */
-	public static <F extends Object, T extends Object> Iterator<T> transform(
-			final Iterator<F> fromIterator, final Function<? super F, ? extends T> function) {
-		checkNotNull(function);
-		checkNotNull(fromIterator);
-
-		ArrayList<T> list = newArrayList();
-
-		while (fromIterator.hasNext()){
-
-			list.add(function.apply(fromIterator.next()));
-
-		}
-		return list.iterator();
-	}
-
-
 
 }
