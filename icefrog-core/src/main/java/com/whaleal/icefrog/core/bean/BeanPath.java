@@ -41,10 +41,12 @@ import java.util.Map;
 public class BeanPath implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	/** 表达式边界符号数组 */
+	/** 表达式边界符号数组  如示例中的 "." ,数组的起止符号 "[" "]" */
 	private static final char[] EXP_CHARS = { CharUtil.DOT, CharUtil.BRACKET_START, CharUtil.BRACKET_END };
 
+	/**标记该expression  是否以始于 "$"  */
 	private boolean isStartWith = false;
+	/** 本质是一个 segments 用于保存 传入的 字符串表达式(expression)的切片 */
 	protected List<String> patternParts;
 
 	/**
@@ -173,7 +175,7 @@ public class BeanPath implements Serializable{
 		}
 
 		if (StrUtil.contains(expression, ':')) {
-			// [start:end:step] 模式
+			// [start:end:step] 模式 ，对 expression  进行切分
 			final List<String> parts = StrUtil.splitTrim(expression, ':');
 			int start = Integer.parseInt(parts.get(0));
 			int end = Integer.parseInt(parts.get(1));
@@ -215,25 +217,29 @@ public class BeanPath implements Serializable{
 	}
 
 	/**
-	 * 初始化
+	 * 初始化方法。
 	 *
 	 * @param expression 表达式
 	 */
 	private void init(String expression) {
+		// 本地保存的切片 用于给 类属性 patternParts 赋值
 		List<String> localPatternParts = new ArrayList<>();
 		int length = expression.length();
 
 		final StrBuilder builder = StrUtil.strBuilder();
 		char c;
 		boolean isNumStart = false;// 下标标识符开始
+
 		for (int i = 0; i < length; i++) {
 			c = expression.charAt(i);
+			//  如果expression  以 $ 符号开头则直接跳过 该符号，并 将 isStartWith  设置 为 true
 			if (0 == i && '$' == c) {
 				// 忽略开头的$符，表示当前对象
 				isStartWith = true;
 				continue;
 			}
 
+			//  如果包含了相关的边界符号 则进行特殊的处理,这里的处理 主要是 进行拆分
 			if (ArrayUtil.contains(EXP_CHARS, c)) {
 				// 处理边界符号
 				if (CharUtil.BRACKET_END == c) {
@@ -253,6 +259,7 @@ public class BeanPath implements Serializable{
 					}
 					// 每一个边界符之前的表达式是一个完整的KEY，开始处理KEY
 				}
+				// 拆分在这里进行,遇到边界时,将上一个builder  转为 string添加到 localPatternParts ,并对该builder 进行重置。
 				if (builder.length() > 0) {
 					localPatternParts.add(unWrapIfPossible(builder));
 				}
@@ -263,7 +270,7 @@ public class BeanPath implements Serializable{
 			}
 		}
 
-		// 末尾边界符检查
+		// 末尾边界符检查 ,并进行最后一次添加
 		if (isNumStart) {
 			throw new IllegalArgumentException(StrUtil.format("Bad expression '{}':{}, we find '[' but no ']' !", expression, length - 1));
 		} else {
@@ -272,7 +279,7 @@ public class BeanPath implements Serializable{
 			}
 		}
 
-		// 不可变List
+		// 不可变List ,  将 localPatternParts 拷贝后赋值给 patternParts
 		this.patternParts = Collections.unmodifiableList(localPatternParts);
 	}
 
@@ -286,6 +293,7 @@ public class BeanPath implements Serializable{
 		if (StrUtil.containsAny(expression, " = ", " > ", " < ", " like ", ",")) {
 			return expression.toString();
 		}
+		// unWrap  去掉某些特殊字符 这里处理是单引号
 		return StrUtil.unWrap(expression, '\'');
 	}
 	// ------------------------------------------------------------------------------------------------------------------------------------- Private method end
