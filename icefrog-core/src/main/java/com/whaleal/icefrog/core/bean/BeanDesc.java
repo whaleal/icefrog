@@ -42,7 +42,7 @@ public class BeanDesc implements Serializable {
 	private final Map<String, PropDesc> propMap = new LinkedHashMap<>();
 
 	/**
-	 * 构造
+	 * BeanDesc 构造
 	 *
 	 * @param beanClass Bean类
 	 */
