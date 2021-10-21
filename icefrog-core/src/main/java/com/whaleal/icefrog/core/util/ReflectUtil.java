@@ -1012,12 +1012,11 @@ public class ReflectUtil {
 
 
 	/**
-	 * Find a method with the given method name and minimal parameters (best case: none)
-	 * in the given list of methods.
-	 * 获取 方法数组中与 给定方法名一致且 参数最小的方法 ,当没有匹配的时候回返回 null
-	 * @param methods the methods to check
-	 * @param methodName the name of the method to find
-	 * @return the Method object, or {@code null} if not found
+	 *
+	 * 获取 方法数组中与 给定方法名一致且参数最少的方法（最少可以为 0，即无需参数）,当名称无法匹配的时候回返回 null。
+	 * @param methods 方法列表
+	 * @param methodName 方法名称
+	 * @return 返回 命中的Method对象 ，在没有命中时返回null
 	 * @throws IllegalArgumentException if methods of the given name were found but
 	 * could not be resolved to a unique method with minimal parameters
 	 *
