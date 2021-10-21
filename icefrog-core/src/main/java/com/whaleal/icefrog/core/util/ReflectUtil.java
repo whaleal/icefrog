@@ -10,6 +10,7 @@ import com.whaleal.icefrog.core.lang.SimpleCache;
 import com.whaleal.icefrog.core.lang.reflect.MethodHandleUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -761,6 +762,9 @@ public class ReflectUtil {
 	 * @throws UtilException 包装各类异常
 	 */
 	public static <T> T newInstance(Class<T> clazz, Object... params) throws UtilException {
+		if (clazz.isInterface()) {
+			throw new UtilException(clazz.getName(), "Specified class is an interface");
+		}
 		if (ArrayUtil.isEmpty(params)) {
 			final Constructor<T> constructor = getConstructor(clazz);
 			try {
@@ -776,9 +780,30 @@ public class ReflectUtil {
 			throw new UtilException("No Constructor matched for parameter types: [{}]", new Object[]{paramTypes});
 		}
 		try {
-			return constructor.newInstance(params);
+			return newInstance(constructor,params);
 		} catch (Exception e) {
 			throw new UtilException(e, "Instance class [{}] error!", clazz);
+		}
+	}
+
+
+	/**
+	 *
+	 * 根据构造方法实例化对象
+	 *
+	 * @param <T>    对象类型
+	 * @param ctor  构造方法
+	 * @param params 构造函数参数
+	 * @return 对象
+	 * @throws UtilException 包装各类异常
+	 */
+	public static <T> T newInstance(Constructor<T> ctor, Object... params) throws UtilException {
+		notNull(ctor, "Constructor must not be null");
+		try {
+			setAccessible(ctor);
+			return ctor.newInstance(params);
+		}catch (Exception e) {
+			throw new UtilException(e, "No Constructor matched for parameter types: [{}]", new Object[]{params});
 		}
 	}
 
@@ -799,7 +824,7 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T newInstanceIfPossible(Class<T> beanClass) {
-		notNull(beanClass);
+		notNull(beanClass,"Class must not be null");
 
 		// 某些特殊接口的实例化按照默认实现进行
 		if (beanClass.isAssignableFrom(AbstractMap.class)) {
@@ -826,7 +851,7 @@ public class ReflectUtil {
 			}
 			setAccessible(constructor);
 			try {
-				return constructor.newInstance(ClassUtil.getDefaultValues(parameterTypes));
+				return newInstance(constructor,ClassUtil.getDefaultValues(parameterTypes));
 			} catch (Exception ignore) {
 				// 构造出错时继续尝试下一种构造方式
 			}
@@ -983,5 +1008,51 @@ public class ReflectUtil {
 			accessibleObject.setAccessible(true);
 		}
 		return accessibleObject;
+	}
+
+
+	/**
+	 * Find a method with the given method name and minimal parameters (best case: none)
+	 * in the given list of methods.
+	 * 获取 方法数组中与 给定方法名一致且 参数最小的方法 ,当没有匹配的时候回返回 null
+	 * @param methods the methods to check
+	 * @param methodName the name of the method to find
+	 * @return the Method object, or {@code null} if not found
+	 * @throws IllegalArgumentException if methods of the given name were found but
+	 * could not be resolved to a unique method with minimal parameters
+	 *
+	 */
+	@Nullable
+	public static Method findMethodWithMinimalParameters(Method[] methods, String methodName)
+			throws IllegalArgumentException {
+
+		Method targetMethod = null;
+		int numMethodsFoundWithCurrentMinimumArgs = 0;
+		for (Method method : methods) {
+			if (method.getName().equals(methodName)) {
+				int numParams = method.getParameterCount();
+				if (targetMethod == null || numParams < targetMethod.getParameterCount()) {
+					targetMethod = method;
+					numMethodsFoundWithCurrentMinimumArgs = 1;
+				}
+				else if (!method.isBridge() && targetMethod.getParameterCount() == numParams) {
+					if (targetMethod.isBridge()) {
+						// Prefer regular method over bridge...
+						targetMethod = method;
+					}
+					else {
+						// Additional candidate with same length
+						numMethodsFoundWithCurrentMinimumArgs++;
+					}
+				}
+			}
+		}
+		if (numMethodsFoundWithCurrentMinimumArgs > 1) {
+			throw new IllegalArgumentException("Cannot resolve method '" + methodName +
+					"' to a unique method. Attempted to resolve to overloaded method with " +
+					"the least number of parameters but there were " +
+					numMethodsFoundWithCurrentMinimumArgs + " candidates.");
+		}
+		return targetMethod;
 	}
 }
