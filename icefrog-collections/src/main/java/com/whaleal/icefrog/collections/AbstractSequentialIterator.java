@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
  *     };
  * }</pre>
  *
- * @author Chris Povirk
+ *
  * 
  */
 

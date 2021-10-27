@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.util.ClassUtil;
 
@@ -26,7 +23,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>This implementation <i>does</i> support null values, despite how it is annotated; see
  * discussion at {@link ClassToInstanceMap}.
  *
- * @author Kevin Bourrillion
+ *
  * 
  */
 

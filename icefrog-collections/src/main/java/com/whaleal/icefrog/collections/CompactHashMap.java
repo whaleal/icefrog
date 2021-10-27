@@ -48,7 +48,7 @@ import static java.util.Objects.requireNonNull;
  * moderately increased constant factors of CPU. Only use this class when there is a specific reason
  * to prioritize memory over CPU.
  *
- * @author Louis Wasserman
+ * 
  * @author Jon Noack
  */
 

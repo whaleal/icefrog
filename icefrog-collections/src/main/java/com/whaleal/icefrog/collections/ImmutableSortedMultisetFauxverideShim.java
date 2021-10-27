@@ -28,7 +28,7 @@ import java.util.stream.Collector;
  * <p>While we could put the overrides in {@link ImmutableSortedMultiset} itself, it seems clearer
  * to separate these "do not call" methods from those intended for normal use.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

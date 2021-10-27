@@ -36,8 +36,8 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multiset"> {@code
  * Multiset}</a>.
  *
- * @author Louis Wasserman
- * @author Jared Levy
+ * 
+ *
  * 
  */
 

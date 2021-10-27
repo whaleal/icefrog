@@ -21,8 +21,8 @@ import static com.whaleal.icefrog.core.util.Predicates.not;
 /**
  * Implementation of {@link Multimaps#filterEntries(Multimap, Predicate)}.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ *
  */
 
 

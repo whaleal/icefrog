@@ -19,7 +19,7 @@ import static java.util.Collections.emptyList;
  * Collectors not present in {@code java.util.stream.Collectors} that are not otherwise associated
  * with a {@code com.google.common} type.
  *
- * @author Louis Wasserman
+ * 
  * 
  */
 

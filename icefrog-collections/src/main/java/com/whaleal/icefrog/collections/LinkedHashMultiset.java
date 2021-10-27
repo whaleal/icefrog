@@ -26,8 +26,8 @@ import java.util.LinkedHashMap;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multiset"> {@code
  * Multiset}</a>.
  *
- * @author Kevin Bourrillion
- * @author Jared Levy
+ *
+ *
  * 
  */
 

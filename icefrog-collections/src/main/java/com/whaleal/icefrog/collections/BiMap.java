@@ -17,7 +17,7 @@ import java.util.Set;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap">{@code BiMap}</a>.
  *
- * @author Kevin Bourrillion
+ *
  * @author wh
  *
  */

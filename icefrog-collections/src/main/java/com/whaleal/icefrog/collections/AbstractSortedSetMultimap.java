@@ -13,7 +13,7 @@ import java.util.*;
  * AbstractMapBasedMultimap} that converts the returned collections into sorted sets. The {@link
  * #createCollection} method must return a {@code SortedSet}.
  *
- * @author Jared Levy
+ *
  */
 
 

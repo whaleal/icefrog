@@ -21,7 +21,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * <p>See the Guava User Guide article on <a
  * href="https://github.com/google/guava/wiki/FunctionalExplained">the use of {@code Predicate}</a>.
  *
- * @author Kevin Bourrillion
+ *
  * @author wh
  *
  */

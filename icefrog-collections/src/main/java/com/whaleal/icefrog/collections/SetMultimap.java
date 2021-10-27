@@ -36,7 +36,7 @@ import java.util.Set;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
  * Multimap}</a>.
  *
- * @author Jared Levy
+ *
  * 
  */
 

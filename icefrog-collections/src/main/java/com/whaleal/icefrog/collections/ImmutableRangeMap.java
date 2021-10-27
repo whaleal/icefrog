@@ -3,8 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
-
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -24,7 +22,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * A {@link RangeMap} whose contents will never change, with many other important properties
  * detailed at {@link ImmutableCollection}.
  *
- * @author Louis Wasserman
+ * 
  * 
  */
 

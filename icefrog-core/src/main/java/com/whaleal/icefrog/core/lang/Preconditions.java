@@ -104,7 +104,7 @@ import static com.whaleal.icefrog.core.util.StrUtil.lenientFormat;
  * href="https://github.com/google/guava/wiki/PreconditionsExplained">using {@code
  * Preconditions}</a>.
  *
- * @author Kevin Bourrillion
+ *
  * @author Looly
  * @author wh
  */

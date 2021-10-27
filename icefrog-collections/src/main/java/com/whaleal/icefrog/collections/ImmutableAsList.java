@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
@@ -14,8 +11,8 @@ import java.io.Serializable;
  * List returned by {@link ImmutableCollection#asList} that delegates {@code contains} checks to the
  * backing collection.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  */
 
 @SuppressWarnings("serial")

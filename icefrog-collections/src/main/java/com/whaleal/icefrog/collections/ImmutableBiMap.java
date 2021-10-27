@@ -5,7 +5,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.map.MapUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -22,7 +21,7 @@ import static java.util.Objects.requireNonNull;
  * A {@link BiMap} whose contents will never change, with many other important properties detailed
  * at {@link ImmutableCollection}.
  *
- * @author Jared Levy
+ *
  * 
  */
 

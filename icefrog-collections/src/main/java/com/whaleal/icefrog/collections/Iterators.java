@@ -1,18 +1,18 @@
 package com.whaleal.icefrog.collections;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
-import static com.whaleal.icefrog.core.util.Predicates.instanceOf;
-import static java.util.Objects.requireNonNull;
-
-import java.util.*;
-import java.util.function.Function;
-import javax.annotation.CheckForNull;
-
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.Predicate;
+
+import javax.annotation.CheckForNull;
+import java.util.*;
+import java.util.function.Function;
+
+import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.util.Predicates.instanceOf;
+import static java.util.Objects.requireNonNull;
 
 /**
  * This class contains static utility methods that operate on or return ObjectUtil of type {@link
@@ -27,8 +27,8 @@ import com.whaleal.icefrog.core.util.Predicate;
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#iterables"> {@code
  * Iterators}</a>.
  *
- * @author Kevin Bourrillion
- * @author Jared Levy
+ *
+ *
  * @since 2.0
  */
 

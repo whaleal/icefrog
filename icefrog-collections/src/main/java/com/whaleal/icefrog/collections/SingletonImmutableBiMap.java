@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.function.BiConsumer;
 
@@ -15,7 +12,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * Implementation of {@link ImmutableMap} with exactly one entry.
  *
  * @author Jesse Wilson
- * @author Kevin Bourrillion
+ *
  */
 
 @SuppressWarnings("serial") // uses writeReplace(), not default serialization

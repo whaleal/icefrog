@@ -18,8 +18,8 @@ import static java.util.Objects.requireNonNull;
  * Implementation of {@link ImmutableMap} with two or more entries.
  *
  * @author Jesse Wilson
- * @author Kevin Bourrillion
- * @author Gregory Kick
+ *
+ *
  */
 
 

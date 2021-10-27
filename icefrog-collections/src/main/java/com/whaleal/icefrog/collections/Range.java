@@ -1,8 +1,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
 import com.whaleal.icefrog.core.util.Predicate;
 
 import javax.annotation.CheckForNull;
@@ -97,8 +95,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a
  * href="https://github.com/google/guava/wiki/RangesExplained">{@code Range}</a>.
  *
- * @author Kevin Bourrillion
- * @author Gregory Kick
+ *
+ *
  * 
  */
 

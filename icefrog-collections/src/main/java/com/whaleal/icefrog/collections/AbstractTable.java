@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Skeletal, implementation-agnostic implementation of the {@link Table} interface.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

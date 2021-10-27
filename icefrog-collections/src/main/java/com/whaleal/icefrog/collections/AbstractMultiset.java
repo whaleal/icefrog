@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.AbstractCollection;
 import java.util.Collection;
@@ -24,8 +21,8 @@ import static com.whaleal.icefrog.collections.Multisets.setCountImpl;
  * {@link Multiset#entrySet()}, as do many methods acting on the set returned by {@link
  * #elementSet()}. Override those methods for better performance.
  *
- * @author Kevin Bourrillion
- * @author Louis Wasserman
+ *
+ *
  */
 
 

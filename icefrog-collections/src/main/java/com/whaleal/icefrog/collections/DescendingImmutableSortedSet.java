@@ -9,7 +9,7 @@ import java.util.Iterator;
 /**
  * Skeletal implementation of {@link ImmutableSortedSet#descendingSet()}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

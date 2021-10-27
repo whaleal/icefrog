@@ -5,7 +5,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
-import com.whaleal.icefrog.core.lang.Preconditions.*;
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
@@ -117,7 +116,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * "https://github.com/google/guava/wiki/OrderingExplained">{@code Ordering}</a>.
  *
  * @author Jesse Wilson
- * @author Kevin Bourrillion
+ *
  * 
  */
 

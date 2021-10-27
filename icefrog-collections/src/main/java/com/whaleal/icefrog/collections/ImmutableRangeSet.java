@@ -6,14 +6,15 @@ import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collector;
-import static com.whaleal.icefrog.collections.SortedLists.*;
+
+import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior;
 import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior.NEXT_HIGHER;
 import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior.NEXT_LOWER;
+import static com.whaleal.icefrog.collections.SortedLists.KeyPresentBehavior;
 import static com.whaleal.icefrog.collections.SortedLists.KeyPresentBehavior.ANY_PRESENT;
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Objects.requireNonNull;
@@ -22,7 +23,7 @@ import static java.util.Objects.requireNonNull;
  * A {@link RangeSet} whose contents will never change, with many other important properties
  * detailed at {@link ImmutableCollection}.
  *
- * @author Louis Wasserman
+ * 
  * 
  */
 

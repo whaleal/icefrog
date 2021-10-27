@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import java.util.Collection;
 import java.util.Set;
 import java.util.SortedMap;
@@ -20,7 +17,7 @@ import java.util.SortedSet;
  * <p>This superclass allows {@code TreeMultimap} to override methods to return navigable set and
  * map types in non-GWT only, while GWT code will inherit the SortedMap/SortedSet overrides.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

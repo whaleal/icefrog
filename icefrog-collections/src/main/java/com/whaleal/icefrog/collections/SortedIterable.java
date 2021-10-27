@@ -13,7 +13,7 @@ import java.util.Iterator;
  * An {@code Iterable} whose elements are sorted relative to a {@code Comparator}, typically
  * provided at creation time.
  *
- * @author Louis Wasserman
+ * 
  */
 
 
