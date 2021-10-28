@@ -18,7 +18,7 @@ import java.util.stream.Collector;
  * equivalents with deprecated, exception-throwing versions. See {@link
  * ImmutableSortedSetFauxverideShim} for details.
  *
- * @author Chris Povirk
+ *
  */
 
 

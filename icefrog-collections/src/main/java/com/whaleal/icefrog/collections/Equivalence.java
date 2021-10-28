@@ -21,7 +21,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  *
  * @author Bob Lee
  * @author Ben Yu
- * @author Gregory Kick
+ *
 
  *     source-compatible</a> since 4.0)
  */

@@ -3,7 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.Predicate;
 
 import javax.annotation.CheckForNull;
@@ -20,7 +19,7 @@ import static java.util.Collections.emptySet;
 /**
 
  *
- * @author Louis Wasserman
+ * 
  */
 
 

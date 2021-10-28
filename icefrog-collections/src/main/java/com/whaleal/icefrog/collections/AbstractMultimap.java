@@ -13,7 +13,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * A skeleton {@code Multimap} implementation, not necessarily in terms of a {@code Map}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

@@ -3,8 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;
@@ -17,7 +15,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * An implementation of ImmutableMultiset backed by a JDK Map and a list of entries. Used to protect
  * against hash flooding attacks.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

@@ -16,7 +16,7 @@ import java.util.Map;
  * AbstractMapBasedMultimap} that converts the returned collections into {@code Lists}. The {@link
  * #createCollection} method must return a {@code List}.
  *
- * @author Jared Levy
+ *
  * 
  */
 

@@ -2,10 +2,8 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.BooleanUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
-
 
 import java.util.Comparator;
 
@@ -40,7 +38,7 @@ import java.util.Comparator;
  * ComparisonChain}</a>.
  *
  * @author Mark Davis
- * @author Kevin Bourrillion
+ *
  * 
  */
 

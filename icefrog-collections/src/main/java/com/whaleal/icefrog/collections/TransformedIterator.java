@@ -2,11 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
 import java.util.Iterator;
 import java.util.function.Function;
 
@@ -17,7 +12,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * An iterator that transforms a backing iterator; for internal use. This avoids the object overhead
  * of constructing a {@link Function Function} for internal methods.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

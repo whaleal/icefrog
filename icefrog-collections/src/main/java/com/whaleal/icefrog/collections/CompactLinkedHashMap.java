@@ -2,8 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
 import javax.annotation.CheckForNull;
 import java.util.*;
 
@@ -28,7 +26,7 @@ import static java.util.Objects.requireNonNull;
  * consumption at the price of moderately increased constant factors of CPU. Only use this class
  * when there is a specific reason to prioritize memory over CPU.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

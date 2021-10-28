@@ -18,8 +18,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * Implementation of {@link ImmutableMultiset} with zero or more elements.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ *
  */
 
 @SuppressWarnings("serial") // uses writeReplace(), not default serialization

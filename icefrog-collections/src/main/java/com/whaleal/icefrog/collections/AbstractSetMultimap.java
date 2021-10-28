@@ -17,7 +17,7 @@ import java.util.Set;
  * AbstractMapBasedMultimap} that converts the returned collections into {@code Sets}. The {@link
  * #createCollection} method must return a {@code Set}.
  *
- * @author Jared Levy
+ *
  */
 
 

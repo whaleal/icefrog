@@ -2,10 +2,8 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import javax.annotation.CheckForNull;
@@ -27,8 +25,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#tables"> {@code Tables}</a>.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 

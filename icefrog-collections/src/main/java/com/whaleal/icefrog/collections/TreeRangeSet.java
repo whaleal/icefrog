@@ -22,7 +22,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * An implementation of {@link RangeSet} backed by a {@link TreeMap}.
  *
- * @author Louis Wasserman
+ * 
  * @since 14.0
  */
 

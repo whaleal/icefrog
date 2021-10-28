@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.*;
 
@@ -14,7 +11,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * An implementation of {@link ImmutableTable} holding an arbitrary number of cells.
  *
- * @author Gregory Kick
+ *
  */
 
 

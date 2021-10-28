@@ -42,8 +42,8 @@ import static java.util.Objects.requireNonNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#table"> {@code Table}</a>.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 

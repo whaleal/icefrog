@@ -4,7 +4,6 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -17,7 +16,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 /**
  * Implementation of {@link ImmutableMap} backed by a non-empty {@link EnumMap}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 @SuppressWarnings("serial") // we're overriding default serialization

@@ -2,22 +2,21 @@
 
 package com.whaleal.icefrog.collections;
 
-import static com.whaleal.icefrog.collections.ImmutableMapEntry.createEntryArray;
-import static com.whaleal.icefrog.collections.RegularImmutableMap.checkNoConflictInKeyBucket;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
-
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
+import static com.whaleal.icefrog.collections.ImmutableMapEntry.createEntryArray;
+import static com.whaleal.icefrog.collections.RegularImmutableMap.checkNoConflictInKeyBucket;
+import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Objects.requireNonNull;
 
 
 /**
  * Bimap with zero or more mappings.
  *
- * @author Louis Wasserman
+ *
  */
 
 @SuppressWarnings("serial") // uses writeReplace(), not default serialization

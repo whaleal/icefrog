@@ -13,8 +13,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * An immutable sorted set with one or more elements. TODO(jlevy): Consider separate class for a
  * single-element sorted set.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  */
 
 @SuppressWarnings({"serial", "rawtypes"})

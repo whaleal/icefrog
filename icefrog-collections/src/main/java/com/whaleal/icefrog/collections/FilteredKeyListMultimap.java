@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Implementation of {@link Multimaps#filterKeys(ListMultimap, Predicate)}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

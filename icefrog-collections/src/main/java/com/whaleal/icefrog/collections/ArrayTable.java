@@ -3,15 +3,14 @@
 package com.whaleal.icefrog.collections;
 
 
-
-
-
+import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.collection.SpliteratorUtil ;
+
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
+
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Collections.emptyMap;
 
@@ -62,7 +61,7 @@ import static java.util.Collections.emptyMap;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#table"> {@code Table}</a>.
  *
- * @author Jared Levy
+ *
  * 
  */
 

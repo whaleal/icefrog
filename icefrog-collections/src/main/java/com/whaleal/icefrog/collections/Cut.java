@@ -2,9 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.BooleanUtil;
-
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -19,7 +17,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * below all values or above all values. With this object defined in this way, an interval can
  * always be represented by a pair of {@code Cut} instances.
  *
- * @author Kevin Bourrillion
+ *
  */
 
 

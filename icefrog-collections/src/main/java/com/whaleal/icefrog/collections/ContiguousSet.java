@@ -31,7 +31,7 @@ import static java.util.Objects.requireNonNull;
  * on such a set can be performed efficiently, but others (such as {@link Set#hashCode} or {@link
  * Collections#frequency}) can cause major performance problems.
  *
- * @author Gregory Kick
+ *
  * 
  */
 

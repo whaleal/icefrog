@@ -4,9 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.Predicate;
 import com.whaleal.icefrog.core.util.Predicates;
 
@@ -37,8 +34,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#iterables"> {@code
  * Iterables}</a>.
  *
- * @author Kevin Bourrillion
- * @author Jared Levy
+ *
+ *
  * 
  */
 

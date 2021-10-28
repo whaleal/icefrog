@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.Map;
 
@@ -34,7 +31,7 @@ import java.util.Map;
  * <p>To map a generic type to an instance of that type.
  *
  * @param <B> the common supertype that all entries must share; often this is simply {@link Object}
- * @author Kevin Bourrillion
+ *
  * 
  */
 

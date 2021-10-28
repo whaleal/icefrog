@@ -20,7 +20,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap"> {@code BiMap}</a>.
  *
- * @author Mike Bostock
+ *
  *
  */
 

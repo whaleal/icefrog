@@ -2,13 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
-
-
 /**
  * Provides similar behavior to {@link String#intern} for any immutable type. Common implementations
  * are available from the {@link Interners} class.
@@ -17,7 +10,7 @@ import com.whaleal.icefrog.core.map.MapUtil;
  * generally be avoided. Prefer {@link Interners#newWeakInterner} or another {@code Interner}
  * implementation even for {@code String} interning.
  *
- * @author Kevin Bourrillion
+ *
  * 
  */
 

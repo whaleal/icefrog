@@ -5,12 +5,12 @@ import com.whaleal.icefrog.core.bean.NullWrapperBean;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.SimpleCache;
 import com.whaleal.icefrog.core.lang.reflect.MethodHandleUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import static com.whaleal.icefrog.core.lang.Preconditions.*;
 
 /**
  * 反射工具类
@@ -34,14 +35,16 @@ public class ReflectUtil {
 
 	/**
 	 * 构造对象缓存
-	 * 鉴于 对象器和Class  直接绑定 设计一个缓存池
-	 *
-	 * 但是字段及方法受父类等超类影响 缓存的意义不大
-	 * 所以字段缓存和方法缓存这里暂时不考虑
-	 * 应当在框架层 在考虑设计
 	 */
 	private static final SimpleCache<Class<?>, Constructor<?>[]> CONSTRUCTORS_CACHE = new SimpleCache<>();
-
+	/**
+	 * 字段缓存
+	 */
+	private static final SimpleCache<Class<?>, Field[]> FIELDS_CACHE = new SimpleCache<>();
+	/**
+	 * 方法缓存
+	 */
+	private static final SimpleCache<Class<?>, Method[]> METHODS_CACHE = new SimpleCache<>();
 
 	// --------------------------------------------------------------------------------------------------------- Constructor
 
@@ -61,11 +64,10 @@ public class ReflectUtil {
 
 		final Constructor<?>[] constructors = getConstructors(clazz);
 		Class<?>[] pts;
-		//  迭代并获取相关 参数类型并修改 Accessible
 		for (Constructor<?> constructor : constructors) {
 			pts = constructor.getParameterTypes();
 			if (ClassUtil.isAllAssignableFrom(pts, parameterTypes)) {
-				// 构造可访问 可以有效的加快访问速度
+				// 构造可访问
 				setAccessible(constructor);
 				return (Constructor<T>) constructor;
 			}
@@ -83,7 +85,7 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Constructor<T>[] getConstructors(Class<T> beanClass) throws SecurityException {
-		Preconditions.notNull(beanClass);
+		notNull(beanClass);
 		Constructor<?>[] constructors = CONSTRUCTORS_CACHE.get(beanClass);
 		if (null != constructors) {
 			return (Constructor<T>[]) constructors;
@@ -101,7 +103,7 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Constructor<?>[] getConstructorsDirectly(Class<?> beanClass) throws SecurityException {
-		Preconditions.notNull(beanClass);
+		notNull(beanClass);
 		return beanClass.getDeclaredConstructors();
 	}
 
@@ -179,9 +181,28 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Field[] getFields(Class<?> beanClass) throws SecurityException {
+		Field[] allFields = FIELDS_CACHE.get(beanClass);
+		if (null != allFields) {
+			return allFields;
+		}
 
-		return getFieldsDirectly(beanClass, true);
+		allFields = getFieldsDirectly(beanClass, true);
+		return FIELDS_CACHE.put(beanClass, allFields);
+	}
 
+
+	/**
+	 * 获得一个类中所有满足条件的字段列表，包括其父类中的字段<br>
+	 * 如果子类与父类中存在同名字段，则这两个字段同时存在，子类字段在前，父类字段在后。
+	 *
+	 * @param beanClass   类
+	 * @param fieldFilter field过滤器，过滤掉不需要的field
+	 * @return 字段列表
+	 * @throws SecurityException 安全检查异常
+	 * @since 1.0.0
+	 */
+	public static Field[] getFields(Class<?> beanClass, Filter<Field> fieldFilter) throws SecurityException {
+		return ArrayUtil.filter(getFields(beanClass), fieldFilter);
 	}
 
 	/**
@@ -194,7 +215,7 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Field[] getFieldsDirectly(Class<?> beanClass, boolean withSuperClassFields) throws SecurityException {
-		Preconditions.notNull(beanClass);
+		notNull(beanClass);
 
 		Field[] allFields = null;
 		Class<?> searchType = beanClass;
@@ -204,9 +225,6 @@ public class ReflectUtil {
 			if (null == allFields) {
 				allFields = declaredFields;
 			} else {
-				/**
-				 * 这里对 Field[] 数据进行拼接
-				 */
 				allFields = ArrayUtil.append(allFields, declaredFields);
 			}
 			searchType = withSuperClassFields ? searchType.getSuperclass() : null;
@@ -259,7 +277,6 @@ public class ReflectUtil {
 			obj = null;
 		}
 
-		// 对字段进行 setAccessible
 		setAccessible(field);
 		Object result;
 		try {
@@ -300,11 +317,11 @@ public class ReflectUtil {
 	 * @throws UtilException 包装IllegalAccessException异常
 	 */
 	public static void setFieldValue(Object obj, String fieldName, Object value) throws UtilException {
-		Preconditions.notNull(obj);
-		Preconditions.notBlank(fieldName);
+		notNull(obj);
+		notBlank(fieldName);
 
 		final Field field = getField((obj instanceof Class) ? (Class<?>) obj : obj.getClass(), fieldName);
-		Preconditions.notNull(field, "Field [{}] is not exist in [{}]", fieldName, obj.getClass().getName());
+		notNull(field, "Field [{}] is not exist in [{}]", fieldName, obj.getClass().getName());
 		setFieldValue(obj, field, value);
 	}
 
@@ -317,7 +334,7 @@ public class ReflectUtil {
 	 * @throws UtilException UtilException 包装IllegalAccessException异常
 	 */
 	public static void setFieldValue(Object obj, Field field, Object value) throws UtilException {
-		Preconditions.notNull(field, "Field in [{}] not exist !", obj);
+		notNull(field, "Field in [{}] not exist !", obj);
 
 		final Class<?> fieldType = field.getType();
 		if (null != value) {
@@ -631,8 +648,13 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Method[] getMethods(Class<?> beanClass) throws SecurityException {
+		Method[] allMethods = METHODS_CACHE.get(beanClass);
+		if (null != allMethods) {
+			return allMethods;
+		}
 
-		return   getMethodsDirectly(beanClass, true);
+		allMethods = getMethodsDirectly(beanClass, true);
+		return METHODS_CACHE.put(beanClass, allMethods);
 	}
 
 	/**
@@ -644,7 +666,7 @@ public class ReflectUtil {
 	 * @throws SecurityException 安全检查异常
 	 */
 	public static Method[] getMethodsDirectly(Class<?> beanClass, boolean withSuperClassMethods) throws SecurityException {
-		Preconditions.notNull(beanClass);
+		notNull(beanClass);
 
 		Method[] allMethods = null;
 		Class<?> searchType = beanClass;
@@ -740,6 +762,9 @@ public class ReflectUtil {
 	 * @throws UtilException 包装各类异常
 	 */
 	public static <T> T newInstance(Class<T> clazz, Object... params) throws UtilException {
+		if (clazz.isInterface()) {
+			throw new UtilException(clazz.getName(), "Specified class is an interface");
+		}
 		if (ArrayUtil.isEmpty(params)) {
 			final Constructor<T> constructor = getConstructor(clazz);
 			try {
@@ -755,9 +780,30 @@ public class ReflectUtil {
 			throw new UtilException("No Constructor matched for parameter types: [{}]", new Object[]{paramTypes});
 		}
 		try {
-			return constructor.newInstance(params);
+			return newInstance(constructor,params);
 		} catch (Exception e) {
 			throw new UtilException(e, "Instance class [{}] error!", clazz);
+		}
+	}
+
+
+	/**
+	 *
+	 * 根据构造方法实例化对象
+	 *
+	 * @param <T>    对象类型
+	 * @param ctor  构造方法
+	 * @param params 构造函数参数
+	 * @return 对象
+	 * @throws UtilException 包装各类异常
+	 */
+	public static <T> T newInstance(Constructor<T> ctor, Object... params) throws UtilException {
+		notNull(ctor, "Constructor must not be null");
+		try {
+			setAccessible(ctor);
+			return ctor.newInstance(params);
+		}catch (Exception e) {
+			throw new UtilException(e, "No Constructor matched for parameter types: [{}]", new Object[]{params});
 		}
 	}
 
@@ -778,7 +824,7 @@ public class ReflectUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T newInstanceIfPossible(Class<T> beanClass) {
-		Preconditions.notNull(beanClass);
+		notNull(beanClass,"Class must not be null");
 
 		// 某些特殊接口的实例化按照默认实现进行
 		if (beanClass.isAssignableFrom(AbstractMap.class)) {
@@ -805,7 +851,7 @@ public class ReflectUtil {
 			}
 			setAccessible(constructor);
 			try {
-				return constructor.newInstance(ClassUtil.getDefaultValues(parameterTypes));
+				return newInstance(constructor,ClassUtil.getDefaultValues(parameterTypes));
 			} catch (Exception ignore) {
 				// 构造出错时继续尝试下一种构造方式
 			}
@@ -847,7 +893,7 @@ public class ReflectUtil {
 	public static <T> T invokeWithCheck(Object obj, Method method, Object... args) throws UtilException {
 		final Class<?>[] types = method.getParameterTypes();
 		if (null != args) {
-			Preconditions.isTrue(args.length == types.length, "Params length [{}] is not fit for param length [{}] of method !", args.length, types.length);
+			isTrue(args.length == types.length, "Params length [{}] is not fit for param length [{}] of method !", args.length, types.length);
 			Class<?> type;
 			for (int i = 0; i < args.length; i++) {
 				type = types[i];
@@ -912,7 +958,7 @@ public class ReflectUtil {
 			}
 		}
 
-		if(method.isDefault()){
+		if (method.isDefault()) {
 			// 当方法是default方法时，尤其对象是代理对象，需使用句柄方式执行
 			// 代理对象情况下调用method.invoke会导致循环引用执行，最终栈溢出
 			return MethodHandleUtil.invokeSpecial(obj, method, args);
@@ -939,8 +985,8 @@ public class ReflectUtil {
 	 * @since 1.0.0
 	 */
 	public static <T> T invoke(Object obj, String methodName, Object... args) throws UtilException {
-		Preconditions.notNull(obj, "Object to get method must be not null!");
-		Preconditions.notBlank(methodName, "Method name must be not blank!");
+		notNull(obj, "Object to get method must be not null!");
+		notBlank(methodName, "Method name must be not blank!");
 
 		final Method method = getMethodOfObj(obj, methodName, args);
 		if (null == method) {
@@ -956,12 +1002,56 @@ public class ReflectUtil {
 	 * @param accessibleObject 可设置访问权限的对象，比如Class、Method、Field等
 	 * @return 被设置可访问的对象
 	 * @since 1.0.0
-	 *
 	 */
 	public static <T extends AccessibleObject> T setAccessible(T accessibleObject) {
 		if (null != accessibleObject && false == accessibleObject.isAccessible()) {
 			accessibleObject.setAccessible(true);
 		}
 		return accessibleObject;
+	}
+
+
+	/**
+	 *
+	 * 获取 方法数组中与 给定方法名一致且参数最少的方法（最少可以为 0，即无需参数）,当名称无法匹配的时候回返回 null。
+	 * @param methods 方法列表
+	 * @param methodName 方法名称
+	 * @return 返回 命中的Method对象 ，在没有命中时返回null
+	 * @throws IllegalArgumentException if methods of the given name were found but
+	 * could not be resolved to a unique method with minimal parameters
+	 *
+	 */
+	@Nullable
+	public static Method findMethodWithMinimalParameters(Method[] methods, String methodName)
+			throws IllegalArgumentException {
+
+		Method targetMethod = null;
+		int numMethodsFoundWithCurrentMinimumArgs = 0;
+		for (Method method : methods) {
+			if (method.getName().equals(methodName)) {
+				int numParams = method.getParameterCount();
+				if (targetMethod == null || numParams < targetMethod.getParameterCount()) {
+					targetMethod = method;
+					numMethodsFoundWithCurrentMinimumArgs = 1;
+				}
+				else if (!method.isBridge() && targetMethod.getParameterCount() == numParams) {
+					if (targetMethod.isBridge()) {
+						// Prefer regular method over bridge...
+						targetMethod = method;
+					}
+					else {
+						// Additional candidate with same length
+						numMethodsFoundWithCurrentMinimumArgs++;
+					}
+				}
+			}
+		}
+		if (numMethodsFoundWithCurrentMinimumArgs > 1) {
+			throw new IllegalArgumentException("Cannot resolve method '" + methodName +
+					"' to a unique method. Attempted to resolve to overloaded method with " +
+					"the least number of parameters but there were " +
+					numMethodsFoundWithCurrentMinimumArgs + " candidates.");
+		}
+		return targetMethod;
 	}
 }

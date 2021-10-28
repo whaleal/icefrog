@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * A mutable value of type {@code int}, for multisets to use in tracking counts of values.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

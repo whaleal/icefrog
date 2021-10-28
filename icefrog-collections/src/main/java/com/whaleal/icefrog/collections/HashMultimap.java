@@ -3,11 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -37,7 +32,7 @@ import java.util.Set;
  * <p><b>Warning:</b> Do not modify either a key <i>or a value</i> of a {@code HashMultimap} in a
  * way that affects its {@link Object#equals} behavior. Undefined behavior and bugs will result.
  *
- * @author Jared Levy
+ *
  * 
  */
 

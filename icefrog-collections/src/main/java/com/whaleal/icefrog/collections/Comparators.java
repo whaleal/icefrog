@@ -32,7 +32,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * the JDK.
  *
  * 
- * @author Louis Wasserman
+ * 
  */
 
 

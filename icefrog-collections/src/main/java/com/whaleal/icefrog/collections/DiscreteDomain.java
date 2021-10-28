@@ -27,7 +27,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
  * "https://github.com/google/guava/wiki/RangesExplained#discrete-domains"> {@code
  * DiscreteDomain}</a>.
  *
- * @author Kevin Bourrillion
+ *
  * 
  */
 

@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 /**
  * An interface for all filtered multimap types.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

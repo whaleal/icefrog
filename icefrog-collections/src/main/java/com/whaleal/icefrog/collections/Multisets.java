@@ -26,9 +26,9 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#multisets"> {@code
  * Multisets}</a>.
  *
- * @author Kevin Bourrillion
- * @author Mike Bostock
- * @author Louis Wasserman
+ *
+ *
+ * 
  * 
  */
 

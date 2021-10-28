@@ -8,7 +8,7 @@ import java.util.ListIterator;
 /**
  * A list iterator that does not support {@link #remove}, {@link #add}, or {@link #set}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

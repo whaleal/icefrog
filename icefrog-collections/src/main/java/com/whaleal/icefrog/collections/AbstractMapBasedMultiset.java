@@ -27,7 +27,7 @@ import static java.util.Objects.requireNonNull;
  * <p>For serialization to work, the subclass must specify explicit {@code readObject} and {@code
  * writeObject} methods.
  *
- * @author Kevin Bourrillion
+ *
  */
 
 

@@ -2,11 +2,9 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.text.StrBuilder;
-import com.whaleal.icefrog.core.text.StrJoiner;
-import com.whaleal.icefrog.core.util.ArrayUtil;
-
 import com.whaleal.icefrog.collections.MapMakerInternalMap.Strength;
+import com.whaleal.icefrog.core.text.StrBuilder;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
 import javax.annotation.CheckForNull;
@@ -68,7 +66,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  *
  * @author Bob Lee
  * @author Charles Fry
- * @author Kevin Bourrillion
+ *
  * 
  */
 

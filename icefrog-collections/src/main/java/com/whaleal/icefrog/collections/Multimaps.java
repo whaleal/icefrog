@@ -3,12 +3,12 @@
 package com.whaleal.icefrog.collections;
 
 
-
+import com.whaleal.icefrog.collections.Maps.EntryTransformer;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.util.Predicate;
 import com.whaleal.icefrog.core.util.Predicates;
-import com.whaleal.icefrog.collections.Maps.*;
+
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,11 +19,9 @@ import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
-
 
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Objects.requireNonNull;
@@ -36,10 +34,10 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#multiMaps"> {@code
  * MultiMaps}</a>.
  *
- * @author Jared Levy
+ *
  * @author Robert Konigsberg
- * @author Mike Bostock
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 
