@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * Implementation of {@link Multimaps#filterEntries(SetMultimap, Predicate)}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

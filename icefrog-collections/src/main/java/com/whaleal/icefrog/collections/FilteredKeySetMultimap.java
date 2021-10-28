@@ -19,7 +19,7 @@ import java.util.Set;
 /**
  * Implementation of {@link Multimaps#filterKeys(SetMultimap, Predicate)}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

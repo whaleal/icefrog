@@ -3,8 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.Predicate;
 import com.whaleal.icefrog.core.util.Predicates;
@@ -21,7 +19,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * Implementation for {@link FilteredMultimap#values()}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

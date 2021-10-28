@@ -13,7 +13,7 @@ import javax.annotation.CheckForNull;
 /**
  * A descending wrapper around an {@code ImmutableSortedMultiset}
  *
- * @author Louis Wasserman
+ * 
  */
 @SuppressWarnings("serial") // uses writeReplace, not default serialization
 

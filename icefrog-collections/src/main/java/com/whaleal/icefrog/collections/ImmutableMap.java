@@ -28,7 +28,7 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/google/guava/wiki/ImmutableCollectionsExplained"> immutable collections</a>.
  *
  * @author Jesse Wilson
- * @author Kevin Bourrillion
+ *
  * 
  */
 

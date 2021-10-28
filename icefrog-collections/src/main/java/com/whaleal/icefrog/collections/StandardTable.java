@@ -3,10 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.Predicate;
 
@@ -40,7 +38,7 @@ import static java.util.Objects.requireNonNull;
  * <p>Note that this implementation is not synchronized. If multiple threads access this table
  * concurrently and one of the threads modifies the table, it must be synchronized externally.
  *
- * @author Jared Levy
+ *
  */
 
 

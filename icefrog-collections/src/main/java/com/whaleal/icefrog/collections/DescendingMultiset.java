@@ -16,7 +16,7 @@ import java.util.Set;
  * A skeleton implementation of a descending multiset. Only needs {@code forwardMultiset()} and
  * {@code entryIterator()}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

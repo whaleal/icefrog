@@ -19,7 +19,7 @@ import java.util.Map;
  * <p>This class assists the implementation of collection classes. Do not use this class to
  * serialize collections that are defined elsewhere.
  *
- * @author Jared Levy
+ *
  */
 
 @Deprecated

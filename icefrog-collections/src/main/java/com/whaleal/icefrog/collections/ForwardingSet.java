@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.Collection;
 import java.util.Set;
@@ -30,8 +27,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>The {@code standard} methods are not guaranteed to be thread-safe, even when all of the
  * methods that they depend on are thread-safe.
  *
- * @author Kevin Bourrillion
- * @author Louis Wasserman
+ *
+ *
  * 
  */
 

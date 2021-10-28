@@ -4,7 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.MapUtil;
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -38,7 +37,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
  * Multimap}</a>.
  *
- * @author Jared Levy
+ *
  * 
  */
 

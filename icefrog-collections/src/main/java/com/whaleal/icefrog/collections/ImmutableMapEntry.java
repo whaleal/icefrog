@@ -20,7 +20,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkEntryNotNull;
  * <p>This base implementation has no key or value pointers, so instances of ImmutableMapEntry (but
  * not its subclasses) can be reused when copied from one ImmutableMap to another.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

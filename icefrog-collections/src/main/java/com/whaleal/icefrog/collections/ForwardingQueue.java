@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -28,8 +25,8 @@ import java.util.Queue;
  * <p>The {@code standard} methods are not guaranteed to be thread-safe, even when all of the
  * methods that they depend on are thread-safe.
  *
- * @author Mike Bostock
- * @author Louis Wasserman
+ *
+ *
  * 
  */
 

@@ -2,22 +2,17 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
-
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
+
+import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndexes;
 
 
 /**
  * Static utility methods pertaining to object arrays.
  *
- * @author Kevin Bourrillion
+ *
  * 
  */
 

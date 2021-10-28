@@ -28,9 +28,9 @@ import static java.util.Objects.requireNonNull;
  * comparisons. These methods are not being deprecated, but we gently encourage you to migrate to
  * streams.
  *
- * @author Chris Povirk
- * @author Mike Bostock
- * @author Jared Levy
+ *
+ *
+ *
  * 
  */
 

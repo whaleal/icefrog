@@ -13,7 +13,7 @@ import java.util.Spliterators;
 /**
  * Implementation of {@link ImmutableSet} with two or more elements.
  *
- * @author Kevin Bourrillion
+ *
  */
 
 @SuppressWarnings("serial") // uses writeReplace(), not default serialization

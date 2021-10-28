@@ -5,7 +5,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,8 +28,8 @@ import static java.util.Objects.requireNonNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap"> {@code BiMap} </a>.
  *
- * @author Louis Wasserman
- * @author Mike Bostock
+ * 
+ *
  * 
  */
 

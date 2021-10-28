@@ -11,6 +11,7 @@ import java.util.Map;
 /**
  * 动态Bean，通过反射对Bean的相关方法做操作<br>
  * 支持Map和普通Bean
+ * 所谓的动态 主要是针对 Map接口的实现
  *
  * @author Looly
  * @author wh

@@ -25,8 +25,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkState;
  * <p>Note that this class contains {@code equals()} calls that keep it from supporting {@code
  * IdentityHashMap} backing MapUtil.
  *
- * @author Kevin Bourrillion
- * @author Mike Bostock
+ *
+ *
  */
 
 

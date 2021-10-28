@@ -28,7 +28,7 @@ import java.io.Serializable;
  * implement {@link Serializable}, a serializable subclass may be created since this class has a
  * parameter-less constructor.
  *
- * @author Mike Bostock
+ *
  * 
  */
 

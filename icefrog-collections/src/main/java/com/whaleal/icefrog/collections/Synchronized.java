@@ -4,7 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.MapUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -25,8 +24,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  *
  * <p>This class should be used by other collection classes only.
  *
- * @author Mike Bostock
- * @author Jared Levy
+ *
+ *
  */
 
 

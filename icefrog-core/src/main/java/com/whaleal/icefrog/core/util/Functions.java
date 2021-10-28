@@ -20,8 +20,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a
  * href="https://github.com/google/guava/wiki/FunctionalExplained">the use of {@code Function}</a>.
  *
- * @author Mike Bostock
- * @author Jared Levy
+ *
+ *
  */
 
 

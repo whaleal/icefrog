@@ -15,7 +15,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * An implementation of {@link ContiguousSet} that contains one or more elements.
  *
- * @author Gregory Kick
+ *
  */
 
 @SuppressWarnings("unchecked") // allow ungenerified Comparable types

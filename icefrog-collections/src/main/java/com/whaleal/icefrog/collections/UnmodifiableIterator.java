@@ -12,7 +12,7 @@ import java.util.Iterator;
  * ImmutableCollection}, such as {@link ImmutableList}. You can, however, convert an existing
  * iterator to an {@code AbstractIterator} using.
  *
- * @author Jared Levy
+ *
  * 
  */
 

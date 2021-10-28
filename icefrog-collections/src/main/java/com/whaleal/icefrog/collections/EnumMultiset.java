@@ -26,7 +26,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multiset"> {@code
  * Multiset}</a>.
  *
- * @author Jared Levy
+ *
  * 
  */
 

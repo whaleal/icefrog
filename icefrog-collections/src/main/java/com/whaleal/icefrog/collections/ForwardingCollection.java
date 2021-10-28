@@ -2,9 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-
 
 import javax.annotation.CheckForNull;
 import java.util.Collection;
@@ -29,8 +27,8 @@ import java.util.Iterator;
  * <p>The {@code standard} methods are not guaranteed to be thread-safe, even when all of the
  * methods that they depend on are thread-safe.
  *
- * @author Kevin Bourrillion
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 

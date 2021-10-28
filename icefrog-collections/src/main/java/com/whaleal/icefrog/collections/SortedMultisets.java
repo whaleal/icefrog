@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.*;
 
@@ -15,7 +12,7 @@ import static com.whaleal.icefrog.collections.BoundType.OPEN;
 /**
  * Provides static utility methods for creating and working with {@link SortedMultiset} instances.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

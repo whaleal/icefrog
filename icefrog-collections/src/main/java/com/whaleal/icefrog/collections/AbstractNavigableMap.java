@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.*;
 
@@ -12,7 +9,7 @@ import java.util.*;
 /**
  * Skeletal implementation of {@link NavigableMap}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

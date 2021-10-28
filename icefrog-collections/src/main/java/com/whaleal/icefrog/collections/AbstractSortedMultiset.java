@@ -18,7 +18,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * {@link Multiset#entrySet()}, as do many methods acting on the set returned by {@link
  * #elementSet()}. Override those methods for better performance.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

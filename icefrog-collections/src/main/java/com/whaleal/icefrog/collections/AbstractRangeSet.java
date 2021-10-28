@@ -13,7 +13,7 @@ import javax.annotation.CheckForNull;
 /**
  * A skeletal implementation of {@code RangeSet}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

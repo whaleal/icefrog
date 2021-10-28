@@ -40,7 +40,7 @@ public class BeanPathTest {
 		examInfoDict2.setId(3);
 		examInfoDict2.setExamType(1);
 		examInfoDict2.setAnswerIs(0);
-
+		// 三个 ExamInfoDict 封装到 list中
 		List<ExamInfoDict> examInfoDicts = new ArrayList<>();
 		examInfoDicts.add(examInfoDict);
 		examInfoDicts.add(examInfoDict1);
@@ -52,7 +52,7 @@ public class BeanPathTest {
 		userInfoDict.setPhotoPath("yx.mm.com");
 		userInfoDict.setRealName("张三");
 		userInfoDict.setExamInfoDict(examInfoDicts);
-
+		// 封装到 Map  中 并将 最外层设置为 userInfo
 		tempMap = new HashMap<>();
 		tempMap.put("userInfo", userInfoDict);
 		tempMap.put("flag", 1);

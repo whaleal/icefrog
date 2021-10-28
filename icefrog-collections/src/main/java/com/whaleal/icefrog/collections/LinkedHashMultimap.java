@@ -55,8 +55,8 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
  * Multimap}</a>.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ *
  * 
  */
 

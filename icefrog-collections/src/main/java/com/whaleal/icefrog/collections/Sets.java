@@ -4,8 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.Predicate;
@@ -30,9 +28,9 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#sets"> {@code Sets}</a>.
  *
- * @author Kevin Bourrillion
- * @author Jared Levy
- * @author Chris Povirk
+ *
+ *
+ *
  * 
  */
 

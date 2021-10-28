@@ -14,7 +14,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * {@code keySet()} implementation for {@link ImmutableMap}.
  *
  * @author Jesse Wilson
- * @author Kevin Bourrillion
+ *
  */
 
 

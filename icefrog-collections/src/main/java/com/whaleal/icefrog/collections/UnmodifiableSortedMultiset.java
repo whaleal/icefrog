@@ -14,7 +14,7 @@ import java.util.NavigableSet;
  * its own file so it can be GWT emulated (to deal with the differing elementSet() types in GWT and
  * non-GWT).
  *
- * @author Louis Wasserman
+ * 
  */
 
 

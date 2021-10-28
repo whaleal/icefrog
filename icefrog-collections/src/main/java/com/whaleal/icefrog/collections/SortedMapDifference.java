@@ -2,16 +2,13 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import java.util.SortedMap;
 
 
 /**
  * An object representing the differences between two sorted MapUtil.
  *
- * @author Louis Wasserman
+ * 
  * 
  */
 
