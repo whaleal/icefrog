@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 /**
  * Implementation of {@link ImmutableSet} backed by a non-empty {@link EnumSet}.
  *
- * @author Jared Levy
+ *
  */
 
 @SuppressWarnings("serial") // we're overriding default serialization

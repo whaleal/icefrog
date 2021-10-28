@@ -19,7 +19,7 @@ import java.util.function.Consumer;
  * {@code entrySet()} implementation for {@link ImmutableMap}.
  *
  * @author Jesse Wilson
- * @author Kevin Bourrillion
+ *
  */
 
 

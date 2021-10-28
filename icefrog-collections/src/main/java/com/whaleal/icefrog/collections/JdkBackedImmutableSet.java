@@ -13,7 +13,7 @@ import java.util.Set;
  * flooding. This implementation is never used on the GWT client side, but it must be present there
  * for serialization to work.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

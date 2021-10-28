@@ -14,7 +14,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndex;
  * fixed number of elements that may be retrieved by position. It does not support {@link #remove},
  * {@link #set}, or {@link #add}.
  *
- * @author Jared Levy
+ *
  */
 
 

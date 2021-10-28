@@ -5,7 +5,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.*;
@@ -23,7 +22,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/ImmutableCollectionsExplained"> immutable collections</a>.
  *
- * @author Gregory Kick
+ *
  * 
  */
 

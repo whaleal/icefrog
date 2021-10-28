@@ -2,11 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
 import java.util.Comparator;
 import java.util.SortedSet;
 
@@ -16,7 +11,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * Utilities for dealing with sorted collections of all types.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

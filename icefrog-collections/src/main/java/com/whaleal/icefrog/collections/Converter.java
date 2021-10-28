@@ -95,7 +95,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
  *
  * @author Mike Ward
  * @author Kurt Alfred Kluever
- * @author Gregory Kick
+ *
  */
 
 

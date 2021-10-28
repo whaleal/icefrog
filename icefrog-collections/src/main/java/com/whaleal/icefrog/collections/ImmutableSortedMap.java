@@ -4,7 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -32,8 +31,8 @@ import static java.util.Objects.requireNonNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/ImmutableCollectionsExplained"> immutable collections</a>.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 

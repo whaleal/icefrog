@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.function.Consumer;
 
@@ -15,7 +12,7 @@ import java.util.function.Consumer;
  * An {@link ImmutableAsList} implementation specialized for when the delegate collection is already
  * backed by an {@code ImmutableList} or array.
  *
- * @author Louis Wasserman
+ * 
  */
 
 @SuppressWarnings("serial") // uses writeReplace, not default serialization

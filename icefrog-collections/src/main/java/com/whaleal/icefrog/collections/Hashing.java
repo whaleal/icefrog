@@ -2,16 +2,14 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
-
 
 import javax.annotation.CheckForNull;
 
 /**
  * Static methods for implementing hash-based collections.
  *
- * @author Kevin Bourrillion
+ *
  * @author Jesse Wilson
  * @author Austin Appleby
  */

@@ -25,8 +25,8 @@ import java.util.Spliterator;
 /**
  * List returned by {@code ImmutableSortedSet.asList()} when the set isn't empty.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  */
 
 @SuppressWarnings("serial")

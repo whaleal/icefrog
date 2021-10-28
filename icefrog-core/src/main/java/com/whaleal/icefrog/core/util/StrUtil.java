@@ -38,8 +38,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     private static final String CURRENT_PATH = ".";
     private static final char EXTENSION_SEPARATOR = '.';
 
-    private StrUtil() {
-    }
+
 
     /**
      * <p>如果对象是字符串是否为空白，空白的定义如下：</p>

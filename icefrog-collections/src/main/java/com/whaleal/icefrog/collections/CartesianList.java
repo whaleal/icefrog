@@ -16,7 +16,7 @@ import static com.whaleal.icefrog.core.math.MathUtil.checkedMultiply;
 /**
  * Implementation of {@link Lists#cartesianProduct(List)}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 @Deprecated

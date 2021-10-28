@@ -23,7 +23,7 @@ import java.util.Iterator;
  * default implementations. When those implementations invoke methods, they invoke methods on the
  * {@code ForwardingIterator}.
  *
- * @author Kevin Bourrillion
+ *
  * 
  */
 

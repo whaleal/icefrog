@@ -22,7 +22,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 /**
  * Contains static methods pertaining to instances of {@link Interner}.
  *
- * @author Kevin Bourrillion
+ *
  * 
  */
 

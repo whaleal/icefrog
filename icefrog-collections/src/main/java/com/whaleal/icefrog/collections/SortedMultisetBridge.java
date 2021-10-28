@@ -16,7 +16,7 @@ import java.util.SortedSet;
  * to ensure binary compatibility with older Guava versions that specified {@code elementSet()} to
  * return {@code SortedSet}.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

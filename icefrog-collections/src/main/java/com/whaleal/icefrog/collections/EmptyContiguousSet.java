@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * An empty contiguous set.
  *
- * @author Gregory Kick
+ *
  */
 
 @SuppressWarnings("rawtypes") // allow ungenerified Comparable types

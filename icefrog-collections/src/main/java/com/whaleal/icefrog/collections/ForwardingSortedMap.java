@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
@@ -34,8 +31,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
  * <p>The {@code standard} methods and the collection views they return are not guaranteed to be
  * thread-safe, even when all of the methods that they depend on are thread-safe.
  *
- * @author Mike Bostock
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 

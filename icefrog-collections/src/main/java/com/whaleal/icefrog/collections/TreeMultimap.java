@@ -46,8 +46,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
  * Multimap}</a>.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 

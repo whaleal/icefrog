@@ -15,7 +15,7 @@ import java.util.Set;
  * more methods to modify the behavior of the backing map as desired per the <a
  * href="http://en.wikipedia.org/wiki/Decorator_pattern">decorator pattern</a>.
  *
- * @author Gregory Kick
+ *
  * 
  */
 

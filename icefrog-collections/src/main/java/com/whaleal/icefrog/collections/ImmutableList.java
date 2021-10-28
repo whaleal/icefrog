@@ -29,7 +29,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @see ImmutableMap
  * @see ImmutableSet
- * @author Kevin Bourrillion
+ *
  * 
  */
 

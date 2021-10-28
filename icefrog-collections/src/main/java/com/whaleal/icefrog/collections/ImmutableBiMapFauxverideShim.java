@@ -2,12 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
-
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collector;
@@ -18,7 +12,7 @@ import java.util.stream.Collector;
  * with deprecated, exception-throwing versions. See {@link ImmutableSortedSetFauxverideShim} for
  * details.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

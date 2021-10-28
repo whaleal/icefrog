@@ -2,12 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
-
 import java.util.stream.Collector;
 
 /**
@@ -25,7 +19,7 @@ import java.util.stream.Collector;
  * <p>While we could put the overrides in {@link ImmutableSortedSet} itself, it seems clearer to
  * separate these "do not call" methods from those intended for normal use.
  *
- * @author Chris Povirk
+ *
  */
 
 

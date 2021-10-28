@@ -2,14 +2,12 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import java.io.Serializable;
 import java.util.*;
 import java.util.function.Supplier;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
+import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 
 /**
@@ -32,7 +30,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * <p>The generated Multimaps are serializable if the key and value types are serializable, unless
  * stated otherwise in one of the configuration methods.
  *
- * @author Louis Wasserman
+ * 
  * @param <K0> An upper bound on the key type of the generated multimap.
  * @param <V0> An upper bound on the value type of the generated multimap.
  * 

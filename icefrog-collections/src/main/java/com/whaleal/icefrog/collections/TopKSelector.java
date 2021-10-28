@@ -49,7 +49,7 @@ import static com.whaleal.icefrog.core.math.MathUtil.log2;
  * <p>The implementation does not necessarily use a <i>stable</i> sorting algorithm; when multiple
  * equivalent elements are added to it, it is undefined which will come first in the output.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

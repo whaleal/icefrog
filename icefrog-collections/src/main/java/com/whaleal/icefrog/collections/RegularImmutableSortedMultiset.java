@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;
@@ -18,7 +15,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndexes;
 /**
  * An immutable sorted multiset with one or more distinct elements.
  *
- * @author Louis Wasserman
+ * 
  */
 @SuppressWarnings("serial") // uses writeReplace, not default serialization
 final class RegularImmutableSortedMultiset<E> extends ImmutableSortedMultiset<E> {

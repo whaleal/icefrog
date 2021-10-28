@@ -23,7 +23,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  *
  * <p>Whenever possible, use {@code Range} instead, which is better supported.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

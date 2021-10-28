@@ -4,8 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.Predicate;
 
@@ -30,7 +28,7 @@ import static java.util.Objects.requireNonNull;
  *
  * <p>Like all {@code RangeMap} implementations, this supports neither null keys nor null values.
  *
- * @author Louis Wasserman
+ * 
  * 
  */
 

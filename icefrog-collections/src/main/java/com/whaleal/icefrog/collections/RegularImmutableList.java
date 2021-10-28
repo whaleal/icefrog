@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import java.util.Spliterator;
 import java.util.Spliterators;
 
@@ -16,7 +13,7 @@ import java.util.Spliterators;
 /**
  * Implementation of {@link ImmutableList} backed by a simple array.
  *
- * @author Kevin Bourrillion
+ *
  */
 
 @SuppressWarnings("serial") // uses writeReplace(), not default serialization

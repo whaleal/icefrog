@@ -3,12 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
-
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -26,7 +20,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <i>lesser</i> are considered to refer to the comparator on the elements, and the terms
  * <i>first</i> and <i>last</i> are considered to refer to the elements' ordering in a list.
  *
- * @author Louis Wasserman
+ * 
  */
 
 

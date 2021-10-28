@@ -31,10 +31,10 @@ import static java.util.Objects.requireNonNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#maps"> {@code Maps}</a>.
  *
- * @author Kevin Bourrillion
- * @author Mike Bostock
+ *
+ *
  * @author Isaac Shum
- * @author Louis Wasserman
+ * 
 
  */
 

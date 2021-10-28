@@ -13,7 +13,7 @@ import javax.annotation.CheckForNull;
 /**
  * Implementation of {@link ImmutableSet} with exactly one element.
  *
- * @author Kevin Bourrillion
+ *
  * @author Nick Kralevich
  */
 

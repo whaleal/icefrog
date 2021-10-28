@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.Collection;
 import java.util.Map;
@@ -20,7 +17,7 @@ import java.util.function.BiFunction;
  * <p>In contrast to {@link RangeSet}, no "coalescing" is done of {@linkplain
  * Range#isConnected(Range) connected} ranges, even if they are mapped to the same value.
  *
- * @author Louis Wasserman
+ * 
  * 
  */
 

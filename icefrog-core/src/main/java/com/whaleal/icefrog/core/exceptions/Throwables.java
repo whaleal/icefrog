@@ -23,7 +23,7 @@ import static java.util.Objects.requireNonNull;
  * <p>See the Guava User Guide entry on <a
  * href="https://github.com/google/guava/wiki/ThrowablesExplained">Throwables</a>.
  *
- * @author Kevin Bourrillion
+ *
  * @author Ben Yu
  * @since 1.0
  */

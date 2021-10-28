@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.Collection;
 import java.util.List;
@@ -142,7 +139,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
  * Multimap}</a>.
  *
- * @author Jared Levy
+ *
  * 
  */
 

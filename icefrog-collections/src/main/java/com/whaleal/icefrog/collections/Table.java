@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import javax.annotation.CheckForNull;
@@ -34,7 +31,7 @@ import java.util.Set;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#table"> {@code Table}</a>.
  *
- * @author Jared Levy
+ *
  * @param <R> the type of the table row keys
  * @param <C> the type of the table column keys
  * @param <V> the type of the mapped values

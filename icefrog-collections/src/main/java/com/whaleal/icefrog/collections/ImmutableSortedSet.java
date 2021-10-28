@@ -29,8 +29,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/ImmutableCollectionsExplained"> immutable collections</a>.
  *
- * @author Jared Levy
- * @author Louis Wasserman
+ *
+ * 
  * 
  */
 // TODO(benyu): benchmark and optimize all creation paths, which are a mess now
