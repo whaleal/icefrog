@@ -2,13 +2,14 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.EnumMap;
 import java.util.Map;
+
+import  com.whaleal.icefrog.core.map.BiMap;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
@@ -20,20 +21,26 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap"> {@code BiMap}</a>.
  *
+ * 枚举值 相关的 BiMap
+ * key  value  两部分均为 枚举类的子类 ，且 key value 均不为null .
  *
  *
  */
 
 
-public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>> extends AbstractBiMap<K, V> {
+public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>> extends BiMap<K, V> {
+
+  // 临时 变量 保存 key  和 value 的 类型
   private transient Class<K> keyType;
   private transient Class<V> valueType;
 
   /**
    * Returns a new, empty {@code EnumBiMap} using the specified key and value types.
    *
+   * 静态方法 主要用于 构造本类对象
    * @param keyType the key type
    * @param valueType the value type
+   *
    */
   public static <K extends Enum<K>, V extends Enum<V>> EnumBiMap<K, V> create(
       Class<K> keyType, Class<V> valueType) {
@@ -56,7 +63,7 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>> extends Abstr
   }
 
   private EnumBiMap(Class<K> keyType, Class<V> valueType) {
-    super(new EnumMap<K, V>(keyType), new EnumMap<V, K>(valueType));
+    super(new EnumMap<K, V>(keyType));
     this.keyType = keyType;
     this.valueType = valueType;
   }
@@ -90,12 +97,12 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>> extends Abstr
     return valueType;
   }
 
-  @Override
+
   K checkKey(K key) {
     return checkNotNull(key);
   }
 
-  @Override
+
   V checkValue(V value) {
     return checkNotNull(value);
   }
@@ -118,7 +125,10 @@ public final class EnumBiMap<K extends Enum<K>, V extends Enum<V>> extends Abstr
     stream.defaultReadObject();
     keyType = (Class<K>) stream.readObject();
     valueType = (Class<V>) stream.readObject();
-    setDelegates(new EnumMap<K, V>(keyType), new EnumMap<V, K>(valueType));
+    //setDelegates(new EnumMap<K, V>(keyType), new EnumMap<V, K>(valueType));
+    clear();
+    putAll(new EnumMap<K, V>(keyType));
+
     Serialization.populateMap(this, stream);
   }
 

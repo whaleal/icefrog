@@ -218,18 +218,7 @@ final class CollectCollectors {
         ImmutableSortedMap::copyOfSorted);
   }
 
-  static <T extends Object, K, V> Collector<T, ?, ImmutableBiMap<K, V>> toImmutableBiMap(
-      Function<? super T, ? extends K> keyFunction,
-      Function<? super T, ? extends V> valueFunction) {
-    checkNotNull(keyFunction);
-    checkNotNull(valueFunction);
-    return Collector.of(
-        ImmutableBiMap.Builder<K, V>::new,
-        (builder, input) -> builder.put(keyFunction.apply(input), valueFunction.apply(input)),
-        ImmutableBiMap.Builder::combine,
-        ImmutableBiMap.Builder::build,
-        new Collector.Characteristics[0]);
-  }
+
 
   static <T extends Object, K extends Enum<K>, V>
       Collector<T, ?, ImmutableMap<K, V>> toImmutableEnumMap(
@@ -312,7 +301,8 @@ final class CollectCollectors {
     }
 
     ImmutableMap<K, V> toImmutableMap() {
-      return (map == null) ? ImmutableMap.of() : ImmutableEnumMap.asImmutable(map);
+      //return (map == null) ? ImmutableMap.of() : ImmutableEnumMap.asImmutable(map);
+      return null ;
     }
   }
 

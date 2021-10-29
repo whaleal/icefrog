@@ -104,7 +104,9 @@ public final class Collections2 {
     }
   }
 
+  //  本质 是一个 collection   的实现
   static class FilteredCollection<E extends Object> extends AbstractCollection<E> {
+    //  内部的一个存储结构
     final Collection<E> unfiltered;
     final Predicate<? super E> predicate;
 

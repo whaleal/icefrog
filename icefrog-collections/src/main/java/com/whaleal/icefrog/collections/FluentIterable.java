@@ -2,11 +2,9 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
 
 import com.whaleal.icefrog.core.text.StrJoiner;
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
