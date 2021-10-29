@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
@@ -149,7 +150,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * either of these would recurse back to us again!
      */
     private List<E> snapshot() {
-        List<E> list = Lists.newArrayListWithExpectedSize(size());
+        List<E> list = CollUtil.newArrayList();;
         for (Entry<E> entry : entrySet()) {
             E element = entry.getElement();
             for (int i = entry.getCount(); i > 0; i--) {
@@ -575,7 +576,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         }
 
         private List<Entry<E>> snapshot() {
-            List<Entry<E>> list = Lists.newArrayListWithExpectedSize(size());
+            List<Entry<E>> list = CollUtil.newArrayList();;
             // Not Iterables.addAll(list, this), because that'll forward right back here.
             Iterators.addAll(list, iterator());
             return list;

@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.util.Predicates;
 
 
@@ -99,7 +100,7 @@ public class FilteredCollectionsTest extends TestCase {
         C filterThenAdd = filter(unfiltered, EVEN);
         unfiltered.add(4);
 
-        List<Integer> target = Lists.newArrayList(contents);
+        List<Integer> target = CollUtil.newArrayList(contents);
         target.add(4);
         C addThenFilter = filter(createUnfiltered(target), EVEN);
 

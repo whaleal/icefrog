@@ -48,7 +48,7 @@ public class ConcurrentHashMultisetBasherTest extends TestCase {
     ExecutorService pool = Executors.newFixedThreadPool(nThreads);
     ImmutableList<String> keys = ImmutableList.of("a", "b", "c");
     try {
-      List<Future<int[]>> futures = Lists.newArrayListWithExpectedSize(nTasks);
+      List<Future<int[]>> futures = CollUtil.newArrayList();
       for (int i = 0; i < nTasks; i++) {
         futures.add(pool.submit(new MutateTask(multiset, keys)));
       }
