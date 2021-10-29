@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.util.ObjectUtil;
+
 import javax.annotation.CheckForNull;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -43,7 +45,7 @@ final class RegularImmutableSet<E> extends ImmutableSet.CachingAsList<E> {
     if (target == null || table.length == 0) {
       return false;
     }
-    for (int i = Hashing.smearedHash(target); ; i++) {
+    for (int i = ObjectUtil.hashCode(target); ; i++) {
       i &= mask;
       Object candidate = table[i];
       if (candidate == null) {

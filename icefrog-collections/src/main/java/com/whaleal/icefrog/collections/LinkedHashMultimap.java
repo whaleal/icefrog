@@ -444,7 +444,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
 
     @Override
     public boolean contains(@CheckForNull Object o) {
-      int smearedHash = Hashing.smearedHash(o);
+      int smearedHash = ObjectUtil.hashCode(o);
       for (ValueEntry<K, V> entry = hashTable[smearedHash & mask()];
           entry != null;
           entry = entry.nextInValueBucket) {
@@ -457,7 +457,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
 
     @Override
     public boolean add(@ParametricNullness V value) {
-      int smearedHash = Hashing.smearedHash(value);
+      int smearedHash = ObjectUtil.hashCode(value);
       int bucket = smearedHash & mask();
       ValueEntry<K, V> rowHead = hashTable[bucket];
       for (ValueEntry<K, V> entry = rowHead; entry != null; entry = entry.nextInValueBucket) {
@@ -498,7 +498,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
 
     @Override
     public boolean remove(@CheckForNull Object o) {
-      int smearedHash = Hashing.smearedHash(o);
+      int smearedHash = ObjectUtil.hashCode(o);
       int bucket = smearedHash & mask();
       ValueEntry<K, V> prev = null;
       for (ValueEntry<K, V> entry = hashTable[bucket];

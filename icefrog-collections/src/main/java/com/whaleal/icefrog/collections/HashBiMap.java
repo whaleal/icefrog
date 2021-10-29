@@ -14,7 +14,6 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import com.whaleal.icefrog.core.map.BiMap;
-import static com.whaleal.icefrog.collections.Hashing.smearedHash;
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Objects.requireNonNull;
 
@@ -234,7 +233,7 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   @Override
   public boolean containsKey(@CheckForNull Object key) {
-    return seekByKey(key, smearedHash(key)) != null;
+    return seekByKey(key, ObjectUtil.hashCode(key)) != null;
   }
 
   /**
@@ -249,13 +248,13 @@ public final class HashBiMap<K extends Object, V extends Object>
    */
   @Override
   public boolean containsValue(@CheckForNull Object value) {
-    return seekByValue(value, smearedHash(value)) != null;
+    return seekByValue(value, ObjectUtil.hashCode(value)) != null;
   }
 
   @Override
   @CheckForNull
   public V get(@CheckForNull Object key) {
-    return MapUtil.valueOrNull(seekByKey(key, smearedHash(key)));
+    return MapUtil.valueOrNull(seekByKey(key, ObjectUtil.hashCode(key)));
   }
 
 
@@ -267,8 +266,8 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   @CheckForNull
   private V put(@ParametricNullness K key, @ParametricNullness V value, boolean force) {
-    int keyHash = smearedHash(key);
-    int valueHash = smearedHash(value);
+    int keyHash = ObjectUtil.hash(key);
+    int valueHash = ObjectUtil.hash(value);
 
     BiEntry<K, V> oldEntryForKey = seekByKey(key, keyHash);
     if (oldEntryForKey != null
@@ -304,8 +303,8 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   @CheckForNull
   private K putInverse(@ParametricNullness V value, @ParametricNullness K key, boolean force) {
-    int valueHash = smearedHash(value);
-    int keyHash = smearedHash(key);
+    int valueHash = ObjectUtil.hash(value);
+    int keyHash = ObjectUtil.hash(key);
 
     BiEntry<K, V> oldEntryForValue = seekByValue(value, valueHash);
     BiEntry<K, V> oldEntryForKey = seekByKey(key, keyHash);
@@ -375,7 +374,7 @@ public final class HashBiMap<K extends Object, V extends Object>
   @Override
   @CheckForNull
   public V remove(@CheckForNull Object key) {
-    BiEntry<K, V> entry = seekByKey(key, smearedHash(key));
+    BiEntry<K, V> entry = seekByKey(key, ObjectUtil.hash(key));
     if (entry == null) {
       return null;
     } else {
@@ -467,7 +466,7 @@ public final class HashBiMap<K extends Object, V extends Object>
 
     @Override
     public boolean remove(@CheckForNull Object o) {
-      BiEntry<K, V> entry = seekByKey(o, smearedHash(o));
+      BiEntry<K, V> entry = seekByKey(o, ObjectUtil.hash(o));
       if (entry == null) {
         return false;
       } else {
@@ -511,7 +510,7 @@ public final class HashBiMap<K extends Object, V extends Object>
         @Override
         public V setValue(V value) {
           V oldValue = delegate.value;
-          int valueHash = smearedHash(value);
+          int valueHash = ObjectUtil.hash(value);
           if (valueHash == delegate.valueHash && ObjectUtil.equal(value, oldValue)) {
             return value;
           }

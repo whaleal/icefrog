@@ -166,7 +166,7 @@ final class CompactHashing {
       int[] entries,
       Object[] keys,
       @CheckForNull Object[] values) {
-    int hash = Hashing.smearedHash(key);
+    int hash = ObjectUtil.hashCode(key);
     int tableIndex = hash & mask;
     int next = tableGet(table, tableIndex);
     if (next == UNSET) {

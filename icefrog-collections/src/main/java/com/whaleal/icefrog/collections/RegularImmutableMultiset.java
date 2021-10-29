@@ -150,7 +150,7 @@ class RegularImmutableMultiset<E> extends ImmutableMultiset<E> {
     if (element == null || hashTable.length == 0) {
       return 0;
     }
-    int hash = Hashing.smearedHash(element);
+    int hash = ObjectUtil.hashCode(element);
     int mask = hashTable.length - 1;
     for (ImmutableEntry<?> entry = hashTable[hash & mask];
         entry != null;

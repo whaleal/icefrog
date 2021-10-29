@@ -15,7 +15,6 @@ import java.util.*;
 import java.util.function.Consumer;
 
 import static com.whaleal.icefrog.collections.CompactHashing.UNSET;
-import static com.whaleal.icefrog.collections.Hashing.smearedHash;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkRemove;
 import static java.util.Objects.requireNonNull;
@@ -281,7 +280,7 @@ class CompactHashSet<E extends Object> extends AbstractSet<E> implements Seriali
 
     int newEntryIndex = this.size; // current size, and pointer to the entry to be appended
     int newSize = newEntryIndex + 1;
-    int hash = smearedHash(object);
+    int hash = ObjectUtil.hashCode(object);
     int mask = hashTableMask();
     int tableIndex = hash & mask;
     int next = CompactHashing.tableGet(requireTable(), tableIndex);
@@ -402,7 +401,7 @@ class CompactHashSet<E extends Object> extends AbstractSet<E> implements Seriali
     if (delegate != null) {
       return delegate.contains(object);
     }
-    int hash = smearedHash(object);
+    int hash = ObjectUtil.hashCode(object);
     int mask = hashTableMask();
     int next = CompactHashing.tableGet(requireTable(), hash & mask);
     if (next == UNSET) {
@@ -471,7 +470,7 @@ class CompactHashSet<E extends Object> extends AbstractSet<E> implements Seriali
       entries[srcIndex] = 0;
 
       // also need to update whoever's "next" pointer was pointing to the last entry place
-      int tableIndex = smearedHash(object) & mask;
+      int tableIndex = ObjectUtil.hashCode(object) & mask;
       int next = CompactHashing.tableGet(table, tableIndex);
       int srcNext = srcIndex + 1;
       if (next == srcNext) {

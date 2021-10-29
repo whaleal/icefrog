@@ -37,6 +37,7 @@ final class Hashing {
     return (int) (C2 * Integer.rotateLeft((int) (hashCode * C1), 15));
   }
 
+  @Deprecated
   static int smearedHash(@CheckForNull Object o) {
     return smear((o == null) ? 0 : o.hashCode());
   }
