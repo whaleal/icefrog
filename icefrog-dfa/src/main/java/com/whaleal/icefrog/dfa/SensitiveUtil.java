@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.dfa;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.thread.ThreadUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.json.JSONUtil;

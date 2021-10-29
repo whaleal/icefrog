@@ -2,6 +2,7 @@ package com.whaleal.icefrog.dfa;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.CollectionUtil;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.text.StrBuilder;
 import com.whaleal.icefrog.core.util.StrUtil;
 

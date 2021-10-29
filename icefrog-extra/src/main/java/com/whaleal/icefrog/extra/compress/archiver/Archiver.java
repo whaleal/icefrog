@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.extra.compress.archiver;
 
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.StrUtil;
 
 import java.io.Closeable;

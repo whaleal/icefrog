@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.extra.compress.extractor;
 
+import com.whaleal.icefrog.core.lang.Predicate;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 
 import java.io.Closeable;

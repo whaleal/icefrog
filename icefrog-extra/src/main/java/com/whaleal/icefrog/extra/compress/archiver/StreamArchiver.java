@@ -3,6 +3,7 @@ package com.whaleal.icefrog.extra.compress.archiver;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.compress.CompressException;
 import org.apache.commons.compress.archivers.ArchiveException;

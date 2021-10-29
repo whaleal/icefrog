@@ -4,8 +4,8 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.comparator.VersionComparator;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
-import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.util.*;
 
@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
@@ -620,8 +621,7 @@ public class CharSequenceUtil {
 	 * @return 除去指定字符后的的字符串，如果原字串为{@code null}，则返回{@code null}
 	 */
 	public static String trim(CharSequence str, int mode) {
-		String trim = trim(str, mode, CharUtil::isBlankChar);
-		return trim;
+		return trim(str, mode, CharUtil::isBlankChar);
 	}
 
 	/**
@@ -633,7 +633,7 @@ public class CharSequenceUtil {
 	 * @return 除去指定字符后的的字符串，如果原字串为{@code null}，则返回{@code null}
 	 * @since 1.0.0
 	 */
-	public static String trim(CharSequence str, int mode, Predicate predicate) {
+	public static String trim(CharSequence str, int mode, Predicate<Character> predicate) {
 		String result;
 		if (str == null) {
 			result = null;
@@ -2339,7 +2339,7 @@ public class CharSequenceUtil {
 	 * @param suffix 截取到的字符串标识
 	 * @return 截取后的字符串
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @since 1.0.0
 	 */
 	public static String[] subBetweenAll(CharSequence str, CharSequence prefix, CharSequence suffix) {
@@ -2390,7 +2390,7 @@ public class CharSequenceUtil {
 	 * @param prefixAndSuffix 截取开始和结束的字符串标识
 	 * @return 截取后的字符串
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @since 1.0.0
 	 */
 	public static String[] subBetweenAll(CharSequence str, CharSequence prefixAndSuffix) {
@@ -3719,7 +3719,7 @@ public class CharSequenceUtil {
 	 * @param desensitizedType 脱敏类型;可以脱敏：用户id、中文名、身份证号、座机号、手机号、地址、电子邮件、密码
 	 * @return 脱敏之后的字符串
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @see DesensitizedUtil 如果需要自定义，脱敏规则，请使用该工具类；
 	 * @since 1.0.0
 	 */
@@ -3937,12 +3937,12 @@ public class CharSequenceUtil {
 	 * 过滤字符串
 	 *
 	 * @param str    字符串
-	 * @param predicate 过滤器，{@link Predicate#apply(Object)}返回为{@code true}的保留字符
+	 * @param filter 过滤器，{@link Filter#accept(Object)}返回为{@code true}的保留字符
 	 * @return 过滤后的字符串
 	 * @since 1.0.0
 	 */
-	public static String filter(CharSequence str, final Predicate<Character> predicate) {
-		if (str == null || predicate == null) {
+	public static String filter(CharSequence str, final Filter<Character> filter) {
+		if (str == null || filter == null) {
 			return str(str);
 		}
 
@@ -3951,7 +3951,7 @@ public class CharSequenceUtil {
 		char c;
 		for (int i = 0; i < len; i++) {
 			c = str.charAt(i);
-			if (predicate.apply(c)) {
+			if (filter.accept(c)) {
 				sb.append(c);
 			}
 		}

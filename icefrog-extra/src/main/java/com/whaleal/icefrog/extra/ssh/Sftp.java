@@ -3,7 +3,6 @@ package com.whaleal.icefrog.extra.ssh;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.io.FileUtil;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.ftp.AbstractFtp;
 import com.whaleal.icefrog.extra.ftp.FtpConfig;
@@ -22,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import com.whaleal.icefrog.core.lang.Predicate;
 
 /**
  * SFTP是Secure File Transfer Protocol的缩写，安全文件传送协议。可以为传输文件提供一种安全的加密方法。<br>
@@ -245,7 +245,7 @@ public class Sftp extends AbstractFtp {
 	 * @since 1.0.0
 	 */
 	public List<String> lsDirs(String path) {
-		return ls(path, t -> t.getAttrs().isDir());
+		 return ls(path, t -> t.getAttrs().isDir());
 	}
 
 	/**
