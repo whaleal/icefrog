@@ -6,7 +6,6 @@ import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Matcher;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.util.*;
 

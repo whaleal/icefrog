@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.lang;
 /**
  * 过滤器接口
  *
-
+ * 
  * @author wh
  */
 @FunctionalInterface

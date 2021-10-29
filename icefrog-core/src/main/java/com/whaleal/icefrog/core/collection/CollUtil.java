@@ -1166,7 +1166,7 @@ public class CollUtil {
 	 * 过滤过程通过传入的Filter实现来过滤返回需要的元素内容，这个Filter实现可以实现以下功能：
 	 *
 	 * <pre>
-	 * 1、过滤出需要的对象，{@link com.whaleal.icefrog.core.lang.Predicate#apply(Object)}方法返回true的对象将被加入结果集合中
+	 * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回true的对象将被加入结果集合中
 	 * </pre>
 	 *
 	 * @param <T>        集合元素类型
@@ -1175,7 +1175,7 @@ public class CollUtil {
 	 * @return 过滤后的数组
 	 * @since 1.0.0
 	 */
-	public static <T> Collection<T> filterNew(Collection<T> collection, com.whaleal.icefrog.core.lang.Predicate<T> predicate) {
+	public static <T> Collection<T> filterNew(Collection<T> collection, Predicate<T> predicate) {
 		if (null == collection || null == predicate) {
 			return collection;
 		}
@@ -1208,7 +1208,7 @@ public class CollUtil {
 	 * @return 处理后的集合
 	 * @since 1.0.0
 	 */
-	public static <T extends Collection<E>, E> T filter(T collection, final com.whaleal.icefrog.core.lang.Predicate<E> predicate) {
+	public static <T extends Collection<E>, E> T filter(T collection, final Predicate<E> predicate) {
 		return IterUtil.filter(collection, predicate);
 	}
 
@@ -1398,7 +1398,7 @@ public class CollUtil {
 	 * @return 满足过滤条件的第一个元素
 	 * @since 1.0.0
 	 */
-	public static <T> T findOne(Iterable<T> collection, com.whaleal.icefrog.core.lang.Predicate<T> predicate) {
+	public static <T> T findOne(Iterable<T> collection, Predicate<T> predicate) {
 		if (null != collection) {
 			for (T t : collection) {
 				if (predicate.apply(t)) {
