@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.map.BiMap;
@@ -3231,13 +3232,13 @@ public final class Maps {
     @Override
     @CheckForNull
     public Entry<K, V> pollFirstEntry() {
-      return Iterables.removeFirstMatching(unfiltered.entrySet(), entryPredicate);
+      return IterUtil.removeFirstMatching(unfiltered.entrySet(), entryPredicate);
     }
 
     @Override
     @CheckForNull
     public Entry<K, V> pollLastEntry() {
-      return Iterables.removeFirstMatching(unfiltered.descendingMap().entrySet(), entryPredicate);
+      return IterUtil.removeFirstMatching(unfiltered.descendingMap().entrySet(), entryPredicate);
     }
 
     @Override

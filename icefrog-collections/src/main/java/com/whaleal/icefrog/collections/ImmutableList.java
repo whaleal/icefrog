@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.InvalidObjectException;
@@ -289,7 +290,7 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
    */
   public static <E extends Comparable<? super E>> ImmutableList<E> sortedCopyOf(
       Iterable<? extends E> elements) {
-    Comparable<?>[] array = Iterables.toArray(elements, new Comparable<?>[0]);
+    Comparable<?>[] array = ArrayUtil.toArray(elements, new Comparable<?>[0]);
     checkElementsNotNull((Object[]) array);
     Arrays.sort(array);
     return asImmutableList(array);
@@ -314,7 +315,7 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
       Comparator<? super E> comparator, Iterable<? extends E> elements) {
     checkNotNull(comparator);
     @SuppressWarnings("unchecked") // all supported methods are covariant
-    E[] array = (E[]) Iterables.toArray(elements);
+    E[] array = (E[]) ArrayUtil.toArray(elements);
     checkElementsNotNull(array);
     Arrays.sort(array, comparator);
     return asImmutableList(array);

@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
@@ -78,7 +79,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
     public static <E> ConcurrentHashMultiset<E> create(Iterable<? extends E> elements) {
         ConcurrentHashMultiset<E> multiset = ConcurrentHashMultiset.create();
-        Iterables.addAll(multiset, elements);
+        IterUtil.addAll(multiset, elements);
         return multiset;
     }
 
@@ -577,7 +578,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
         private List<Entry<E>> snapshot() {
             List<Entry<E>> list = CollUtil.newArrayList();;
-            // Not Iterables.addAll(list, this), because that'll forward right back here.
+            // Not IterUtil.addAll(list, this), because that'll forward right back here.
             Iterators.addAll(list, iterator());
             return list;
         }

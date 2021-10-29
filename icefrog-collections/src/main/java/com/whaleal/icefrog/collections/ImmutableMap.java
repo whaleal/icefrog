@@ -8,6 +8,7 @@ import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 import sun.jvm.hotspot.utilities.BitMap;
 
 import javax.annotation.CheckForNull;
@@ -613,7 +614,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
   public static <K, V> ImmutableMap<K, V> copyOf(
       Iterable<? extends Entry<? extends K, ? extends V>> entries) {
     @SuppressWarnings("unchecked") // we'll only be using getKey and getValue, which are covariant
-    Entry<K, V>[] entryArray = (Entry<K, V>[]) Iterables.toArray(entries, EMPTY_ENTRY_ARRAY);
+    Entry<K, V>[] entryArray = (Entry<K, V>[]) ArrayUtil.toArray(entries, EMPTY_ENTRY_ARRAY);
     switch (entryArray.length) {
       case 0:
         return of();

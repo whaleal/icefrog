@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.AbstractIterator;
@@ -126,7 +127,7 @@ public final class Sets {
   public static <E extends Enum<E>> EnumSet<E> newEnumSet(
       Iterable<E> iterable, Class<E> elementType) {
     EnumSet<E> set = EnumSet.noneOf(elementType);
-    Iterables.addAll(set, iterable);
+    IterUtil.addAll(set, iterable);
     return set;
   }
 
@@ -170,7 +171,7 @@ public final class Sets {
   /**
    * Creates a <i>mutable</i> {@code HashSet} instance containing the given elements. A very thin
    * convenience for creating an empty set then calling {@link Collection#addAll} or {@link
-   * Iterables#addAll}.
+   * IterUtil#addAll}.
    *
    * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
    * ImmutableSet#copyOf(Iterable)} instead. (Or, change {@code elements} to be a {@link
@@ -255,7 +256,7 @@ public final class Sets {
    */
   public static <E> Set<E> newConcurrentHashSet(Iterable<? extends E> elements) {
     Set<E> set = newConcurrentHashSet();
-    Iterables.addAll(set, elements);
+    IterUtil.addAll(set, elements);
     return set;
   }
 
@@ -297,7 +298,7 @@ public final class Sets {
       return new LinkedHashSet<E>((Collection<? extends E>) elements);
     }
     LinkedHashSet<E> set = newLinkedHashSet();
-    Iterables.addAll(set, elements);
+    IterUtil.addAll(set, elements);
     return set;
   }
 
@@ -352,14 +353,14 @@ public final class Sets {
    * <a href="http://goo.gl/iz2Wi">"diamond" syntax</a>.
    *
    * <p>This method is just a small convenience for creating an empty set and then calling {@link
-   * Iterables#addAll}. This method is not very useful and will likely be deprecated in the future.
+   * IterUtil#addAll}. This method is not very useful and will likely be deprecated in the future.
    *
    * @param elements the elements that the set should contain
    * @return a new {@code TreeSet} containing those elements (minus duplicates)
    */
   public static <E extends Comparable> TreeSet<E> newTreeSet(Iterable<? extends E> elements) {
     TreeSet<E> set = newTreeSet();
-    Iterables.addAll(set, elements);
+    IterUtil.addAll(set, elements);
     return set;
   }
 
@@ -986,13 +987,13 @@ public final class Sets {
    *
    * <p>Many of the filtered set's methods, such as {@code size()}, iterate across every element in
    * the underlying set and determine which elements satisfy the filter. When a live view is
-   * <i>not</i> needed, it may be faster to copy {@code Iterables.filter(unfiltered, predicate)} and
+   * <i>not</i> needed, it may be faster to copy {@code IterUtil.filter(unfiltered, predicate)} and
    * use the copy.
    *
    * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
    * {@link Predicate#apply}. Do not provide a predicate such as {@code
    * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-   * Iterables#filter(Iterable, Class)} for related functionality.)
+   * IterUtil#filter(Iterable, Class)} for related functionality.)
    *
    * <p><b>Java 8 users:</b> many use cases for this method are better addressed by {@link
    * Stream#filter}. This method is not being deprecated, but we gently encourage
@@ -1029,13 +1030,13 @@ public final class Sets {
    *
    * <p>Many of the filtered set's methods, such as {@code size()}, iterate across every element in
    * the underlying set and determine which elements satisfy the filter. When a live view is
-   * <i>not</i> needed, it may be faster to copy {@code Iterables.filter(unfiltered, predicate)} and
+   * <i>not</i> needed, it may be faster to copy {@code IterUtil.filter(unfiltered, predicate)} and
    * use the copy.
    *
    * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
    * {@link Predicate#apply}. Do not provide a predicate such as {@code
    * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-   * Iterables#filter(Iterable, Class)} for related functionality.)
+   * IterUtil#filter(Iterable, Class)} for related functionality.)
    *
    * 
    */
@@ -1066,13 +1067,13 @@ public final class Sets {
    *
    * <p>Many of the filtered set's methods, such as {@code size()}, iterate across every element in
    * the underlying set and determine which elements satisfy the filter. When a live view is
-   * <i>not</i> needed, it may be faster to copy {@code Iterables.filter(unfiltered, predicate)} and
+   * <i>not</i> needed, it may be faster to copy {@code IterUtil.filter(unfiltered, predicate)} and
    * use the copy.
    *
    * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
    * {@link Predicate#apply}. Do not provide a predicate such as {@code
    * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-   * Iterables#filter(Iterable, Class)} for related functionality.)
+   * IterUtil#filter(Iterable, Class)} for related functionality.)
    *
    * 
    */
@@ -1184,25 +1185,25 @@ public final class Sets {
     @Override
     @CheckForNull
     public E ceiling(@ParametricNullness E e) {
-      return Iterables.find(unfiltered().tailSet(e, true), predicate, null);
+      return IterUtil.find(unfiltered().tailSet(e, true), predicate, null);
     }
 
     @Override
     @CheckForNull
     public E higher(@ParametricNullness E e) {
-      return Iterables.find(unfiltered().tailSet(e, false), predicate, null);
+      return IterUtil.find(unfiltered().tailSet(e, false), predicate, null);
     }
 
     @Override
     @CheckForNull
     public E pollFirst() {
-      return Iterables.removeFirstMatching(unfiltered(), predicate);
+      return IterUtil.removeFirstMatching(unfiltered(), predicate);
     }
 
     @Override
     @CheckForNull
     public E pollLast() {
-      return Iterables.removeFirstMatching(unfiltered().descendingSet(), predicate);
+      return IterUtil.removeFirstMatching(unfiltered().descendingSet(), predicate);
     }
 
     @Override

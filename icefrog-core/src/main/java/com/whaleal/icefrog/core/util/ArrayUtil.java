@@ -1270,7 +1270,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     public static <T> T[] toArray(Iterable<T> iterable, Class<T> componentType) {
-        return toArray(CollectionUtil.toCollection(iterable), componentType);
+        return toArray(CollUtil.toCollection(iterable), componentType);
     }
 
     // ---------------------------------------------------------------------- remove
@@ -1286,6 +1286,19 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      */
     public static <T> T[] toArray(Collection<T> collection, Class<T> componentType) {
         return collection.toArray(newArray(componentType, 0));
+    }
+
+    /**
+     *
+     * @param iterable  {@link Iterable}
+     * @param array 数组元素
+     * @param <T> 数组元素类型
+     * @return 数组
+     * @since 1.1
+     */
+    public static <T extends Object> T[] toArray(Iterable<? extends T> iterable, T[] array) {
+        Collection<? extends T> collection = CollUtil.toCollection(iterable);
+        return collection.toArray(array);
     }
 
     // ---------------------------------------------------------------------- removeEle

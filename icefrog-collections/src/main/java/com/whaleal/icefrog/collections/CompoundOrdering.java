@@ -4,6 +4,8 @@ package com.whaleal.icefrog.collections;
 
 
 
+import com.whaleal.icefrog.core.util.ArrayUtil;
+
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ final class CompoundOrdering<T extends Object> extends Ordering<T>
   }
 
   CompoundOrdering(Iterable<? extends Comparator<? super T>> comparators) {
-    this.comparators = Iterables.toArray(comparators, new Comparator[0]);
+    this.comparators = ArrayUtil.toArray(comparators, new Comparator[0]);
   }
 
   @Override

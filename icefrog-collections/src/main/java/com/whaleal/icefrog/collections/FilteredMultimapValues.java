@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
@@ -62,7 +63,7 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
 
   @Override
   public boolean removeAll(Collection<?> c) {
-    return Iterables.removeIf(
+    return IterUtil.removeIf(
         multimap.unfiltered().entries(),
         // explicit <Entry<K, V>> is required to build with JDK6
         Predicates.and(
@@ -71,7 +72,7 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
 
   @Override
   public boolean retainAll(Collection<?> c) {
-    return Iterables.removeIf(
+    return IterUtil.removeIf(
         multimap.unfiltered().entries(),
         // explicit <Entry<K, V>> is required to build with JDK6
         Predicates.and(

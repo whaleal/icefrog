@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -471,7 +472,7 @@ public final class ImmutableSortedMap<K, V> extends ImmutableSortedMapFauxveride
     // long as no one can ever cast that same array instance back to a
     // raw type.
     @SuppressWarnings("unchecked")
-    Entry<K, V>[] entryArray = (Entry[]) Iterables.toArray(entries, EMPTY_ENTRY_ARRAY);
+    Entry<K, V>[] entryArray = (Entry[]) ArrayUtil.toArray(entries, EMPTY_ENTRY_ARRAY);
     return fromEntries(comparator, sameComparator, entryArray, entryArray.length);
   }
 

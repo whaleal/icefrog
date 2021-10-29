@@ -295,7 +295,8 @@ public final class Iterators {
    * @throws IllegalArgumentException if the iterator contains multiple elements. The state of the
    *     iterator is unspecified.
    */
- 
+
+  @Deprecated
   public static <T extends Object> T getOnlyElement(
           Iterator<? extends T> iterator, T defaultValue) {
     return iterator.hasNext() ? getOnlyElement(iterator) : defaultValue;
@@ -311,6 +312,7 @@ public final class Iterators {
    */
  // Array.newInstance(Class, int)
   // For discussion of this signature, see the corresponding overload of *Iterables*.toArray.
+  @Deprecated
   public static <T>  T[] toArray(Iterator<T> iterator, Class<T> type) {
     List< T> list = ListUtil.list(false,iterator);
     return Iterables.toArray(list, type);
@@ -322,7 +324,8 @@ public final class Iterators {
    *
    * @return {@code true} if {@code collection} was modified as a result of this operation
    */
-  
+
+  @Deprecated
   public static <T extends Object> boolean addAll(
           Collection<T> addTo, Iterator<? extends T> iterator) {
     checkNotNull(addTo);

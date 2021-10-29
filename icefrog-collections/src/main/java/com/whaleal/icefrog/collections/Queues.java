@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
@@ -56,7 +57,7 @@ public final class Queues {
       return new ArrayDeque<E>((Collection<? extends E>) elements);
     }
     ArrayDeque<E> deque = new ArrayDeque<E>();
-    Iterables.addAll(deque, elements);
+    IterUtil.addAll(deque, elements);
     return deque;
   }
 
@@ -79,7 +80,7 @@ public final class Queues {
       return new ConcurrentLinkedQueue<E>((Collection<? extends E>) elements);
     }
     ConcurrentLinkedQueue<E> queue = new ConcurrentLinkedQueue<E>();
-    Iterables.addAll(queue, elements);
+    IterUtil.addAll(queue, elements);
     return queue;
   }
 
@@ -119,7 +120,7 @@ public final class Queues {
       return new LinkedBlockingDeque<E>((Collection<? extends E>) elements);
     }
     LinkedBlockingDeque<E> deque = new LinkedBlockingDeque<E>();
-    Iterables.addAll(deque, elements);
+    IterUtil.addAll(deque, elements);
     return deque;
   }
 
@@ -155,7 +156,7 @@ public final class Queues {
       return new LinkedBlockingQueue<E>((Collection<? extends E>) elements);
     }
     LinkedBlockingQueue<E> queue = new LinkedBlockingQueue<E>();
-    Iterables.addAll(queue, elements);
+    IterUtil.addAll(queue, elements);
     return queue;
   }
 
@@ -191,7 +192,7 @@ public final class Queues {
       return new PriorityBlockingQueue<E>((Collection<? extends E>) elements);
     }
     PriorityBlockingQueue<E> queue = new PriorityBlockingQueue<E>();
-    Iterables.addAll(queue, elements);
+    IterUtil.addAll(queue, elements);
     return queue;
   }
 
@@ -223,7 +224,7 @@ public final class Queues {
       return new PriorityQueue<E>((Collection<? extends E>) elements);
     }
     PriorityQueue<E> queue = new PriorityQueue<E>();
-    Iterables.addAll(queue, elements);
+    IterUtil.addAll(queue, elements);
     return queue;
   }
 
