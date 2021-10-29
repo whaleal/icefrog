@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -408,8 +409,8 @@ public final class Lists {
    *     a provided list is null
    * 
    */
-  public static <B> List<List<B>> cartesianProduct(List<? extends List<? extends B>> lists) {
-    return CartesianList.create(lists);
+  public static <B> List<List<B>> cartesianProduct(List<List<B>> lists) {
+     return (List<List<B>>) CollUtil.cartesianProduct(lists);
   }
 
   /**
@@ -467,7 +468,8 @@ public final class Lists {
    * 
    */
   @SafeVarargs
-  public static <B> List<List<B>> cartesianProduct(List<? extends B>... lists) {
+  public static <B> List<List<B>> cartesianProduct(List<B>... lists) {
+
     return cartesianProduct(Arrays.asList(lists));
   }
 

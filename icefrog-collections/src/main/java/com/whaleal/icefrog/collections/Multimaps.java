@@ -6,7 +6,7 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.collections.Maps.EntryTransformer;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.Predicates;
 
 import javax.annotation.CheckForNull;
@@ -2203,7 +2203,7 @@ public final class Multimaps {
    */
   private static <K extends Object, V extends Object>
       SetMultimap<K, V> filterFiltered(
-          FilteredSetMultimap<K, V> multimap, com.whaleal.icefrog.core.util.Predicate<? super Entry<K, V>> entryPredicate) {
+          FilteredSetMultimap<K, V> multimap, Predicate<? super Entry<K, V>> entryPredicate) {
     Predicate<Entry<K, V>> predicate =
         Predicates.and(multimap.entryPredicate(), entryPredicate);
     return new FilteredEntrySetMultimap<>(multimap.unfiltered(), predicate);

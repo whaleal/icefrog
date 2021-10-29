@@ -49,7 +49,6 @@ public final class ImmutableSortedMap<K, V> extends ImmutableSortedMapFauxveride
    * from the {@code Collector} returned by {@link Collectors#toMap(Function, Function)}, which
    * throws an {@code IllegalStateException}.)
    *
-   * 
    */
   public static <T extends Object, K, V>
       Collector<T, ?, ImmutableSortedMap<K, V>> toImmutableSortedMap(

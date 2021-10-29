@@ -2,10 +2,13 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.map.BiMap;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import sun.jvm.hotspot.utilities.BitMap;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -96,13 +99,13 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
     return (ImmutableMap<K, V>) RegularImmutableMap.EMPTY;
   }
 
-  /**
-   * Returns an immutable map containing a single entry. This map behaves and performs comparably to
-   * {@link Collections#singletonMap} but will not accept a null key or value. It is preferable
-   * mainly for consistency and maintainability of your code.
-   */
+
   public static <K, V> ImmutableMap<K, V> of(K k1, V v1) {
-    return ImmutableBiMap.of(k1, v1);
+    HashMap<Object, Object> hashMap = MapUtil.newHashMap();
+    hashMap.put(k1,v1);
+    ImmutableMap build = new Builder().build();
+    build.put(k1,v1);
+    return build ;
   }
 
   /**
@@ -546,7 +549,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
         case 1:
           // requireNonNull is safe because the first `size` elements have been filled in.
           Entry<K, V> onlyEntry = requireNonNull(entries[0]);
-          return of(onlyEntry.getKey(), onlyEntry.getValue());
+          //return of(onlyEntry.getKey(), onlyEntry.getValue());
         default:
           entriesUsed = true;
           return RegularImmutableMap.fromEntryArray(size, entries);
@@ -563,7 +566,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
         case 1:
           // requireNonNull is safe because the first `size` elements have been filled in.
           Entry<K, V> onlyEntry = requireNonNull(entries[0]);
-          return of(onlyEntry.getKey(), onlyEntry.getValue());
+          //return of(onlyEntry.getKey(), onlyEntry.getValue());
         default:
           entriesUsed = true;
           return JdkBackedImmutableMap.create(size, entries);
@@ -617,7 +620,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
       case 1:
         // requireNonNull is safe because the first `size` elements have been filled in.
         Entry<K, V> onlyEntry = requireNonNull(entryArray[0]);
-        return of(onlyEntry.getKey(), onlyEntry.getValue());
+        //return of(onlyEntry.getKey(), onlyEntry.getValue());
       default:
         /*
          * The current implementation will end up using entryArray directly, though it will write
@@ -633,7 +636,8 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
     for (Entry<K, V> entry : copy.entrySet()) {
       checkEntryNotNull(entry.getKey(), entry.getValue());
     }
-    return ImmutableEnumMap.asImmutable(copy);
+    return null ;
+    //return ImmutableEnumMap.asImmutable(copy);
   }
 
   static final Entry<?, ?>[] EMPTY_ENTRY_ARRAY = new Entry<?, ?>[0];

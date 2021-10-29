@@ -2,12 +2,14 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.map.BiMap;
 import com.whaleal.icefrog.core.util.Functions;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.Predicates;
-import com.whaleal.icefrog.core.util.Predicate ;
+import com.whaleal.icefrog.core.lang.Predicate;
 import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
@@ -91,45 +93,6 @@ public final class Maps {
     };
   }
 
-  /**
-   * Returns an immutable map instance containing the given entries. Internally, the returned map
-   * will be backed by an {@link EnumMap}.
-   *
-   * <p>The iteration order of the returned map follows the enum's iteration order, not the order in
-   * which the elements appear in the given map.
-   *
-   * @param map the map to make an immutable copy of
-   * @return an immutable map containing those entries
-
-   */
-
-  public static <K extends Enum<K>, V> ImmutableMap<K, V> immutableEnumMap(
-          Map<K, ? extends V> map) {
-    if (map instanceof ImmutableEnumMap) {
-      @SuppressWarnings("unchecked") // safe covariant cast
-      ImmutableEnumMap<K, V> result = (ImmutableEnumMap<K, V>) map;
-      return result;
-    }
-    Iterator<? extends Entry<K, ? extends V>> entryItr = map.entrySet().iterator();
-    if (!entryItr.hasNext()) {
-      return ImmutableMap.of();
-    }
-    Entry<K, ? extends V> entry1 = entryItr.next();
-    K key1 = entry1.getKey();
-    V value1 = entry1.getValue();
-    checkEntryNotNull(key1, value1);
-    Class<K> clazz = key1.getDeclaringClass();
-    EnumMap<K, V> enumMap = new EnumMap<>(clazz);
-    enumMap.put(key1, value1);
-    while (entryItr.hasNext()) {
-      Entry<K, ? extends V> entry = entryItr.next();
-      K key = entry.getKey();
-      V value = entry.getValue();
-      checkEntryNotNull(key, value);
-      enumMap.put(key, value);
-    }
-    return ImmutableEnumMap.asImmutable(enumMap);
-  }
 
   /**
    * Returns a {@link Collector} that accumulates elements into an {@code ImmutableMap} whose keys
@@ -1519,7 +1482,7 @@ public final class Maps {
 
   /**
    * Returns a {@link Converter} that converts values using {@link BiMap#get bimap.get()}, and whose
-   * inverse view converts values using {@link BiMap#inverse bimap.inverse()}{@code .get()}.
+   * inverse view converts values using {@code .get()}.
    *
    * <p>To use a plain {@link Map} as a {@link Function}, see {@link
    * Functions#forMap(Map)} or {@link
@@ -1545,7 +1508,7 @@ public final class Maps {
 
     @Override
     protected A doBackward(B b) {
-      return convert(bimap.inverse(), b);
+      return convert(new BiMap<>(bimap.getInverse()), b);
     }
 
     private static <X, Y> Y convert(BiMap<X, Y> bimap, X input) {
@@ -1606,10 +1569,10 @@ public final class Maps {
    * @param bimap the bimap to be wrapped in a synchronized view
    * @return a synchronized view of the specified bimap
    */
-  public static <K extends Object, V extends Object>
+  /*public static <K extends Object, V extends Object>
   BiMap<K, V> synchronizedBiMap(BiMap<K, V> bimap) {
     return Synchronized.biMap(bimap, null);
-  }
+  }*/
 
   /**
    * Returns an unmodifiable view of the specified bimap. This method allows modules to provide
@@ -1629,41 +1592,37 @@ public final class Maps {
 
   /** @see Maps#unmodifiableBiMap(BiMap) */
   private static class UnmodifiableBiMap<K extends Object, V extends Object>
-          extends ForwardingMap<K, V> implements BiMap<K, V>, Serializable {
+          extends   BiMap<K, V> {
     final Map<K, V> unmodifiableMap;
     final BiMap<? extends K, ? extends V> delegate;
      @CheckForNull BiMap<V, K> inverse;
     @CheckForNull transient Set<V> values;
 
     UnmodifiableBiMap(BiMap<? extends K, ? extends V> delegate, @CheckForNull BiMap<V, K> inverse) {
+      super((Map<K,V> )delegate);
       unmodifiableMap = Collections.unmodifiableMap(delegate);
       this.delegate = delegate;
       this.inverse = inverse;
     }
 
-    @Override
+
     protected Map<K, V> delegate() {
       return unmodifiableMap;
     }
 
-    @Override
-    @CheckForNull
-    public V forcePut( K key,  V value) {
-      throw new UnsupportedOperationException();
-    }
 
     @Override
-    public BiMap<V, K> inverse() {
+    public BiMap<V, K> getInverse() {
       BiMap<V, K> result = inverse;
       return (result == null)
-              ? inverse = new UnmodifiableBiMap<>(delegate.inverse(), this)
+              ? inverse = new UnmodifiableBiMap(new BiMap(delegate.getInverse()), this)
               : result;
     }
 
     @Override
     public Set<V> values() {
       Set<V> result = values;
-      return (result == null) ? values = Collections.unmodifiableSet(delegate.values()) : result;
+      return (result == null) ? values = Collections.unmodifiableSet(CollUtil.newHashSet(delegate.values())) : result;
     }
 
     private static final long serialVersionUID = 0;
@@ -2740,9 +2699,7 @@ public final class Maps {
           BiMap<K, V> unfiltered, Predicate<? super Entry<K, V>> entryPredicate) {
     checkNotNull(unfiltered);
     checkNotNull(entryPredicate);
-    return (unfiltered instanceof FilteredEntryBiMap)
-            ? filterFiltered((FilteredEntryBiMap<K, V>) unfiltered, entryPredicate)
-            : new FilteredEntryBiMap<K, V>(unfiltered, entryPredicate);
+    return null;
   }
 
   /**
@@ -2779,16 +2736,7 @@ public final class Maps {
     return new FilteredEntryNavigableMap<>(map.unfiltered, predicate);
   }
 
-  /**
-   * Support {@code clear()}, {@code removeAll()}, and {@code retainAll()} when filtering a filtered
-   * map.
-   */
-  private static <K extends Object, V extends Object>
-  BiMap<K, V> filterFiltered(
-          FilteredEntryBiMap<K, V> map, Predicate<? super Entry<K, V>> entryPredicate) {
-    Predicate<Entry<K, V>> predicate = Predicates.and(map.predicate, entryPredicate);
-    return new FilteredEntryBiMap<>(map.unfiltered(), predicate);
-  }
+
 
   private abstract static class AbstractFilteredMap<
           K extends Object, V extends Object>
@@ -3318,64 +3266,6 @@ public final class Maps {
     }
   }
 
-  static final class FilteredEntryBiMap<K extends Object, V extends Object>
-          extends FilteredEntryMap<K, V> implements BiMap<K, V> {
-     private final BiMap<V, K> inverse;
-
-    private static <K extends Object, V extends Object>
-    Predicate<Entry<V, K>> inversePredicate(
-            final Predicate<? super Entry<K, V>> forwardPredicate) {
-      return new Predicate<Entry<V, K>>() {
-        @Override
-        public boolean apply(Entry<V, K> input) {
-          return forwardPredicate.apply(Maps.immutableEntry(input.getValue(), input.getKey()));
-        }
-      };
-    }
-
-    FilteredEntryBiMap(BiMap<K, V> delegate, Predicate<? super Entry<K, V>> predicate) {
-      super(delegate, predicate);
-      this.inverse =
-              new FilteredEntryBiMap<>(delegate.inverse(), inversePredicate(predicate), this);
-    }
-
-    private FilteredEntryBiMap(
-            BiMap<K, V> delegate, Predicate<? super Entry<K, V>> predicate, BiMap<V, K> inverse) {
-      super(delegate, predicate);
-      this.inverse = inverse;
-    }
-
-    BiMap<K, V> unfiltered() {
-      return (BiMap<K, V>) unfiltered;
-    }
-
-    @Override
-    @CheckForNull
-    public V forcePut( K key,  V value) {
-      checkArgument(apply(key, value));
-      return unfiltered().forcePut(key, value);
-    }
-
-    @Override
-    public void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
-      unfiltered()
-              .replaceAll(
-                      (key, value) ->
-                              predicate.apply(Maps.immutableEntry(key, value))
-                                      ? function.apply(key, value)
-                                      : value);
-    }
-
-    @Override
-    public BiMap<V, K> inverse() {
-      return inverse;
-    }
-
-    @Override
-    public Set<V> values() {
-      return inverse.keySet();
-    }
-  }
 
   /**
    * Returns an unmodifiable view of the specified navigable map. Query operations on the returned

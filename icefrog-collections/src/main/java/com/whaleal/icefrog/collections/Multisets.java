@@ -5,6 +5,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.collections.Multiset.Entry;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.*;
 
 import javax.annotation.CheckForNull;
