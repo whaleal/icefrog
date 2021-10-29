@@ -6,8 +6,8 @@ import com.whaleal.icefrog.core.comparator.CompareUtil;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Editor;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
 
@@ -640,20 +640,20 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * 过滤过程通过传入的Filter实现来过滤返回需要的元素内容，这个Filter实现可以实现以下功能：
      *
      * <pre>
-     * 1、过滤出需要的对象，{@link Filter#accept(Object)}方法返回true的对象将被加入结果集合中
+     * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回true的对象将被加入结果集合中
      * </pre>
      *
      * @param <T>    数组元素类型
      * @param array  数组
-     * @param filter 过滤器接口，用于定义过滤规则，{@code null}返回原集合
+     * @param predicate 过滤器接口，用于定义过滤规则，{@code null}返回原集合
      * @return 过滤后的数组
      * @since 1.0.0
      */
-    public static <T> T[] filter(T[] array, Filter<T> filter) {
-        if (null == array || null == filter) {
+    public static <T> T[] filter(T[] array, Predicate<T> predicate) {
+        if (null == array || null == predicate) {
             return array;
         }
-        return edit(array, t -> filter.accept(t) ? t : null);
+        return edit(array, t -> predicate.apply(t) ? t : null);
     }
 
     /**

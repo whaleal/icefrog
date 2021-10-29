@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.util;
 
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.text.escape.Html4Escape;
 import com.whaleal.icefrog.core.text.escape.Html4Unescape;
 import com.whaleal.icefrog.core.text.escape.XmlEscape;
@@ -20,7 +20,7 @@ public class EscapeUtil {
 	 * 不转义的符号编码
 	 */
 	private static final String NOT_ESCAPE_CHARS = "*@-_+./";
-	private static final Filter<Character> JS_ESCAPE_FILTER = c -> false == (
+	private static final Predicate<Character> JS_ESCAPE_PREDICATE = c -> false == (
 			Character.isDigit(c)
 					|| Character.isLowerCase(c)
 					|| Character.isUpperCase(c)
@@ -91,7 +91,7 @@ public class EscapeUtil {
 	 * @return 编码后的字符串
 	 */
 	public static String escape(CharSequence content) {
-		return escape(content, JS_ESCAPE_FILTER);
+		return escape(content, JS_ESCAPE_PREDICATE);
 	}
 
 	/**
@@ -110,10 +110,10 @@ public class EscapeUtil {
 	 * 该方法不会对 ASCII 字母和数字进行编码。其他所有的字符都会被转义序列替换。
 	 *
 	 * @param content 被转义的内容
-	 * @param filter  编码过滤器，对于过滤器中accept为false的字符不做编码
+	 * @param predicate  编码过滤器，对于过滤器中accept为false的字符不做编码
 	 * @return 编码后的字符串
 	 */
-	public static String escape(CharSequence content, Filter<Character> filter) {
+	public static String escape(CharSequence content, Predicate<Character> predicate) {
 		if (StrUtil.isEmpty(content)) {
 			return StrUtil.str(content);
 		}
@@ -122,7 +122,7 @@ public class EscapeUtil {
 		char j;
 		for (int i = 0; i < content.length(); i++) {
 			j = content.charAt(i);
-			if (false == filter.accept(j)) {
+			if (false == predicate.apply(j)) {
 				tmp.append(j);
 			} else if (j < 256) {
 				tmp.append("%");

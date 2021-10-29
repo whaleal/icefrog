@@ -13,6 +13,7 @@ import com.whaleal.icefrog.core.io.file.Tailer;
 import com.whaleal.icefrog.core.io.resource.ResourceUtil;
 import com.whaleal.icefrog.core.io.unit.DataSizeUtil;
 import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.*;
 
 import java.io.*;

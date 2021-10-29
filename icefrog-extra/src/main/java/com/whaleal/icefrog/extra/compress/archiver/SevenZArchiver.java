@@ -3,7 +3,6 @@ package com.whaleal.icefrog.extra.compress.archiver;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import org.apache.commons.compress.archivers.sevenz.SevenZOutputFile;
 import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
@@ -77,9 +76,9 @@ public class SevenZArchiver implements Archiver {
 	}
 
 	@Override
-	public SevenZArchiver add(File file, String path, Filter<File> filter) {
+	public SevenZArchiver add(File file, String path, Predicate<File> predicate) {
 		try {
-			addInternal(file, path, filter);
+			addInternal(file, path, predicate);
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		}
@@ -118,10 +117,10 @@ public class SevenZArchiver implements Archiver {
 	 *
 	 * @param file   文件或目录
 	 * @param path   文件或目录的初始路径，null表示位于根路径
-	 * @param filter 文件过滤器，指定哪些文件或目录可以加入，当{@link Filter#accept(Object)}为true时加入。
+	 * @param predicate 文件过滤器，指定哪些文件或目录可以加入，当{@link Predicate#apply(Object)}为true时加入。
 	 */
-	private void addInternal(File file, String path, Filter<File> filter) throws IOException {
-		if (null != filter && false == filter.accept(file)) {
+	private void addInternal(File file, String path, Predicate<File> predicate) throws IOException {
+		if (null != predicate && false == predicate.apply(file)) {
 			return;
 		}
 		final SevenZOutputFile out = this.sevenZOutputFile;
@@ -133,7 +132,7 @@ public class SevenZArchiver implements Archiver {
 			// 目录遍历写入
 			final File[] files = file.listFiles();
 			for (File childFile : files) {
-				addInternal(childFile, entryName, filter);
+				addInternal(childFile, entryName, predicate);
 			}
 		} else {
 			if (file.isFile()) {

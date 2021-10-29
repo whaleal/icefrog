@@ -3,13 +3,12 @@ package com.whaleal.icefrog.core.collection;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Editor;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicate;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 
 import javax.annotation.CheckForNull;
@@ -687,22 +686,22 @@ public class IterUtil {
 	 * 通过实现Filter接口，完成元素的过滤，这个Filter实现可以实现以下功能：
 	 *
 	 * <pre>
-	 * 1、过滤出需要的对象，{@link Filter#accept(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
+	 * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
 	 * </pre>
 	 *
 	 * @param <T>    集合类型
 	 * @param <E>    集合元素类型
 	 * @param iter   集合
-	 * @param filter 过滤器接口
+	 * @param predicate 过滤器接口
 	 * @return 编辑后的集合
 	 * @since 1.0.0
 	 */
-	public static <T extends Iterable<E>, E> T filter(T iter, Filter<E> filter) {
+	public static <T extends Iterable<E>, E> T filter(T iter, Predicate<E> predicate) {
 		if (null == iter) {
 			return null;
 		}
 
-		filter(iter.iterator(), filter);
+		filter(iter.iterator(), predicate);
 
 		return iter;
 	}
@@ -712,22 +711,22 @@ public class IterUtil {
 	 * 通过实现Filter接口，完成元素的过滤，这个Filter实现可以实现以下功能：
 	 *
 	 * <pre>
-	 * 1、过滤出需要的对象，{@link Filter#accept(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
+	 * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
 	 * </pre>
 	 *
 	 * @param <E>    集合元素类型
 	 * @param iter   集合
-	 * @param filter 过滤器接口
+	 * @param predicate 过滤器接口
 	 * @return 编辑后的集合
 	 * @since 1.0.0
 	 */
-	public static <E> Iterator<E> filter(Iterator<E> iter, Filter<E> filter) {
-		if (null == iter || null == filter) {
+	public static <E> Iterator<E> filter(Iterator<E> iter, Predicate<E> predicate) {
+		if (null == iter || null == predicate) {
 			return iter;
 		}
 
 		while (iter.hasNext()) {
-			if (false == filter.accept(iter.next())) {
+			if (false == predicate.apply(iter.next())) {
 				iter.remove();
 			}
 		}
@@ -937,7 +936,7 @@ public class IterUtil {
 	 */
 
 	public static <T extends Object> boolean removeIf(
-			Iterator<T> removeFrom, Predicate<? super T> predicate) {
+			Iterator<T> removeFrom, Predicate predicate) {
 		checkNotNull(predicate);
 		boolean modified = false;
 		while (removeFrom.hasNext()) {
@@ -1097,7 +1096,7 @@ public class IterUtil {
 	 * predicate.
 	 */
 	public static <T extends Object> boolean any(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		return indexOf(iterator, predicate) != -1;
 	}
 
@@ -1106,7 +1105,7 @@ public class IterUtil {
 	 * predicate. If {@code iterator} is empty, {@code true} is returned.
 	 */
 	public static <T extends Object> boolean all(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(predicate);
 		while (iterator.hasNext()) {
 			T element = iterator.next();
@@ -1128,7 +1127,7 @@ public class IterUtil {
 	 */
 
 	public static <T extends Object> T find(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(iterator);
 		checkNotNull(predicate);
 		while (iterator.hasNext()) {
@@ -1151,7 +1150,7 @@ public class IterUtil {
 	@CheckForNull
 	public static <T extends Object> T find(
 			Iterator<? extends T> iterator,
-			Predicate<? super T> predicate,
+			Predicate predicate,
 			@CheckForNull T defaultValue) {
 		checkNotNull(iterator);
 		checkNotNull(predicate);
@@ -1175,7 +1174,7 @@ public class IterUtil {
 	 *
 	 * @since 11.0
 	 */
-	public static <T> Optional<T> tryFind(Iterator<T> iterator, Predicate<? super T> predicate) {
+	public static <T> Optional<T> tryFind(Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(iterator);
 		checkNotNull(predicate);
 		while (iterator.hasNext()) {
@@ -1202,7 +1201,7 @@ public class IterUtil {
 	 * @since 2.0
 	 */
 	public static <T extends Object> int indexOf(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(predicate, "predicate");
 		for (int i = 0; iterator.hasNext(); i++) {
 			T current = iterator.next();

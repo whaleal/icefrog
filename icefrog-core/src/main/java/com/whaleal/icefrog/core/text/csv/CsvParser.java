@@ -7,7 +7,7 @@ import com.whaleal.icefrog.core.text.StrBuilder;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
-
+import com.whaleal.icefrog.core.lang.Filter;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.Reader;

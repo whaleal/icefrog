@@ -2,11 +2,12 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.Predicates;
 
 import javax.annotation.CheckForNull;
@@ -1295,8 +1296,9 @@ public final class Sets {
    * 
    */
   @Deprecated
-  public static <B> Set<List<B>> cartesianProduct(List<? extends Set<? extends B>> sets) {
-    return CartesianSet.create(sets);
+  public static <B> Set<List<B>> cartesianProduct(List<Set< B>> sets) {
+
+    return (Set<List<B>>) CollUtil.cartesianProduct(sets);
   }
 
   /**
@@ -1354,108 +1356,10 @@ public final class Sets {
    */
   @Deprecated
   @SafeVarargs
-  public static <B> Set<List<B>> cartesianProduct(Set<? extends B>... sets) {
+  public static <B> Set<List<B>> cartesianProduct(Set<B>... sets) {
     return cartesianProduct(Arrays.asList(sets));
   }
 
-  @Deprecated
-  private static final class CartesianSet<E> extends ForwardingCollection<List<E>>
-      implements Set<List<E>> {
-    private final transient ImmutableList<ImmutableSet<E>> axes;
-    private final transient CartesianList<E> delegate;
-
-    static <E> Set<List<E>> create(List<? extends Set<? extends E>> sets) {
-      ImmutableList.Builder<ImmutableSet<E>> axesBuilder = new ImmutableList.Builder<>(sets.size());
-      for (Set<? extends E> set : sets) {
-        ImmutableSet<E> copy = ImmutableSet.copyOf(set);
-        if (copy.isEmpty()) {
-          return ImmutableSet.of();
-        }
-        axesBuilder.add(copy);
-      }
-      final ImmutableList<ImmutableSet<E>> axes = axesBuilder.build();
-      ImmutableList<List<E>> listAxes =
-          new ImmutableList<List<E>>() {
-            @Override
-            public int size() {
-              return axes.size();
-            }
-
-            @Override
-            public List<E> get(int index) {
-              return axes.get(index).asList();
-            }
-
-            @Override
-            boolean isPartialView() {
-              return true;
-            }
-          };
-      return new CartesianSet<E>(axes, new CartesianList<E>(listAxes));
-    }
-
-    private CartesianSet(ImmutableList<ImmutableSet<E>> axes, CartesianList<E> delegate) {
-      this.axes = axes;
-      this.delegate = delegate;
-    }
-
-    @Override
-    protected Collection<List<E>> delegate() {
-      return delegate;
-    }
-
-    @Override
-    public boolean contains(@CheckForNull Object object) {
-      if (!(object instanceof List)) {
-        return false;
-      }
-      List<?> list = (List<?>) object;
-      if (list.size() != axes.size()) {
-        return false;
-      }
-      int i = 0;
-      for (Object o : list) {
-        if (!axes.get(i).contains(o)) {
-          return false;
-        }
-        i++;
-      }
-      return true;
-    }
-
-    @Override
-    public boolean equals(@CheckForNull Object object) {
-      // Warning: this is broken if size() == 0, so it is critical that we
-      // substitute an empty ImmutableSet to the user in place of this
-      if (object instanceof CartesianSet) {
-        CartesianSet<?> that = (CartesianSet<?>) object;
-        return this.axes.equals(that.axes);
-      }
-      return super.equals(object);
-    }
-
-    @Override
-    public int hashCode() {
-      // Warning: this is broken if size() == 0, so it is critical that we
-      // substitute an empty ImmutableSet to the user in place of this
-
-      // It's a weird formula, but tests prove it works.
-      int adjust = size() - 1;
-      for (int i = 0; i < axes.size(); i++) {
-        adjust *= 31;
-        adjust = ~~adjust;
-        // in GWT, we have to deal with integer overflow carefully
-      }
-      int hash = 1;
-      for (Set<E> axis : axes) {
-        hash = 31 * hash + (size() / axis.size() * axis.hashCode());
-
-        hash = ~~hash;
-      }
-      hash += adjust;
-      return ~~hash;
-    }
-  }
 
   /**
    * Returns the set of all possible subsets of {@code set}. For example, {@code

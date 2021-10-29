@@ -8,7 +8,7 @@ import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.resource.ResourceUtil;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.ClassScanner;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.Singleton;
 
 import java.beans.Introspector;
@@ -228,11 +228,11 @@ public class ClassUtil {
 	 * 因为className 应该为 com.abs.A 现在却成为abs.A,此工具类对该异常进行忽略处理,有可能是一个不完善的地方，以后需要进行修改<br>
 	 *
 	 * @param packageName 包路径 com | com. | com.abs | com.abs.
-	 * @param classFilter class过滤器，过滤掉不需要的class
+	 * @param classPredicate class过滤器，过滤掉不需要的class
 	 * @return 类集合
 	 */
-	public static Set<Class<?>> scanPackage(String packageName, Filter<Class<?>> classFilter) {
-		return ClassScanner.scanPackage(packageName, classFilter);
+	public static Set<Class<?>> scanPackage(String packageName, Predicate<Class<?>> classPredicate) {
+		return ClassScanner.scanPackage(packageName, classPredicate);
 	}
 
 	// ----------------------------------------------------------------------------------------- Method
@@ -262,11 +262,11 @@ public class ClassUtil {
 	 * 获得指定类过滤后的Public方法列表
 	 *
 	 * @param clazz  查找方法的类
-	 * @param filter 过滤器
+	 * @param predicate 过滤器
 	 * @return 过滤后的方法列表
 	 */
-	public static List<Method> getPublicMethods(Class<?> clazz, Filter<Method> filter) {
-		return ReflectUtil.getPublicMethods(clazz, filter);
+	public static List<Method> getPublicMethods(Class<?> clazz, Predicate<Method> predicate) {
+		return ReflectUtil.getPublicMethods(clazz, predicate);
 	}
 
 	/**

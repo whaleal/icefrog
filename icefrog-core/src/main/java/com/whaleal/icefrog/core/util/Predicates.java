@@ -3,6 +3,8 @@ package com.whaleal.icefrog.core.util;
 
 
 
+import com.whaleal.icefrog.core.lang.Predicate;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;

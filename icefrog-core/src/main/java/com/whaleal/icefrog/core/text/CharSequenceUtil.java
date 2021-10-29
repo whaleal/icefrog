@@ -4,8 +4,9 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.comparator.VersionComparator;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
+import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.util.*;
 
@@ -620,7 +621,8 @@ public class CharSequenceUtil {
 	 * @return 除去指定字符后的的字符串，如果原字串为{@code null}，则返回{@code null}
 	 */
 	public static String trim(CharSequence str, int mode) {
-		return trim(str, mode, CharUtil::isBlankChar);
+		String trim = trim(str, mode, CharUtil::isBlankChar);
+		return trim;
 	}
 
 	/**
@@ -632,7 +634,7 @@ public class CharSequenceUtil {
 	 * @return 除去指定字符后的的字符串，如果原字串为{@code null}，则返回{@code null}
 	 * @since 1.0.0
 	 */
-	public static String trim(CharSequence str, int mode, Predicate<Character> predicate) {
+	public static String trim(CharSequence str, int mode, Predicate predicate) {
 		String result;
 		if (str == null) {
 			result = null;
@@ -3936,12 +3938,12 @@ public class CharSequenceUtil {
 	 * 过滤字符串
 	 *
 	 * @param str    字符串
-	 * @param filter 过滤器，{@link Filter#accept(Object)}返回为{@code true}的保留字符
+	 * @param predicate 过滤器，{@link Predicate#apply(Object)}返回为{@code true}的保留字符
 	 * @return 过滤后的字符串
 	 * @since 1.0.0
 	 */
-	public static String filter(CharSequence str, final Filter<Character> filter) {
-		if (str == null || filter == null) {
+	public static String filter(CharSequence str, final Predicate<Character> predicate) {
+		if (str == null || predicate == null) {
 			return str(str);
 		}
 
@@ -3950,7 +3952,7 @@ public class CharSequenceUtil {
 		char c;
 		for (int i = 0; i < len; i++) {
 			c = str.charAt(i);
-			if (filter.accept(c)) {
+			if (predicate.apply(c)) {
 				sb.append(c);
 			}
 		}

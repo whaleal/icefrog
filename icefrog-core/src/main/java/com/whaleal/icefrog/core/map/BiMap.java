@@ -8,6 +8,18 @@ import java.util.Map;
  * 值的顺序在HashMap中不确定，所以谁覆盖谁也不确定，在有序的Map中按照先后顺序覆盖，保留最后的值<br>
  * 它与TableMap的区别是，BiMap维护两个Map实现高效的正向和反向查找
  *
+ * bimap和普通HashMap区别
+ * 在Java集合类库中的Map，它的特点是存放的键（Key）是唯一的，而值（Value）可以不唯一，而
+ * bimap要求key和value都唯一，如果key不唯一则覆盖key，如果value不唯一则直接报错。
+ *
+ * 在 guava 中 BiMap的常用实现有：
+ *
+ * 1、HashBiMap: key 集合与 value 集合都有 HashMap 实现
+ * 2、EnumBiMap: key 与 value 都必须是 enum 类型
+ * 3、ImmutableBiMap: 不可修改的 BiMap  这次不涉及
+ *
+ *
+ *
  * @param <K> 键类型
  * @param <V> 值类型
  * @since 1.0.0
@@ -15,6 +27,7 @@ import java.util.Map;
 public class BiMap<K, V> extends MapWrapper<K, V> {
 	private static final long serialVersionUID = 1L;
 
+	//  反向的 map 作为一个临时保存
 	private Map<V, K> inverse;
 
 	/**

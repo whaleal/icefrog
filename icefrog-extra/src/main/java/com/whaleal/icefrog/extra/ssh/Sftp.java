@@ -264,12 +264,12 @@ public class Sftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   遍历某个目录下所有文件或目录
-	 * @param filter 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
+	 * @param predicate 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
 	 * @return 目录或文件名列表
 	 * @since 1.0.0
 	 */
-	public List<String> ls(String path, final Filter<LsEntry> filter) {
-		final List<LsEntry> entries = lsEntries(path, filter);
+	public List<String> ls(String path, final Predicate<LsEntry> predicate) {
+		final List<LsEntry> entries = lsEntries(path, predicate);
 		if (CollUtil.isEmpty(entries)) {
 			return ListUtil.empty();
 		}
@@ -293,17 +293,17 @@ public class Sftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   遍历某个目录下所有文件或目录
-	 * @param filter 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
+	 * @param predicate 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
 	 * @return 目录或文件名列表
 	 * @since 1.0.0
 	 */
-	public List<LsEntry> lsEntries(String path, Filter<LsEntry> filter) {
+	public List<LsEntry> lsEntries(String path, Predicate<LsEntry> predicate) {
 		final List<LsEntry> entryList = new ArrayList<>();
 		try {
 			channel.ls(path, entry -> {
 				final String fileName = entry.getFilename();
 				if (false == StrUtil.equals(".", fileName) && false == StrUtil.equals("..", fileName)) {
-					if (null == filter || filter.accept(entry)) {
+					if (null == predicate || predicate.apply(entry)) {
 						entryList.add(entry);
 					}
 				}

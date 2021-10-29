@@ -14,9 +14,8 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 import junit.framework.TestCase;
 
 import static org.junit.Assert.assertThat;

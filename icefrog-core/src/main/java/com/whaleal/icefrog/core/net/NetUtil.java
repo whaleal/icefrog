@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.collection.EnumerationIter;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.JNDIUtil;
 import com.whaleal.icefrog.core.util.RandomUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -431,11 +431,11 @@ public class NetUtil {
 	/**
 	 * 获取所有满足过滤条件的本地IP地址对象
 	 *
-	 * @param addressFilter 过滤器，null表示不过滤，获取所有地址
+	 * @param addressPredicate 过滤器，null表示不过滤，获取所有地址
 	 * @return 过滤后的地址对象列表
 	 * @since 1.0.0
 	 */
-	public static LinkedHashSet<InetAddress> localAddressList(Filter<InetAddress> addressFilter) {
+	public static LinkedHashSet<InetAddress> localAddressList(Predicate<InetAddress> addressPredicate) {
 		Enumeration<NetworkInterface> networkInterfaces;
 		try {
 			networkInterfaces = NetworkInterface.getNetworkInterfaces();
@@ -454,7 +454,7 @@ public class NetUtil {
 			final Enumeration<InetAddress> inetAddresses = networkInterface.getInetAddresses();
 			while (inetAddresses.hasMoreElements()) {
 				final InetAddress inetAddress = inetAddresses.nextElement();
-				if (inetAddress != null && (null == addressFilter || addressFilter.accept(inetAddress))) {
+				if (inetAddress != null && (null == addressPredicate || addressPredicate.apply(inetAddress))) {
 					ipSet.add(inetAddress);
 				}
 			}

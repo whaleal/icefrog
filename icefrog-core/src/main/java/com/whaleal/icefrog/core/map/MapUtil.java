@@ -4,8 +4,8 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.lang.Editor;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Pair;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.TypeReference;
 import com.whaleal.icefrog.core.util.*;
 
@@ -654,15 +654,15 @@ public class MapUtil {
      * @param <K>    Key类型
      * @param <V>    Value类型
      * @param map    Map
-     * @param filter 过滤器接口，{@code null}返回原Map
+     * @param predicate 过滤器接口，{@code null}返回原Map
      * @return 过滤后的Map
      * @since 1.0.0
      */
-    public static <K, V> Map<K, V> filter(Map<K, V> map, Filter<Entry<K, V>> filter) {
-        if (null == map || null == filter) {
+    public static <K, V> Map<K, V> filter(Map<K, V> map, Predicate<Entry<K, V>> predicate) {
+        if (null == map || null == predicate) {
             return map;
         }
-        return edit(map, t -> filter.accept(t) ? t : null);
+        return edit(map, t -> predicate.apply(t) ? t : null);
     }
 
     /**
@@ -1511,14 +1511,14 @@ public class MapUtil {
         return (Function) EntryFunction.VALUE;
     }
 
-    public static <K extends Object> Predicate<Entry<K, ?>> keyPredicateOnEntries(
-            Predicate<? super K> keyPredicate) {
+    public static <K extends Object> Predicate keyPredicateOnEntries(
+            Predicate keyPredicate) {
         return compose(keyPredicate, MapUtil.<K>keyFunction());
     }
 
 
-   public static <V extends Object> Predicate<Entry<?, V>> valuePredicateOnEntries(
-            Predicate<? super V> valuePredicate) {
+   public static <V extends Object> Predicate valuePredicateOnEntries(
+            Predicate valuePredicate) {
         return compose(valuePredicate, MapUtil.<V>valueFunction());
     }
 

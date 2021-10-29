@@ -51,5 +51,5 @@ timeBetweenEvictionRunsMillis = 60000
 connectionInitSqls = SELECT 1
 # 属性类型是字符串，通过别名的方式配置扩展插件， 常用的插件有： 监控统计用的filter:stat  日志用的filter:log4j 防御sql注入的filter:wall
 filters = stat
-# 类型是List<com.alibaba.druid.filter.Filter>， 如果同时配置了filters和proxyFilters， 是组合关系，并非替换关系
+# 类型是List<com.alibaba.druid.predicate.Filter>， 如果同时配置了filters和proxyFilters， 是组合关系，并非替换关系
 proxyFilters =

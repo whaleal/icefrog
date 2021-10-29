@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -624,6 +624,7 @@ public final class Iterators {
   /**
    * Returns a view of {@code unfiltered} containing all elements that satisfy the input predicate
    * {@code retainIfTrue}.
+   *
    */
   public static <T extends Object> AbstractIterator<T> filter(
           Iterator<T> unfiltered, Predicate<? super T> retainIfTrue) {
