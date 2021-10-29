@@ -6,6 +6,7 @@ import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import javax.annotation.CheckForNull;
@@ -352,7 +353,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
       this.firstEntry = this;
       this.lastEntry = this;
       // Round expected values up to a power of 2 to get the table size.
-      int tableSize = Hashing.closedTableSize(expectedValues, VALUE_SET_LOAD_FACTOR);
+      int tableSize =expectedValues;
 
       @SuppressWarnings({"rawtypes", "unchecked"})
       
@@ -479,7 +480,8 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
     }
 
     private void rehashIfNecessary() {
-      if (Hashing.needsResizing(size, hashTable.length, VALUE_SET_LOAD_FACTOR)) {
+      boolean  flag = size > VALUE_SET_LOAD_FACTOR * hashTable.length && hashTable.length < NumberUtil.MAX_POWER_OF_TWO;
+      if (flag) {
         @SuppressWarnings("unchecked")
         ValueEntry<K, V>[] hashTable = new ValueEntry[this.hashTable.length * 2];
         this.hashTable = hashTable;

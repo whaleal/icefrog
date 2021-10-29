@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import javax.annotation.CheckForNull;
@@ -14,6 +15,8 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import com.whaleal.icefrog.core.map.BiMap;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Objects.requireNonNull;
 
@@ -107,7 +110,7 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   private void init(int expectedSize) {
     checkNonnegative(expectedSize, "expectedSize");
-    int tableSize = Hashing.closedTableSize(expectedSize, LOAD_FACTOR);
+    int tableSize = expectedSize ;
     this.hashTableKToV = createTable(tableSize);
     this.hashTableVToK = createTable(tableSize);
     this.firstInKeyInsertionOrder = null;
@@ -121,6 +124,7 @@ public final class HashBiMap<K extends Object, V extends Object>
    * Finds and removes {@code entry} from the bucket linked lists in both the key-to-value direction
    * and the value-to-key direction.
    */
+  @SuppressFBWarnings({"NP_NULL_ON_SOME_PATH", "NP_NULL_ON_SOME_PATH"})
   private void delete(BiEntry<K, V> entry) {
     int keyBucket = entry.keyHash & mask;
     BiEntry<K, V> prevBucketEntry = null;
@@ -266,8 +270,8 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   @CheckForNull
   private V put(@ParametricNullness K key, @ParametricNullness V value, boolean force) {
-    int keyHash = ObjectUtil.hash(key);
-    int valueHash = ObjectUtil.hash(value);
+    int keyHash = ObjectUtil.hashCode(key);
+    int valueHash = ObjectUtil.hashCode(value);
 
     BiEntry<K, V> oldEntryForKey = seekByKey(key, keyHash);
     if (oldEntryForKey != null
@@ -303,8 +307,8 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   @CheckForNull
   private K putInverse(@ParametricNullness V value, @ParametricNullness K key, boolean force) {
-    int valueHash = ObjectUtil.hash(value);
-    int keyHash = ObjectUtil.hash(key);
+    int valueHash = ObjectUtil.hashCode(value);
+    int keyHash = ObjectUtil.hashCode(key);
 
     BiEntry<K, V> oldEntryForValue = seekByValue(value, valueHash);
     BiEntry<K, V> oldEntryForKey = seekByKey(key, keyHash);
@@ -348,7 +352,8 @@ public final class HashBiMap<K extends Object, V extends Object>
 
   private void rehashIfNecessary() {
     BiEntry<K, V>[] oldKToV = hashTableKToV;
-    if (Hashing.needsResizing(size, oldKToV.length, LOAD_FACTOR)) {
+    boolean flag =  size > LOAD_FACTOR * oldKToV.length && oldKToV.length < NumberUtil.MAX_POWER_OF_TWO;
+    if (flag) {
       int newTableSize = oldKToV.length * 2;
 
       this.hashTableKToV = createTable(newTableSize);
@@ -374,7 +379,7 @@ public final class HashBiMap<K extends Object, V extends Object>
   @Override
   @CheckForNull
   public V remove(@CheckForNull Object key) {
-    BiEntry<K, V> entry = seekByKey(key, ObjectUtil.hash(key));
+    BiEntry<K, V> entry = seekByKey(key, ObjectUtil.hashCode(key));
     if (entry == null) {
       return null;
     } else {
@@ -466,7 +471,7 @@ public final class HashBiMap<K extends Object, V extends Object>
 
     @Override
     public boolean remove(@CheckForNull Object o) {
-      BiEntry<K, V> entry = seekByKey(o, ObjectUtil.hash(o));
+      BiEntry<K, V> entry = seekByKey(o, ObjectUtil.hashCode(o));
       if (entry == null) {
         return false;
       } else {
@@ -510,7 +515,7 @@ public final class HashBiMap<K extends Object, V extends Object>
         @Override
         public V setValue(V value) {
           V oldValue = delegate.value;
-          int valueHash = ObjectUtil.hash(value);
+          int valueHash = ObjectUtil.hashCode(value);
           if (valueHash == delegate.valueHash && ObjectUtil.equal(value, oldValue)) {
             return value;
           }
