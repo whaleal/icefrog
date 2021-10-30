@@ -137,6 +137,28 @@ public class MapUtil {
         return newHashMap(DEFAULT_INITIAL_CAPACITY, isOrder);
     }
 
+
+    /**
+     * Instantiate a new {@link LinkedHashMap} with an initial capacity
+     * that can accommodate the specified number of elements without
+     * any immediate resize/rehash operations to be expected.
+     * <p>This differs from the regular {@link LinkedHashMap} constructor
+     * which takes an initial capacity relative to a load factor
+     *
+     * @param expectedSize the expected number of elements (with a corresponding
+     *                     capacity to be derived so that no resize/rehash operations are needed)
+     * @param <K>          键
+     * @param <V>          值
+     * @return LinkedHashMap
+     * @see #newHashMap(int)
+     */
+
+    public static <K, V> LinkedHashMap<K, V> newLinkedHashMap(int expectedSize) {
+        return new LinkedHashMap<>((int) (expectedSize / DEFAULT_LOAD_FACTOR), DEFAULT_LOAD_FACTOR);
+    }
+
+
+
     /**
      * 新建TreeMap，Key有序的Map
      *

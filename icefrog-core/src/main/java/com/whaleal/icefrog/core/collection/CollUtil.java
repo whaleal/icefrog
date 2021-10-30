@@ -43,13 +43,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
  */
 public class CollUtil {
 
-	/**
-	 * Default load factor for {@link HashMap}/{@link LinkedHashMap} variants.
-	 *
-	 * @see #newHashMap(int)
-	 * @see #newLinkedHashMap(int)
-	 */
-	static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
 
 	/**
 	 * 如果提供的集合为{@code null}，返回一个不可变的默认空集合，否则返回原集合<br>
@@ -2914,44 +2908,7 @@ public class CollUtil {
 		return IterUtil.isEqualList(list1, list2);
 	}
 
-	/**
-	 * Instantiate a new {@link HashMap} with an initial capacity
-	 * that can accommodate the specified number of elements without
-	 * any immediate resize/rehash operations to be expected.
-	 * <p>This differs from the regular {@link HashMap} constructor
-	 * which takes an initial capacity relative to a load factor
-	 * but is effectively aligned with the JDK's
-	 * {@link java.util.concurrent.ConcurrentHashMap#ConcurrentHashMap(int)}.
-	 *
-	 * @param expectedSize the expected number of elements (with a corresponding
-	 *                     capacity to be derived so that no resize/rehash operations are needed)
-	 * @param <K>          键
-	 * @param <V>          值
-	 * @return HashMap
-	 * @see #newLinkedHashMap(int)
-	 */
-	public static <K, V> HashMap<K, V> newHashMap(int expectedSize) {
-		return new HashMap<>((int) (expectedSize / DEFAULT_LOAD_FACTOR), DEFAULT_LOAD_FACTOR);
-	}
 
-	/**
-	 * Instantiate a new {@link LinkedHashMap} with an initial capacity
-	 * that can accommodate the specified number of elements without
-	 * any immediate resize/rehash operations to be expected.
-	 * <p>This differs from the regular {@link LinkedHashMap} constructor
-	 * which takes an initial capacity relative to a load factor
-	 *
-	 * @param expectedSize the expected number of elements (with a corresponding
-	 *                     capacity to be derived so that no resize/rehash operations are needed)
-	 * @param <K>          键
-	 * @param <V>          值
-	 * @return LinkedHashMap
-	 * @see #newHashMap(int)
-	 */
-
-	public static <K, V> LinkedHashMap<K, V> newLinkedHashMap(int expectedSize) {
-		return new LinkedHashMap<>((int) (expectedSize / DEFAULT_LOAD_FACTOR), DEFAULT_LOAD_FACTOR);
-	}
 
 	/**
 	 * Convert the supplied array into a List. A primitive array gets converted
