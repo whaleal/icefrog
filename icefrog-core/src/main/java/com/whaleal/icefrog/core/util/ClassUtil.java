@@ -23,6 +23,7 @@ import java.util.*;
 import static com.whaleal.icefrog.core.collection.CollUtil.createHashMap;
 import static com.whaleal.icefrog.core.collection.CollUtil.createHashSet;
 import static com.whaleal.icefrog.core.util.ArrayUtil.*;
+import static com.whaleal.icefrog.core.util.ClassLoaderUtil.*;
 
 /**
  * 类工具类 <br>
@@ -91,10 +92,8 @@ public class ClassUtil {
 	 * 类名并不包含“.class”这个扩展名<br>
 	 * 例如：ClassUtil这个类<br>
 	 *
-	
-	 * isSimple为false: "com.xiaoleilu.icefrog.util.ClassUtil"
+	 * isSimple为false: "com.whaleal.icefrog.util.ClassUtil"
 	 * isSimple为true: "ClassUtil"
-	
 	 *
 	 * @param clazz    类
 	 * @param isSimple 是否简单类名，如果为true，返回不带包名的类名
@@ -117,7 +116,7 @@ public class ClassUtil {
 	 * @since 1.0.0
 	 */
 	public static String getShortClassName(String className) {
-		final List<String> packages = StrUtil.split(className, CharUtil.DOT);
+		final List<String> packages = StrUtil.split(className, PACKAGE_SEPARATOR);
 		if (null == packages || packages.size() < 2) {
 			return className;
 		}
@@ -126,9 +125,9 @@ public class ClassUtil {
 		final StringBuilder result = StrUtil.builder();
 		result.append(packages.get(0).charAt(0));
 		for (int i = 1; i < size - 1; i++) {
-			result.append(CharUtil.DOT).append(packages.get(i).charAt(0));
+			result.append(PACKAGE_SEPARATOR).append(packages.get(i).charAt(0));
 		}
-		result.append(CharUtil.DOT).append(packages.get(size - 1));
+		result.append(PACKAGE_SEPARATOR).append(packages.get(size - 1));
 		return result.toString();
 	}
 
@@ -624,7 +623,7 @@ public class ClassUtil {
 	 * 非单例模式，如果是非静态方法，每次创建一个新对象
 	 *
 	 * @param <T>                     对象类型
-	 * @param classNameWithMethodName 类名和方法名表达式，类名与方法名用{@code .}或{@code #}连接 例如：com.xiaoleilu.icefrog.StrUtil.isEmpty 或 com.xiaoleilu.icefrog.StrUtil#isEmpty
+	 * @param classNameWithMethodName 类名和方法名表达式，类名与方法名用{@code .}或{@code #}连接 例如：com.whaleal.icefrog.StrUtil.isEmpty 或 com.whaleal.icefrog.StrUtil#isEmpty
 	 * @param args                    参数，必须严格对应指定方法的参数类型和数量
 	 * @return 返回结果
 	 */
@@ -638,7 +637,7 @@ public class ClassUtil {
 	 * 执行非static方法时，必须满足对象有默认构造方法<br>
 	 *
 	 * @param <T>                     对象类型
-	 * @param classNameWithMethodName 类名和方法名表达式，例如：com.xiaoleilu.icefrog.StrUtil#isEmpty或com.xiaoleilu.icefrog.StrUtil.isEmpty
+	 * @param classNameWithMethodName 类名和方法名表达式，例如：com.whaleal.icefrog.StrUtil#isEmpty或com.whaleal.icefrog.StrUtil.isEmpty
 	 * @param isSingleton             是否为单例对象，如果此参数为false，每次执行方法时创建一个新对象
 	 * @param args                    参数，必须严格对应指定方法的参数类型和数量
 	 * @return 返回结果
@@ -734,6 +733,25 @@ public class ClassUtil {
 		}
 		return (clazz.isPrimitive() || isPrimitiveWrapper(clazz));
 	}
+	/**
+	 * 判断该类型是不是包装类型
+	 * @param clazz  传入的class
+	 * @return 是否为包装类型
+	 */
+	public static boolean isBasicClass(Class<?> clazz) {
+		boolean isPrimitive = false;
+		try {
+			if (clazz.isPrimitive() || clazz.isAssignableFrom(String.class)) {
+				isPrimitive = true;
+			} else {
+				isPrimitive = ((Class<?>) clazz.getField("TYPE").get(null)).isPrimitive();
+			}
+		} catch (Exception e) {
+			isPrimitive = false;
+		}
+		return isPrimitive;
+	}
+
 
 	/**
 	 * 是否简单值类型或简单值类型的数组<br>
@@ -954,7 +972,7 @@ public class ClassUtil {
 	/**
 	 * 获得给定类所在包的名称<br>
 	 * 例如：<br>
-	 * com.xiaoleilu.icefrog.util.ClassUtil =》 com.xiaoleilu.icefrog.util
+	 * com.whaleal.icefrog.util.ClassUtil =》 com.whaleal.icefrog.util
 	 *
 	 * @param clazz 类
 	 * @return 包名
@@ -974,7 +992,7 @@ public class ClassUtil {
 	/**
 	 * 获得给定类所在包的路径<br>
 	 * 例如：<br>
-	 * com.xiaoleilu.icefrog.util.ClassUtil =》 com/xiaoleilu/icefrog/util
+	 * com.whaleal.icefrog.util.ClassUtil =》 com/whaleal/icefrog/util
 	 *
 	 * @param clazz 类
 	 * @return 包名
@@ -1092,30 +1110,6 @@ public class ClassUtil {
 	}
 
 
-	/**
-	 * Suffix for array class names: "[]"
-	 */
-	public static final String ARRAY_SUFFIX = "[]";
-
-	/**
-	 * The package separator character '.'
-	 */
-	private static final char PACKAGE_SEPARATOR = '.';
-
-	/**
-	 * The inner class separator character '$'
-	 */
-	private static final char INNER_CLASS_SEPARATOR = '$';
-
-	/**
-	 * The CGLIB class separator character "$$"
-	 */
-	public static final String CGLIB_CLASS_SEPARATOR = "$$";
-
-	/**
-	 * The ".class" file suffix
-	 */
-	public static final String CLASS_FILE_SUFFIX = ".class";
 
 	/**
 	 * 从接口端计算深度
@@ -2292,23 +2286,6 @@ public class ClassUtil {
 		return className.substring(lastDotIndex + 1) + CLASS_FILE_SUFFIX;
 	}
 
-	/**
-	 * 判断该类型是不是包装类型
-	 * @param clazz  传入的class
-	 * @return 是否为包装类型
-	 */
-	public static boolean isBasicClass(Class<?> clazz) {
-		boolean isPrimitive = false;
-		try {
-			if (clazz.isPrimitive() || clazz.isAssignableFrom(String.class)) {
-				isPrimitive = true;
-			} else {
-				isPrimitive = ((Class<?>) clazz.getField("TYPE").get(null)).isPrimitive();
-			}
-		} catch (Exception e) {
-			isPrimitive = false;
-		}
-		return isPrimitive;
-	}
+
 
 }

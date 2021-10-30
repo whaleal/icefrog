@@ -2,11 +2,10 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -616,7 +615,7 @@ public final class Iterables {
   public static <T> Iterable<T> filter(final Iterable<?> unfiltered, final Class<T> desiredType) {
     checkNotNull(unfiltered);
     checkNotNull(desiredType);
-    return (Iterable<T>) filter(unfiltered, Predicates.instanceOf(desiredType));
+    return (Iterable<T>) filter(unfiltered, PredicateUtil.instanceOf(desiredType));
   }
 
   /**

@@ -6,10 +6,10 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -1009,7 +1009,7 @@ public final class Sets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredSet<E> filtered = (FilteredSet<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredSet<E>((Set<E>) filtered.unfiltered, combinedPredicate);
     }
 
@@ -1046,7 +1046,7 @@ public final class Sets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredSet<E> filtered = (FilteredSet<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredSortedSet<E>((SortedSet<E>) filtered.unfiltered, combinedPredicate);
     }
 
@@ -1086,7 +1086,7 @@ public final class Sets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredSet<E> filtered = (FilteredSet<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredNavigableSet<E>((NavigableSet<E>) filtered.unfiltered, combinedPredicate);
     }
 

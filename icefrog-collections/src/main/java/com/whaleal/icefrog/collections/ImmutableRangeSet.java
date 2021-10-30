@@ -4,7 +4,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;

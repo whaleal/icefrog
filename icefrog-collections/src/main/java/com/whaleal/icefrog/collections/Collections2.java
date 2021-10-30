@@ -6,10 +6,10 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -117,7 +117,7 @@ public final class Collections2 {
     }
 
     FilteredCollection<E> createCombined(Predicate<? super E> newPredicate) {
-      return new FilteredCollection<E>(unfiltered, Predicates.and(predicate, newPredicate));
+      return new FilteredCollection<E>(unfiltered, PredicateUtil.and(predicate, newPredicate));
       // .<E> above needed to compile in JDK 5
     }
 

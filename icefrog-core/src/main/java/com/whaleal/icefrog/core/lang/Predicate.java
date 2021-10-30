@@ -4,7 +4,7 @@ package com.whaleal.icefrog.core.lang;
 
 
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 /**
  * Legacy version of {@link java.util.function.Predicate java.util.function.Predicate}. Determines a
@@ -20,7 +20,7 @@ import com.whaleal.icefrog.core.util.Predicates;
  * Otherwise, at least reduce <i>explicit</i> dependencies on this type by using lambda expressions
  * or method references instead of classes, leaving your code easier to migrate in the future.
  *
- * <p>The {@link Predicates} class provides icefrog predicates and related utilities.
+ * <p>The {@link PredicateUtil} class provides icefrog predicates and related utilities.
  *
  * <p>See the Guava User Guide article on <a
  * href="https://github.com/google/guava/wiki/FunctionalExplained">the use of {@code Predicate}</a>.

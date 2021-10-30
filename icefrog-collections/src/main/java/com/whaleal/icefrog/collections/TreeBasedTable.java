@@ -4,7 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.IterUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -303,7 +303,6 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
             Iterators.mergeSorted(
             IterUtil.trans(
                 backingMap.values(),new Function<Map<C,V> ,Iterator<C>>(){
-
                       @Override
                       public Iterator<C> apply( Map<C, V> cvMap ) {
                         return cvMap.keySet().iterator();

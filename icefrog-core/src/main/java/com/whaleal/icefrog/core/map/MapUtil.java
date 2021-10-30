@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static com.whaleal.icefrog.core.util.Predicates.compose;
+import static com.whaleal.icefrog.core.util.PredicateUtil.compose;
 
 /**
  * Map相关工具类

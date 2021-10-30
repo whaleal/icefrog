@@ -18,6 +18,7 @@ public interface CharPool {
 	char TAB = '	';
 	/**
 	 * 字符常量：点 {@code '.'}
+	 * 可以用于包名分隔符等
 	 */
 	char DOT = '.';
 	/**

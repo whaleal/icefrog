@@ -5,7 +5,7 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 
@@ -14,8 +14,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static com.whaleal.icefrog.core.util.Predicates.in;
-import static com.whaleal.icefrog.core.util.Predicates.not;
+import static com.whaleal.icefrog.core.util.PredicateUtil.in;
+import static com.whaleal.icefrog.core.util.PredicateUtil.not;
 
 
 /**

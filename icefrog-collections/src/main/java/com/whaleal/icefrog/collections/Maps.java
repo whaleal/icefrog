@@ -7,9 +7,9 @@ import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.map.BiMap;
-import com.whaleal.icefrog.core.util.Functions;
+import com.whaleal.icefrog.core.util.FunctionUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import java.io.Serializable;
 import java.util.*;
@@ -22,7 +22,7 @@ import javax.annotation.CheckForNull;
 
 import static com.whaleal.icefrog.collections.NullnessCasts.uncheckedCastNullableTToT;
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
-import static com.whaleal.icefrog.core.util.Predicates.compose;
+import static com.whaleal.icefrog.core.util.PredicateUtil.compose;
 import static java.util.Objects.requireNonNull;
 
 
@@ -1486,8 +1486,8 @@ public final class Maps {
    * inverse view converts values using {@code .get()}.
    *
    * <p>To use a plain {@link Map} as a {@link Function}, see {@link
-   * Functions#forMap(Map)} or {@link
-   * Functions#forMap(Map, Object)}.
+   * FunctionUtil#forMap(Map)} or {@link
+   * FunctionUtil#forMap(Map, Object)}.
    *
 
    */
@@ -2710,7 +2710,7 @@ public final class Maps {
   private static <K extends Object, V extends Object> Map<K, V> filterFiltered(
           AbstractFilteredMap<K, V> map, Predicate<? super Entry<K, V>> entryPredicate) {
     return new FilteredEntryMap<>(
-            map.unfiltered, Predicates.and(map.predicate, entryPredicate));
+            map.unfiltered, PredicateUtil.and(map.predicate, entryPredicate));
   }
 
   /**
@@ -2720,7 +2720,7 @@ public final class Maps {
   private static <K extends Object, V extends Object>
   SortedMap<K, V> filterFiltered(
           FilteredEntrySortedMap<K, V> map, Predicate<? super Entry<K, V>> entryPredicate) {
-    Predicate<Entry<K, V>> predicate = Predicates.and(map.predicate, entryPredicate);
+    Predicate<Entry<K, V>> predicate = PredicateUtil.and(map.predicate, entryPredicate);
     return new FilteredEntrySortedMap<>(map.sortedMap(), predicate);
   }
 
@@ -2733,7 +2733,7 @@ public final class Maps {
   NavigableMap<K, V> filterFiltered(
           FilteredEntryNavigableMap<K, V> map, Predicate<? super Entry<K, V>> entryPredicate) {
     Predicate<Entry<K, V>> predicate =
-            Predicates.and(map.entryPredicate, entryPredicate);
+            PredicateUtil.and(map.entryPredicate, entryPredicate);
     return new FilteredEntryNavigableMap<>(map.unfiltered, predicate);
   }
 

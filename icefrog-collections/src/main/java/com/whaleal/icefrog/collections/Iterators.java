@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.function.Function;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
-import static com.whaleal.icefrog.core.util.Predicates.instanceOf;
+import static com.whaleal.icefrog.core.util.PredicateUtil.instanceOf;
 import static java.util.Objects.requireNonNull;
 
 /**

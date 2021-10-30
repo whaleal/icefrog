@@ -392,10 +392,19 @@ public class CollUtil {
 
 	/**
 	 * 判断指定集合是否包含指定值，如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+	 * 
+	 * 异常这块 主要是 contains 方法抛出。其他同理。
+	 * @see CollUtil#safeContains(Collection, Object)
 	 *
 	 * @param collection 集合
 	 * @param value      需要查找的值
 	 * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+	 * @throws ClassCastException if the type of the specified element
+	 *         is incompatible with this collection
+	 *         (<a href="#optional-restrictions">optional</a>)
+	 * @throws NullPointerException if the specified element is null and this
+	 *         collection does not permit null elements
+	 *         (<a href="#optional-restrictions">optional</a>)
 	 * @since 1.0.0
 	 *
 	 */

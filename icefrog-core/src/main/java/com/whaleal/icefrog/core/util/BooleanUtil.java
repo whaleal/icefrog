@@ -458,7 +458,7 @@ public class BooleanUtil {
 	 * equivalent {@link Boolean#compare} method instead.
 	 *
 	 * 比较两个 boolean 值的大小
-	 * 一样时返回 0 ;
+	 * a b 一样时 	返回 0
 	 * a true b false 返回1
 	 * a false b true 返回-1
 	 *

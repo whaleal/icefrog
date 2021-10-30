@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;
