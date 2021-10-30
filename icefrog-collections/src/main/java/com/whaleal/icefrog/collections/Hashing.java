@@ -33,16 +33,19 @@ final class Hashing {
    * MurmurHash3 was written by Austin Appleby, and is placed in the public domain. The author
    * hereby disclaims copyright to this source code.
    */
+  @Deprecated
   static int smear(int hashCode) {
-    return (int) (C2 * Integer.rotateLeft((int) (hashCode * C1), 15));
+    return (int) (0x1b873593 * Integer.rotateLeft((int) (hashCode * 0xcc9e2d51), 15));
   }
 
+  @Deprecated
   static int smearedHash(@CheckForNull Object o) {
     return smear((o == null) ? 0 : o.hashCode());
   }
 
   private static final int MAX_TABLE_SIZE = NumberUtil.MAX_POWER_OF_TWO;
 
+  @Deprecated
   static int closedTableSize(int expectedEntries, double loadFactor) {
     // Get the recommended table size.
     // Round down to the nearest power of 2.
@@ -56,7 +59,8 @@ final class Hashing {
     return tableSize;
   }
 
+  @Deprecated
   static boolean needsResizing(int size, int tableSize, double loadFactor) {
-    return size > loadFactor * tableSize && tableSize < MAX_TABLE_SIZE;
+    return size > loadFactor * tableSize && tableSize < NumberUtil.MAX_POWER_OF_TWO;
   }
 }

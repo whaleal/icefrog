@@ -85,7 +85,7 @@ public interface Multiset<E extends Object> extends Collection<E> {
    * element). Note that for an {@link Object#equals}-based multiset, this gives the same result as
    * {@link Collections#frequency} (which would presumably perform more poorly).
    *
-   * <p><b>Note:</b> the utility method {@link Iterables#frequency} generalizes this operation; it
+   * <p><b>Note:</b> the utility method {@link IterUtil#frequency} generalizes this operation; it
    * correctly delegates to this method when dealing with a multiset, but it can also accept any
    * other iterable type.
    *

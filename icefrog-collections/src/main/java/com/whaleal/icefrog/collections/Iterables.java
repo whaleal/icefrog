@@ -4,8 +4,8 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.util.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -44,6 +44,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
 public final class Iterables {
   private Iterables() {}
 
+  @Deprecated
   /** Returns an unmodifiable view of {@code iterable}. */
   public static <T extends Object> Iterable<T> unmodifiableIterable(
       final Iterable<? extends T> iterable) {
@@ -66,6 +67,7 @@ public final class Iterables {
   public static <E> Iterable<E> unmodifiableIterable(ImmutableCollection<E> iterable) {
     return checkNotNull(iterable);
   }
+
 
   private static final class UnmodifiableIterable<T extends Object>
       extends FluentIterable<T> {
@@ -99,11 +101,14 @@ public final class Iterables {
   }
 
   /** Returns the number of elements in {@code iterable}. */
+  @Deprecated
   public static int size(Iterable<?> iterable) {
+
     return (iterable instanceof Collection)
         ? ((Collection<?>) iterable).size()
         : Iterators.size(iterable.iterator());
   }
+
 
   /**
    * Returns {@code true} if {@code iterable} contains any element {@code o} for which {@code
@@ -112,6 +117,7 @@ public final class Iterables {
    * ClassCastException}.
    */
   // <? extends Object> instead of <?> because of Kotlin b/189937072, discussed in Joiner.
+  @Deprecated
   public static boolean contains(
       Iterable<? extends Object> iterable, @CheckForNull Object element) {
     if (iterable instanceof Collection) {
@@ -132,6 +138,7 @@ public final class Iterables {
    * @return {@code true} if any element was removed from {@code iterable}
    */
 
+  @Deprecated
   public static boolean removeAll(Iterable<?> removeFrom, Collection<?> elementsToRemove) {
     return (removeFrom instanceof Collection)
         ? ((Collection<?>) removeFrom).removeAll(checkNotNull(elementsToRemove))
@@ -149,6 +156,7 @@ public final class Iterables {
    * @return {@code true} if any element was removed from {@code iterable}
    */
 
+  @Deprecated
   public static boolean retainAll(Iterable<?> removeFrom, Collection<?> elementsToRetain) {
     return (removeFrom instanceof Collection)
         ? ((Collection<?>) removeFrom).retainAll(checkNotNull(elementsToRetain))
@@ -172,6 +180,8 @@ public final class Iterables {
    * 
    */
 
+
+  @Deprecated
   public static <T extends Object> boolean removeIf(
       Iterable<T> removeFrom, Predicate<? super T> predicate) {
     if (removeFrom instanceof Collection) {
@@ -182,6 +192,7 @@ public final class Iterables {
 
   /** Removes and returns the first matching element, or returns {@code null} if there is none. */
   @CheckForNull
+  @Deprecated
   static <T extends Object> T removeFirstMatching(
       Iterable<T> removeFrom, Predicate<? super T> predicate) {
     checkNotNull(predicate);
@@ -202,6 +213,7 @@ public final class Iterables {
    * number of elements and every element of {@code iterable1} is equal to the corresponding element
    * of {@code iterable2}.
    */
+  @Deprecated
   public static boolean elementsEqual(Iterable<?> iterable1, Iterable<?> iterable2) {
     if (iterable1 instanceof Collection && iterable2 instanceof Collection) {
       Collection<?> collection1 = (Collection<?>) iterable1;
@@ -220,6 +232,7 @@ public final class Iterables {
    * Collection}, {@code collection.toString()} also gives the same result, but that behavior is not
    * generally guaranteed.
    */
+  @Deprecated
   public static String toString(Iterable<?> iterable) {
     return Iterators.toString(iterable.iterator());
   }
@@ -248,6 +261,7 @@ public final class Iterables {
    * @throws IllegalArgumentException if the iterator contains multiple elements
    */
   @ParametricNullness
+  @Deprecated
   public static <T extends Object> T getOnlyElement(
       Iterable<? extends T> iterable, @ParametricNullness T defaultValue) {
     return Iterators.getOnlyElement(iterable.iterator(), defaultValue);
@@ -266,10 +280,13 @@ public final class Iterables {
    * Object>, and then we could accept an Iterable<? extends T> and return a plain T[]
    * instead of a T[].
    */
+
+  @Deprecated
   public static <T> T[] toArray(Iterable<? extends T> iterable, Class<T> type) {
     return toArray(iterable, ObjectArrays.newArray(type, 0));
   }
 
+  @Deprecated
   static <T extends Object> T[] toArray(Iterable<? extends T> iterable, T[] array) {
     Collection<? extends T> collection = castOrCopyToCollection(iterable);
     return collection.toArray(array);
@@ -281,6 +298,7 @@ public final class Iterables {
    * @param iterable the iterable to copy
    * @return a newly-allocated array into which all the elements of the iterable have been copied
    */
+  @Deprecated
   static Object[] toArray(Iterable<?> iterable) {
     return castOrCopyToCollection(iterable).toArray();
   }
@@ -290,6 +308,8 @@ public final class Iterables {
    * returned. Otherwise, an {@link java.util.ArrayList} is created with the contents of the
    * iterable in the same iteration order.
    */
+
+  @Deprecated
   private static <E extends Object> Collection<E> castOrCopyToCollection(
       Iterable<E> iterable) {
     return (iterable instanceof Collection)
@@ -303,6 +323,7 @@ public final class Iterables {
    * @return {@code true} if {@code collection} was modified as a result of this operation.
    */
 
+  @Deprecated
   public static <T extends Object> boolean addAll(
       Collection<T> addTo, Iterable<? extends T> elementsToAdd) {
     if (elementsToAdd instanceof Collection) {
@@ -323,6 +344,8 @@ public final class Iterables {
    * @see java.util.Collections#frequency(Collection, Object) Collections.frequency(Collection,
    *     Object)
    */
+
+  @Deprecated
   public static int frequency(Iterable<?> iterable, @CheckForNull Object element) {
     if ((iterable instanceof Multiset)) {
       return ((Multiset<?>) iterable).count(element);
@@ -592,7 +615,7 @@ public final class Iterables {
   public static <T> Iterable<T> filter(final Iterable<?> unfiltered, final Class<T> desiredType) {
     checkNotNull(unfiltered);
     checkNotNull(desiredType);
-    return (Iterable<T>) filter(unfiltered, Predicates.instanceOf(desiredType));
+    return (Iterable<T>) filter(unfiltered, PredicateUtil.instanceOf(desiredType));
   }
 
   /**
@@ -657,6 +680,7 @@ public final class Iterables {
   //
   // - @JointlyNullable means "or no annotation"
   @CheckForNull
+  @Deprecated
   public static <T extends Object> T find(
       Iterable<? extends T> iterable,
       Predicate<? super T> predicate,
@@ -675,6 +699,7 @@ public final class Iterables {
    *
    * 
    */
+  @Deprecated
   public static <T> Optional<T> tryFind(Iterable<T> iterable, Predicate<? super T> predicate) {
     return Iterators.tryFind(iterable.iterator(), predicate);
   }
@@ -689,6 +714,7 @@ public final class Iterables {
    *
    * 
    */
+  @Deprecated
   public static <T extends Object> int indexOf(
       Iterable<T> iterable, Predicate<? super T> predicate) {
     return Iterators.indexOf(iterable.iterator(), predicate);
@@ -706,7 +732,11 @@ public final class Iterables {
    * consider {@link Lists#transform} and {@link Collections2#transform}.
    *
    * <p><b>{@code Stream} equivalent:</b> {@link Stream#map}
+   *
+   *
    */
+  @Deprecated
+
   public static <F extends Object, T extends Object> Iterable<T> transform(
       final Iterable<F> fromIterable, final Function<? super F, ? extends T> function) {
     checkNotNull(fromIterable);

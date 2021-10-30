@@ -8,12 +8,14 @@ import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.convert.ConverterRegistry;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Editor;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
+
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.lang.hash.Hash32;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.*;
+
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -23,10 +25,9 @@ import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.function.Function;
 
-import java.util.stream.Collectors;
-
 import static com.whaleal.icefrog.core.collection.ListUtil.of;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
 
 /**
  * 集合相关工具类
@@ -42,13 +43,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  */
 public class CollUtil {
 
-	/**
-	 * Default load factor for {@link HashMap}/{@link LinkedHashMap} variants.
-	 *
-	 * @see #newHashMap(int)
-	 * @see #newLinkedHashMap(int)
-	 */
-	static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
 
 	/**
 	 * 如果提供的集合为{@code null}，返回一个不可变的默认空集合，否则返回原集合<br>
@@ -391,10 +386,19 @@ public class CollUtil {
 
 	/**
 	 * 判断指定集合是否包含指定值，如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+	 * 
+	 * 异常这块 主要是 contains 方法抛出。其他同理。
+	 * @see CollUtil#safeContains(Collection, Object)
 	 *
 	 * @param collection 集合
 	 * @param value      需要查找的值
 	 * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+	 * @throws ClassCastException if the type of the specified element
+	 *         is incompatible with this collection
+	 *         (<a href="#optional-restrictions">optional</a>)
+	 * @throws NullPointerException if the specified element is null and this
+	 *         collection does not permit null elements
+	 *         (<a href="#optional-restrictions">optional</a>)
 	 * @since 1.0.0
 	 *
 	 */
@@ -410,7 +414,7 @@ public class CollUtil {
 	 * @param <T>         值类型
 	 * @return 是否包含自定义规则的值
 	 */
-	public static <T> boolean contains(Collection<T> collection, Predicate<? super T> containFunc) {
+	public static <T> boolean contains(Collection<T> collection, Predicate containFunc) {
 		if (isEmpty(collection)) {
 			return false;
 		}
@@ -1167,20 +1171,20 @@ public class CollUtil {
 	 * 过滤过程通过传入的Filter实现来过滤返回需要的元素内容，这个Filter实现可以实现以下功能：
 	 *
 	 * <pre>
-	 * 1、过滤出需要的对象，{@link Filter#accept(Object)}方法返回true的对象将被加入结果集合中
+	 * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回true的对象将被加入结果集合中
 	 * </pre>
 	 *
 	 * @param <T>        集合元素类型
 	 * @param collection 集合
-	 * @param filter     过滤器，{@code null}返回原集合
+	 * @param predicate     过滤器，{@code null}返回原集合
 	 * @return 过滤后的数组
 	 * @since 1.0.0
 	 */
-	public static <T> Collection<T> filterNew(Collection<T> collection, Filter<T> filter) {
-		if (null == collection || null == filter) {
+	public static <T> Collection<T> filterNew(Collection<T> collection, Predicate<T> predicate) {
+		if (null == collection || null == predicate) {
 			return collection;
 		}
-		return edit(collection, t -> filter.accept(t) ? t : null);
+		return edit(collection, t -> predicate.apply(t) ? t : null);
 	}
 
 	/**
@@ -1205,12 +1209,12 @@ public class CollUtil {
 	 * @param <T>        集合类型
 	 * @param <E>        集合元素类型
 	 * @param collection 集合
-	 * @param filter     过滤器
+	 * @param predicate     过滤器
 	 * @return 处理后的集合
 	 * @since 1.0.0
 	 */
-	public static <T extends Collection<E>, E> T filter(T collection, final Filter<E> filter) {
-		return IterUtil.filter(collection, filter);
+	public static <T extends Collection<E>, E> T filter(T collection, final Predicate<E> predicate) {
+		return IterUtil.filter(collection, predicate);
 	}
 
 	/**
@@ -1395,14 +1399,14 @@ public class CollUtil {
 	 *
 	 * @param <T>        集合元素类型
 	 * @param collection 集合
-	 * @param filter     过滤器，满足过滤条件的第一个元素将被返回
+	 * @param predicate     过滤器，满足过滤条件的第一个元素将被返回
 	 * @return 满足过滤条件的第一个元素
 	 * @since 1.0.0
 	 */
-	public static <T> T findOne(Iterable<T> collection, Filter<T> filter) {
+	public static <T> T findOne(Iterable<T> collection, Predicate<T> predicate) {
 		if (null != collection) {
 			for (T t : collection) {
-				if (filter.accept(t)) {
+				if (predicate.apply(t)) {
 					return t;
 				}
 			}
@@ -2904,44 +2908,7 @@ public class CollUtil {
 		return IterUtil.isEqualList(list1, list2);
 	}
 
-	/**
-	 * Instantiate a new {@link HashMap} with an initial capacity
-	 * that can accommodate the specified number of elements without
-	 * any immediate resize/rehash operations to be expected.
-	 * <p>This differs from the regular {@link HashMap} constructor
-	 * which takes an initial capacity relative to a load factor
-	 * but is effectively aligned with the JDK's
-	 * {@link java.util.concurrent.ConcurrentHashMap#ConcurrentHashMap(int)}.
-	 *
-	 * @param expectedSize the expected number of elements (with a corresponding
-	 *                     capacity to be derived so that no resize/rehash operations are needed)
-	 * @param <K>          键
-	 * @param <V>          值
-	 * @return HashMap
-	 * @see #newLinkedHashMap(int)
-	 */
-	public static <K, V> HashMap<K, V> newHashMap(int expectedSize) {
-		return new HashMap<>((int) (expectedSize / DEFAULT_LOAD_FACTOR), DEFAULT_LOAD_FACTOR);
-	}
 
-	/**
-	 * Instantiate a new {@link LinkedHashMap} with an initial capacity
-	 * that can accommodate the specified number of elements without
-	 * any immediate resize/rehash operations to be expected.
-	 * <p>This differs from the regular {@link LinkedHashMap} constructor
-	 * which takes an initial capacity relative to a load factor
-	 *
-	 * @param expectedSize the expected number of elements (with a corresponding
-	 *                     capacity to be derived so that no resize/rehash operations are needed)
-	 * @param <K>          键
-	 * @param <V>          值
-	 * @return LinkedHashMap
-	 * @see #newHashMap(int)
-	 */
-
-	public static <K, V> LinkedHashMap<K, V> newLinkedHashMap(int expectedSize) {
-		return new LinkedHashMap<>((int) (expectedSize / DEFAULT_LOAD_FACTOR), DEFAULT_LOAD_FACTOR);
-	}
 
 	/**
 	 * Convert the supplied array into a List. A primitive array gets converted
@@ -3774,65 +3741,6 @@ public class CollUtil {
 	 * product</a>" of the lists. For example:
 	 *
 	 * <pre>{@code
-	 * CollUtil.cartesianProduct(ListUtil.of(
-	 *     ListUtil.of(1, 2),
-	 *     ListUtil.of("A", "B", "C")))
-	 * }</pre>
-	 *
-	 * <p>returns a list containing six lists in the following order:
-	 *
-	 * <ul>
-	 *   <li>{@code ListUtil.of(1, "A")}
-	 *   <li>{@code ListUtil.of(1, "B")}
-	 *   <li>{@code ListUtil.of(1, "C")}
-	 *   <li>{@code ListUtil.of(2, "A")}
-	 *   <li>{@code ListUtil.of(2, "B")}
-	 *   <li>{@code ListUtil.of(2, "C")}
-	 * </ul>
-	 *
-	 * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
-	 * products that you would get from nesting for loops:
-	 *
-	 * <pre>{@code
-	 * for (B b0 : lists.get(0)) {
-	 *   for (B b1 : lists.get(1)) {
-	 *     ...
-	 *     List<B> tuple = ListUtil.of(b0, b1, ...);
-	 *     // operate on tuple
-	 *   }
-	 * }
-	 * }</pre>
-	 *
-	 * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
-	 * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
-	 * list (counter-intuitive, but mathematically consistent).
-	 *
-	 * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
-	 * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
-	 * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
-	 * is iterated are the individual lists created, and these are not retained after iteration.
-	 *
-	 * @param lists the lists to choose elements from, in the order that the elements chosen from
-	 *     those lists should appear in the resulting lists
-	 * @param <B> any common base class shared by all axes (often just {@link Object})
-	 * @return the Cartesian product, as an immutable list containing immutable lists
-	 * @throws IllegalArgumentException if the size of the cartesian product would be greater than
-	 *     {@link Integer#MAX_VALUE}
-	 * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
-	 *     a provided list is null
-	 *
-	 */
-	@SafeVarargs
-	public static <B> List<List<B>> cartesianProduct(List<B>... lists) {
-		return cartesianProduct(Arrays.asList(lists));
-	}
-
-	/**
-	 * Returns every possible list that can be formed by choosing one element from each of the given
-	 * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
-	 * product</a>" of the lists. For example:
-	 *
-	 * <pre>{@code
 	 * CollUtil.cartesianProduct(List.of(
 	 *     List.of(1, 2),
 	 *     List.of("A", "B", "C")))
@@ -3880,12 +3788,22 @@ public class CollUtil {
 	 *     {@link Integer#MAX_VALUE}
 	 * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
 	 *     a provided list is null
-	 *
 	 * @author wh
 	 */
-	public static <B> List<List<B>> cartesianProduct(List<List<B>> lists) {
+	public static <B> Collection<List<B>> cartesianProduct(List<? extends Collection<B>> lists) {
+		
+		notNull(lists);
+		if(lists.isEmpty()){
+			return list(false);
+		}
+		Collection<List<B>> result =null ;
+		if(lists.get(0) instanceof Set){
 
-		List<List<B>> result = list(false) ;
+			result = newHashSet();
+		}else {
+			result = list(false);
+		}
+
 		for (Collection<B> listinner : lists) {
 			List<B> copy = list(false,listinner);
 			if (copy.isEmpty()) {
@@ -3896,7 +3814,5 @@ public class CollUtil {
 		return result;
 
 	}
-
-
 
 }

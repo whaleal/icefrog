@@ -5,11 +5,10 @@ package com.whaleal.icefrog.collections;
 
 
 
-import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import junit.framework.TestCase;
 
 /**

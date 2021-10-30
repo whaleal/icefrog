@@ -1,7 +1,10 @@
 
 
-package com.whaleal.icefrog.core.util;
+package com.whaleal.icefrog.core.lang;
 
+
+import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 /**
  * Legacy version of {@link java.util.function.Predicate java.util.function.Predicate}. Determines a
@@ -17,17 +20,18 @@ package com.whaleal.icefrog.core.util;
  * Otherwise, at least reduce <i>explicit</i> dependencies on this type by using lambda expressions
  * or method references instead of classes, leaving your code easier to migrate in the future.
  *
- * <p>The {@link Predicates} class provides icefrog predicates and related utilities.
+ * <p>The {@link PredicateUtil} class provides icefrog predicates and related utilities.
  *
  * <p>See the Guava User Guide article on <a
  * href="https://github.com/google/guava/wiki/FunctionalExplained">the use of {@code Predicate}</a>.
  *
  *
+ * 过滤器
  * @author wh
  * @since 1.0
  */
 @FunctionalInterface
-public interface Predicate<T extends Object> extends java.util.function.Predicate<T> {
+public interface Predicate<T> extends java.util.function.Predicate<T> {
 	/**
 	 * Returns the result of applying this predicate to {@code input} (Java 8 users, see notes in the
 	 * class documentation above). This method is <i>generally expected</i>, but not absolutely
@@ -40,10 +44,13 @@ public interface Predicate<T extends Object> extends java.util.function.Predicat
 	 *       predicate.apply(b))}.
 	 * </ul>
 	 *
-	 * @param input  input
+	 *  当转为 过滤器使用时 可以判断 是否接受对象
+	 *
+	 *
+	 * @param input  input  检查的对象
 	 * @throws NullPointerException if {@code input} is null and this predicate does not accept null
 	 *                              arguments
-	 * @return  boolean
+	 * @return  boolean  是否接受对象
 	 */
 	boolean apply(T input);
 

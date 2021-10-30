@@ -3,12 +3,13 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
-import com.whaleal.icefrog.core.util.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -104,7 +105,9 @@ public final class Collections2 {
     }
   }
 
+  //  本质 是一个 collection   的实现
   static class FilteredCollection<E extends Object> extends AbstractCollection<E> {
+    //  内部的一个存储结构
     final Collection<E> unfiltered;
     final Predicate<? super E> predicate;
 
@@ -114,7 +117,7 @@ public final class Collections2 {
     }
 
     FilteredCollection<E> createCombined(Predicate<? super E> newPredicate) {
-      return new FilteredCollection<E>(unfiltered, Predicates.and(predicate, newPredicate));
+      return new FilteredCollection<E>(unfiltered, PredicateUtil.and(predicate, newPredicate));
       // .<E> above needed to compile in JDK 5
     }
 
@@ -134,7 +137,7 @@ public final class Collections2 {
 
     @Override
     public void clear() {
-      Iterables.removeIf(unfiltered, predicate);
+      IterUtil.removeIf(unfiltered, predicate);
     }
 
     @Override

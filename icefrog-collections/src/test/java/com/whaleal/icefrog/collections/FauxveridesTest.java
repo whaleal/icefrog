@@ -32,9 +32,7 @@ import junit.framework.TestCase;
  *
  */
 public class FauxveridesTest extends TestCase {
-  public void testImmutableBiMap() {
-    doHasAllFauxveridesTest(ImmutableBiMap.class, ImmutableMap.class);
-  }
+
 
   public void testImmutableListMultimap() {
     doHasAllFauxveridesTest(ImmutableListMultimap.class, ImmutableMultimap.class);

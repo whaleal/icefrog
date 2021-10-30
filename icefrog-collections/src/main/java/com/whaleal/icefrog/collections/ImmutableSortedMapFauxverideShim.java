@@ -84,20 +84,7 @@ abstract class ImmutableSortedMapFauxverideShim<K, V> extends ImmutableMap<K, V>
     throw new UnsupportedOperationException();
   }
 
-  /**
-   * Not supported. <b>You are attempting to create a map that may contain a non-{@code Comparable}
-   * key.</b> Proper calls will resolve to the version in {@code ImmutableSortedMap}, not this dummy
-   * version.
-   *
-   * @throws UnsupportedOperationException always
-   * @deprecated <b>Pass a key of type {@code Comparable} to use {@link
-   *     ImmutableSortedMap#of(Comparable, Object)}.</b>
-   */
 
-  @Deprecated
-  public static <K, V> ImmutableSortedMap<K, V> of(K k1, V v1) {
-    throw new UnsupportedOperationException();
-  }
 
   /**
    * Not supported. <b>You are attempting to create a map that may contain non-{@code Comparable}

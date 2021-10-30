@@ -1,17 +1,17 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.Function;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.*;
-import static com.whaleal.icefrog.core.util.Predicates.instanceOf;
+import static com.whaleal.icefrog.core.util.PredicateUtil.instanceOf;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -295,7 +295,8 @@ public final class Iterators {
    * @throws IllegalArgumentException if the iterator contains multiple elements. The state of the
    *     iterator is unspecified.
    */
- 
+
+  @Deprecated
   public static <T extends Object> T getOnlyElement(
           Iterator<? extends T> iterator, T defaultValue) {
     return iterator.hasNext() ? getOnlyElement(iterator) : defaultValue;
@@ -311,6 +312,7 @@ public final class Iterators {
    */
  // Array.newInstance(Class, int)
   // For discussion of this signature, see the corresponding overload of *Iterables*.toArray.
+  @Deprecated
   public static <T>  T[] toArray(Iterator<T> iterator, Class<T> type) {
     List< T> list = ListUtil.list(false,iterator);
     return Iterables.toArray(list, type);
@@ -322,7 +324,8 @@ public final class Iterators {
    *
    * @return {@code true} if {@code collection} was modified as a result of this operation
    */
-  
+
+  @Deprecated
   public static <T extends Object> boolean addAll(
           Collection<T> addTo, Iterator<? extends T> iterator) {
     checkNotNull(addTo);
@@ -624,6 +627,7 @@ public final class Iterators {
   /**
    * Returns a view of {@code unfiltered} containing all elements that satisfy the input predicate
    * {@code retainIfTrue}.
+   *
    */
   public static <T extends Object> AbstractIterator<T> filter(
           Iterator<T> unfiltered, Predicate<? super T> retainIfTrue) {

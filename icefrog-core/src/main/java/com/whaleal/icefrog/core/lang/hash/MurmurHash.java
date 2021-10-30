@@ -22,9 +22,14 @@ import java.nio.charset.Charset;
 public class MurmurHash implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	/*
+	 * These should be NumberUtil, but we need to use longs to force GWT to do the multiplications with
+	 * enough precision.
+	 */
 	// Constants for 32 bit variant
 	private static final int C1_32 = 0xcc9e2d51;
 	private static final int C2_32 = 0x1b873593;
+
 	private static final int R1_32 = 15;
 	private static final int R2_32 = 13;
 	private static final int M_32 = 5;

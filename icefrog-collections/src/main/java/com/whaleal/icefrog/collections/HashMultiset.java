@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 import java.io.IOException;
@@ -51,7 +52,7 @@ public final class HashMultiset<E extends Object> extends AbstractMapBasedMultis
   public static <E extends Object> HashMultiset<E> create(
       Iterable<? extends E> elements) {
     HashMultiset<E> multiset = create(Multisets.inferDistinctElements(elements));
-    Iterables.addAll(multiset, elements);
+    IterUtil.addAll(multiset, elements);
     return multiset;
   }
 

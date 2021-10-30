@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;
@@ -91,7 +92,7 @@ public final class TreeMultiset<E extends Object> extends AbstractSortedMultiset
    */
   public static <E extends Comparable> TreeMultiset<E> create(Iterable<? extends E> elements) {
     TreeMultiset<E> multiset = create();
-    Iterables.addAll(multiset, elements);
+    IterUtil.addAll(multiset, elements);
     return multiset;
   }
 

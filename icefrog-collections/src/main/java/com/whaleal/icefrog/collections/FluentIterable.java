@@ -2,11 +2,12 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 
-
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -247,7 +248,12 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
     return new FluentIterable<T>() {
       @Override
       public Iterator<T> iterator() {
-        return Iterators.concat(Iterators.transform(inputs.iterator(), Iterables.<T>toIterator()));
+        return Iterators.concat(IterUtil.trans(inputs.iterator(), new Function<Iterable<? extends T>, Iterator<? extends T>>() {
+          @Override
+          public Iterator<? extends T> apply(Iterable<? extends T> iterable) {
+            return iterable.iterator();
+          }
+        }));
       }
     };
   }
@@ -294,9 +300,9 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    * 
    */
 
-  public static <E extends Object> FluentIterable<E> of(
+  public static <E> FluentIterable<E> of(
       @ParametricNullness E element, E... elements) {
-    return from(Lists.asList(element, elements));
+    return (FluentIterable<E>) from(CollUtil.list(false,element, elements));
   }
 
   /**
@@ -308,7 +314,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    */
   @Override
   public String toString() {
-    return Iterables.toString(getDelegate());
+    return IterUtil.toString(getDelegate());
   }
 
   /**
@@ -317,7 +323,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    * <p><b>{@code Stream} equivalent:</b> {@link Stream#count}.
    */
   public final int size() {
-    return Iterables.size(getDelegate());
+    return IterUtil.size(getDelegate());
   }
 
   /**
@@ -327,7 +333,8 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    * <p><b>{@code Stream} equivalent:</b> {@code stream.anyMatch(Predicate.isEqual(target))}.
    */
   public final boolean contains(@CheckForNull Object target) {
-    return Iterables.contains(getDelegate(), target);
+    return IterUtil.contains(getDelegate(),target);
+
   }
 
   /**
@@ -438,7 +445,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    */
   @SuppressWarnings("nullness") // Unsafe, but we can't do much about it now.
   public final Optional<E> firstMatch(Predicate<? super E> predicate) {
-    return Iterables.tryFind(getDelegate(), predicate);
+    return IterUtil.tryFind(getDelegate().iterator(), predicate);
   }
 
   /**
@@ -453,7 +460,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    */
   public final <T extends Object> FluentIterable<T> transform(
       Function<? super E, T> function) {
-    return from(Iterables.transform(getDelegate(), function));
+    return from(IterUtil.trans(getDelegate(), function));
   }
 
   /**
@@ -761,12 +768,12 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
    */
   @SuppressWarnings("nullness")
   public final E[] toArray(Class<E> type) {
-    return Iterables.toArray(getDelegate(), type);
+    return ArrayUtil.toArray(getDelegate(), type);
   }
 
   /**
    * Copies all the elements from this fluent iterable to {@code collection}. This is equivalent to
-   * calling {@code Iterables.addAll(collection, this)}.
+   * calling {@code IterUtil.addAll(collection, this)}.
    *
    * <p><b>{@code Stream} equivalent:</b> {@code stream.forEachOrdered(collection::add)} or {@code
    * stream.forEach(collection::add)}.

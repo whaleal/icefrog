@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
@@ -61,7 +62,7 @@ public final class LinkedHashMultiset<E extends Object>
   public static <E extends Object> LinkedHashMultiset<E> create(
       Iterable<? extends E> elements) {
     LinkedHashMultiset<E> multiset = create(Multisets.inferDistinctElements(elements));
-    Iterables.addAll(multiset, elements);
+    IterUtil.addAll(multiset, elements);
     return multiset;
   }
 

@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
+
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,7 +27,7 @@ final class ImmutableEnumSet<E extends Enum<E>> extends ImmutableSet<E> {
       case 0:
         return ImmutableSet.of();
       case 1:
-        return ImmutableSet.of(Iterables.getOnlyElement(set));
+        return ImmutableSet.of(IterUtil.getOnlyElement(set));
       default:
         return new ImmutableEnumSet(set);
     }

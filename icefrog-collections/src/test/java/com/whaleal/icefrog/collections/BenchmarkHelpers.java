@@ -4,6 +4,8 @@ package com.whaleal.icefrog.collections;
 
 
 
+import com.whaleal.icefrog.core.map.BiMap;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -268,7 +270,8 @@ final class BenchmarkHelpers {
     ImmutableBiMapImpl {
       @Override
       public <K extends Comparable<K>, V> BiMap<K, V> create(Map<K, V> map) {
-        return ImmutableBiMap.copyOf(map);
+       // return ImmutableBiMap.copyOf(map);
+        return  null ;
       }
     };
 

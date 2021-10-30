@@ -1,4 +1,4 @@
-package com.whaleal.icefrog.core.util;
+package com.whaleal.icefrog.core.collection;
 
 
 import javax.annotation.CheckForNull;

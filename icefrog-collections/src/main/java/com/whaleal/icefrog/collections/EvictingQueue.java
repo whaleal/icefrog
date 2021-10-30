@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
@@ -112,7 +113,7 @@ public final class EvictingQueue<E> extends ForwardingQueue<E> implements Serial
     int size = collection.size();
     if (size >= maxSize) {
       clear();
-      return Iterables.addAll(this, Iterables.skip(collection, size - maxSize));
+      return IterUtil.addAll(this, Iterables.skip(collection, size - maxSize));
     }
     return standardAddAll(collection);
   }

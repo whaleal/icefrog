@@ -17,11 +17,18 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * below all values or above all values. With this object defined in this way, an interval can
  * always be represented by a pair of {@code Cut} instances.
  *
+ * {@link Range}实例内部结构的实现细节。代表一种独特的
+ * “切割”一条“数字线”的方式（实际上是{@code C}类型的实例，不一定
+ * “编号”）分为两部分；这可以在低于某个值、高于某个值的情况下进行，
+ * 低于所有值或高于所有值。以这种方式定义此对象后，可以创建一个间隔
+ * 始终由一对{@code Cut}实例表示。
+ * @author wh
  *
  */
 
 
 abstract class Cut<C extends Comparable> implements Comparable<Cut<C>>, Serializable {
+    //  序列化 serialVersionUID
     private static final long serialVersionUID = 0;
     final C endpoint;
 

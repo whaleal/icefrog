@@ -76,7 +76,7 @@ final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
     @SuppressWarnings("nullness")
     Entry<K, V>[] entries =
         (n == entryArray.length) ? entryArray : createEntryArray(n);
-    int tableSize = Hashing.closedTableSize(n, MAX_LOAD_FACTOR);
+    int tableSize = n;
     ImmutableMapEntry<K, V>[] table = createEntryArray(tableSize);
     int mask = tableSize - 1;
     for (int entryIndex = 0; entryIndex < n; entryIndex++) {
@@ -85,7 +85,7 @@ final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
       K key = entry.getKey();
       V value = entry.getValue();
       checkEntryNotNull(key, value);
-      int tableIndex = Hashing.smear(key.hashCode()) & mask;
+      int tableIndex = (int) (0x1b873593 * Integer.rotateLeft((int) (key.hashCode() * 0xcc9e2d51), 15)) & mask;
       ImmutableMapEntry<K, V> existing = table[tableIndex];
       // prepend, not append, so the entries can be immutable
       ImmutableMapEntry<K, V> newEntry =
@@ -152,7 +152,7 @@ final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
     if (key == null || keyTable == null) {
       return null;
     }
-    int index = Hashing.smear(key.hashCode()) & mask;
+    int index =  (int) (0x1b873593 * Integer.rotateLeft((int) (key.hashCode() * 0xcc9e2d51), 15)) & mask;
     for (ImmutableMapEntry<?, V> entry = keyTable[index];
         entry != null;
         entry = entry.getNextInKeyBucket()) {

@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.util.NumberUtil;
@@ -18,7 +15,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import static com.whaleal.icefrog.collections.CompactHashing.UNSET;
-import static com.whaleal.icefrog.collections.Hashing.smearedHash;
 import static com.whaleal.icefrog.collections.NullnessCasts.unsafeNull;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkRemove;
@@ -321,7 +317,7 @@ class CompactHashMap<K extends Object, V extends Object>
 
     int newEntryIndex = this.size; // current size, and pointer to the entry to be appended
     int newSize = newEntryIndex + 1;
-    int hash = smearedHash(key);
+    int hash = ObjectUtil.hashCode(key);
     int mask = hashTableMask();
     int tableIndex = hash & mask;
     int next = CompactHashing.tableGet(requireTable(), tableIndex);
@@ -455,7 +451,7 @@ class CompactHashMap<K extends Object, V extends Object>
     if (needsAllocArrays()) {
       return -1;
     }
-    int hash = smearedHash(key);
+    int hash = ObjectUtil.hashCode(key);
     int mask = hashTableMask();
     int next = CompactHashing.tableGet(requireTable(), hash & mask);
     if (next == UNSET) {
@@ -557,7 +553,7 @@ class CompactHashMap<K extends Object, V extends Object>
       entries[srcIndex] = 0;
 
       // also need to update whoever's "next" pointer was pointing to the last entry place
-      int tableIndex = smearedHash(key) & mask;
+      int tableIndex = ObjectUtil.hashCode(key) & mask;
       int next = CompactHashing.tableGet(table, tableIndex);
       int srcNext = srcIndex + 1;
       if (next == srcNext) {

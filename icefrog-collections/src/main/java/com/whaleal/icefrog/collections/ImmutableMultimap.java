@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 
 import javax.annotation.CheckForNull;
@@ -184,7 +185,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
 
     public Builder<K, V> putAll(K key, Iterable<? extends V> values) {
       if (key == null) {
-        throw new NullPointerException("null key in entry: null=" + Iterables.toString(values));
+        throw new NullPointerException("null key in entry: null=" + IterUtil.toString(values));
       }
       Collection<V> valueCollection = builderMap.get(key);
       if (valueCollection != null) {

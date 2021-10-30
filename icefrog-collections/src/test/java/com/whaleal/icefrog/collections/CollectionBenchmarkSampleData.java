@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.CollUtil;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +49,7 @@ class CollectionBenchmarkSampleData {
   }
 
   private Element[] createQueries(Set<Element> elementsInSet, int numQueries) {
-    List<Element> queryList = Lists.newArrayListWithCapacity(numQueries);
+    List<Element> queryList = CollUtil.newArrayList();
 
     int numGoodQueries = (int) (numQueries * hitRate + 0.5);
 
@@ -60,7 +62,7 @@ class CollectionBenchmarkSampleData {
       for (int i = 0; i < minCopiesOfEachGoodQuery; i++) {
         queryList.addAll(elementsInSet);
       }
-      List<Element> tmp = Lists.newArrayList(elementsInSet);
+      List<Element> tmp = CollUtil.newArrayList(elementsInSet);
       Collections.shuffle(tmp, random);
       queryList.addAll(tmp.subList(0, extras));
     }

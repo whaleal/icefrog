@@ -2,12 +2,11 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.collection.ListUtil;
+import com.whaleal.icefrog.core.collection.*;
 import com.whaleal.icefrog.core.map.MapUtil;
-import com.whaleal.icefrog.core.util.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
-import com.whaleal.icefrog.core.util.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -23,7 +22,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
 
 /**
  * Static utility methods pertaining to {@link Set} instances. Also see this class's counterparts
- * {@link Lists}, {@link MapUtil} and {@link Queues}.
+ * {@link Lists}, {@link MapUtil} and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#sets"> {@code Sets}</a>.
@@ -125,7 +124,7 @@ public final class Sets {
   public static <E extends Enum<E>> EnumSet<E> newEnumSet(
       Iterable<E> iterable, Class<E> elementType) {
     EnumSet<E> set = EnumSet.noneOf(elementType);
-    Iterables.addAll(set, iterable);
+    IterUtil.addAll(set, iterable);
     return set;
   }
 
@@ -169,7 +168,7 @@ public final class Sets {
   /**
    * Creates a <i>mutable</i> {@code HashSet} instance containing the given elements. A very thin
    * convenience for creating an empty set then calling {@link Collection#addAll} or {@link
-   * Iterables#addAll}.
+   * IterUtil#addAll}.
    *
    * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
    * ImmutableSet#copyOf(Iterable)} instead. (Or, change {@code elements} to be a {@link
@@ -254,7 +253,7 @@ public final class Sets {
    */
   public static <E> Set<E> newConcurrentHashSet(Iterable<? extends E> elements) {
     Set<E> set = newConcurrentHashSet();
-    Iterables.addAll(set, elements);
+    IterUtil.addAll(set, elements);
     return set;
   }
 
@@ -296,7 +295,7 @@ public final class Sets {
       return new LinkedHashSet<E>((Collection<? extends E>) elements);
     }
     LinkedHashSet<E> set = newLinkedHashSet();
-    Iterables.addAll(set, elements);
+    IterUtil.addAll(set, elements);
     return set;
   }
 
@@ -351,14 +350,14 @@ public final class Sets {
    * <a href="http://goo.gl/iz2Wi">"diamond" syntax</a>.
    *
    * <p>This method is just a small convenience for creating an empty set and then calling {@link
-   * Iterables#addAll}. This method is not very useful and will likely be deprecated in the future.
+   * IterUtil#addAll}. This method is not very useful and will likely be deprecated in the future.
    *
    * @param elements the elements that the set should contain
    * @return a new {@code TreeSet} containing those elements (minus duplicates)
    */
   public static <E extends Comparable> TreeSet<E> newTreeSet(Iterable<? extends E> elements) {
     TreeSet<E> set = newTreeSet();
-    Iterables.addAll(set, elements);
+    IterUtil.addAll(set, elements);
     return set;
   }
 
@@ -985,13 +984,13 @@ public final class Sets {
    *
    * <p>Many of the filtered set's methods, such as {@code size()}, iterate across every element in
    * the underlying set and determine which elements satisfy the filter. When a live view is
-   * <i>not</i> needed, it may be faster to copy {@code Iterables.filter(unfiltered, predicate)} and
+   * <i>not</i> needed, it may be faster to copy {@code IterUtil.filter(unfiltered, predicate)} and
    * use the copy.
    *
    * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
    * {@link Predicate#apply}. Do not provide a predicate such as {@code
    * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-   * Iterables#filter(Iterable, Class)} for related functionality.)
+   * IterUtil#filter(Iterable, Class)} for related functionality.)
    *
    * <p><b>Java 8 users:</b> many use cases for this method are better addressed by {@link
    * Stream#filter}. This method is not being deprecated, but we gently encourage
@@ -1007,7 +1006,7 @@ public final class Sets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredSet<E> filtered = (FilteredSet<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredSet<E>((Set<E>) filtered.unfiltered, combinedPredicate);
     }
 
@@ -1028,13 +1027,13 @@ public final class Sets {
    *
    * <p>Many of the filtered set's methods, such as {@code size()}, iterate across every element in
    * the underlying set and determine which elements satisfy the filter. When a live view is
-   * <i>not</i> needed, it may be faster to copy {@code Iterables.filter(unfiltered, predicate)} and
+   * <i>not</i> needed, it may be faster to copy {@code IterUtil.filter(unfiltered, predicate)} and
    * use the copy.
    *
    * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
    * {@link Predicate#apply}. Do not provide a predicate such as {@code
    * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-   * Iterables#filter(Iterable, Class)} for related functionality.)
+   * IterUtil#filter(Iterable, Class)} for related functionality.)
    *
    * 
    */
@@ -1044,7 +1043,7 @@ public final class Sets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredSet<E> filtered = (FilteredSet<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredSortedSet<E>((SortedSet<E>) filtered.unfiltered, combinedPredicate);
     }
 
@@ -1065,13 +1064,13 @@ public final class Sets {
    *
    * <p>Many of the filtered set's methods, such as {@code size()}, iterate across every element in
    * the underlying set and determine which elements satisfy the filter. When a live view is
-   * <i>not</i> needed, it may be faster to copy {@code Iterables.filter(unfiltered, predicate)} and
+   * <i>not</i> needed, it may be faster to copy {@code IterUtil.filter(unfiltered, predicate)} and
    * use the copy.
    *
    * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
    * {@link Predicate#apply}. Do not provide a predicate such as {@code
    * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-   * Iterables#filter(Iterable, Class)} for related functionality.)
+   * IterUtil#filter(Iterable, Class)} for related functionality.)
    *
    * 
    */
@@ -1084,7 +1083,7 @@ public final class Sets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredSet<E> filtered = (FilteredSet<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredNavigableSet<E>((NavigableSet<E>) filtered.unfiltered, combinedPredicate);
     }
 
@@ -1183,25 +1182,25 @@ public final class Sets {
     @Override
     @CheckForNull
     public E ceiling(@ParametricNullness E e) {
-      return Iterables.find(unfiltered().tailSet(e, true), predicate, null);
+      return IterUtil.find(unfiltered().tailSet(e, true), predicate, null);
     }
 
     @Override
     @CheckForNull
     public E higher(@ParametricNullness E e) {
-      return Iterables.find(unfiltered().tailSet(e, false), predicate, null);
+      return IterUtil.find(unfiltered().tailSet(e, false), predicate, null);
     }
 
     @Override
     @CheckForNull
     public E pollFirst() {
-      return Iterables.removeFirstMatching(unfiltered(), predicate);
+      return IterUtil.removeFirstMatching(unfiltered(), predicate);
     }
 
     @Override
     @CheckForNull
     public E pollLast() {
-      return Iterables.removeFirstMatching(unfiltered().descendingSet(), predicate);
+      return IterUtil.removeFirstMatching(unfiltered().descendingSet(), predicate);
     }
 
     @Override
@@ -1295,8 +1294,9 @@ public final class Sets {
    * 
    */
   @Deprecated
-  public static <B> Set<List<B>> cartesianProduct(List<? extends Set<? extends B>> sets) {
-    return CartesianSet.create(sets);
+  public static <B> Set<List<B>> cartesianProduct(List<Set< B>> sets) {
+
+    return (Set<List<B>>) CollUtil.cartesianProduct(sets);
   }
 
   /**
@@ -1354,108 +1354,10 @@ public final class Sets {
    */
   @Deprecated
   @SafeVarargs
-  public static <B> Set<List<B>> cartesianProduct(Set<? extends B>... sets) {
+  public static <B> Set<List<B>> cartesianProduct(Set<B>... sets) {
     return cartesianProduct(Arrays.asList(sets));
   }
 
-  @Deprecated
-  private static final class CartesianSet<E> extends ForwardingCollection<List<E>>
-      implements Set<List<E>> {
-    private final transient ImmutableList<ImmutableSet<E>> axes;
-    private final transient CartesianList<E> delegate;
-
-    static <E> Set<List<E>> create(List<? extends Set<? extends E>> sets) {
-      ImmutableList.Builder<ImmutableSet<E>> axesBuilder = new ImmutableList.Builder<>(sets.size());
-      for (Set<? extends E> set : sets) {
-        ImmutableSet<E> copy = ImmutableSet.copyOf(set);
-        if (copy.isEmpty()) {
-          return ImmutableSet.of();
-        }
-        axesBuilder.add(copy);
-      }
-      final ImmutableList<ImmutableSet<E>> axes = axesBuilder.build();
-      ImmutableList<List<E>> listAxes =
-          new ImmutableList<List<E>>() {
-            @Override
-            public int size() {
-              return axes.size();
-            }
-
-            @Override
-            public List<E> get(int index) {
-              return axes.get(index).asList();
-            }
-
-            @Override
-            boolean isPartialView() {
-              return true;
-            }
-          };
-      return new CartesianSet<E>(axes, new CartesianList<E>(listAxes));
-    }
-
-    private CartesianSet(ImmutableList<ImmutableSet<E>> axes, CartesianList<E> delegate) {
-      this.axes = axes;
-      this.delegate = delegate;
-    }
-
-    @Override
-    protected Collection<List<E>> delegate() {
-      return delegate;
-    }
-
-    @Override
-    public boolean contains(@CheckForNull Object object) {
-      if (!(object instanceof List)) {
-        return false;
-      }
-      List<?> list = (List<?>) object;
-      if (list.size() != axes.size()) {
-        return false;
-      }
-      int i = 0;
-      for (Object o : list) {
-        if (!axes.get(i).contains(o)) {
-          return false;
-        }
-        i++;
-      }
-      return true;
-    }
-
-    @Override
-    public boolean equals(@CheckForNull Object object) {
-      // Warning: this is broken if size() == 0, so it is critical that we
-      // substitute an empty ImmutableSet to the user in place of this
-      if (object instanceof CartesianSet) {
-        CartesianSet<?> that = (CartesianSet<?>) object;
-        return this.axes.equals(that.axes);
-      }
-      return super.equals(object);
-    }
-
-    @Override
-    public int hashCode() {
-      // Warning: this is broken if size() == 0, so it is critical that we
-      // substitute an empty ImmutableSet to the user in place of this
-
-      // It's a weird formula, but tests prove it works.
-      int adjust = size() - 1;
-      for (int i = 0; i < axes.size(); i++) {
-        adjust *= 31;
-        adjust = ~~adjust;
-        // in GWT, we have to deal with integer overflow carefully
-      }
-      int hash = 1;
-      for (Set<E> axis : axes) {
-        hash = 31 * hash + (size() / axis.size() * axis.hashCode());
-
-        hash = ~~hash;
-      }
-      hash += adjust;
-      return ~~hash;
-    }
-  }
 
   /**
    * Returns the set of all possible subsets of {@code set}. For example, {@code

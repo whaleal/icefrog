@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.QueueUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -9,7 +10,6 @@ import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -18,7 +18,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
 
 /**
  * Static utility methods pertaining to {@link List} instances. Also see this class's counterparts
- * {@link Sets}, {@link MapUtil} and {@link Queues}.
+ * {@link Sets}, {@link MapUtil} and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#lists"> {@code Lists}</a>.
@@ -34,223 +34,11 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
 public final class Lists {
   private Lists() {}
 
-  // ArrayList
-
-  /**
-   * Creates a <i>mutable</i>, empty {@code ArrayList} instance (for Java 6 and earlier).
-   *
-   * <p><b>Note:</b> if mutability is not required, use {@link ImmutableList#of()} instead.
-   *
-   * <p><b>Note for Java 7 and later:</b> this method is now unnecessary and should be treated as
-   * deprecated. Instead, use the {@code ArrayList} {@linkplain ArrayList#ArrayList() constructor}
-   * directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond" syntax</a>.
-   */
-
-  @Deprecated
-  public static <E extends Object> ArrayList<E> newArrayList() {
-    return new ArrayList<>();
-  }
-
-  /**
-   * Creates a <i>mutable</i> {@code ArrayList} instance containing the given elements.
-   *
-   * <p><b>Note:</b> essentially the only reason to use this method is when you will need to add or
-   * remove elements later. Otherwise, for non-null elements use {@link ImmutableList#of()} (for
-   * varargs) or {@link ImmutableList#copyOf(Object[])} (for an array) instead. If any elements
-   * might be null, or you need support for {@link List#set(int, Object)}, use {@link
-   * Arrays#asList}.
-   *
-   * <p>Note that even when you do need the ability to add or remove, this method provides only a
-   * tiny bit of syntactic sugar for {@code newArrayList(}{@link Arrays#asList asList}{@code
-   * (...))}, or for creating an empty list then calling {@link Collections#addAll}. This method is
-   * not actually very useful and will likely be deprecated in the future.
-   */
-  @SafeVarargs
-  @Deprecated
-  public static <E extends Object> ArrayList<E> newArrayList(E... elements) {
-    checkNotNull(elements); // for GWT
-    // Avoid integer overflow when a large array is passed in
-    int capacity = computeArrayListCapacity(elements.length);
-    ArrayList<E> list = new ArrayList<>(capacity);
-    Collections.addAll(list, elements);
-    return list;
-  }
-
-  /**
-   * Creates a <i>mutable</i> {@code ArrayList} instance containing the given elements; a very thin
-   * shortcut for creating an empty list then calling {@link Iterables#addAll}.
-   *
-   * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
-   * ImmutableList#copyOf(Iterable)} instead. (Or, change {@code elements} to be a {@link
-   * FluentIterable} and call {@code elements.toList()}.)
-   *
-   * <p><b>Note for Java 7 and later:</b> if {@code elements} is a {@link Collection}, you don't
-   * need this method. Use the {@code ArrayList} {@linkplain ArrayList#ArrayList(Collection)
-   * constructor} directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond"
-   * syntax</a>.
-   */
-
-  @Deprecated
-  public static <E extends Object> ArrayList<E> newArrayList(
-      Iterable<? extends E> elements) {
-    checkNotNull(elements); // for GWT
-    // Let ArrayList's sizing logic work, if possible
-    return (elements instanceof Collection)
-        ? new ArrayList<>((Collection<? extends E>) elements)
-        : newArrayList(elements.iterator());
-  }
-
-  /**
-   * Creates a <i>mutable</i> {@code ArrayList} instance containing the given elements; a very thin
-   * shortcut for creating an empty list and then calling {@link Iterators#addAll}.
-   *
-   * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
-   * ImmutableList#copyOf(Iterator)} instead.
-   */
-
-  @Deprecated
-  public static <E extends Object> ArrayList<E> newArrayList(
-      Iterator<? extends E> elements) {
-    ArrayList<E> list = newArrayList();
-    Iterators.addAll(list, elements);
-    return list;
-  }
 
 
-  @Deprecated
-  static int computeArrayListCapacity(int arraySize) {
-    checkNonnegative(arraySize, "arraySize");
 
-    // TODO(kevinb): Figure out the right behavior, and document it
-    return (int) NumberUtil.saturatedCast(5L + arraySize + (arraySize / 10),Integer.class);
-  }
 
-  /**
-   * Creates an {@code ArrayList} instance backed by an array with the specified initial size;
-   * simply delegates to {@link ArrayList#ArrayList(int)}.
-   *
-   * <p><b>Note for Java 7 and later:</b> this method is now unnecessary and should be treated as
-   * deprecated. Instead, use {@code new }{@link ArrayList#ArrayList(int) ArrayList}{@code <>(int)}
-   * directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond" syntax</a>.
-   * (Unlike here, there is no risk of overload ambiguity, since the {@code ArrayList} constructors
-   * very wisely did not accept varargs.)
-   *
-   * @param initialArraySize the exact size of the initial backing array for the returned array list
-   *     ({@code ArrayList} documentation calls this value the "capacity")
-   * @return a new, empty {@code ArrayList} which is guaranteed not to resize itself unless its size
-   *     reaches {@code initialArraySize + 1}
-   * @throws IllegalArgumentException if {@code initialArraySize} is negative
-   */
 
-  @Deprecated
-  public static <E extends Object> ArrayList<E> newArrayListWithCapacity(
-      int initialArraySize) {
-    checkNonnegative(initialArraySize, "initialArraySize"); // for GWT.
-    return new ArrayList<>(initialArraySize);
-  }
-
-  /**
-   * Creates an {@code ArrayList} instance to hold {@code estimatedSize} elements, <i>plus</i> an
-   * unspecified amount of padding; you almost certainly mean to call {@link
-   * #newArrayListWithCapacity} (see that method for further advice on usage).
-   *
-   * <p><b>Note:</b> This method will soon be deprecated. Even in the rare case that you do want
-   * some amount of padding, it's best if you choose your desired amount explicitly.
-   *
-   * @param estimatedSize an estimate of the eventual {@link List#size()} of the new list
-   * @return a new, empty {@code ArrayList}, sized appropriately to hold the estimated number of
-   *     elements
-   * @throws IllegalArgumentException if {@code estimatedSize} is negative
-   */
-
-  @Deprecated
-  public static <E extends Object> ArrayList<E> newArrayListWithExpectedSize(
-      int estimatedSize) {
-    return new ArrayList<>(computeArrayListCapacity(estimatedSize));
-  }
-
-  // LinkedList
-
-  /**
-   * Creates a <i>mutable</i>, empty {@code LinkedList} instance (for Java 6 and earlier).
-   *
-   * <p><b>Note:</b> if you won't be adding any elements to the list, use {@link ImmutableList#of()}
-   * instead.
-   *
-   * <p><b>Performance note:</b> {@link ArrayList} and {@link java.util.ArrayDeque} consistently
-   * outperform {@code LinkedList} except in certain rare and specific situations. Unless you have
-   * spent a lot of time benchmarking your specific needs, use one of those instead.
-   *
-   * <p><b>Note for Java 7 and later:</b> this method is now unnecessary and should be treated as
-   * deprecated. Instead, use the {@code LinkedList} {@linkplain LinkedList#LinkedList()
-   * constructor} directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond"
-   * syntax</a>.
-   */
-
-  @Deprecated
-  public static <E extends Object> LinkedList<E> newLinkedList() {
-    return new LinkedList<>();
-  }
-
-  /**
-   * Creates a <i>mutable</i> {@code LinkedList} instance containing the given elements; a very thin
-   * shortcut for creating an empty list then calling {@link Iterables#addAll}.
-   *
-   * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
-   * ImmutableList#copyOf(Iterable)} instead. (Or, change {@code elements} to be a {@link
-   * FluentIterable} and call {@code elements.toList()}.)
-   *
-   * <p><b>Performance note:</b> {@link ArrayList} and {@link java.util.ArrayDeque} consistently
-   * outperform {@code LinkedList} except in certain rare and specific situations. Unless you have
-   * spent a lot of time benchmarking your specific needs, use one of those instead.
-   *
-   * <p><b>Note for Java 7 and later:</b> if {@code elements} is a {@link Collection}, you don't
-   * need this method. Use the {@code LinkedList} {@linkplain LinkedList#LinkedList(Collection)
-   * constructor} directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond"
-   * syntax</a>.
-   */
- @Deprecated
-  public static <E extends Object> LinkedList<E> newLinkedList(
-      Iterable<? extends E> elements) {
-    LinkedList<E> list = newLinkedList();
-    Iterables.addAll(list, elements);
-    return list;
-  }
-
-  /**
-   * Creates an empty {@code CopyOnWriteArrayList} instance.
-   *
-   * <p><b>Note:</b> if you need an immutable empty {@link List}, use {@link Collections#emptyList}
-   * instead.
-   *
-   * @return a new, empty {@code CopyOnWriteArrayList}
-   * 
-   */
-  @Deprecated
- // CopyOnWriteArrayList
-  public static <E extends Object> CopyOnWriteArrayList<E> newCopyOnWriteArrayList() {
-    return new CopyOnWriteArrayList<>();
-  }
-
-  /**
-   * Creates a {@code CopyOnWriteArrayList} instance containing the given elements.
-   *
-   * @param elements the elements that the list should contain, in order
-   * @return a new {@code CopyOnWriteArrayList} containing those elements
-   * 
-   */
-  @Deprecated
- // CopyOnWriteArrayList
-  public static <E extends Object> CopyOnWriteArrayList<E> newCopyOnWriteArrayList(
-      Iterable<? extends E> elements) {
-    // We copy elements to an ArrayList first, rather than incurring the
-    // quadratic cost of adding them to the COWAL directly.
-    Collection<? extends E> elementsCollection =
-        (elements instanceof Collection)
-            ? (Collection<? extends E>) elements
-            : newArrayList(elements);
-    return new CopyOnWriteArrayList<>(elementsCollection);
-  }
 
   /**
    * Returns an unmodifiable list containing the specified first element and backed by the specified
@@ -354,122 +142,7 @@ public final class Lists {
     private static final long serialVersionUID = 0;
   }
 
-  /**
-   * Returns every possible list that can be formed by choosing one element from each of the given
-   * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
-   * product</a>" of the lists. For example:
-   *
-   * <pre>{@code
-   * Lists.cartesianProduct(ImmutableList.of(
-   *     ImmutableList.of(1, 2),
-   *     ImmutableList.of("A", "B", "C")))
-   * }</pre>
-   *
-   * <p>returns a list containing six lists in the following order:
-   *
-   * <ul>
-   *   <li>{@code ImmutableList.of(1, "A")}
-   *   <li>{@code ImmutableList.of(1, "B")}
-   *   <li>{@code ImmutableList.of(1, "C")}
-   *   <li>{@code ImmutableList.of(2, "A")}
-   *   <li>{@code ImmutableList.of(2, "B")}
-   *   <li>{@code ImmutableList.of(2, "C")}
-   * </ul>
-   *
-   * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
-   * products that you would get from nesting for loops:
-   *
-   * <pre>{@code
-   * for (B b0 : lists.get(0)) {
-   *   for (B b1 : lists.get(1)) {
-   *     ...
-   *     ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
-   *     // operate on tuple
-   *   }
-   * }
-   * }</pre>
-   *
-   * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
-   * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
-   * list (counter-intuitive, but mathematically consistent).
-   *
-   * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
-   * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
-   * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
-   * is iterated are the individual lists created, and these are not retained after iteration.
-   *
-   * @param lists the lists to choose elements from, in the order that the elements chosen from
-   *     those lists should appear in the resulting lists
-   * @param <B> any common base class shared by all axes (often just {@link Object})
-   * @return the Cartesian product, as an immutable list containing immutable lists
-   * @throws IllegalArgumentException if the size of the cartesian product would be greater than
-   *     {@link Integer#MAX_VALUE}
-   * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
-   *     a provided list is null
-   * 
-   */
-  public static <B> List<List<B>> cartesianProduct(List<? extends List<? extends B>> lists) {
-    return CartesianList.create(lists);
-  }
 
-  /**
-   * Returns every possible list that can be formed by choosing one element from each of the given
-   * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
-   * product</a>" of the lists. For example:
-   *
-   * <pre>{@code
-   * Lists.cartesianProduct(ImmutableList.of(
-   *     ImmutableList.of(1, 2),
-   *     ImmutableList.of("A", "B", "C")))
-   * }</pre>
-   *
-   * <p>returns a list containing six lists in the following order:
-   *
-   * <ul>
-   *   <li>{@code ImmutableList.of(1, "A")}
-   *   <li>{@code ImmutableList.of(1, "B")}
-   *   <li>{@code ImmutableList.of(1, "C")}
-   *   <li>{@code ImmutableList.of(2, "A")}
-   *   <li>{@code ImmutableList.of(2, "B")}
-   *   <li>{@code ImmutableList.of(2, "C")}
-   * </ul>
-   *
-   * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
-   * products that you would get from nesting for loops:
-   *
-   * <pre>{@code
-   * for (B b0 : lists.get(0)) {
-   *   for (B b1 : lists.get(1)) {
-   *     ...
-   *     ImmutableList<B> tuple = ImmutableList.of(b0, b1, ...);
-   *     // operate on tuple
-   *   }
-   * }
-   * }</pre>
-   *
-   * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
-   * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
-   * list (counter-intuitive, but mathematically consistent).
-   *
-   * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
-   * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
-   * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
-   * is iterated are the individual lists created, and these are not retained after iteration.
-   *
-   * @param lists the lists to choose elements from, in the order that the elements chosen from
-   *     those lists should appear in the resulting lists
-   * @param <B> any common base class shared by all axes (often just {@link Object})
-   * @return the Cartesian product, as an immutable list containing immutable lists
-   * @throws IllegalArgumentException if the size of the cartesian product would be greater than
-   *     {@link Integer#MAX_VALUE}
-   * @throws NullPointerException if {@code lists}, any one of the {@code lists}, or any element of
-   *     a provided list is null
-   * 
-   */
-  @SafeVarargs
-  public static <B> List<List<B>> cartesianProduct(List<? extends B>... lists) {
-    return cartesianProduct(Arrays.asList(lists));
-  }
 
   /**
    * Returns a list that applies {@code function} to each element of {@code fromList}. The returned
@@ -702,19 +375,7 @@ public final class Lists {
     return new StringAsImmutableList(checkNotNull(string));
   }
 
-  /**
-   * Returns a view of the specified {@code CharSequence} as a {@code List<Character>}, viewing
-   * {@code sequence} as a sequence of Unicode code units. The view does not support any
-   * modification operations, but reflects any changes to the underlying character sequence.
-   *
-   * @param sequence the character sequence to view as a {@code List} of characters
-   * @return an {@code List<Character>} view of the character sequence
-   * 
-   */
 
-  public static List<Character> charactersOf(CharSequence sequence) {
-    return new CharSequenceAsList(checkNotNull(sequence));
-  }
 
   @SuppressWarnings("serial") // serialized using ImmutableList serialization
   private static final class StringAsImmutableList extends ImmutableList<Character> {

@@ -4,7 +4,9 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.collections.Multiset.Entry;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.*;
 
 import javax.annotation.CheckForNull;
@@ -283,7 +285,7 @@ public final class Multisets {
       // Support clear(), removeAll(), and retainAll() when filtering a filtered
       // collection.
       FilteredMultiset<E> filtered = (FilteredMultiset<E>) unfiltered;
-      Predicate<E> combinedPredicate = Predicates.and(filtered.predicate, predicate);
+      Predicate<E> combinedPredicate = PredicateUtil.and(filtered.predicate, predicate);
       return new FilteredMultiset<E>(filtered.unfiltered, combinedPredicate);
     }
     return new FilteredMultiset<E>(unfiltered, predicate);

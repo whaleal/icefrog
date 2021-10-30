@@ -5,15 +5,21 @@ package com.whaleal.icefrog.collections;
 
 
 
+import com.whaleal.icefrog.core.lang.hash.MurmurHash;
+import com.whaleal.icefrog.core.util.StrUtil;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import static com.whaleal.icefrog.collections.Hashing.smear;
 
 /** Tests for {@code Hashing}. */
 
+@Deprecated
 public class HashingTest extends TestCase {
+  @Test
   public void testSmear() {
-    assertEquals(1459320713, smear(754102528));
+
+    assertEquals(1459320713, MurmurHash.hash32(StrUtil.getBytesUtf8(new Integer(754102528).hashCode()+"")));
     assertEquals(-160560296, smear(1234567890));
     assertEquals(-1017931171, smear(1));
     assertEquals(-1350072884, smear(-2000000000));

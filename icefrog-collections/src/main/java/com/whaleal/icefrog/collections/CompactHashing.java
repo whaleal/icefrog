@@ -71,7 +71,7 @@ final class CompactHashing {
    */
   static int tableSize(int expectedSize) {
     // We use entries next == 0 to indicate UNSET, so actual capacity is 1 less than requested.
-    return Math.max(MIN_HASH_TABLE_SIZE, Hashing.closedTableSize(expectedSize + 1, 1.0f));
+    return Math.max(MIN_HASH_TABLE_SIZE, expectedSize + 1);
   }
 
   /** Creates and returns a properly-sized array with the given number of buckets. */
@@ -166,7 +166,7 @@ final class CompactHashing {
       int[] entries,
       Object[] keys,
       @CheckForNull Object[] values) {
-    int hash = Hashing.smearedHash(key);
+    int hash = ObjectUtil.hashCode(key);
     int tableIndex = hash & mask;
     int next = tableGet(table, tableIndex);
     if (next == UNSET) {

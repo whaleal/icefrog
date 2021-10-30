@@ -1,38 +1,9 @@
 package com.whaleal.icefrog.core.convert;
 
 import com.whaleal.icefrog.core.bean.BeanUtil;
-import com.whaleal.icefrog.core.convert.impl.ArrayConverter;
-import com.whaleal.icefrog.core.convert.impl.AtomicBooleanConverter;
-import com.whaleal.icefrog.core.convert.impl.AtomicIntegerArrayConverter;
-import com.whaleal.icefrog.core.convert.impl.AtomicLongArrayConverter;
-import com.whaleal.icefrog.core.convert.impl.AtomicReferenceConverter;
-import com.whaleal.icefrog.core.convert.impl.BeanConverter;
-import com.whaleal.icefrog.core.convert.impl.BooleanConverter;
-import com.whaleal.icefrog.core.convert.impl.CalendarConverter;
-import com.whaleal.icefrog.core.convert.impl.CharacterConverter;
-import com.whaleal.icefrog.core.convert.impl.CharsetConverter;
-import com.whaleal.icefrog.core.convert.impl.ClassConverter;
-import com.whaleal.icefrog.core.convert.impl.CollectionConverter;
-import com.whaleal.icefrog.core.convert.impl.CurrencyConverter;
-import com.whaleal.icefrog.core.convert.impl.DateConverter;
-import com.whaleal.icefrog.core.convert.impl.DurationConverter;
-import com.whaleal.icefrog.core.convert.impl.EnumConverter;
-import com.whaleal.icefrog.core.convert.impl.LocaleConverter;
-import com.whaleal.icefrog.core.convert.impl.MapConverter;
-import com.whaleal.icefrog.core.convert.impl.NumberConverter;
-import com.whaleal.icefrog.core.convert.impl.OptionalConverter;
-import com.whaleal.icefrog.core.convert.impl.PathConverter;
-import com.whaleal.icefrog.core.convert.impl.PeriodConverter;
-import com.whaleal.icefrog.core.convert.impl.PrimitiveConverter;
-import com.whaleal.icefrog.core.convert.impl.ReferenceConverter;
-import com.whaleal.icefrog.core.convert.impl.StackTraceElementConverter;
-import com.whaleal.icefrog.core.convert.impl.StringConverter;
-import com.whaleal.icefrog.core.convert.impl.TemporalAccessorConverter;
-import com.whaleal.icefrog.core.convert.impl.TimeZoneConverter;
-import com.whaleal.icefrog.core.convert.impl.URIConverter;
-import com.whaleal.icefrog.core.convert.impl.URLConverter;
-import com.whaleal.icefrog.core.convert.impl.UUIDConverter;
+import com.whaleal.icefrog.core.convert.impl.*;
 import com.whaleal.icefrog.core.date.DateTime;
+import com.whaleal.icefrog.core.lang.ObjectId;
 import com.whaleal.icefrog.core.lang.TypeReference;
 import com.whaleal.icefrog.core.util.ClassUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -387,16 +358,16 @@ public class ConverterRegistry implements Serializable {
 		// 包装类转换器
 		defaultConverterMap.put(Number.class, new NumberConverter());
 		defaultConverterMap.put(Integer.class, new NumberConverter(Integer.class));
-		defaultConverterMap.put(AtomicInteger.class, new NumberConverter(AtomicInteger.class));// since 3.0.8
+		defaultConverterMap.put(AtomicInteger.class, new NumberConverter(AtomicInteger.class));
 		defaultConverterMap.put(Long.class, new NumberConverter(Long.class));
-		defaultConverterMap.put(AtomicLong.class, new NumberConverter(AtomicLong.class));// since 3.0.8
+		defaultConverterMap.put(AtomicLong.class, new NumberConverter(AtomicLong.class));
 		defaultConverterMap.put(Byte.class, new NumberConverter(Byte.class));
 		defaultConverterMap.put(Short.class, new NumberConverter(Short.class));
 		defaultConverterMap.put(Float.class, new NumberConverter(Float.class));
 		defaultConverterMap.put(Double.class, new NumberConverter(Double.class));
 		defaultConverterMap.put(Character.class, new CharacterConverter());
 		defaultConverterMap.put(Boolean.class, new BooleanConverter());
-		defaultConverterMap.put(AtomicBoolean.class, new AtomicBooleanConverter());// since 3.0.8
+		defaultConverterMap.put(AtomicBoolean.class, new AtomicBooleanConverter());
 		defaultConverterMap.put(BigDecimal.class, new NumberConverter(BigDecimal.class));
 		defaultConverterMap.put(BigInteger.class, new NumberConverter(BigInteger.class));
 		defaultConverterMap.put(CharSequence.class, new StringConverter());
@@ -427,9 +398,9 @@ public class ConverterRegistry implements Serializable {
 		defaultConverterMap.put(Duration.class, new DurationConverter());
 
 		// Reference
-		defaultConverterMap.put(WeakReference.class, new ReferenceConverter(WeakReference.class));// since 3.0.8
-		defaultConverterMap.put(SoftReference.class, new ReferenceConverter(SoftReference.class));// since 3.0.8
-		defaultConverterMap.put(AtomicReference.class, new AtomicReferenceConverter());// since 3.0.8
+		defaultConverterMap.put(WeakReference.class, new ReferenceConverter(WeakReference.class));
+		defaultConverterMap.put(SoftReference.class, new ReferenceConverter(SoftReference.class));
+		defaultConverterMap.put(AtomicReference.class, new AtomicReferenceConverter());
 
 		//AtomicXXXArray，since 5.4.5
 		defaultConverterMap.put(AtomicIntegerArray.class, new AtomicIntegerArrayConverter());
@@ -441,10 +412,11 @@ public class ConverterRegistry implements Serializable {
 		defaultConverterMap.put(Locale.class, new LocaleConverter());
 		defaultConverterMap.put(Charset.class, new CharsetConverter());
 		defaultConverterMap.put(Path.class, new PathConverter());
-		defaultConverterMap.put(Currency.class, new CurrencyConverter());// since 3.0.8
-		defaultConverterMap.put(UUID.class, new UUIDConverter());// since 4.0.10
-		defaultConverterMap.put(StackTraceElement.class, new StackTraceElementConverter());// since 4.5.2
-		defaultConverterMap.put(Optional.class, new OptionalConverter());// since 5.0.0
+		defaultConverterMap.put(Currency.class, new CurrencyConverter());
+		defaultConverterMap.put(UUID.class, new UUIDConverter());
+		defaultConverterMap.put(StackTraceElement.class, new StackTraceElementConverter());
+		defaultConverterMap.put(Optional.class, new OptionalConverter());
+		defaultConverterMap.put(ObjectId.class,new ObjectIdConverter());
 
 		return this;
 	}

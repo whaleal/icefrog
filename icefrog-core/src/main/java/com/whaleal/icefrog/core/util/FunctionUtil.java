@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.core.util;
 
 
+import com.whaleal.icefrog.core.lang.Predicate;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.function.Function;
@@ -12,7 +14,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 /**
- * Static utility methods pertaining to {@code com.google.icefrog.base.Function} instances; see that
+ * Static utility methods pertaining to {@code com.whaleal.icefrog.lang.Function} instances; see that
  * class for information about migrating to {@code java.util.Function}.
  *
  * <p>All methods return serializable Functions as long as they're given serializable parameters.
@@ -24,9 +26,8 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  *
  */
 
-
-public final class Functions {
-	private Functions() {
+public final class FunctionUtil {
+	private FunctionUtil() {
 	}
 
 	/**
@@ -326,7 +327,7 @@ public final class Functions {
 	}
 
 	/**
-	 * @see Functions#forPredicate
+	 * @see FunctionUtil#forPredicate
 	 */
 	private static class PredicateFunction<T extends Object>
 			implements Function<T, Boolean>, Serializable {
@@ -398,7 +399,7 @@ public final class Functions {
 	}
 
 	/**
-	 * @see Functions#forSupplier
+	 * @see FunctionUtil#forSupplier
 	 */
 	private static class SupplierFunction<F extends Object, T extends Object>
 			implements Function<F, T>, Serializable {

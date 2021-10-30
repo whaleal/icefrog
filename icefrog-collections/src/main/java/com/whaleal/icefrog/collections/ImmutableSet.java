@@ -731,7 +731,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
     private SetBuilderImpl<E> insertInHashTable(E e) {
       requireNonNull(hashTable);
       int eHash = e.hashCode();
-      int i0 = Hashing.smear(eHash);
+      int i0 = (int) (0x1b873593 * Integer.rotateLeft((int) (eHash * 0xcc9e2d51), 15));
       int mask = hashTable.length - 1;
       for (int i = i0; i - i0 < maxRunBeforeFallback; i++) {
         int index = i & mask;
@@ -802,7 +802,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
       for (int i = 0; i < n; i++) {
         // requireNonNull is safe because we ensure that the first n elements have been populated.
         Object e = requireNonNull(elements[i]);
-        int j0 = Hashing.smear(e.hashCode());
+        int j0 = (int) (0x1b873593 * Integer.rotateLeft((int) (e.hashCode() * 0xcc9e2d51), 15));
         for (int j = j0; ; j++) {
           int index = j & mask;
           if (hashTable[index] == null) {

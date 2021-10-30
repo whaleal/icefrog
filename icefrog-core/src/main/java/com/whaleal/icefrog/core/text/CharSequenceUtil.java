@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
@@ -2338,7 +2339,7 @@ public class CharSequenceUtil {
 	 * @param suffix 截取到的字符串标识
 	 * @return 截取后的字符串
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @since 1.0.0
 	 */
 	public static String[] subBetweenAll(CharSequence str, CharSequence prefix, CharSequence suffix) {
@@ -2389,7 +2390,7 @@ public class CharSequenceUtil {
 	 * @param prefixAndSuffix 截取开始和结束的字符串标识
 	 * @return 截取后的字符串
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @since 1.0.0
 	 */
 	public static String[] subBetweenAll(CharSequence str, CharSequence prefixAndSuffix) {
@@ -3718,7 +3719,7 @@ public class CharSequenceUtil {
 	 * @param desensitizedType 脱敏类型;可以脱敏：用户id、中文名、身份证号、座机号、手机号、地址、电子邮件、密码
 	 * @return 脱敏之后的字符串
 	 * @author Looly
- * @author wh
+	 * @author wh
 	 * @see DesensitizedUtil 如果需要自定义，脱敏规则，请使用该工具类；
 	 * @since 1.0.0
 	 */

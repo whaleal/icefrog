@@ -2,13 +2,15 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.map.BiMap;
+
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collector;
 
 
 /**
- * "Overrides" the {@link ImmutableMap} static methods that lack {@link ImmutableBiMap} equivalents
+ * "Overrides" the {@link ImmutableMap} static methods that lack {@link BiMap} equivalents
  * with deprecated, exception-throwing versions. See {@link ImmutableSortedSetFauxverideShim} for
  * details.
  *
@@ -18,12 +20,12 @@ import java.util.stream.Collector;
 
 abstract class ImmutableBiMapFauxverideShim<K, V> extends ImmutableMap<K, V> {
   /**
-   * Not supported. Use {@link ImmutableBiMap#toImmutableBiMap} instead. This method exists only to
+   * Not supported. Use  instead. This method exists only to
    * hide {@link ImmutableMap#toImmutableMap(Function, Function)} from consumers of {@code
    * ImmutableBiMap}.
    *
    * @throws UnsupportedOperationException always
-   * @deprecated Use {@link ImmutableBiMap#toImmutableBiMap}.
+   * @deprecated Use .
    */
   @Deprecated
 

@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.io.watch;
 
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import java.io.Closeable;
@@ -130,10 +130,10 @@ public class WatchServer extends Thread implements Closeable, Serializable {
 	 * 执行事件获取并处理
 	 *
 	 * @param action     监听回调函数，实现此函数接口用于处理WatchEvent事件
-	 * @param watchFilter 监听过滤接口，通过实现此接口过滤掉不需要监听的情况，null表示不过滤
+	 * @param watchPredicate 监听过滤接口，通过实现此接口过滤掉不需要监听的情况，null表示不过滤
 	 * @since 1.0.0
 	 */
-	public void watch(WatchAction action, Filter<WatchEvent<?>> watchFilter) {
+	public void watch(WatchAction action, Predicate<WatchEvent<?>> watchPredicate) {
 		WatchKey wk;
 		try {
 			wk = watchService.take();
@@ -147,7 +147,7 @@ public class WatchServer extends Thread implements Closeable, Serializable {
 
 		for (WatchEvent<?> event : wk.pollEvents()) {
 			// 如果监听文件，检查当前事件是否与所监听文件关联
-			if (null != watchFilter && false == watchFilter.accept(event)) {
+			if (null != watchPredicate && false == watchPredicate.apply(event)) {
 				continue;
 			}
 
@@ -161,9 +161,9 @@ public class WatchServer extends Thread implements Closeable, Serializable {
 	 * 执行事件获取并处理
 	 *
 	 * @param watcher     {@link Watcher}
-	 * @param watchFilter 监听过滤接口，通过实现此接口过滤掉不需要监听的情况，null表示不过滤
+	 * @param watchPredicate 监听过滤接口，通过实现此接口过滤掉不需要监听的情况，null表示不过滤
 	 */
-	public void watch(Watcher watcher, Filter<WatchEvent<?>> watchFilter) {
+	public void watch(Watcher watcher, Predicate<WatchEvent<?>> watchPredicate) {
 		watch((event, currentPath)->{
 			final WatchEvent.Kind<?> kind = event.kind();
 
@@ -176,7 +176,7 @@ public class WatchServer extends Thread implements Closeable, Serializable {
 			} else if (kind == WatchKind.OVERFLOW.getValue()) {
 				watcher.onOverflow(event, currentPath);
 			}
-		}, watchFilter);
+		}, watchPredicate);
 	}
 
 	/**

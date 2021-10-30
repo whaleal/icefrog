@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 
 import javax.annotation.CheckForNull;
@@ -252,7 +253,7 @@ public abstract class ImmutableSortedMultiset<E> extends ImmutableSortedMultiset
     }
     elements = ListUtil.list(false,elements); // defensive copy
     TreeMultiset<E> sortedCopy = TreeMultiset.create(checkNotNull(comparator));
-    Iterables.addAll(sortedCopy, elements);
+    IterUtil.addAll(sortedCopy, elements);
     return copyOfSortedEntries(comparator, sortedCopy.entrySet());
   }
 
