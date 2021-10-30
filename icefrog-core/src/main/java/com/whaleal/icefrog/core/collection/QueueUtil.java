@@ -1,9 +1,6 @@
 
 
-package com.whaleal.icefrog.collections;
-
-import com.whaleal.icefrog.core.collection.IterUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
+package com.whaleal.icefrog.core.collection;
 
 
 import com.whaleal.icefrog.core.lang.Preconditions;
@@ -12,17 +9,17 @@ import java.util.concurrent.*;
 
 
 /**
- * Static utility methods pertaining to {@link Queue} and {@link Deque} instances. Also see this
- * class's counterparts {@link Lists}, {@link Sets}, and {@link MapUtil}.
  *
- * @author Kurt Alfred Kluever
- * 
+ * 针对 queue  相关的工具类
+ *
+ * @author wh
+ * @since 1.1
+ *
+ *
  */
 
+public final class QueueUtil {
 
-@Deprecated
-public final class Queues {
-  private Queues() {}
 
   // ArrayBlockingQueue
 
@@ -385,71 +382,5 @@ public final class Queues {
       }
     }
     return added;
-  }
-
-  /**
-   * Returns a synchronized (thread-safe) queue backed by the specified queue. In order to guarantee
-   * serial access, it is critical that <b>all</b> access to the backing queue is accomplished
-   * through the returned queue.
-   *
-   * <p>It is imperative that the user manually synchronize on the returned queue when accessing the
-   * queue's iterator:
-   *
-   * <pre>{@code
-   * Queue<E> queue = Queues.synchronizedQueue(MinMaxPriorityQueue.<E>create());
-   * ...
-   * queue.add(element);  // Needn't be in synchronized block
-   * ...
-   * synchronized (queue) {  // Must synchronize on queue!
-   *   Iterator<E> i = queue.iterator(); // Must be in synchronized block
-   *   while (i.hasNext()) {
-   *     foo(i.next());
-   *   }
-   * }
-   * }</pre>
-   *
-   * <p>Failure to follow this advice may result in non-deterministic behavior.
-   *
-   * <p>The returned queue will be serializable if the specified queue is serializable.
-   *
-   * @param queue the queue to be wrapped in a synchronized view
-   * @return a synchronized view of the specified queue
-   * 
-   */
-  public static <E extends Object> Queue<E> synchronizedQueue(Queue<E> queue) {
-    return Synchronized.queue(queue, null);
-  }
-
-  /**
-   * Returns a synchronized (thread-safe) deque backed by the specified deque. In order to guarantee
-   * serial access, it is critical that <b>all</b> access to the backing deque is accomplished
-   * through the returned deque.
-   *
-   * <p>It is imperative that the user manually synchronize on the returned deque when accessing any
-   * of the deque's iterators:
-   *
-   * <pre>{@code
-   * Deque<E> deque = Queues.synchronizedDeque(Queues.<E>newArrayDeque());
-   * ...
-   * deque.add(element);  // Needn't be in synchronized block
-   * ...
-   * synchronized (deque) {  // Must synchronize on deque!
-   *   Iterator<E> i = deque.iterator(); // Must be in synchronized block
-   *   while (i.hasNext()) {
-   *     foo(i.next());
-   *   }
-   * }
-   * }</pre>
-   *
-   * <p>Failure to follow this advice may result in non-deterministic behavior.
-   *
-   * <p>The returned deque will be serializable if the specified deque is serializable.
-   *
-   * @param deque the deque to be wrapped in a synchronized view
-   * @return a synchronized view of the specified deque
-   * 
-   */
-  public static <E extends Object> Deque<E> synchronizedDeque(Deque<E> deque) {
-    return Synchronized.deque(deque, null);
   }
 }

@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.collection.ListUtil;
+import com.whaleal.icefrog.core.collection.QueueUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -10,7 +10,6 @@ import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -19,7 +18,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
 
 /**
  * Static utility methods pertaining to {@link List} instances. Also see this class's counterparts
- * {@link Sets}, {@link MapUtil} and {@link Queues}.
+ * {@link Sets}, {@link MapUtil} and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#lists"> {@code Lists}</a>.

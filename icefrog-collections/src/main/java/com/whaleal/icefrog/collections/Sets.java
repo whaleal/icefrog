@@ -2,11 +2,8 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.collection.IterUtil;
-import com.whaleal.icefrog.core.collection.ListUtil;
+import com.whaleal.icefrog.core.collection.*;
 import com.whaleal.icefrog.core.map.MapUtil;
-import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.PredicateUtil;
@@ -25,7 +22,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
 
 /**
  * Static utility methods pertaining to {@link Set} instances. Also see this class's counterparts
- * {@link Lists}, {@link MapUtil} and {@link Queues}.
+ * {@link Lists}, {@link MapUtil} and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#sets"> {@code Sets}</a>.

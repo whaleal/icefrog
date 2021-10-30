@@ -2,10 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.collection.IterUtil;
-import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.collection.*;
 import com.whaleal.icefrog.core.map.BiMap;
 import com.whaleal.icefrog.core.util.FunctionUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -29,7 +26,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Static utility methods pertaining to {@link Map} instances (including instances of {@link
  * SortedMap}, {@link BiMap}, etc.). Also see this class's counterparts {@link Lists}, {@link Sets}
- * and {@link Queues}.
+ * and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#maps"> {@code Maps}</a>.
