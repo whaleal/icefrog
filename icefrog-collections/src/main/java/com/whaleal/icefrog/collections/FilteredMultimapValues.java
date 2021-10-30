@@ -2,10 +2,11 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicate;
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.AbstractCollection;
@@ -62,21 +63,21 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
 
   @Override
   public boolean removeAll(Collection<?> c) {
-    return Iterables.removeIf(
+    return IterUtil.removeIf(
         multimap.unfiltered().entries(),
         // explicit <Entry<K, V>> is required to build with JDK6
-        Predicates.and(
-            multimap.entryPredicate(), MapUtil.valuePredicateOnEntries(Predicates.in(c))));
+        PredicateUtil.and(
+            multimap.entryPredicate(), MapUtil.valuePredicateOnEntries(PredicateUtil.in(c))));
   }
 
   @Override
   public boolean retainAll(Collection<?> c) {
-    return Iterables.removeIf(
+    return IterUtil.removeIf(
         multimap.unfiltered().entries(),
         // explicit <Entry<K, V>> is required to build with JDK6
-        Predicates.and(
+        PredicateUtil.and(
             multimap.entryPredicate(),
-            MapUtil.valuePredicateOnEntries(Predicates.not(Predicates.in(c)))));
+            MapUtil.valuePredicateOnEntries(PredicateUtil.not(PredicateUtil.in(c)))));
   }
 
   @Override

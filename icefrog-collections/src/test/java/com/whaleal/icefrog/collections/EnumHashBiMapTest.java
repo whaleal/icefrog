@@ -47,7 +47,7 @@ public class EnumHashBiMapTest extends TestCase {
     assertEquals(HashBiMap.create(), bimap);
     bimap.put(Currency.DOLLAR, "dollar");
     assertEquals("dollar", bimap.get(Currency.DOLLAR));
-    assertEquals(Currency.DOLLAR, bimap.inverse().get("dollar"));
+    assertEquals(Currency.DOLLAR, bimap.getInverse().get("dollar"));
   }
 
   public void testCreateFromMap() {
@@ -59,7 +59,7 @@ public class EnumHashBiMapTest extends TestCase {
             Currency.FRANC, "franc");
     EnumHashBiMap<Currency, String> bimap = EnumHashBiMap.create(map);
     assertEquals("dollar", bimap.get(Currency.DOLLAR));
-    assertEquals(Currency.DOLLAR, bimap.inverse().get("dollar"));
+    assertEquals(Currency.DOLLAR, bimap.getInverse().get("dollar"));
 
     /* Map must have at least one entry if not an EnumHashBiMap. */
     try {
@@ -86,7 +86,7 @@ public class EnumHashBiMapTest extends TestCase {
     EnumHashBiMap<Currency, String> bimap2 = EnumHashBiMap.create(bimap1);
     assertEquals("dollar", bimap2.get(Currency.DOLLAR));
     assertEquals(bimap1, bimap2);
-    bimap2.inverse().put("franc", Currency.FRANC);
+    bimap2.getInverse().put("franc", Currency.FRANC);
     assertEquals("franc", bimap2.get(Currency.FRANC));
     assertNull(bimap1.get(Currency.FRANC));
     assertFalse(bimap2.equals(bimap1));
@@ -105,7 +105,7 @@ public class EnumHashBiMapTest extends TestCase {
         EnumHashBiMap.<Currency, Object>create(bimap1);
     assertEquals(Country.SWITZERLAND, bimap2.get(Currency.DOLLAR));
     assertEquals(bimap1, bimap2);
-    bimap2.inverse().put("franc", Currency.FRANC);
+    bimap2.getInverse().put("franc", Currency.FRANC);
     assertEquals("franc", bimap2.get(Currency.FRANC));
     assertNull(bimap1.get(Currency.FRANC));
     assertFalse(bimap2.equals(bimap1));

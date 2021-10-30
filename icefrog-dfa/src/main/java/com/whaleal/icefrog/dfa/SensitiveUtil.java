@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.dfa;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.thread.ThreadUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.json.JSONUtil;
@@ -84,12 +84,12 @@ public final class SensitiveUtil {
 	 * 设置字符过滤规则，通过定义字符串过滤规则，过滤不需要的字符<br>
 	 * 当accept为false时，此字符不参与匹配
 	 *
-	 * @param charFilter 过滤函数
+	 * @param charPredicate 过滤函数
 	 * @since 1.0.0
 	 */
-	public static void setCharFilter(Filter<Character> charFilter) {
-		if (charFilter != null) {
-			sensitiveTree.setCharFilter(charFilter);
+	public static void setCharFilter(Predicate<Character> charPredicate) {
+		if (charPredicate != null) {
+			sensitiveTree.setCharFilter(charPredicate);
 		}
 	}
 

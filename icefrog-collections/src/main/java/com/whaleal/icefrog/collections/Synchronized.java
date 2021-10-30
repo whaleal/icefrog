@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.map.BiMap;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 import javax.annotation.CheckForNull;
@@ -1303,61 +1304,6 @@ final class Synchronized {
     private static final long serialVersionUID = 0;
   }
 
-  static <K extends Object, V extends Object> BiMap<K, V> biMap(
-      BiMap<K, V> bimap, @CheckForNull Object mutex) {
-    if (bimap instanceof SynchronizedBiMap || bimap instanceof ImmutableBiMap) {
-      return bimap;
-    }
-    return new SynchronizedBiMap<>(bimap, mutex, null);
-  }
-
-
-  static class SynchronizedBiMap<K extends Object, V extends Object>
-      extends SynchronizedMap<K, V> implements BiMap<K, V>, Serializable {
-    @CheckForNull private transient Set<V> valueSet;
-    @CheckForNull private transient BiMap<V, K> inverse;
-
-    private SynchronizedBiMap(
-        BiMap<K, V> delegate, @CheckForNull Object mutex, @CheckForNull BiMap<V, K> inverse) {
-      super(delegate, mutex);
-      this.inverse = inverse;
-    }
-
-    @Override
-    BiMap<K, V> delegate() {
-      return (BiMap<K, V>) super.delegate();
-    }
-
-    @Override
-    public Set<V> values() {
-      synchronized (mutex) {
-        if (valueSet == null) {
-          valueSet = set(delegate().values(), mutex);
-        }
-        return valueSet;
-      }
-    }
-
-    @Override
-    @CheckForNull
-    public V forcePut(K key, V value) {
-      synchronized (mutex) {
-        return delegate().forcePut(key, value);
-      }
-    }
-
-    @Override
-    public BiMap<V, K> inverse() {
-      synchronized (mutex) {
-        if (inverse == null) {
-          inverse = new SynchronizedBiMap<>(delegate().inverse(), mutex, this);
-        }
-        return inverse;
-      }
-    }
-
-    private static final long serialVersionUID = 0;
-  }
 
   private static class SynchronizedAsMap<K extends Object, V extends Object>
       extends SynchronizedMap<K, Collection<V>> {

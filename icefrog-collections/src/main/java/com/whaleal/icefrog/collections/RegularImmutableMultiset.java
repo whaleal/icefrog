@@ -35,7 +35,7 @@ class RegularImmutableMultiset<E> extends ImmutableMultiset<E> {
     if (distinct == 0) {
       return new RegularImmutableMultiset<>(entryArray, EMPTY_ARRAY, 0, 0, ImmutableSet.of());
     }
-    int tableSize = Hashing.closedTableSize(distinct, MAX_LOAD_FACTOR);
+    int tableSize = distinct ;
     int mask = tableSize - 1;
     @SuppressWarnings({"unchecked", "rawtypes"})
     
@@ -50,7 +50,7 @@ class RegularImmutableMultiset<E> extends ImmutableMultiset<E> {
       E element = checkNotNull(entry.getElement());
       int count = entry.getCount();
       int hash = element.hashCode();
-      int bucket = Hashing.smear(hash) & mask;
+      int bucket = (int) (0x1b873593 * Integer.rotateLeft((int) (hash * 0xcc9e2d51), 15)) & mask;
       ImmutableEntry<E> bucketHead = hashTable[bucket];
       ImmutableEntry<E> newEntry;
       if (bucketHead == null) {
@@ -150,7 +150,7 @@ class RegularImmutableMultiset<E> extends ImmutableMultiset<E> {
     if (element == null || hashTable.length == 0) {
       return 0;
     }
-    int hash = Hashing.smearedHash(element);
+    int hash = ObjectUtil.hashCode(element);
     int mask = hashTable.length - 1;
     for (ImmutableEntry<?> entry = hashTable[hash & mask];
         entry != null;

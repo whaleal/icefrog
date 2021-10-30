@@ -1,6 +1,5 @@
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import javax.annotation.CheckForNull;
@@ -8,9 +7,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
+import com.whaleal.icefrog.core.map.BiMap;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 
@@ -27,7 +26,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
 
 public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
-        extends AbstractBiMap<K, V> {
+        extends BiMap<K, V> {
     private transient Class<K> keyType;
 
     /**
@@ -59,14 +58,12 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
 
     private EnumHashBiMap(Class<K> keyType) {
         super(
-                new EnumMap<K, V>(keyType),
-                MapUtil.newHashMap(keyType.getEnumConstants().length,true));
+                new EnumMap<K, V>(keyType));
         this.keyType = keyType;
     }
 
     // Overriding these 3 methods to show that values may be null (but not keys)
 
-    @Override
     K checkKey(K key) {
         return checkNotNull(key);
     }
@@ -80,14 +77,6 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
         return super.put(key, value);
     }
 
-
-    @Override
-    @SuppressWarnings("RedundantOverride") // b/192446478: RedundantOverride ignores some annotations.
-    // TODO(b/192446998): Remove this override after tools understand nullness better.
-    @CheckForNull
-    public V forcePut(K key, @ParametricNullness V value) {
-        return super.forcePut(key, value);
-    }
 
     /**
      * Returns the associated key type.
@@ -112,8 +101,8 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
     private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         keyType = (Class<K>) stream.readObject();
-        setDelegates(
-                new EnumMap<K, V>(keyType), new HashMap<V, K>(keyType.getEnumConstants().length * 3 / 2));
+        clear();
+        putAll(new EnumMap<K, V>(keyType));
         Serialization.populateMap(this, stream);
     }
 

@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.util.ArrayUtil;
+
 import javax.annotation.CheckForNull;
 import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
@@ -279,7 +281,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
       }
     }
     @SuppressWarnings("unchecked") // elements only contains E's; it's safe.
-    E[] array = (E[]) Iterables.toArray(elements);
+    E[] array = (E[]) ArrayUtil.toArray(elements);
     return construct(comparator, array.length, array);
   }
 

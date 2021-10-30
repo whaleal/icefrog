@@ -2,6 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
@@ -263,7 +264,7 @@ public abstract class ImmutableTable<R, C, V> extends AbstractTable<R, C, V>
         case 0:
           return of();
         case 1:
-          return new SingletonImmutableTable<>(Iterables.getOnlyElement(cells));
+          return new SingletonImmutableTable<>(IterUtil.getOnlyElement(cells));
         default:
           return RegularImmutableTable.forCells(cells, rowComparator, columnComparator);
       }

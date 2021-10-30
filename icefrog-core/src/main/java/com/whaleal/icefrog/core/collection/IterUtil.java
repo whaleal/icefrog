@@ -3,13 +3,12 @@ package com.whaleal.icefrog.core.collection;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Editor;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.util.Predicate;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 
 import javax.annotation.CheckForNull;
@@ -17,7 +16,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.collection.CollUtil.newArrayList;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
 
@@ -687,22 +685,22 @@ public class IterUtil {
 	 * 通过实现Filter接口，完成元素的过滤，这个Filter实现可以实现以下功能：
 	 *
 	 * <pre>
-	 * 1、过滤出需要的对象，{@link Filter#accept(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
+	 * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
 	 * </pre>
 	 *
 	 * @param <T>    集合类型
 	 * @param <E>    集合元素类型
 	 * @param iter   集合
-	 * @param filter 过滤器接口
+	 * @param predicate 过滤器接口
 	 * @return 编辑后的集合
 	 * @since 1.0.0
 	 */
-	public static <T extends Iterable<E>, E> T filter(T iter, Filter<E> filter) {
+	public static <T extends Iterable<E>, E> T filter(T iter, Predicate<E> predicate) {
 		if (null == iter) {
 			return null;
 		}
 
-		filter(iter.iterator(), filter);
+		filter(iter.iterator(), predicate);
 
 		return iter;
 	}
@@ -712,22 +710,22 @@ public class IterUtil {
 	 * 通过实现Filter接口，完成元素的过滤，这个Filter实现可以实现以下功能：
 	 *
 	 * <pre>
-	 * 1、过滤出需要的对象，{@link Filter#accept(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
+	 * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
 	 * </pre>
 	 *
 	 * @param <E>    集合元素类型
 	 * @param iter   集合
-	 * @param filter 过滤器接口
+	 * @param predicate 过滤器接口
 	 * @return 编辑后的集合
 	 * @since 1.0.0
 	 */
-	public static <E> Iterator<E> filter(Iterator<E> iter, Filter<E> filter) {
-		if (null == iter || null == filter) {
+	public static <E> Iterator<E> filter(Iterator<E> iter, Predicate<E> predicate) {
+		if (null == iter || null == predicate) {
 			return iter;
 		}
 
 		while (iter.hasNext()) {
-			if (false == filter.accept(iter.next())) {
+			if (false == predicate.apply(iter.next())) {
 				iter.remove();
 			}
 		}
@@ -797,6 +795,27 @@ public class IterUtil {
 		return Collections.emptyIterator();
 	}
 
+
+	/**
+	 * 按照给定函数，转换{@link Iterator}为另一种类型的{@link Iterator}
+	 *
+	 * @param <F>      源元素类型
+	 * @param <T>      目标元素类型
+	 * @param iterable 源{@link Iterator}
+	 * @param function 转换函数
+	 * @return 转换后的{@link Iterator}
+	 * @since 1.0.0
+	 */
+	public static <F, T> Iterable<T> trans(Iterable<F> iterable, Function<? super F, ? extends T> function) {
+
+		if(iterable instanceof Collection){
+			return CollUtil.trans((Collection)iterable ,function);
+		}
+
+		return CollUtil.trans(CollUtil.newArrayList(iterable),function);
+	}
+
+
 	/**
 	 * 按照给定函数，转换{@link Iterator}为另一种类型的{@link Iterator}
 	 *
@@ -813,7 +832,7 @@ public class IterUtil {
 
 	/**
 	 * 返回 Iterable 对象的元素数量
-	 *
+	 * Returns the number of elements in {@code iterable}.
 	 * @param iterable Iterable对象
 	 * @return Iterable对象的元素数量
 	 * @since 1.0.0
@@ -885,6 +904,22 @@ public class IterUtil {
 
 
 
+	/**
+	 * Returns {@code true} if {@code iterable} contains any element {@code o} for which {@code
+	 * ObjectUtil.equals(o, element)} would return {@code true}. Otherwise returns {@code false}, even in
+	 * cases where {@link Collection#contains} might throw {@link NullPointerException} or {@link
+	 * ClassCastException}.
+	 */
+	// <? extends Object> instead of <?> because of Kotlin b/189937072, discussed in Joiner.
+	public static boolean contains(
+			Iterable<? extends Object> iterable, @CheckForNull Object element) {
+		if (iterable instanceof Collection) {
+			Collection<?> collection = (Collection<?>) iterable;
+			return CollUtil.safeContains(collection, element);
+		}
+		return contains(iterable.iterator(), element);
+	}
+
 	
 
 	/** Returns {@code true} if {@code iterator} contains {@code element}. */
@@ -927,6 +962,32 @@ public class IterUtil {
 	}
 
 	/**
+	 * Removes, from an iterable, every element that satisfies the provided predicate.
+	 *
+	 * <p>Removals may or may not happen immediately as each element is tested against the predicate.
+	 * The behavior of this method is not specified if {@code predicate} is dependent on {@code
+	 * removeFrom}.
+	 *
+	 * <p><b>Java 8 users:</b> if {@code removeFrom} is a {@link Collection}, use {@code
+	 * removeFrom.removeIf(predicate)} instead.
+	 *
+	 * @param removeFrom the iterable to (potentially) remove elements from
+	 * @param predicate a predicate that determines whether an element should be removed
+	 * @return {@code true} if any elements were removed from the iterable
+	 * @throws UnsupportedOperationException if the iterable does not support {@code remove()}.
+	 *
+	 */
+
+
+	public static <T extends Object> boolean removeIf(
+			Iterable<T> removeFrom, Predicate<? super T> predicate) {
+		if (removeFrom instanceof Collection) {
+			return ((Collection<T>) removeFrom).removeIf(predicate);
+		}
+		return removeIf(removeFrom.iterator(), predicate);
+	}
+
+	/**
 	 * Removes every element that satisfies the provided predicate from the iterator. The iterator
 	 * will be left exhausted: its {@code hasNext()} method will return {@code false}.
 	 *
@@ -937,7 +998,7 @@ public class IterUtil {
 	 */
 
 	public static <T extends Object> boolean removeIf(
-			Iterator<T> removeFrom, Predicate<? super T> predicate) {
+			Iterator<T> removeFrom, Predicate predicate) {
 		checkNotNull(predicate);
 		boolean modified = false;
 		while (removeFrom.hasNext()) {
@@ -971,6 +1032,22 @@ public class IterUtil {
 		return result;
 	}
 
+	/** Removes and returns the first matching element, or returns {@code null} if there is none. */
+	@CheckForNull
+	public static <T extends Object> T removeFirstMatching(
+			Iterable<T> removeFrom, Predicate<? super T> predicate) {
+		checkNotNull(predicate);
+		Iterator<T> iterator = removeFrom.iterator();
+		while (iterator.hasNext()) {
+			T next = iterator.next();
+			if (predicate.apply(next)) {
+				iterator.remove();
+				return next;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Determines whether two iterators contain equal elements in the same order. More specifically,
 	 * this method returns {@code true} if {@code iterator1} and {@code iterator2} contain the same
@@ -995,6 +1072,17 @@ public class IterUtil {
 	}
 
 	/**
+	 * Returns a string representation of {@code iterable}, with the format {@code [e1, e2, ..., en]}
+	 * (that is, identical to {@link java.util.Arrays Arrays}{@code
+	 * .toString(Iterables.toArray(iterable))}). Note that for <i>most</i> implementations of {@link
+	 * Collection}, {@code collection.toString()} also gives the same result, but that behavior is not
+	 * generally guaranteed.
+	 */
+	public static String toString(Iterable<?> iterable) {
+		return toString(iterable.iterator());
+	}
+
+	/**
 	 * Returns a string representation of {@code iterator}, with the format {@code [e1, e2, ..., en]}.
 	 * The iterator will be left exhausted: its {@code hasNext()} method will return {@code false}.
 	 */
@@ -1009,6 +1097,20 @@ public class IterUtil {
 			sb.append(iterator.next());
 		}
 		return sb.append(']').toString();
+	}
+
+	/**
+	 * Returns the single element contained in {@code iterable}.
+	 *
+	 * <p><b>Java 8 users:</b> the {@code Stream} equivalent to this method is {@code
+	 * stream.collect(MoreCollectors.onlyElement())}.
+	 *
+	 * @throws NoSuchElementException if the iterable is empty
+	 * @throws IllegalArgumentException if the iterable contains multiple elements
+	 */
+
+	public static <T extends Object> T getOnlyElement(Iterable<T> iterable) {
+		return getOnlyElement(iterable.iterator());
 	}
 
 	/**
@@ -1050,6 +1152,20 @@ public class IterUtil {
 		return iterator.hasNext() ? getOnlyElement(iterator) : defaultValue;
 	}
 
+	/**
+	 * Adds all elements in {@code iterable} to {@code collection}.
+	 *
+	 * @return {@code true} if {@code collection} was modified as a result of this operation.
+	 */
+
+	public static <T extends Object> boolean addAll(
+			Collection<T> addTo, Iterable<? extends T> elementsToAdd) {
+		if (elementsToAdd instanceof Collection) {
+			Collection<? extends T> c = (Collection<? extends T>) elementsToAdd;
+			return addTo.addAll(c);
+		}
+		return addAll(addTo, checkNotNull(elementsToAdd).iterator());
+	}
 
 	/**
 	 * Adds all elements in {@code iterator} to {@code collection}. The iterator will be left
@@ -1097,7 +1213,7 @@ public class IterUtil {
 	 * predicate.
 	 */
 	public static <T extends Object> boolean any(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		return indexOf(iterator, predicate) != -1;
 	}
 
@@ -1106,7 +1222,7 @@ public class IterUtil {
 	 * predicate. If {@code iterator} is empty, {@code true} is returned.
 	 */
 	public static <T extends Object> boolean all(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(predicate);
 		while (iterator.hasNext()) {
 			T element = iterator.next();
@@ -1115,29 +1231,6 @@ public class IterUtil {
 			}
 		}
 		return true;
-	}
-
-	/**
-	 * Returns the first element in {@code iterator} that satisfies the given predicate; use this
-	 * method only when such an element is known to exist. If no such element is found, the iterator
-	 * will be left exhausted: its {@code hasNext()} method will return {@code false}. If it is
-	 * possible that <i>no</i> element will match, use {@link #tryFind} or {@link #find(Iterator,
-	 * Predicate, Object)} instead.
-	 *
-	 * @throws NoSuchElementException if no element in {@code iterator} matches the given predicate
-	 */
-
-	public static <T extends Object> T find(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
-		checkNotNull(iterator);
-		checkNotNull(predicate);
-		while (iterator.hasNext()) {
-			T t = iterator.next();
-			if (predicate.apply(t)) {
-				return t;
-			}
-		}
-		throw new NoSuchElementException();
 	}
 
 	/**
@@ -1151,7 +1244,7 @@ public class IterUtil {
 	@CheckForNull
 	public static <T extends Object> T find(
 			Iterator<? extends T> iterator,
-			Predicate<? super T> predicate,
+			Predicate predicate,
 			@CheckForNull T defaultValue) {
 		checkNotNull(iterator);
 		checkNotNull(predicate);
@@ -1175,7 +1268,7 @@ public class IterUtil {
 	 *
 	 * @since 11.0
 	 */
-	public static <T> Optional<T> tryFind(Iterator<T> iterator, Predicate<? super T> predicate) {
+	public static <T> Optional<T> tryFind(Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(iterator);
 		checkNotNull(predicate);
 		while (iterator.hasNext()) {
@@ -1202,7 +1295,7 @@ public class IterUtil {
 	 * @since 2.0
 	 */
 	public static <T extends Object> int indexOf(
-			Iterator<T> iterator, Predicate<? super T> predicate) {
+			Iterator<T> iterator, Predicate predicate) {
 		checkNotNull(predicate, "predicate");
 		for (int i = 0; iterator.hasNext(); i++) {
 			T current = iterator.next();
@@ -1380,5 +1473,62 @@ public class IterUtil {
 			iterator.remove();
 		}
 	}
+
+	/**
+	 *
+	 * @param iterable
+	 * @param predicate
+	 * @param defaultValue
+	 * @param <T>
+	 * @return
+	 */
+	@CheckForNull
+	public static <T extends Object> T find(
+			Iterable<? extends T> iterable,
+			Predicate<? super T> predicate,
+			@CheckForNull T defaultValue) {
+		return find(iterable.iterator(), predicate, defaultValue);
+	}
+
+	/**
+	 * Returns the first element in {@code iterable} that satisfies the given predicate; use this
+	 * method only when such an element is known to exist. If it is possible that <i>no</i> element
+	 * will match, use {@link #tryFind} or {@link #find(Iterable, Predicate, Object)} instead.
+	 *
+	 * <p><b>{@code Stream} equivalent:</b> {@code stream.filter(predicate).findFirst().get()}
+	 *
+	 * @throws NoSuchElementException if no element in {@code iterable} matches the given predicate
+	 */
+
+	public static <T extends Object> T find(
+			Iterable<T> iterable, Predicate<? super T> predicate) {
+		return find(iterable.iterator(), predicate);
+	}
+
+	/**
+	 * Returns the first element in {@code iterator} that satisfies the given predicate; use this
+	 * method only when such an element is known to exist. If no such element is found, the iterator
+	 * will be left exhausted: its {@code hasNext()} method will return {@code false}. If it is
+	 * possible that <i>no</i> element will match, use {@link #tryFind} or {@link #find(Iterator,
+	 * Predicate, Object)} instead.
+	 *
+	 * @throws NoSuchElementException if no element in {@code iterator} matches the given predicate
+	 */
+
+	public static <T extends Object> T find(
+			Iterator<T> iterator, Predicate<? super T> predicate) {
+		checkNotNull(iterator);
+		checkNotNull(predicate);
+		while (iterator.hasNext()) {
+			T t = iterator.next();
+			if (predicate.apply(t)) {
+				return t;
+			}
+		}
+		throw new NoSuchElementException();
+	}
+
+
+
 
 }

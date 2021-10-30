@@ -1,10 +1,12 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.util.AbstractIterator;
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;
@@ -77,7 +79,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
     public static <E> ConcurrentHashMultiset<E> create(Iterable<? extends E> elements) {
         ConcurrentHashMultiset<E> multiset = ConcurrentHashMultiset.create();
-        Iterables.addAll(multiset, elements);
+        IterUtil.addAll(multiset, elements);
         return multiset;
     }
 
@@ -149,7 +151,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * either of these would recurse back to us again!
      */
     private List<E> snapshot() {
-        List<E> list = Lists.newArrayListWithExpectedSize(size());
+        List<E> list = CollUtil.newArrayList();;
         for (Entry<E> entry : entrySet()) {
             E element = entry.getElement();
             for (int i = entry.getCount(); i > 0; i--) {
@@ -575,8 +577,8 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         }
 
         private List<Entry<E>> snapshot() {
-            List<Entry<E>> list = Lists.newArrayListWithExpectedSize(size());
-            // Not Iterables.addAll(list, this), because that'll forward right back here.
+            List<Entry<E>> list = CollUtil.newArrayList();;
+            // Not IterUtil.addAll(list, this), because that'll forward right back here.
             Iterators.addAll(list, iterator());
             return list;
         }

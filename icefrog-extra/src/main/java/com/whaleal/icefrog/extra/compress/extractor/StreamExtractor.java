@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.compress.CompressException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -84,12 +84,12 @@ public class StreamExtractor implements Extractor{
 	 * 释放（解压）到指定目录，结束后自动关闭流，此方法只能调用一次
 	 *
 	 * @param targetDir 目标目录
-	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
+	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
 	 */
 	@Override
-	public void extract(File targetDir, Filter<ArchiveEntry> filter) {
+	public void extract(File targetDir, Predicate<ArchiveEntry> predicate) {
 		try {
-			extractInternal(targetDir, filter);
+			extractInternal(targetDir, predicate);
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		} finally {
@@ -101,10 +101,10 @@ public class StreamExtractor implements Extractor{
 	 * 释放（解压）到指定目录
 	 *
 	 * @param targetDir 目标目录
-	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
+	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
 	 * @throws IOException IO异常
 	 */
-	private void extractInternal(File targetDir, Filter<ArchiveEntry> filter) throws IOException {
+	private void extractInternal(File targetDir, Predicate<ArchiveEntry> predicate) throws IOException {
 		Preconditions.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
 		final ArchiveInputStream in = this.in;
 		ArchiveEntry entry;

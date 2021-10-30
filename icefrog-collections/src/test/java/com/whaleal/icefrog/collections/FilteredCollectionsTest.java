@@ -3,7 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.util.Predicates;
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 
 import java.util.ArrayList;
@@ -14,9 +15,8 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
-import com.whaleal.icefrog.core.util.Predicate;
+import com.whaleal.icefrog.core.lang.Predicate;
 import junit.framework.TestCase;
 
 import static org.junit.Assert.assertThat;
@@ -35,7 +35,7 @@ public class FilteredCollectionsTest extends TestCase {
         }
       };
 
-  private static final Predicate<Integer> PRIME_DIGIT = Predicates.in(ImmutableSet.of(2, 3, 5, 7));
+  private static final Predicate<Integer> PRIME_DIGIT = PredicateUtil.in(ImmutableSet.of(2, 3, 5, 7));
 
   private static final ImmutableList<? extends List<Integer>> SAMPLE_INPUTS =
       ImmutableList.of(
@@ -100,7 +100,7 @@ public class FilteredCollectionsTest extends TestCase {
         C filterThenAdd = filter(unfiltered, EVEN);
         unfiltered.add(4);
 
-        List<Integer> target = Lists.newArrayList(contents);
+        List<Integer> target = CollUtil.newArrayList(contents);
         target.add(4);
         C addThenFilter = filter(createUnfiltered(target), EVEN);
 
@@ -195,7 +195,7 @@ public class FilteredCollectionsTest extends TestCase {
         C filtered2 = filter(filtered1, PRIME_DIGIT);
 
         C inverseFiltered =
-            filter(createUnfiltered(contents), Predicates.not(Predicates.and(EVEN, PRIME_DIGIT)));
+            filter(createUnfiltered(contents), PredicateUtil.not(PredicateUtil.and(EVEN, PRIME_DIGIT)));
 
         filtered2.clear();
         //assertThat(unfiltered).containsExactlyElementsIn(inverseFiltered);

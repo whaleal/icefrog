@@ -1,8 +1,14 @@
 # 🚀Changelog
 #项目计划（on the way )
-对db 相关的 column  进行设计及优化   
+对db 模块相关的 column  进行设计及优化   
 在现有的基础上 添加一些转换器 方便数据转换  
 完善测试类及中文说明 javadoc   
+在 2.0之前 对collections模块进行优化  
+计划在 2.0之间添加 bean 模块 
+
+#1.1.2(2021-10-28)  
+添加与 collections 相关的测试类 主要来自guava 
+
 
 #1.1.0(2021-10-17)
 新增 collections  module  针对集合类进行拓展 主要来自guava   

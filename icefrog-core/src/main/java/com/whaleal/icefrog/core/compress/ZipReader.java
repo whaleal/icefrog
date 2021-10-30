@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.compress;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.ZipUtil;
 
 import java.io.Closeable;
@@ -135,14 +135,14 @@ public class ZipReader implements Closeable {
 	 * 解压到指定目录中
 	 *
 	 * @param outFile     解压到的目录
-	 * @param entryFilter 过滤器，排除不需要的文件
+	 * @param entryPredicate 过滤器，排除不需要的文件
 	 * @return 解压的目录
 	 * @throws IORuntimeException IO异常
 	 * @since 1.0.0
 	 */
-	public File readTo(File outFile, Filter<ZipEntry> entryFilter) throws IORuntimeException {
+	public File readTo(File outFile, Predicate<ZipEntry> entryPredicate) throws IORuntimeException {
 		read((zipEntry) -> {
-			if (null == entryFilter || entryFilter.accept(zipEntry)) {
+			if (null == entryPredicate || entryPredicate.apply(zipEntry)) {
 				// FileUtil.file会检查slip漏洞，漏洞说明见http://blog.nsfocus.net/zip-slip-2/
 				final File outItemFile = FileUtil.file(outFile, zipEntry.getName());
 				if (zipEntry.isDirectory()) {

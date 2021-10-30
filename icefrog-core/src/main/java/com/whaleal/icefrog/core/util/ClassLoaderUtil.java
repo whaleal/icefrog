@@ -62,7 +62,7 @@ public class ClassLoaderUtil {
 	/**
 	 * 数组类的结尾符: "[]"
 	 */
-	private static final String ARRAY_SUFFIX = "[]";
+	public static final String ARRAY_SUFFIX = "[]";
 	/**
 	 * 内部数组类名前缀: "["
 	 */
@@ -74,11 +74,22 @@ public class ClassLoaderUtil {
 	/**
 	 * 包名分界符: '.'
 	 */
-	private static final char PACKAGE_SEPARATOR = StrUtil.C_DOT;
+	public static final char PACKAGE_SEPARATOR = StrUtil.C_DOT;
 	/**
 	 * 内部类分界符: '$'
 	 */
-	private static final char INNER_CLASS_SEPARATOR = '$';
+	public static final char INNER_CLASS_SEPARATOR = '$';
+
+	/**
+	 * The CGLIB class separator character "$$"
+	 */
+	public static final String CGLIB_CLASS_SEPARATOR = "$$";
+
+
+	/**
+	 * The ".class" file suffix
+	 */
+	public static final String CLASS_FILE_SUFFIX = ".class";
 
 	/**
 	 * 原始类型名和其class对应表，例如：int =》 int.class

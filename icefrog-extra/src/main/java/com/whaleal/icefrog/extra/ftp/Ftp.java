@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -321,11 +321,11 @@ public class Ftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   目录
-	 * @param filter 过滤器，null表示不过滤，默认去掉"."和".."两种目录
+	 * @param predicate 过滤器，null表示不过滤，默认去掉"."和".."两种目录
 	 * @return 文件或目录列表
 	 * @since 1.0.0
 	 */
-	public List<FTPFile> lsFiles(String path, Filter<FTPFile> filter) {
+	public List<FTPFile> lsFiles(String path, Predicate<FTPFile> predicate) {
 		final FTPFile[] ftpFiles = lsFiles(path);
 		if (ArrayUtil.isEmpty(ftpFiles)) {
 			return ListUtil.empty();
@@ -336,7 +336,7 @@ public class Ftp extends AbstractFtp {
 		for (FTPFile ftpFile : ftpFiles) {
 			fileName = ftpFile.getName();
 			if (false == StrUtil.equals(".", fileName) && false == StrUtil.equals("..", fileName)) {
-				if (null == filter || filter.accept(ftpFile)) {
+				if (null == predicate || predicate.apply(ftpFile)) {
 					result.add(ftpFile);
 				}
 			}

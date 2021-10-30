@@ -11,6 +11,7 @@ import java.util.function.IntToDoubleFunction;
 import java.util.function.Supplier;
 
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import junit.framework.TestCase;
 
 /**
@@ -145,30 +146,7 @@ public abstract class AbstractHashFloodingTest<T> extends TestCase {
     abstract double expectedAsymptotic(int n);
   }
 
-  /**
-   * Returns a list of objects with the same hash code, of size 2^power, counting calls to equals,
-   * hashCode, and compareTo in counter.
-   */
-  static List<CountsHashCodeAndEquals> createAdversarialInput(int power, CallsCounter counter) {
-    String str1 = "Aa";
-    String str2 = "BB";
-    assertEquals(str1.hashCode(), str2.hashCode());
-    List<String> haveSameHashes2 = Arrays.asList(str1, str2);
-    List<CountsHashCodeAndEquals> result =
-        Lists.newArrayList(
-            Lists.transform(
-                Lists.cartesianProduct(Collections.nCopies(power, haveSameHashes2)),
-                strs ->
-                    new CountsHashCodeAndEquals(
-                        String.join("", strs),
-                        () -> counter.hashCode++,
-                        () -> counter.equals++,
-                        () -> counter.compareTo++)));
-    assertEquals(
-        result.get(0).delegateString.hashCode(),
-        result.get(result.size() - 1).delegateString.hashCode());
-    return result;
-  }
+
 
 
 

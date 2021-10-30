@@ -36,6 +36,13 @@ public abstract class AbstractConverter<T> implements Converter<T>, Serializable
 		}
 	}
 
+	/**
+	 * 转换器的具体实现
+	 * @param value 原始值
+	 * @param defaultValue 默认值
+	 * @throws IllegalArgumentException  详见父类
+	 * @return  转换后的值
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public T convert(Object value, T defaultValue) {
@@ -65,6 +72,7 @@ public abstract class AbstractConverter<T> implements Converter<T>, Serializable
 	}
 
 	/**
+	 *
 	 * 内部转换器，被 {@link AbstractConverter#convert(Object, Object)} 调用，实现基本转换逻辑<br>
 	 * 内部转换器转换后如果转换失败可以做如下操作，处理结果都为返回默认值：
 	 *

@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.extra.compress.extractor;
 
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 
 import java.io.Closeable;
@@ -28,9 +28,9 @@ public interface Extractor extends Closeable {
 	 * 释放（解压）到指定目录，结束后自动关闭流，此方法只能调用一次
 	 *
 	 * @param targetDir 目标目录
-	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
+	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
 	 */
-	void extract(File targetDir, Filter<ArchiveEntry> filter);
+	void extract(File targetDir, Predicate<ArchiveEntry> predicate);
 
 	/**
 	 * 无异常关闭

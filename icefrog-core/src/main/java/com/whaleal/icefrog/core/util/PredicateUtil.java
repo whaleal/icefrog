@@ -3,6 +3,8 @@ package com.whaleal.icefrog.core.util;
 
 
 
+import com.whaleal.icefrog.core.lang.Predicate;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  * @author wh
  *
  */
-public final class Predicates {
+public final class PredicateUtil {
 
 
   // TODO(kevinb): considering having these implement a VisitablePredicate
@@ -120,7 +122,7 @@ public final class Predicates {
    */
   public static <T extends Object> Predicate<T> and(
       Predicate<? super T> first, Predicate<? super T> second) {
-    return new AndPredicate<T>(Predicates.<T>asList(checkNotNull(first), checkNotNull(second)));
+    return new AndPredicate<T>(PredicateUtil.<T>asList(checkNotNull(first), checkNotNull(second)));
   }
 
   /**
@@ -165,7 +167,7 @@ public final class Predicates {
    */
   public static <T extends Object> Predicate<T> or(
       Predicate<? super T> first, Predicate<? super T> second) {
-    return new OrPredicate<T>(Predicates.<T>asList(checkNotNull(first), checkNotNull(second)));
+    return new OrPredicate<T>(PredicateUtil.<T>asList(checkNotNull(first), checkNotNull(second)));
   }
 
   /**
@@ -177,7 +179,7 @@ public final class Predicates {
    */
   public static <T extends Object> Predicate<T> equalTo( T target) {
     return (target == null)
-        ? Predicates.<T>isNull()
+        ? PredicateUtil.<T>isNull()
         : new IsEqualToPredicate(target).withNarrowedType();
   }
 
@@ -261,7 +263,7 @@ public final class Predicates {
 
   // Package private for GWT serialization.
   enum ObjectPredicate implements Predicate<Object> {
-    /** @see Predicates#alwaysTrue() */
+    /** @see PredicateUtil#alwaysTrue() */
     ALWAYS_TRUE {
       @Override
       public boolean apply( Object o) {
@@ -273,7 +275,7 @@ public final class Predicates {
         return "Predicates.alwaysTrue()";
       }
     },
-    /** @see Predicates#alwaysFalse() */
+    /** @see PredicateUtil#alwaysFalse() */
     ALWAYS_FALSE {
       @Override
       public boolean apply( Object o) {
@@ -285,7 +287,7 @@ public final class Predicates {
         return "Predicates.alwaysFalse()";
       }
     },
-    /** @see Predicates#isNull() */
+    /** @see PredicateUtil#isNull() */
     IS_NULL {
       @Override
       public boolean apply( Object o) {
@@ -297,7 +299,7 @@ public final class Predicates {
         return "Predicates.isNull()";
       }
     },
-    /** @see Predicates#notNull() */
+    /** @see PredicateUtil#notNull() */
     NOT_NULL {
       @Override
       public boolean apply( Object o) {
@@ -316,7 +318,7 @@ public final class Predicates {
     }
   }
 
-  /** @see Predicates#not(Predicate) */
+  /** @see PredicateUtil#not(Predicate) */
   private static class NotPredicate<T extends Object>
       implements Predicate<T>, Serializable {
     final Predicate<T> predicate;
@@ -352,7 +354,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /** @see Predicates#and(Iterable) */
+  /** @see PredicateUtil#and(Iterable) */
   private static class AndPredicate<T extends Object>
       implements Predicate<T>, Serializable {
     private final List<? extends Predicate<? super T>> components;
@@ -395,7 +397,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /** @see Predicates#or(Iterable) */
+  /** @see PredicateUtil#or(Iterable) */
   private static class OrPredicate<T extends Object>
       implements Predicate<T>, Serializable {
     private final List<? extends Predicate<? super T>> components;
@@ -451,7 +453,7 @@ public final class Predicates {
     return builder.append(')').toString();
   }
 
-  /** @see Predicates#equalTo(Object) */
+  /** @see PredicateUtil#equalTo(Object) */
   private static class IsEqualToPredicate implements Predicate<Object>, Serializable {
     private final Object target;
 
@@ -491,7 +493,7 @@ public final class Predicates {
     }
   }
 
-  /** @see Predicates#instanceOf(Class) */
+  /** @see PredicateUtil#instanceOf(Class) */
    // Class.isInstance
   private static class InstanceOfPredicate<T extends Object>
       implements Predicate<T>, Serializable {
@@ -528,7 +530,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /** @see Predicates#subtypeOf(Class) */
+  /** @see PredicateUtil#subtypeOf(Class) */
    // Class.isAssignableFrom
   private static class SubtypeOfPredicate implements Predicate<Class<?>>, Serializable {
     private final Class<?> clazz;
@@ -564,7 +566,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /** @see Predicates#in(Collection) */
+  /** @see PredicateUtil#in(Collection) */
   private static class InPredicate<T extends Object>
       implements Predicate<T>, Serializable {
     private final Collection<?> target;
@@ -604,7 +606,7 @@ public final class Predicates {
     private static final long serialVersionUID = 0;
   }
 
-  /** @see Predicates#compose(Predicate, Function) */
+  /** @see PredicateUtil#compose(Predicate, Function) */
   private static class CompositionPredicate<A extends Object, B extends Object>
       implements Predicate<A>, Serializable {
     final Predicate<B> p;

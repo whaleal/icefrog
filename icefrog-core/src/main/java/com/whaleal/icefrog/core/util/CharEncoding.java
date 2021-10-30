@@ -58,6 +58,8 @@ package com.whaleal.icefrog.core.util;
  * @see java.nio.charset.StandardCharsets
  * <p>
  * 与StandardCharsets 对应
+ * @author wh
+ * @since 1.1
  */
 public class CharEncoding {
 

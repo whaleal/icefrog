@@ -49,7 +49,7 @@ public class ClassScanner implements Serializable {
 	/**
 	 * 过滤器
 	 */
-	private final Filter<Class<?>> classFilter;
+	private final Predicate<Class<?>> classPredicate;
 	/**
 	 * 编码
 	 */
@@ -148,12 +148,12 @@ public class ClassScanner implements Serializable {
 	 * 因为className 应该为 com.abs.A 现在却成为abs.A,此工具类对该异常进行忽略处理<br>
 	 *
 	 * @param packageName 包路径 com | com. | com.abs | com.abs.
-	 * @param classFilter class过滤器，过滤掉不需要的class
+	 * @param classPredicate class过滤器，过滤掉不需要的class
 	 * @return 类集合
 	 * @since 1.0.0
 	 */
-	public static Set<Class<?>> scanAllPackage(String packageName, Filter<Class<?>> classFilter) {
-		return new ClassScanner(packageName, classFilter).scan(true);
+	public static Set<Class<?>> scanAllPackage(String packageName, Predicate<Class<?>> classPredicate) {
+		return new ClassScanner(packageName, classPredicate).scan(true);
 	}
 
 	/**
@@ -162,11 +162,11 @@ public class ClassScanner implements Serializable {
 	 * 因为className 应该为 com.abs.A 现在却成为abs.A,此工具类对该异常进行忽略处理<br>
 	 *
 	 * @param packageName 包路径 com | com. | com.abs | com.abs.
-	 * @param classFilter class过滤器，过滤掉不需要的class
+	 * @param classPredicate class过滤器，过滤掉不需要的class
 	 * @return 类集合
 	 */
-	public static Set<Class<?>> scanPackage(String packageName, Filter<Class<?>> classFilter) {
-		return new ClassScanner(packageName, classFilter).scan();
+	public static Set<Class<?>> scanPackage(String packageName, Predicate<Class<?>> classPredicate) {
+		return new ClassScanner(packageName, classPredicate).scan();
 	}
 
 	/**
@@ -189,26 +189,26 @@ public class ClassScanner implements Serializable {
 	 * 构造，默认UTF-8编码
 	 *
 	 * @param packageName 包名，所有包传入""或者null
-	 * @param classFilter 过滤器，无需传入null
+	 * @param classPredicate 过滤器，无需传入null
 	 */
-	public ClassScanner(String packageName, Filter<Class<?>> classFilter) {
-		this(packageName, classFilter, CharsetUtil.CHARSET_UTF_8);
+	public ClassScanner(String packageName, Predicate<Class<?>> classPredicate) {
+		this(packageName, classPredicate, CharsetUtil.CHARSET_UTF_8);
 	}
 
 	/**
 	 * 构造
 	 *
 	 * @param packageName 包名，所有包传入""或者null
-	 * @param classFilter 过滤器，无需传入null
+	 * @param classPredicate 过滤器，无需传入null
 	 * @param charset     编码
 	 */
-	public ClassScanner(String packageName, Filter<Class<?>> classFilter, Charset charset) {
+	public ClassScanner(String packageName, Predicate<Class<?>> classPredicate, Charset charset) {
 		packageName = StrUtil.nullToEmpty(packageName);
 		this.packageName = packageName;
 		this.packageNameWithDot = StrUtil.addSuffixIfNot(packageName, StrUtil.DOT);
 		this.packageDirName = packageName.replace(CharUtil.DOT, File.separatorChar);
 		this.packagePath = packageName.replace(CharUtil.DOT, CharUtil.SLASH);
-		this.classFilter = classFilter;
+		this.classPredicate = classPredicate;
 		this.charset = charset;
 	}
 
@@ -395,8 +395,8 @@ public class ClassScanner implements Serializable {
 	 */
 	private void addIfAccept(Class<?> clazz) {
 		if (null != clazz) {
-			Filter<Class<?>> classFilter = this.classFilter;
-			if (classFilter == null || classFilter.accept(clazz)) {
+			Predicate<Class<?>> classPredicate = this.classPredicate;
+			if (classPredicate == null || classPredicate.apply(clazz)) {
 				this.classes.add(clazz);
 			}
 		}

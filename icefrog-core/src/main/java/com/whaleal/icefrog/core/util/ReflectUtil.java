@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.bean.NullWrapperBean;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.SimpleCache;
 import com.whaleal.icefrog.core.lang.reflect.MethodHandleUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
@@ -196,13 +196,13 @@ public class ReflectUtil {
 	 * 如果子类与父类中存在同名字段，则这两个字段同时存在，子类字段在前，父类字段在后。
 	 *
 	 * @param beanClass   类
-	 * @param fieldFilter field过滤器，过滤掉不需要的field
+	 * @param fieldPredicate field过滤器，过滤掉不需要的field
 	 * @return 字段列表
 	 * @throws SecurityException 安全检查异常
 	 * @since 1.0.0
 	 */
-	public static Field[] getFields(Class<?> beanClass, Filter<Field> fieldFilter) throws SecurityException {
-		return ArrayUtil.filter(getFields(beanClass), fieldFilter);
+	public static Field[] getFields(Class<?> beanClass, Predicate<Field> fieldPredicate) throws SecurityException {
+		return ArrayUtil.filter(getFields(beanClass), fieldPredicate);
 	}
 
 	/**
@@ -392,20 +392,20 @@ public class ReflectUtil {
 	 * 获得指定类过滤后的Public方法列表
 	 *
 	 * @param clazz  查找方法的类
-	 * @param filter 过滤器
+	 * @param predicate 过滤器
 	 * @return 过滤后的方法列表
 	 */
-	public static List<Method> getPublicMethods(Class<?> clazz, Filter<Method> filter) {
+	public static List<Method> getPublicMethods(Class<?> clazz, Predicate<Method> predicate) {
 		if (null == clazz) {
 			return null;
 		}
 
 		final Method[] methods = getPublicMethods(clazz);
 		List<Method> methodList;
-		if (null != filter) {
+		if (null != predicate) {
 			methodList = new ArrayList<>();
 			for (Method method : methods) {
-				if (filter.accept(method)) {
+				if (predicate.apply(method)) {
 					methodList.add(method);
 				}
 			}
@@ -629,15 +629,15 @@ public class ReflectUtil {
 	 * 获得指定类过滤后的Public方法列表
 	 *
 	 * @param clazz  查找方法的类
-	 * @param filter 过滤器
+	 * @param predicate 过滤器
 	 * @return 过滤后的方法列表
 	 * @throws SecurityException 安全异常
 	 */
-	public static Method[] getMethods(Class<?> clazz, Filter<Method> filter) throws SecurityException {
+	public static Method[] getMethods(Class<?> clazz, Predicate<Method> predicate) throws SecurityException {
 		if (null == clazz) {
 			return null;
 		}
-		return ArrayUtil.filter(getMethods(clazz), filter);
+		return ArrayUtil.filter(getMethods(clazz), predicate);
 	}
 
 	/**

@@ -3,7 +3,6 @@ package com.whaleal.icefrog.extra.ssh;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.io.FileUtil;
-import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.ftp.AbstractFtp;
 import com.whaleal.icefrog.extra.ftp.FtpConfig;
@@ -22,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import com.whaleal.icefrog.core.lang.Predicate;
 
 /**
  * SFTP是Secure File Transfer Protocol的缩写，安全文件传送协议。可以为传输文件提供一种安全的加密方法。<br>
@@ -245,7 +245,7 @@ public class Sftp extends AbstractFtp {
 	 * @since 1.0.0
 	 */
 	public List<String> lsDirs(String path) {
-		return ls(path, t -> t.getAttrs().isDir());
+		 return ls(path, t -> t.getAttrs().isDir());
 	}
 
 	/**
@@ -264,12 +264,12 @@ public class Sftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   遍历某个目录下所有文件或目录
-	 * @param filter 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
+	 * @param predicate 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
 	 * @return 目录或文件名列表
 	 * @since 1.0.0
 	 */
-	public List<String> ls(String path, final Filter<LsEntry> filter) {
-		final List<LsEntry> entries = lsEntries(path, filter);
+	public List<String> ls(String path, final Predicate<LsEntry> predicate) {
+		final List<LsEntry> entries = lsEntries(path, predicate);
 		if (CollUtil.isEmpty(entries)) {
 			return ListUtil.empty();
 		}
@@ -293,17 +293,17 @@ public class Sftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   遍历某个目录下所有文件或目录
-	 * @param filter 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
+	 * @param predicate 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
 	 * @return 目录或文件名列表
 	 * @since 1.0.0
 	 */
-	public List<LsEntry> lsEntries(String path, Filter<LsEntry> filter) {
+	public List<LsEntry> lsEntries(String path, Predicate<LsEntry> predicate) {
 		final List<LsEntry> entryList = new ArrayList<>();
 		try {
 			channel.ls(path, entry -> {
 				final String fileName = entry.getFilename();
 				if (false == StrUtil.equals(".", fileName) && false == StrUtil.equals("..", fileName)) {
-					if (null == filter || filter.accept(entry)) {
+					if (null == predicate || predicate.apply(entry)) {
 						entryList.add(entry);
 					}
 				}
