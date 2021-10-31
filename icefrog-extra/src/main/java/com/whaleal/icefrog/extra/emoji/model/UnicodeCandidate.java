@@ -13,7 +13,7 @@ public class UnicodeCandidate {
     private final Fitzpatrick fitzpatrick;
     private final int startIndex;
 
-    public UnicodeCandidate(Emoji emoji, String fitzpatrick, int startIndex) {
+    public UnicodeCandidate( Emoji emoji, String fitzpatrick, int startIndex ) {
         this.emoji = emoji;
         this.fitzpatrick = Fitzpatrick.fitzpatrickFromUnicode(fitzpatrick);
         this.startIndex = startIndex;

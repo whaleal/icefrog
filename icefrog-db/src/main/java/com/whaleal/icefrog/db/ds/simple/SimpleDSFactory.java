@@ -10,30 +10,28 @@ import javax.sql.DataSource;
  *
  * @author Looly
  * @author wh
- *
  */
 public class SimpleDSFactory extends AbstractDSFactory {
-	private static final long serialVersionUID = 4738029988261034743L;
+    public static final String DS_NAME = "icefrog-Simple-DataSource";
+    private static final long serialVersionUID = 4738029988261034743L;
 
-	public static final String DS_NAME = "icefrog-Simple-DataSource";
+    public SimpleDSFactory() {
+        this(null);
+    }
 
-	public SimpleDSFactory() {
-		this(null);
-	}
+    public SimpleDSFactory( Setting setting ) {
+        super(DS_NAME, SimpleDataSource.class, setting);
+    }
 
-	public SimpleDSFactory(Setting setting) {
-		super(DS_NAME, SimpleDataSource.class, setting);
-	}
-
-	@Override
-	protected DataSource createDataSource(String jdbcUrl, String driver, String user, String pass, Setting poolSetting) {
-		SimpleDataSource ds = new SimpleDataSource(//
-				jdbcUrl, //
-				user, //
-				pass, //
-				driver//
-		);
-		ds.setConnProps(poolSetting.getProps(Setting.DEFAULT_GROUP));
-		return ds;
-	}
+    @Override
+    protected DataSource createDataSource( String jdbcUrl, String driver, String user, String pass, Setting poolSetting ) {
+        SimpleDataSource ds = new SimpleDataSource(//
+                jdbcUrl, //
+                user, //
+                pass, //
+                driver//
+        );
+        ds.setConnProps(poolSetting.getProps(Setting.DEFAULT_GROUP));
+        return ds;
+    }
 }

@@ -5,10 +5,10 @@ import org.junit.Test;
 
 public class ThreadUtilTest {
 
-	@Test
-	public void executeTest() {
-		final boolean isValid = true;
+    @Test
+    public void executeTest() {
+        final boolean isValid = true;
 
-		ThreadUtil.execute(() -> Assert.assertTrue(isValid));
-	}
+        ThreadUtil.execute(() -> Assert.assertTrue(isValid));
+    }
 }

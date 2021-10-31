@@ -11,22 +11,22 @@ import com.whaleal.icefrog.core.util.StrUtil;
  */
 public class NoneJWTSigner implements JWTSigner {
 
-	public static final String ID_NONE = "none";
+    public static final String ID_NONE = "none";
 
-	public static final NoneJWTSigner NONE = new NoneJWTSigner();
+    public static final NoneJWTSigner NONE = new NoneJWTSigner();
 
-	@Override
-	public String sign(String headerBase64, String payloadBase64) {
-		return StrUtil.EMPTY;
-	}
+    @Override
+    public String sign( String headerBase64, String payloadBase64 ) {
+        return StrUtil.EMPTY;
+    }
 
-	@Override
-	public boolean verify(String headerBase64, String payloadBase64, String signBase64) {
-		return StrUtil.isEmpty(signBase64);
-	}
+    @Override
+    public boolean verify( String headerBase64, String payloadBase64, String signBase64 ) {
+        return StrUtil.isEmpty(signBase64);
+    }
 
-	@Override
-	public String getAlgorithm() {
-		return ID_NONE;
-	}
+    @Override
+    public String getAlgorithm() {
+        return ID_NONE;
+    }
 }

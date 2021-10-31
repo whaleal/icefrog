@@ -9,49 +9,49 @@ import java.util.NoSuchElementException;
  *
  * @author Looly
  * @author wh
- *
  */
-public abstract class AbstractResult implements Result{
+public abstract class AbstractResult implements Result {
 
-	private Word cachedWord;
+    private Word cachedWord;
 
-	@Override
-	public boolean hasNext() {
-		if (this.cachedWord != null) {
-			return true;
-		}
+    @Override
+    public boolean hasNext() {
+        if (this.cachedWord != null) {
+            return true;
+        }
 
-		final Word next = nextWord();
-		if(null != next) {
-			this.cachedWord = next;
-			return true;
-		}
-		return false;
-	}
+        final Word next = nextWord();
+        if (null != next) {
+            this.cachedWord = next;
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * 下一个单词，通过实现此方法获取下一个单词，null表示无下一个结果。
-	 * @return 下一个单词或null
-	 */
-	protected abstract Word nextWord();
+    /**
+     * 下一个单词，通过实现此方法获取下一个单词，null表示无下一个结果。
+     *
+     * @return 下一个单词或null
+     */
+    protected abstract Word nextWord();
 
-	@Override
-	public Word next() {
-		if (false == hasNext()) {
-			throw new NoSuchElementException("No more word !");
-		}
-		final Word currentWord = this.cachedWord;
-		this.cachedWord = null;
-		return currentWord;
-	}
+    @Override
+    public Word next() {
+        if (false == hasNext()) {
+            throw new NoSuchElementException("No more word !");
+        }
+        final Word currentWord = this.cachedWord;
+        this.cachedWord = null;
+        return currentWord;
+    }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException("Jcseg result not allow to remove !");
-	}
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Jcseg result not allow to remove !");
+    }
 
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
+    @Override
+    public Iterator<Word> iterator() {
+        return this;
+    }
 }

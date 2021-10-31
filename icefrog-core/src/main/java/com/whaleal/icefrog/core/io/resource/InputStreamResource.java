@@ -13,43 +13,43 @@ import java.net.URL;
  * @since 1.0.0
  */
 public class InputStreamResource implements Resource, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final InputStream in;
-	private final String name;
+    private final InputStream in;
+    private final String name;
 
-	/**
-	 * 构造
-	 *
-	 * @param in {@link InputStream}
-	 */
-	public InputStreamResource(InputStream in) {
-		this(in, null);
-	}
+    /**
+     * 构造
+     *
+     * @param in {@link InputStream}
+     */
+    public InputStreamResource( InputStream in ) {
+        this(in, null);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param in {@link InputStream}
-	 * @param name 资源名称
-	 */
-	public InputStreamResource(InputStream in, String name) {
-		this.in = in;
-		this.name = name;
-	}
+    /**
+     * 构造
+     *
+     * @param in   {@link InputStream}
+     * @param name 资源名称
+     */
+    public InputStreamResource( InputStream in, String name ) {
+        this.in = in;
+        this.name = name;
+    }
 
-	@Override
-	public String getName() {
-		return this.name;
-	}
+    @Override
+    public String getName() {
+        return this.name;
+    }
 
-	@Override
-	public URL getUrl() {
-		return null;
-	}
+    @Override
+    public URL getUrl() {
+        return null;
+    }
 
-	@Override
-	public InputStream getStream() {
-		return this.in;
-	}
+    @Override
+    public InputStream getStream() {
+        return this.in;
+    }
 }

@@ -9,7 +9,7 @@ package com.whaleal.icefrog.http.ssl;
  */
 public class DefaultSSLFactory extends CustomProtocolsSSLFactory {
 
-	public DefaultSSLFactory() {
-	}
+    public DefaultSSLFactory() {
+    }
 
 }

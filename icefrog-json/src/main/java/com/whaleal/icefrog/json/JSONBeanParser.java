@@ -9,11 +9,11 @@ package com.whaleal.icefrog.json;
  */
 public interface JSONBeanParser<T> {
 
-	/**
-	 * value转Bean<br>
-	 * 通过实现此接口，将JSON中的值填充到当前对象的字段值中，即对象自行实现JSON反序列化逻辑
-	 *
-	 * @param value 被解析的对象类型，可能为JSON或者普通String、Number等
-	 */
-	void parse(T value);
+    /**
+     * value转Bean<br>
+     * 通过实现此接口，将JSON中的值填充到当前对象的字段值中，即对象自行实现JSON反序列化逻辑
+     *
+     * @param value 被解析的对象类型，可能为JSON或者普通String、Number等
+     */
+    void parse( T value );
 }

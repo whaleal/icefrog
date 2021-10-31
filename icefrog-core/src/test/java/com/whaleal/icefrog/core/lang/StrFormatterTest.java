@@ -1,24 +1,23 @@
 package com.whaleal.icefrog.core.lang;
 
+import com.whaleal.icefrog.core.text.StrFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.whaleal.icefrog.core.text.StrFormatter;
-
 public class StrFormatterTest {
 
-	@Test
-	public void formatTest(){
-		//通常使用
-		String result1 = StrFormatter.format("this is {} for {}", "a", "b");
-		Assert.assertEquals("this is a for b", result1);
+    @Test
+    public void formatTest() {
+        //通常使用
+        String result1 = StrFormatter.format("this is {} for {}", "a", "b");
+        Assert.assertEquals("this is a for b", result1);
 
-		//转义{}
-		String result2 = StrFormatter.format("this is \\{} for {}", "a", "b");
-		Assert.assertEquals("this is {} for a", result2);
+        //转义{}
+        String result2 = StrFormatter.format("this is \\{} for {}", "a", "b");
+        Assert.assertEquals("this is {} for a", result2);
 
-		//转义\
-		String result3 = StrFormatter.format("this is \\\\{} for {}", "a", "b");
-		Assert.assertEquals("this is \\a for b", result3);
-	}
+        //转义\
+        String result3 = StrFormatter.format("this is \\\\{} for {}", "a", "b");
+        Assert.assertEquals("this is \\a for b", result3);
+    }
 }

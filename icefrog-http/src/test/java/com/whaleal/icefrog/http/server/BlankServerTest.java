@@ -5,11 +5,11 @@ import com.whaleal.icefrog.http.ContentType;
 import com.whaleal.icefrog.http.HttpUtil;
 
 public class BlankServerTest {
-	public static void main(String[] args) {
-		HttpUtil.createServer(8888)
-				.addAction("/", (req, res)-> res.write("Hello icefrog Server", ContentType.JSON.getValue()))
-				.start();
+    public static void main( String[] args ) {
+        HttpUtil.createServer(8888)
+                .addAction("/", ( req, res ) -> res.write("Hello icefrog Server", ContentType.JSON.getValue()))
+                .start();
 
-		DesktopUtil.browse("http://localhost:8888/");
-	}
+        DesktopUtil.browse("http://localhost:8888/");
+    }
 }

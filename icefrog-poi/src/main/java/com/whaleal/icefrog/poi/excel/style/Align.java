@@ -8,5 +8,5 @@ package com.whaleal.icefrog.poi.excel.style;
  * @since 1.0.0
  */
 public enum Align {
-	LEFT, RIGHT, CENTER
+    LEFT, RIGHT, CENTER
 }

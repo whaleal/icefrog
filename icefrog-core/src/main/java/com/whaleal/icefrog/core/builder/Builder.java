@@ -10,11 +10,11 @@ import java.io.Serializable;
  * @author wh
  * @since 1.0.0
  */
-public interface Builder<T> extends Serializable{
-	/**
-	 * 构建
-	 *
-	 * @return 被构建的对象
-	 */
-	T build();
+public interface Builder<T> extends Serializable {
+    /**
+     * 构建
+     *
+     * @return 被构建的对象
+     */
+    T build();
 }

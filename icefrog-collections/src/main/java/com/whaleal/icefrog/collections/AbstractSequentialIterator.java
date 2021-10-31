@@ -3,9 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
-
 import javax.annotation.CheckForNull;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**

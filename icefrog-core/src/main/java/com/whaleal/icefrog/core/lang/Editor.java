@@ -10,16 +10,16 @@ package com.whaleal.icefrog.core.lang;
  * </pre>
  *
  * @param <T> 被编辑对象类型
- * @author Looly 
+ * @author Looly
  * @author wh
  */
 @FunctionalInterface
 public interface Editor<T> {
-	/**
-	 * 修改过滤后的结果
-	 *
-	 * @param t 被过滤的对象
-	 * @return 修改后的对象，如果被过滤返回{@code null}
-	 */
-	T edit(T t);
+    /**
+     * 修改过滤后的结果
+     *
+     * @param t 被过滤的对象
+     * @return 修改后的对象，如果被过滤返回{@code null}
+     */
+    T edit( T t );
 }

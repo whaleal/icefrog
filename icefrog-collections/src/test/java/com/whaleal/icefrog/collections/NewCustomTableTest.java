@@ -3,13 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 
-
-
-
-import com.whaleal.icefrog.collections.Maps;
-import com.whaleal.icefrog.collections.Table;
-import com.whaleal.icefrog.collections.Tables;
-
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Supplier;

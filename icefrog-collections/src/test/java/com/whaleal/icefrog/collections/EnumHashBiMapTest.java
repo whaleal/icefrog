@@ -2,18 +2,11 @@
 package com.whaleal.icefrog.collections;
 
 
-
+import junit.framework.TestCase;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-
-import com.whaleal.icefrog.collections.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests for {@code EnumHashBiMap}.

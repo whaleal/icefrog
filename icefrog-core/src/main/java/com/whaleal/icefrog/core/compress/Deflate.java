@@ -22,82 +22,82 @@ import java.util.zip.InflaterOutputStream;
  */
 public class Deflate implements Closeable {
 
-	private final InputStream source;
-	private OutputStream target;
-	private final boolean nowrap;
+    private final InputStream source;
+    private final boolean nowrap;
+    private OutputStream target;
 
-	/**
-	 * 创建Deflate
-	 *
-	 * @param source 源流
-	 * @param target 目标流
-	 * @param nowrap {@code true}表示兼容Gzip压缩
-	 * @return this
-	 */
-	public static Deflate of(InputStream source, OutputStream target, boolean nowrap) {
-		return new Deflate(source, target, nowrap);
-	}
+    /**
+     * 构造
+     *
+     * @param source 源流
+     * @param target 目标流
+     * @param nowrap {@code true}表示兼容Gzip压缩
+     */
+    public Deflate( InputStream source, OutputStream target, boolean nowrap ) {
+        this.source = source;
+        this.target = target;
+        this.nowrap = nowrap;
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param source 源流
-	 * @param target 目标流
-	 * @param nowrap {@code true}表示兼容Gzip压缩
-	 */
-	public Deflate(InputStream source, OutputStream target, boolean nowrap) {
-		this.source = source;
-		this.target = target;
-		this.nowrap = nowrap;
-	}
+    /**
+     * 创建Deflate
+     *
+     * @param source 源流
+     * @param target 目标流
+     * @param nowrap {@code true}表示兼容Gzip压缩
+     * @return this
+     */
+    public static Deflate of( InputStream source, OutputStream target, boolean nowrap ) {
+        return new Deflate(source, target, nowrap);
+    }
 
-	/**
-	 * 获取目标流
-	 *
-	 * @return 目标流
-	 */
-	public OutputStream getTarget() {
-		return this.target;
-	}
+    /**
+     * 获取目标流
+     *
+     * @return 目标流
+     */
+    public OutputStream getTarget() {
+        return this.target;
+    }
 
-	/**
-	 * 将普通数据流压缩
-	 *
-	 * @param level 压缩级别，0~9
-	 * @return this
-	 */
-	public Deflate deflater(int level) {
-		target= (target instanceof DeflaterOutputStream) ?
-				(DeflaterOutputStream) target : new DeflaterOutputStream(target, new Deflater(level, nowrap));
-		IoUtil.copy(source, target);
-		try {
-			((DeflaterOutputStream)target).finish();
-		} catch (IOException e) {
-			throw new IORuntimeException(e);
-		}
-		return this;
-	}
+    /**
+     * 将普通数据流压缩
+     *
+     * @param level 压缩级别，0~9
+     * @return this
+     */
+    public Deflate deflater( int level ) {
+        target = (target instanceof DeflaterOutputStream) ?
+                (DeflaterOutputStream) target : new DeflaterOutputStream(target, new Deflater(level, nowrap));
+        IoUtil.copy(source, target);
+        try {
+            ((DeflaterOutputStream) target).finish();
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+        return this;
+    }
 
-	/**
-	 * 将压缩流解压到target中
-	 *
-	 * @return this
-	 */
-	public Deflate inflater() {
-		target = (target instanceof InflaterOutputStream) ?
-				(InflaterOutputStream) target : new InflaterOutputStream(target, new Inflater(nowrap));
-		IoUtil.copy(source, target);
-		try {
-			((InflaterOutputStream)target).finish();
-		} catch (IOException e) {
-			throw new IORuntimeException(e);
-		}
-		return this;
-	}
+    /**
+     * 将压缩流解压到target中
+     *
+     * @return this
+     */
+    public Deflate inflater() {
+        target = (target instanceof InflaterOutputStream) ?
+                (InflaterOutputStream) target : new InflaterOutputStream(target, new Inflater(nowrap));
+        IoUtil.copy(source, target);
+        try {
+            ((InflaterOutputStream) target).finish();
+        } catch (IOException e) {
+            throw new IORuntimeException(e);
+        }
+        return this;
+    }
 
-	@Override
-	public void close() {
-		IoUtil.close(this.target);
-		IoUtil.close(this.source);
-	}
+    @Override
+    public void close() {
+        IoUtil.close(this.target);
+        IoUtil.close(this.source);
+    }
 }

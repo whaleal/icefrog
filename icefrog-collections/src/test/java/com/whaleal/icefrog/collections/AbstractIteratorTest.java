@@ -3,13 +3,11 @@
 package com.whaleal.icefrog.collections;
 
 
-
+import com.whaleal.icefrog.core.collection.AbstractIterator;
+import junit.framework.TestCase;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import com.whaleal.icefrog.core.collection.AbstractIterator;
-import junit.framework.TestCase;
 
 /**
  * Unit test for {@code AbstractIterator}.

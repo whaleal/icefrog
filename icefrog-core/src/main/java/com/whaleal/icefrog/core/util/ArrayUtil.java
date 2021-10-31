@@ -1,12 +1,11 @@
 package com.whaleal.icefrog.core.util;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.collection.CollectionUtil;
 import com.whaleal.icefrog.core.comparator.CompareUtil;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Editor;
 import com.whaleal.icefrog.core.lang.Matcher;
+import com.whaleal.icefrog.core.lang.Preconditions;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
@@ -55,7 +54,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array 数组
      * @return 是否为空
      */
-    public static <T> boolean isEmpty(T[] array) {
+    public static <T> boolean isEmpty( T[] array ) {
         return array == null || array.length == 0;
     }
 
@@ -68,7 +67,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 非空（empty）的原数组或默认数组
      * @since 1.0.0
      */
-    public static <T> T[] defaultIfEmpty(T[] array, T[] defaultArray) {
+    public static <T> T[] defaultIfEmpty( T[] array, T[] defaultArray ) {
         return isEmpty(array) ? defaultArray : array;
     }
 
@@ -83,7 +82,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array 数组
      * @return 是否为空
      */
-    public static boolean isEmpty(Object array) {
+    public static boolean isEmpty( Object array ) {
         if (array != null) {
             if (isArray(array)) {
                 return 0 == Array.getLength(array);
@@ -100,7 +99,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array 数组
      * @return 是否为非空
      */
-    public static <T> boolean isNotEmpty(T[] array) {
+    public static <T> boolean isNotEmpty( T[] array ) {
         return (null != array && array.length != 0);
     }
 
@@ -113,7 +112,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array 数组
      * @return 是否为非空
      */
-    public static boolean isNotEmpty(Object array) {
+    public static boolean isNotEmpty( Object array ) {
         return false == isEmpty(array);
     }
 
@@ -126,7 +125,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> boolean hasNull(T... array) {
+    public static <T> boolean hasNull( T... array ) {
         if (isNotEmpty(array)) {
             for (T element : array) {
                 if (null == element) {
@@ -148,7 +147,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> boolean isAllNull(T... array) {
+    public static <T> boolean isAllNull( T... array ) {
         return null == firstNonNull(array);
     }
 
@@ -161,7 +160,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> T firstNonNull(T... array) {
+    public static <T> T firstNonNull( T... array ) {
         return firstMatch(Objects::nonNull, array);
     }
 
@@ -175,7 +174,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> T firstMatch(Matcher<T> matcher, T... array) {
+    public static <T> T firstMatch( Matcher<T> matcher, T... array ) {
         final int index = matchIndex(matcher, array);
         if (index < 0) {
             return null;
@@ -194,7 +193,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> int matchIndex(Matcher<T> matcher, T... array) {
+    public static <T> int matchIndex( Matcher<T> matcher, T... array ) {
         return matchIndex(matcher, 0, array);
     }
 
@@ -209,7 +208,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> int matchIndex(Matcher<T> matcher, int beginIndexInclude, T... array) {
+    public static <T> int matchIndex( Matcher<T> matcher, int beginIndexInclude, T... array ) {
         Preconditions.notNull(matcher, "Matcher must be not null !");
         if (isNotEmpty(array)) {
             for (int i = beginIndexInclude; i < array.length; i++) {
@@ -231,7 +230,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 空数组
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] newArray(Class<?> componentType, int newSize) {
+    public static <T> T[] newArray( Class<?> componentType, int newSize ) {
         return (T[]) Array.newInstance(componentType, newSize);
     }
 
@@ -242,7 +241,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 空数组
      * @since 1.0.0
      */
-    public static Object[] newArray(int newSize) {
+    public static Object[] newArray( int newSize ) {
         return new Object[newSize];
     }
 
@@ -253,7 +252,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 元素类型
      * @since 1.0.0
      */
-    public static Class<?> getComponentType(Object array) {
+    public static Class<?> getComponentType( Object array ) {
         return null == array ? null : array.getClass().getComponentType();
     }
 
@@ -264,7 +263,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 元素类型
      * @since 1.0.0
      */
-    public static Class<?> getComponentType(Class<?> arrayClass) {
+    public static Class<?> getComponentType( Class<?> arrayClass ) {
         return null == arrayClass ? null : arrayClass.getComponentType();
     }
 
@@ -276,7 +275,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组类型
      * @since 1.0.0
      */
-    public static Class<?> getArrayType(Class<?> componentType) {
+    public static Class<?> getArrayType( Class<?> componentType ) {
         return Array.newInstance(componentType, 0).getClass();
     }
 
@@ -292,7 +291,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @throws IllegalArgumentException 参数arrayObj不是数组
      * @since 1.0.0
      */
-    public static Object[] cast(Class<?> type, Object arrayObj) throws NullPointerException, IllegalArgumentException {
+    public static Object[] cast( Class<?> type, Object arrayObj ) throws NullPointerException, IllegalArgumentException {
         if (null == arrayObj) {
             throw new NullPointerException("Argument [arrayObj] is null !");
         }
@@ -320,7 +319,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新数组
      */
     @SafeVarargs
-    public static <T> T[] append(T[] buffer, T... newElements) {
+    public static <T> T[] append( T[] buffer, T... newElements ) {
         if (isEmpty(buffer)) {
             return newElements;
         }
@@ -337,7 +336,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新数组
      */
     @SafeVarargs
-    public static <T> Object append(Object array, T... newElements) {
+    public static <T> Object append( Object array, T... newElements ) {
         if (isEmpty(array)) {
             return newElements;
         }
@@ -354,7 +353,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新数组或原有数组
      * @since 1.0.0
      */
-    public static <T> T[] setOrAppend(T[] buffer, int index, T value) {
+    public static <T> T[] setOrAppend( T[] buffer, int index, T value ) {
         if (index < buffer.length) {
             Array.set(buffer, index, value);
             return buffer;
@@ -372,7 +371,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新数组或原有数组
      * @since 1.0.0
      */
-    public static Object setOrAppend(Object array, int index, Object value) {
+    public static Object setOrAppend( Object array, int index, Object value ) {
         if (index < length(array)) {
             Array.set(array, index, value);
             return array;
@@ -394,7 +393,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] insert(T[] buffer, int index, T... newElements) {
+    public static <T> T[] insert( T[] buffer, int index, T... newElements ) {
         return (T[]) insert((Object) buffer, index, newElements);
     }
 
@@ -411,7 +410,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings({"unchecked", "SuspiciousSystemArraycopy"})
-    public static <T> Object insert(Object array, int index, T... newElements) {
+    public static <T> Object insert( Object array, int index, T... newElements ) {
         if (isEmpty(newElements)) {
             return array;
         }
@@ -443,7 +442,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param componentType 数组元素类型
      * @return 调整后的新数组
      */
-    public static <T> T[] resize(T[] data, int newSize, Class<?> componentType) {
+    public static <T> T[] resize( T[] data, int newSize, Class<?> componentType ) {
         if (newSize < 0) {
             return data;
         }
@@ -464,7 +463,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 调整后的新数组
      * @since 1.0.0
      */
-    public static Object resize(Object array, int newSize) {
+    public static Object resize( Object array, int newSize ) {
         if (newSize < 0) {
             return array;
         }
@@ -489,7 +488,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param newSize 新的数组大小
      * @return 调整后的新数组
      */
-    public static <T> T[] resize(T[] buffer, int newSize) {
+    public static <T> T[] resize( T[] buffer, int newSize ) {
         return resize(buffer, newSize, buffer.getClass().getComponentType());
     }
 
@@ -502,7 +501,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 合并后的数组
      */
     @SafeVarargs
-    public static <T> T[] addAll(T[]... arrays) {
+    public static <T> T[] addAll( T[]... arrays ) {
         if (arrays.length == 1) {
             return arrays[0];
         }
@@ -537,7 +536,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 目标数组
      * @since 1.0.0
      */
-    public static Object copy(Object src, int srcPos, Object dest, int destPos, int length) {
+    public static Object copy( Object src, int srcPos, Object dest, int destPos, int length ) {
         //noinspection SuspiciousSystemArraycopy
         System.arraycopy(src, srcPos, dest, destPos, length);
         return dest;
@@ -553,7 +552,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 目标数组
      * @since 1.0.0
      */
-    public static Object copy(Object src, Object dest, int length) {
+    public static Object copy( Object src, Object dest, int length ) {
         //noinspection SuspiciousSystemArraycopy
         System.arraycopy(src, 0, dest, 0, length);
         return dest;
@@ -566,7 +565,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array 被克隆的数组
      * @return 新数组
      */
-    public static <T> T[] clone(T[] array) {
+    public static <T> T[] clone( T[] array ) {
         if (array == null) {
             return null;
         }
@@ -581,7 +580,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 克隆后的数组对象
      */
     @SuppressWarnings("unchecked")
-    public static <T> T clone(final T obj) {
+    public static <T> T clone( final T obj ) {
         if (null == obj) {
             return null;
         }
@@ -618,7 +617,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 编辑后的数组
      * @since 1.0.0
      */
-    public static <T> T[] edit(T[] array, Editor<T> editor) {
+    public static <T> T[] edit( T[] array, Editor<T> editor ) {
         if (null == editor) {
             return array;
         }
@@ -643,13 +642,13 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回true的对象将被加入结果集合中
      * </pre>
      *
-     * @param <T>    数组元素类型
-     * @param array  数组
+     * @param <T>       数组元素类型
+     * @param array     数组
      * @param predicate 过滤器接口，用于定义过滤规则，{@code null}返回原集合
      * @return 过滤后的数组
      * @since 1.0.0
      */
-    public static <T> T[] filter(T[] array, Predicate<T> predicate) {
+    public static <T> T[] filter( T[] array, Predicate<T> predicate ) {
         if (null == array || null == predicate) {
             return array;
         }
@@ -664,7 +663,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 处理后的数组
      * @since 1.0.0
      */
-    public static <T> T[] removeNull(T[] array) {
+    public static <T> T[] removeNull( T[] array ) {
         return edit(array, t -> {
             // 返回null便不加入集合
             return t;
@@ -679,7 +678,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 处理后的数组
      * @since 1.0.0
      */
-    public static <T extends CharSequence> T[] removeEmpty(T[] array) {
+    public static <T extends CharSequence> T[] removeEmpty( T[] array ) {
         return filter(array, StrUtil::isNotEmpty);
     }
 
@@ -691,7 +690,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 处理后的数组
      * @since 1.0.0
      */
-    public static <T extends CharSequence> T[] removeBlank(T[] array) {
+    public static <T extends CharSequence> T[] removeBlank( T[] array ) {
         return filter(array, StrUtil::isNotBlank);
     }
 
@@ -702,7 +701,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新数组
      * @since 1.0.0
      */
-    public static String[] nullToEmpty(String[] array) {
+    public static String[] nullToEmpty( String[] array ) {
         return edit(array, t -> null == t ? StrUtil.EMPTY : t);
     }
 
@@ -722,7 +721,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return Map
      * @since 1.0.0
      */
-    public static <K, V> Map<K, V> zip(K[] keys, V[] values, boolean isOrder) {
+    public static <K, V> Map<K, V> zip( K[] keys, V[] values, boolean isOrder ) {
         if (isEmpty(keys) || isEmpty(values)) {
             return null;
         }
@@ -752,7 +751,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param values 值列表
      * @return Map
      */
-    public static <K, V> Map<K, V> zip(K[] keys, V[] values) {
+    public static <K, V> Map<K, V> zip( K[] keys, V[] values ) {
         return zip(keys, values, false);
     }
 
@@ -766,8 +765,8 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
      * @since 1.0.0
      */
-    public static <T> int indexOf(T[] array, Object value, int beginIndexInclude) {
-        return matchIndex((obj) -> ObjectUtil.equal(value, obj), beginIndexInclude, array);
+    public static <T> int indexOf( T[] array, Object value, int beginIndexInclude ) {
+        return matchIndex(( obj ) -> ObjectUtil.equal(value, obj), beginIndexInclude, array);
     }
 
     /**
@@ -779,8 +778,8 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
      * @since 1.0.0
      */
-    public static <T> int indexOf(T[] array, Object value) {
-        return matchIndex((obj) -> ObjectUtil.equal(value, obj), array);
+    public static <T> int indexOf( T[] array, Object value ) {
+        return matchIndex(( obj ) -> ObjectUtil.equal(value, obj), array);
     }
 
     /**
@@ -791,7 +790,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
      * @since 1.0.0
      */
-    public static int indexOfIgnoreCase(CharSequence[] array, CharSequence value) {
+    public static int indexOfIgnoreCase( CharSequence[] array, CharSequence value ) {
         if (null != array) {
             for (int i = 0; i < array.length; i++) {
                 if (StrUtil.equalsIgnoreCase(array[i], value)) {
@@ -811,7 +810,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
      * @since 1.0.0
      */
-    public static <T> int lastIndexOf(T[] array, Object value) {
+    public static <T> int lastIndexOf( T[] array, Object value ) {
         if (isEmpty(array)) {
             return INDEX_NOT_FOUND;
         }
@@ -828,7 +827,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组中指定元素所在位置，未找到返回{@link #INDEX_NOT_FOUND}
      * @since 1.0.0
      */
-    public static <T> int lastIndexOf(T[] array, Object value, int endInclude) {
+    public static <T> int lastIndexOf( T[] array, Object value, int endInclude ) {
         if (isNotEmpty(array)) {
             for (int i = endInclude; i >= 0; i--) {
                 if (ObjectUtil.equal(value, array[i])) {
@@ -847,7 +846,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param value 被检查的元素
      * @return 是否包含
      */
-    public static <T> boolean contains(T[] array, T value) {
+    public static <T> boolean contains( T[] array, T value ) {
         return indexOf(array, value) > INDEX_NOT_FOUND;
     }
 
@@ -861,7 +860,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> boolean containsAny(T[] array, T... values) {
+    public static <T> boolean containsAny( T[] array, T... values ) {
         for (T value : values) {
             if (contains(array, value)) {
                 return true;
@@ -880,7 +879,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> boolean containsAll(T[] array, T... values) {
+    public static <T> boolean containsAll( T[] array, T... values ) {
         for (T value : values) {
             if (false == contains(array, value)) {
                 return false;
@@ -899,7 +898,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 是否包含
      * @since 1.0.0
      */
-    public static boolean containsIgnoreCase(CharSequence[] array, CharSequence value) {
+    public static boolean containsIgnoreCase( CharSequence[] array, CharSequence value ) {
         return indexOfIgnoreCase(array, value) > INDEX_NOT_FOUND;
     }
 
@@ -910,7 +909,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 包装类型数组或对象数组
      * @throws UtilException 对象为非数组
      */
-    public static Object[] wrap(Object obj) {
+    public static Object[] wrap( Object obj ) {
         if (null == obj) {
             return null;
         }
@@ -950,7 +949,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param obj 对象
      * @return 是否为数组对象，如果为{@code null} 返回false
      */
-    public static boolean isArray(Object obj) {
+    public static boolean isArray( Object obj ) {
         return null != obj && obj.getClass().isArray();
     }
 
@@ -965,7 +964,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> T get(Object array, int index) {
+    public static <T> T get( Object array, int index ) {
         if (null == array) {
             return null;
         }
@@ -988,7 +987,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param indexes 下标列表
      * @return 结果
      */
-    public static <T> T[] getAny(Object array, int... indexes) {
+    public static <T> T[] getAny( Object array, int... indexes ) {
         if (null == array) {
             return null;
         }
@@ -1011,7 +1010,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @see Arrays#copyOfRange(Object[], int, int)
      * @since 1.0.0
      */
-    public static <T> T[] sub(T[] array, int start, int end) {
+    public static <T> T[] sub( T[] array, int start, int end ) {
         int length = length(array);
         if (start < 0) {
             start += length;
@@ -1045,7 +1044,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新的数组
      * @since 1.0.0
      */
-    public static Object[] sub(Object array, int start, int end) {
+    public static Object[] sub( Object array, int start, int end ) {
         return sub(array, start, end, 1);
     }
 
@@ -1059,7 +1058,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 新的数组
      * @since 1.0.0
      */
-    public static Object[] sub(Object array, int start, int end, int step) {
+    public static Object[] sub( Object array, int start, int end, int step ) {
         int length = length(array);
         if (start < 0) {
             start += length;
@@ -1100,7 +1099,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param obj 集合或数组对象
      * @return 数组字符串，与集合转字符串格式相同
      */
-    public static String toString(Object obj) {
+    public static String toString( Object obj ) {
         if (null == obj) {
             return null;
         }
@@ -1152,7 +1151,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @see Array#getLength(Object)
      * @since 1.0.0
      */
-    public static int length(Object array) throws IllegalArgumentException {
+    public static int length( Object array ) throws IllegalArgumentException {
         if (null == array) {
             return 0;
         }
@@ -1167,7 +1166,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param conjunction 分隔符
      * @return 连接后的字符串
      */
-    public static <T> String join(T[] array, CharSequence conjunction) {
+    public static <T> String join( T[] array, CharSequence conjunction ) {
         return join(array, conjunction, null, null);
     }
 
@@ -1182,7 +1181,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 连接后的字符串
      * @since 1.0.0
      */
-    public static <T> String join(T[] array, CharSequence delimiter, String prefix, String suffix) {
+    public static <T> String join( T[] array, CharSequence delimiter, String prefix, String suffix ) {
         if (null == array) {
             return null;
         }
@@ -1204,8 +1203,8 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 连接后的字符串
      * @since 1.0.0
      */
-    public static <T> String join(T[] array, CharSequence conjunction, Editor<T> editor) {
-        return StrJoiner.of(conjunction).append(array, (t) -> String.valueOf(editor.edit(t))).toString();
+    public static <T> String join( T[] array, CharSequence conjunction, Editor<T> editor ) {
+        return StrJoiner.of(conjunction).append(array, ( t ) -> String.valueOf(editor.edit(t))).toString();
     }
 
     /**
@@ -1215,7 +1214,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param conjunction 分隔符
      * @return 连接后的字符串
      */
-    public static String join(Object array, CharSequence conjunction) {
+    public static String join( Object array, CharSequence conjunction ) {
         if (null == array) {
             return null;
         }
@@ -1233,7 +1232,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return byte数组
      * @since 1.0.0
      */
-    public static byte[] toArray(ByteBuffer bytebuffer) {
+    public static byte[] toArray( ByteBuffer bytebuffer ) {
         if (bytebuffer.hasArray()) {
             return Arrays.copyOfRange(bytebuffer.array(), bytebuffer.position(), bytebuffer.limit());
         } else {
@@ -1256,7 +1255,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组
      * @since 1.0.0
      */
-    public static <T> T[] toArray(Iterator<T> iterator, Class<T> componentType) {
+    public static <T> T[] toArray( Iterator<T> iterator, Class<T> componentType ) {
         return toArray(CollUtil.newArrayList(iterator), componentType);
     }
 
@@ -1269,7 +1268,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组
      * @since 1.0.0
      */
-    public static <T> T[] toArray(Iterable<T> iterable, Class<T> componentType) {
+    public static <T> T[] toArray( Iterable<T> iterable, Class<T> componentType ) {
         return toArray(CollUtil.toCollection(iterable), componentType);
     }
 
@@ -1284,19 +1283,18 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 数组
      * @since 1.0.0
      */
-    public static <T> T[] toArray(Collection<T> collection, Class<T> componentType) {
+    public static <T> T[] toArray( Collection<T> collection, Class<T> componentType ) {
         return collection.toArray(newArray(componentType, 0));
     }
 
     /**
-     *
-     * @param iterable  {@link Iterable}
-     * @param array 数组元素
-     * @param <T> 数组元素类型
+     * @param iterable {@link Iterable}
+     * @param array    数组元素
+     * @param <T>      数组元素类型
      * @return 数组
      * @since 1.1
      */
-    public static <T extends Object> T[] toArray(Iterable<? extends T> iterable, T[] array) {
+    public static <T extends Object> T[] toArray( Iterable<? extends T> iterable, T[] array ) {
         Collection<? extends T> collection = CollUtil.toCollection(iterable);
         return collection.toArray(array);
     }
@@ -1315,7 +1313,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] remove(T[] array, int index) throws IllegalArgumentException {
+    public static <T> T[] remove( T[] array, int index ) throws IllegalArgumentException {
         return (T[]) remove((Object) array, index);
     }
 
@@ -1332,7 +1330,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @throws IllegalArgumentException 参数对象不为数组对象
      * @since 1.0.0
      */
-    public static <T> T[] removeEle(T[] array, T element) throws IllegalArgumentException {
+    public static <T> T[] removeEle( T[] array, T element ) throws IllegalArgumentException {
         return remove(array, indexOf(array, element));
     }
 
@@ -1346,7 +1344,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 变更后的原数组
      * @since 1.0.0
      */
-    public static <T> T[] reverse(T[] array, final int startIndexInclusive, final int endIndexExclusive) {
+    public static <T> T[] reverse( T[] array, final int startIndexInclusive, final int endIndexExclusive ) {
         if (isEmpty(array)) {
             return array;
         }
@@ -1373,7 +1371,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 变更后的原数组
      * @since 1.0.0
      */
-    public static <T> T[] reverse(T[] array) {
+    public static <T> T[] reverse( T[] array ) {
         return reverse(array, 0, array.length);
     }
 
@@ -1385,7 +1383,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 最小值
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> T min(T[] numberArray) {
+    public static <T extends Comparable<? super T>> T min( T[] numberArray ) {
         return min(numberArray, null);
     }
 
@@ -1398,7 +1396,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 最小值
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> T min(T[] numberArray, Comparator<T> comparator) {
+    public static <T extends Comparable<? super T>> T min( T[] numberArray, Comparator<T> comparator ) {
         if (isEmpty(numberArray)) {
             throw new IllegalArgumentException("Number array must not empty !");
         }
@@ -1419,7 +1417,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 最大值
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> T max(T[] numberArray) {
+    public static <T extends Comparable<? super T>> T max( T[] numberArray ) {
         return max(numberArray, null);
     }
 
@@ -1434,7 +1432,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 最大值
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> T max(T[] numberArray, Comparator<T> comparator) {
+    public static <T extends Comparable<? super T>> T max( T[] numberArray, Comparator<T> comparator ) {
         if (isEmpty(numberArray)) {
             throw new IllegalArgumentException("Number array must not empty !");
         }
@@ -1457,7 +1455,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @author wh
      * @since 1.0.0
      */
-    public static <T> T[] shuffle(T[] array) {
+    public static <T> T[] shuffle( T[] array ) {
         return shuffle(array, RandomUtil.getRandom());
     }
 
@@ -1472,7 +1470,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @author wh
      * @since 1.0.0
      */
-    public static <T> T[] shuffle(T[] array, Random random) {
+    public static <T> T[] shuffle( T[] array, Random random ) {
         if (array == null || random == null || array.length <= 1) {
             return array;
         }
@@ -1494,7 +1492,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 交换后的数组，与传入数组为同一对象
      * @since 1.0.0
      */
-    public static <T> T[] swap(T[] array, int index1, int index2) {
+    public static <T> T[] swap( T[] array, int index1, int index2 ) {
         if (isEmpty(array)) {
             throw new IllegalArgumentException("Array must not empty !");
         }
@@ -1513,7 +1511,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 交换后的数组，与传入数组为同一对象
      * @since 1.0.0
      */
-    public static Object swap(Object array, int index1, int index2) {
+    public static Object swap( Object array, int index1, int index2 ) {
         if (isEmpty(array)) {
             throw new IllegalArgumentException("Array must not empty !");
         }
@@ -1530,7 +1528,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 存在{@code null}的数量
      * @since 1.0.0
      */
-    public static int emptyCount(Object... args) {
+    public static int emptyCount( Object... args ) {
         int count = 0;
         if (isNotEmpty(args)) {
             for (Object element : args) {
@@ -1549,7 +1547,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 是否存在
      * @since 1.0.0
      */
-    public static boolean hasEmpty(Object... args) {
+    public static boolean hasEmpty( Object... args ) {
         if (isNotEmpty(args)) {
             for (Object element : args) {
                 if (ObjectUtil.isEmpty(element)) {
@@ -1567,7 +1565,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 是否都为空
      * @since 1.0.0
      */
-    public static boolean isAllEmpty(Object... args) {
+    public static boolean isAllEmpty( Object... args ) {
         return emptyCount(args) == args.length;
     }
 
@@ -1578,7 +1576,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 是否都不为空
      * @since 1.0.0
      */
-    public static boolean isAllNotEmpty(Object... args) {
+    public static boolean isAllNotEmpty( Object... args ) {
         return false == hasEmpty(args);
     }
 
@@ -1591,7 +1589,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @since 1.0.0
      */
     @SuppressWarnings("unchecked")
-    public static <T> boolean isAllNotNull(T... array) {
+    public static <T> boolean isAllNotNull( T... array ) {
         return false == hasNull(array);
     }
 
@@ -1604,7 +1602,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 去重后的数组
      */
     @SuppressWarnings("unchecked")
-    public static <T> T[] distinct(T[] array) {
+    public static <T> T[] distinct( T[] array ) {
         if (isEmpty(array)) {
             return array;
         }
@@ -1625,7 +1623,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 转换后的数组
      * @since 1.0.0
      */
-    public static <T, R> R[] map(T[] array, Class<R> targetComponentType, Function<? super T, ? extends R> func) {
+    public static <T, R> R[] map( T[] array, Class<R> targetComponentType, Function<? super T, ? extends R> func ) {
         final R[] result = newArray(targetComponentType, array.length);
         for (int i = 0; i < array.length; i++) {
             result[i] = func.apply(array[i]);
@@ -1644,7 +1642,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 转换后的数组
      * @since 1.0.0
      */
-    public static <T, R> R[] map(Object array, Class<R> targetComponentType, Function<? super T, ? extends R> func) {
+    public static <T, R> R[] map( Object array, Class<R> targetComponentType, Function<? super T, ? extends R> func ) {
         final int length = length(array);
         final R[] result = newArray(targetComponentType, length);
         for (int i = 0; i < length; i++) {
@@ -1663,7 +1661,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 转换后的数组
      * @since 1.0.0
      */
-    public static <T, R> List<R> map(T[] array, Function<? super T, ? extends R> func) {
+    public static <T, R> List<R> map( T[] array, Function<? super T, ? extends R> func ) {
         return Arrays.stream(array).map(func).collect(Collectors.toList());
     }
 
@@ -1675,7 +1673,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 是否相等
      * @since 1.0.0
      */
-    public static boolean equals(Object array1, Object array2) {
+    public static boolean equals( Object array1, Object array2 ) {
         if (array1 == array2) {
             return true;
         }
@@ -1717,7 +1715,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
      * @since 1.0.0
      */
-    public static <T> boolean isSub(T[] array, T[] subArray) {
+    public static <T> boolean isSub( T[] array, T[] subArray ) {
         return indexOfSub(array, subArray) > INDEX_NOT_FOUND;
     }
 
@@ -1730,7 +1728,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
      * @since 1.0.0
      */
-    public static <T> int indexOfSub(T[] array, T[] subArray) {
+    public static <T> int indexOfSub( T[] array, T[] subArray ) {
         return indexOfSub(array, 0, subArray);
     }
 
@@ -1744,7 +1742,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 子数组的开始位置，即子数字第一个元素在数组中的位置
      * @since 1.0.0
      */
-    public static <T> int indexOfSub(T[] array, int beginInclude, T[] subArray) {
+    public static <T> int indexOfSub( T[] array, int beginInclude, T[] subArray ) {
         if (isEmpty(array) || isEmpty(subArray) || subArray.length > array.length) {
             return INDEX_NOT_FOUND;
         }
@@ -1771,7 +1769,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 最后一个子数组的开始位置，即子数字第一个元素在数组中的位置
      * @since 1.0.0
      */
-    public static <T> int lastIndexOfSub(T[] array, T[] subArray) {
+    public static <T> int lastIndexOfSub( T[] array, T[] subArray ) {
         if (isEmpty(array) || isEmpty(subArray)) {
             return INDEX_NOT_FOUND;
         }
@@ -1790,7 +1788,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @return 最后一个子数组的开始位置，即子数字第一个元素在数组中的位置
      * @since 1.0.0
      */
-    public static <T> int lastIndexOfSub(T[] array, int endInclude, T[] subArray) {
+    public static <T> int lastIndexOfSub( T[] array, int endInclude, T[] subArray ) {
         if (isEmpty(array) || isEmpty(subArray) || subArray.length > array.length || endInclude < 0) {
             return INDEX_NOT_FOUND;
         }
@@ -1820,7 +1818,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @author wh
      * @since 1.0.0
      */
-    public static <T> boolean isSorted(T[] array, Comparator<? super T> comparator) {
+    public static <T> boolean isSorted( T[] array, Comparator<? super T> comparator ) {
         if (array == null || comparator == null) {
             return false;
         }
@@ -1843,7 +1841,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @author wh
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> boolean isSorted(T[] array) {
+    public static <T extends Comparable<? super T>> boolean isSorted( T[] array ) {
         return isSortedASC(array);
     }
 
@@ -1857,7 +1855,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @author wh
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> boolean isSortedDESC(T[] array) {
+    public static <T extends Comparable<? super T>> boolean isSortedDESC( T[] array ) {
         if (array == null) {
             return false;
         }
@@ -1881,7 +1879,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * * @author wh
      * @since 1.0.0
      */
-    public static <T extends Comparable<? super T>> boolean isSortedASC(T[] array) {
+    public static <T extends Comparable<? super T>> boolean isSortedASC( T[] array ) {
         if (array == null) {
             return false;
         }
@@ -1908,11 +1906,11 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array 要检查的数组
      * @return 如果为空，或者非数组，则返回<code>0</code>。
      */
-    public static int arrayLength(Object array) {
+    public static int arrayLength( Object array ) {
         return arrayLength(array, 0, 0);
     }
 
-    private static int arrayLength(Object array, int defaultIfNull, int defaultIfNotArray) {
+    private static int arrayLength( Object array, int defaultIfNull, int defaultIfNotArray ) {
         if (array == null) {
             return defaultIfNull; // null
         } else if (array instanceof Object[]) {
@@ -1954,11 +1952,10 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * ArrayUtil.isEmptyArray(new int[10])       = false
      * </pre>
      *
-     *
      * @param array 要检查的数组
      * @return 如果为空, 则返回<code>true</code>
      */
-    public static boolean isEmptyArray(Object array) {
+    public static boolean isEmptyArray( Object array ) {
         return arrayLength(array, 0, -1) == 0;
     }
 
@@ -1979,14 +1976,13 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * ArrayUtil.defaultIfEmpty(new String[10], defaultArray) = 数组本身
      * </pre>
      *
-     *
      * @param array        要转换的数组
      * @param defaultValue 默认数组
-     * @param <T>  传入数组的泛型
-     * @param <S>  传入数组泛型的子类
+     * @param <T>          传入数组的泛型
+     * @param <S>          传入数组泛型的子类
      * @return 数组本身或默认数组
      */
-    public static <T, S extends T> T defaultIfEmptyArray(T array, S defaultValue) {
+    public static <T, S extends T> T defaultIfEmptyArray( T array, S defaultValue ) {
         return isEmptyArray(array) ? defaultValue : array;
     }
 
@@ -1999,7 +1995,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(Object[] array1, Object[] array2) {
+    public static boolean isArraySameLength( Object[] array1, Object[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2014,7 +2010,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(long[] array1, long[] array2) {
+    public static boolean isArraySameLength( long[] array1, long[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2029,7 +2025,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(int[] array1, int[] array2) {
+    public static boolean isArraySameLength( int[] array1, int[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2044,7 +2040,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(short[] array1, short[] array2) {
+    public static boolean isArraySameLength( short[] array1, short[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2059,7 +2055,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(byte[] array1, byte[] array2) {
+    public static boolean isArraySameLength( byte[] array1, byte[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2074,7 +2070,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(double[] array1, double[] array2) {
+    public static boolean isArraySameLength( double[] array1, double[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2089,7 +2085,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(float[] array1, float[] array2) {
+    public static boolean isArraySameLength( float[] array1, float[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2104,7 +2100,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(boolean[] array1, boolean[] array2) {
+    public static boolean isArraySameLength( boolean[] array1, boolean[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2119,7 +2115,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param array2 数组2
      * @return 如果两个数组长度相同，则返回<code>true</code>
      */
-    public static boolean isArraySameLength(char[] array1, char[] array2) {
+    public static boolean isArraySameLength( char[] array1, char[] array2 ) {
         int length1 = array1 == null ? 0 : array1.length;
         int length2 = array2 == null ? 0 : array2.length;
 
@@ -2136,7 +2132,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(Object[] array) {
+    public static void arrayReverse( Object[] array ) {
         if (array == null) {
             return;
         }
@@ -2156,7 +2152,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(long[] array) {
+    public static void arrayReverse( long[] array ) {
         if (array == null) {
             return;
         }
@@ -2176,7 +2172,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(int[] array) {
+    public static void arrayReverse( int[] array ) {
         if (array == null) {
             return;
         }
@@ -2196,7 +2192,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(short[] array) {
+    public static void arrayReverse( short[] array ) {
         if (array == null) {
             return;
         }
@@ -2216,7 +2212,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(byte[] array) {
+    public static void arrayReverse( byte[] array ) {
         if (array == null) {
             return;
         }
@@ -2236,7 +2232,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(double[] array) {
+    public static void arrayReverse( double[] array ) {
         if (array == null) {
             return;
         }
@@ -2256,7 +2252,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(float[] array) {
+    public static void arrayReverse( float[] array ) {
         if (array == null) {
             return;
         }
@@ -2276,7 +2272,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(boolean[] array) {
+    public static void arrayReverse( boolean[] array ) {
         if (array == null) {
             return;
         }
@@ -2296,7 +2292,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      *
      * @param array 要反转的数组
      */
-    public static void arrayReverse(char[] array) {
+    public static void arrayReverse( char[] array ) {
         if (array == null) {
             return;
         }
@@ -2327,7 +2323,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param objectToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(Object[] array, Object objectToFind) {
+    public static int arrayIndexOf( Object[] array, Object objectToFind ) {
         return arrayIndexOf(array, objectToFind, 0);
     }
 
@@ -2342,7 +2338,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(Object[] array, Object[] arrayToFind) {
+    public static int arrayIndexOf( Object[] array, Object[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -2361,7 +2357,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex   起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(Object[] array, Object objectToFind, int startIndex) {
+    public static int arrayIndexOf( Object[] array, Object objectToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -2399,7 +2395,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param objectToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(Object[] array, Object objectToFind) {
+    public static int arrayLastIndexOf( Object[] array, Object objectToFind ) {
         return arrayLastIndexOf(array, objectToFind, Integer.MAX_VALUE);
     }
 
@@ -2414,7 +2410,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(Object[] array, Object[] arrayToFind) {
+    public static int arrayLastIndexOf( Object[] array, Object[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -2433,7 +2429,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex   起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(Object[] array, Object objectToFind, int startIndex) {
+    public static int arrayLastIndexOf( Object[] array, Object objectToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -2473,7 +2469,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param objectToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(Object[] array, Object objectToFind) {
+    public static boolean arrayContains( Object[] array, Object objectToFind ) {
         return arrayIndexOf(array, objectToFind) != -1;
     }
 
@@ -2488,7 +2484,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(Object[] array, Object[] arrayToFind) {
+    public static boolean arrayContains( Object[] array, Object[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -2509,7 +2505,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param longToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(long[] array, long longToFind) {
+    public static int arrayIndexOf( long[] array, long longToFind ) {
         return arrayIndexOf(array, longToFind, 0);
     }
 
@@ -2524,7 +2520,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(long[] array, long[] arrayToFind) {
+    public static int arrayIndexOf( long[] array, long[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -2543,7 +2539,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(long[] array, long longToFind, int startIndex) {
+    public static int arrayIndexOf( long[] array, long longToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -2576,7 +2572,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(long[] array, long[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( long[] array, long[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -2641,7 +2637,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param longToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(long[] array, long longToFind) {
+    public static int arrayLastIndexOf( long[] array, long longToFind ) {
         return arrayLastIndexOf(array, longToFind, Integer.MAX_VALUE);
     }
 
@@ -2656,7 +2652,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(long[] array, long[] arrayToFind) {
+    public static int arrayLastIndexOf( long[] array, long[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -2675,7 +2671,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(long[] array, long longToFind, int startIndex) {
+    public static int arrayLastIndexOf( long[] array, long longToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -2710,7 +2706,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(long[] array, long[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( long[] array, long[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -2773,7 +2769,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param longToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(long[] array, long longToFind) {
+    public static boolean arrayContains( long[] array, long longToFind ) {
         return arrayIndexOf(array, longToFind) != -1;
     }
 
@@ -2788,7 +2784,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(long[] array, long[] arrayToFind) {
+    public static boolean arrayContains( long[] array, long[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -2809,7 +2805,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param intToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(int[] array, int intToFind) {
+    public static int arrayIndexOf( int[] array, int intToFind ) {
         return arrayIndexOf(array, intToFind, 0);
     }
 
@@ -2824,7 +2820,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(int[] array, int[] arrayToFind) {
+    public static int arrayIndexOf( int[] array, int[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -2843,7 +2839,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(int[] array, int intToFind, int startIndex) {
+    public static int arrayIndexOf( int[] array, int intToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -2876,7 +2872,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(int[] array, int[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( int[] array, int[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -2941,7 +2937,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param intToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(int[] array, int intToFind) {
+    public static int arrayLastIndexOf( int[] array, int intToFind ) {
         return arrayLastIndexOf(array, intToFind, Integer.MAX_VALUE);
     }
 
@@ -2956,7 +2952,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(int[] array, int[] arrayToFind) {
+    public static int arrayLastIndexOf( int[] array, int[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -2975,7 +2971,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(int[] array, int intToFind, int startIndex) {
+    public static int arrayLastIndexOf( int[] array, int intToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -3010,7 +3006,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(int[] array, int[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( int[] array, int[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -3073,7 +3069,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param intToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(int[] array, int intToFind) {
+    public static boolean arrayContains( int[] array, int intToFind ) {
         return arrayIndexOf(array, intToFind) != -1;
     }
 
@@ -3088,7 +3084,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(int[] array, int[] arrayToFind) {
+    public static boolean arrayContains( int[] array, int[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -3109,7 +3105,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param shortToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(short[] array, short shortToFind) {
+    public static int arrayIndexOf( short[] array, short shortToFind ) {
         return arrayIndexOf(array, shortToFind, 0);
     }
 
@@ -3124,7 +3120,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(short[] array, short[] arrayToFind) {
+    public static int arrayIndexOf( short[] array, short[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -3143,7 +3139,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(short[] array, short shortToFind, int startIndex) {
+    public static int arrayIndexOf( short[] array, short shortToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -3176,7 +3172,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(short[] array, short[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( short[] array, short[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -3241,7 +3237,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param shortToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(short[] array, short shortToFind) {
+    public static int arrayLastIndexOf( short[] array, short shortToFind ) {
         return arrayLastIndexOf(array, shortToFind, Integer.MAX_VALUE);
     }
 
@@ -3256,7 +3252,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(short[] array, short[] arrayToFind) {
+    public static int arrayLastIndexOf( short[] array, short[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -3275,7 +3271,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(short[] array, short shortToFind, int startIndex) {
+    public static int arrayLastIndexOf( short[] array, short shortToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -3310,7 +3306,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(short[] array, short[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( short[] array, short[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -3373,7 +3369,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param shortToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(short[] array, short shortToFind) {
+    public static boolean arrayContains( short[] array, short shortToFind ) {
         return arrayIndexOf(array, shortToFind) != -1;
     }
 
@@ -3388,7 +3384,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(short[] array, short[] arrayToFind) {
+    public static boolean arrayContains( short[] array, short[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -3409,7 +3405,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param byteToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(byte[] array, byte byteToFind) {
+    public static int arrayIndexOf( byte[] array, byte byteToFind ) {
         return arrayIndexOf(array, byteToFind, 0);
     }
 
@@ -3424,7 +3420,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(byte[] array, byte[] arrayToFind) {
+    public static int arrayIndexOf( byte[] array, byte[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -3443,7 +3439,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(byte[] array, byte byteToFind, int startIndex) {
+    public static int arrayIndexOf( byte[] array, byte byteToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -3476,7 +3472,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(byte[] array, byte[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( byte[] array, byte[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -3541,7 +3537,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param byteToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(byte[] array, byte byteToFind) {
+    public static int arrayLastIndexOf( byte[] array, byte byteToFind ) {
         return arrayLastIndexOf(array, byteToFind, Integer.MAX_VALUE);
     }
 
@@ -3556,7 +3552,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(byte[] array, byte[] arrayToFind) {
+    public static int arrayLastIndexOf( byte[] array, byte[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -3575,7 +3571,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(byte[] array, byte byteToFind, int startIndex) {
+    public static int arrayLastIndexOf( byte[] array, byte byteToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -3610,7 +3606,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(byte[] array, byte[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( byte[] array, byte[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -3673,7 +3669,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param byteToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(byte[] array, byte byteToFind) {
+    public static boolean arrayContains( byte[] array, byte byteToFind ) {
         return arrayIndexOf(array, byteToFind) != -1;
     }
 
@@ -3688,7 +3684,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(byte[] array, byte[] arrayToFind) {
+    public static boolean arrayContains( byte[] array, byte[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -3709,7 +3705,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param doubleToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double doubleToFind) {
+    public static int arrayIndexOf( double[] array, double doubleToFind ) {
         return arrayIndexOf(array, doubleToFind, 0, 0);
     }
 
@@ -3725,7 +3721,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance    误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double doubleToFind, double tolerance) {
+    public static int arrayIndexOf( double[] array, double doubleToFind, double tolerance ) {
         return arrayIndexOf(array, doubleToFind, 0, tolerance);
     }
 
@@ -3740,7 +3736,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double[] arrayToFind) {
+    public static int arrayIndexOf( double[] array, double[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0, 0);
     }
 
@@ -3756,7 +3752,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double[] arrayToFind, double tolerance) {
+    public static int arrayIndexOf( double[] array, double[] arrayToFind, double tolerance ) {
         return arrayIndexOf(array, arrayToFind, 0, tolerance);
     }
 
@@ -3775,7 +3771,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex   起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double doubleToFind, int startIndex) {
+    public static int arrayIndexOf( double[] array, double doubleToFind, int startIndex ) {
         return arrayIndexOf(array, doubleToFind, startIndex, 0);
     }
 
@@ -3795,7 +3791,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance    误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double doubleToFind, int startIndex, double tolerance) {
+    public static int arrayIndexOf( double[] array, double doubleToFind, int startIndex, double tolerance ) {
         if (array == null) {
             return -1;
         }
@@ -3831,7 +3827,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( double[] array, double[] arrayToFind, int startIndex ) {
         return arrayIndexOf(array, arrayToFind, startIndex, 0);
     }
 
@@ -3851,7 +3847,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(double[] array, double[] arrayToFind, int startIndex, double tolerance) {
+    public static int arrayIndexOf( double[] array, double[] arrayToFind, int startIndex, double tolerance ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -3917,7 +3913,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param doubleToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double doubleToFind) {
+    public static int arrayLastIndexOf( double[] array, double doubleToFind ) {
         return arrayLastIndexOf(array, doubleToFind, Integer.MAX_VALUE, 0);
     }
 
@@ -3933,7 +3929,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance    误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double doubleToFind, double tolerance) {
+    public static int arrayLastIndexOf( double[] array, double doubleToFind, double tolerance ) {
         return arrayLastIndexOf(array, doubleToFind, Integer.MAX_VALUE, tolerance);
     }
 
@@ -3948,7 +3944,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double[] arrayToFind) {
+    public static int arrayLastIndexOf( double[] array, double[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE, 0);
     }
 
@@ -3964,7 +3960,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double[] arrayToFind, double tolerance) {
+    public static int arrayLastIndexOf( double[] array, double[] arrayToFind, double tolerance ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE, tolerance);
     }
 
@@ -3983,7 +3979,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex   起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double doubleToFind, int startIndex) {
+    public static int arrayLastIndexOf( double[] array, double doubleToFind, int startIndex ) {
         return arrayLastIndexOf(array, doubleToFind, startIndex, 0);
     }
 
@@ -4003,7 +3999,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance    误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double doubleToFind, int startIndex, double tolerance) {
+    public static int arrayLastIndexOf( double[] array, double doubleToFind, int startIndex, double tolerance ) {
         if (array == null) {
             return -1;
         }
@@ -4041,7 +4037,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( double[] array, double[] arrayToFind, int startIndex ) {
         return arrayLastIndexOf(array, arrayToFind, startIndex, 0);
     }
 
@@ -4061,7 +4057,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(double[] array, double[] arrayToFind, int startIndex, double tolerance) {
+    public static int arrayLastIndexOf( double[] array, double[] arrayToFind, int startIndex, double tolerance ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -4125,7 +4121,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param doubleToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(double[] array, double doubleToFind) {
+    public static boolean arrayContains( double[] array, double doubleToFind ) {
         return arrayIndexOf(array, doubleToFind) != -1;
     }
 
@@ -4141,7 +4137,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance    误差
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(double[] array, double doubleToFind, double tolerance) {
+    public static boolean arrayContains( double[] array, double doubleToFind, double tolerance ) {
         return arrayIndexOf(array, doubleToFind, tolerance) != -1;
     }
 
@@ -4156,7 +4152,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(double[] array, double[] arrayToFind) {
+    public static boolean arrayContains( double[] array, double[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -4172,7 +4168,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(double[] array, double[] arrayToFind, double tolerance) {
+    public static boolean arrayContains( double[] array, double[] arrayToFind, double tolerance ) {
         return arrayIndexOf(array, arrayToFind, tolerance) != -1;
     }
 
@@ -4193,7 +4189,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param floatToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float floatToFind) {
+    public static int arrayIndexOf( float[] array, float floatToFind ) {
         return arrayIndexOf(array, floatToFind, 0, 0);
     }
 
@@ -4209,7 +4205,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float floatToFind, float tolerance) {
+    public static int arrayIndexOf( float[] array, float floatToFind, float tolerance ) {
         return arrayIndexOf(array, floatToFind, 0, tolerance);
     }
 
@@ -4224,7 +4220,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float[] arrayToFind) {
+    public static int arrayIndexOf( float[] array, float[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0, 0);
     }
 
@@ -4240,7 +4236,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float[] arrayToFind, float tolerance) {
+    public static int arrayIndexOf( float[] array, float[] arrayToFind, float tolerance ) {
         return arrayIndexOf(array, arrayToFind, 0, tolerance);
     }
 
@@ -4259,7 +4255,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float floatToFind, int startIndex) {
+    public static int arrayIndexOf( float[] array, float floatToFind, int startIndex ) {
         return arrayIndexOf(array, floatToFind, startIndex, 0);
     }
 
@@ -4279,7 +4275,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float floatToFind, int startIndex, float tolerance) {
+    public static int arrayIndexOf( float[] array, float floatToFind, int startIndex, float tolerance ) {
         if (array == null) {
             return -1;
         }
@@ -4315,7 +4311,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( float[] array, float[] arrayToFind, int startIndex ) {
         return arrayIndexOf(array, arrayToFind, startIndex, 0);
     }
 
@@ -4335,7 +4331,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(float[] array, float[] arrayToFind, int startIndex, float tolerance) {
+    public static int arrayIndexOf( float[] array, float[] arrayToFind, int startIndex, float tolerance ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -4401,7 +4397,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param floatToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float floatToFind) {
+    public static int arrayLastIndexOf( float[] array, float floatToFind ) {
         return arrayLastIndexOf(array, floatToFind, Integer.MAX_VALUE, 0);
     }
 
@@ -4417,7 +4413,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float floatToFind, float tolerance) {
+    public static int arrayLastIndexOf( float[] array, float floatToFind, float tolerance ) {
         return arrayLastIndexOf(array, floatToFind, Integer.MAX_VALUE, tolerance);
     }
 
@@ -4432,7 +4428,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float[] arrayToFind) {
+    public static int arrayLastIndexOf( float[] array, float[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE, 0);
     }
 
@@ -4448,7 +4444,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float[] arrayToFind, float tolerance) {
+    public static int arrayLastIndexOf( float[] array, float[] arrayToFind, float tolerance ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE, tolerance);
     }
 
@@ -4467,7 +4463,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float floatToFind, int startIndex) {
+    public static int arrayLastIndexOf( float[] array, float floatToFind, int startIndex ) {
         return arrayLastIndexOf(array, floatToFind, startIndex, 0);
     }
 
@@ -4487,7 +4483,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float floatToFind, int startIndex, float tolerance) {
+    public static int arrayLastIndexOf( float[] array, float floatToFind, int startIndex, float tolerance ) {
         if (array == null) {
             return -1;
         }
@@ -4525,7 +4521,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( float[] array, float[] arrayToFind, int startIndex ) {
         return arrayLastIndexOf(array, arrayToFind, startIndex, 0);
     }
 
@@ -4545,7 +4541,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(float[] array, float[] arrayToFind, int startIndex, float tolerance) {
+    public static int arrayLastIndexOf( float[] array, float[] arrayToFind, int startIndex, float tolerance ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -4609,7 +4605,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param floatToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(float[] array, float floatToFind) {
+    public static boolean arrayContains( float[] array, float floatToFind ) {
         return arrayIndexOf(array, floatToFind) != -1;
     }
 
@@ -4625,7 +4621,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(float[] array, float floatToFind, float tolerance) {
+    public static boolean arrayContains( float[] array, float floatToFind, float tolerance ) {
         return arrayIndexOf(array, floatToFind, tolerance) != -1;
     }
 
@@ -4640,7 +4636,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(float[] array, float[] arrayToFind) {
+    public static boolean arrayContains( float[] array, float[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -4656,7 +4652,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param tolerance   误差
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(float[] array, float[] arrayToFind, float tolerance) {
+    public static boolean arrayContains( float[] array, float[] arrayToFind, float tolerance ) {
         return arrayIndexOf(array, arrayToFind, tolerance) != -1;
     }
 
@@ -4677,7 +4673,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param booleanToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(boolean[] array, boolean booleanToFind) {
+    public static int arrayIndexOf( boolean[] array, boolean booleanToFind ) {
         return arrayIndexOf(array, booleanToFind, 0);
     }
 
@@ -4692,7 +4688,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(boolean[] array, boolean[] arrayToFind) {
+    public static int arrayIndexOf( boolean[] array, boolean[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -4711,7 +4707,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex    起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(boolean[] array, boolean booleanToFind, int startIndex) {
+    public static int arrayIndexOf( boolean[] array, boolean booleanToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -4744,7 +4740,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(boolean[] array, boolean[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( boolean[] array, boolean[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -4809,7 +4805,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param booleanToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(boolean[] array, boolean booleanToFind) {
+    public static int arrayLastIndexOf( boolean[] array, boolean booleanToFind ) {
         return arrayLastIndexOf(array, booleanToFind, Integer.MAX_VALUE);
     }
 
@@ -4824,7 +4820,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(boolean[] array, boolean[] arrayToFind) {
+    public static int arrayLastIndexOf( boolean[] array, boolean[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -4843,7 +4839,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex    起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(boolean[] array, boolean booleanToFind, int startIndex) {
+    public static int arrayLastIndexOf( boolean[] array, boolean booleanToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -4878,7 +4874,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(boolean[] array, boolean[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( boolean[] array, boolean[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -4941,7 +4937,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param booleanToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(boolean[] array, boolean booleanToFind) {
+    public static boolean arrayContains( boolean[] array, boolean booleanToFind ) {
         return arrayIndexOf(array, booleanToFind) != -1;
     }
 
@@ -4956,7 +4952,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(boolean[] array, boolean[] arrayToFind) {
+    public static boolean arrayContains( boolean[] array, boolean[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
@@ -4977,7 +4973,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param charToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(char[] array, char charToFind) {
+    public static int arrayIndexOf( char[] array, char charToFind ) {
         return arrayIndexOf(array, charToFind, 0);
     }
 
@@ -4992,7 +4988,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(char[] array, char[] arrayToFind) {
+    public static int arrayIndexOf( char[] array, char[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind, 0);
     }
 
@@ -5011,7 +5007,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(char[] array, char charToFind, int startIndex) {
+    public static int arrayIndexOf( char[] array, char charToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -5044,7 +5040,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayIndexOf(char[] array, char[] arrayToFind, int startIndex) {
+    public static int arrayIndexOf( char[] array, char[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -5109,7 +5105,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param charToFind 要查找的元素
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(char[] array, char charToFind) {
+    public static int arrayLastIndexOf( char[] array, char charToFind ) {
         return arrayLastIndexOf(array, charToFind, Integer.MAX_VALUE);
     }
 
@@ -5124,7 +5120,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(char[] array, char[] arrayToFind) {
+    public static int arrayLastIndexOf( char[] array, char[] arrayToFind ) {
         return arrayLastIndexOf(array, arrayToFind, Integer.MAX_VALUE);
     }
 
@@ -5143,7 +5139,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex 起始索引
      * @return 该元素在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(char[] array, char charToFind, int startIndex) {
+    public static int arrayLastIndexOf( char[] array, char charToFind, int startIndex ) {
         if (array == null) {
             return -1;
         }
@@ -5178,7 +5174,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param startIndex  起始索引
      * @return 该元素序列在数组中的序号，如果数组为<code>null</code>或未找到，则返回<code>-1</code>。
      */
-    public static int arrayLastIndexOf(char[] array, char[] arrayToFind, int startIndex) {
+    public static int arrayLastIndexOf( char[] array, char[] arrayToFind, int startIndex ) {
         if (array == null || arrayToFind == null) {
             return -1;
         }
@@ -5241,7 +5237,7 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param charToFind 要查找的元素
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(char[] array, char charToFind) {
+    public static boolean arrayContains( char[] array, char charToFind ) {
         return arrayIndexOf(array, charToFind) != -1;
     }
 
@@ -5256,17 +5252,18 @@ public class ArrayUtil extends PrimitiveArrayUtil {
      * @param arrayToFind 要查找的元素序列
      * @return 如果找到则返回<code>true</code>
      */
-    public static boolean arrayContains(char[] array, char[] arrayToFind) {
+    public static boolean arrayContains( char[] array, char[] arrayToFind ) {
         return arrayIndexOf(array, arrayToFind) != -1;
     }
 
     /**
      * 将一个对象转为 Object[] 对象数组
-     * @param value  对象
+     *
+     * @param value 对象
      * @return 对象数组
      */
     @SuppressWarnings("unchecked")
-    public static Object[] toArray(Object value) {
+    public static Object[] toArray( Object value ) {
         if (value == null) {
             return EMPTY_ARRAY;
         }

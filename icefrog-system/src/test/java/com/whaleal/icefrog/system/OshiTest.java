@@ -11,21 +11,21 @@ import oshi.software.os.OSProcess;
  */
 public class OshiTest {
 
-	@Test
-	public void getMemoryTest() {
-		long total = OshiUtil.getMemory().getTotal();
-		Assert.assertTrue(total > 0);
-	}
+    @Test
+    public void getMemoryTest() {
+        long total = OshiUtil.getMemory().getTotal();
+        Assert.assertTrue(total > 0);
+    }
 
-	@Test
-	public void getCupInfo() {
-		CpuInfo cpuInfo = OshiUtil.getCpuInfo();
-		Assert.assertNotNull(cpuInfo);
-	}
+    @Test
+    public void getCupInfo() {
+        CpuInfo cpuInfo = OshiUtil.getCpuInfo();
+        Assert.assertNotNull(cpuInfo);
+    }
 
-	@Test
-	public void getCurrentProcessTest() {
-		final OSProcess currentProcess = OshiUtil.getCurrentProcess();
-		Assert.assertEquals("java", currentProcess.getName());
-	}
+    @Test
+    public void getCurrentProcessTest() {
+        final OSProcess currentProcess = OshiUtil.getCurrentProcess();
+        Assert.assertEquals("java", currentProcess.getName());
+    }
 }

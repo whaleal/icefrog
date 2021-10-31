@@ -5,41 +5,41 @@ import org.junit.Test;
 
 public class LazyFunLoaderTest {
 
-	static class BigObject {
+    @Test
+    public void test1() {
 
-		private boolean isDestroy = false;
+        LazyFunLoader<BigObject> loader = new LazyFunLoader<>(BigObject::new);
 
-		public void destroy() {
-			this.isDestroy = true;
-		}
-	}
+        Assert.assertNotNull(loader.get());
+        Assert.assertTrue(loader.isInitialize());
 
-	@Test
-	public void test1() {
+        // 对于某些对象，在程序关闭时，需要进行销毁操作
+        loader.ifInitialized(BigObject::destroy);
 
-		LazyFunLoader<BigObject> loader = new LazyFunLoader<>(BigObject::new);
+        Assert.assertTrue(loader.get().isDestroy);
+    }
 
-		Assert.assertNotNull(loader.get());
-		Assert.assertTrue(loader.isInitialize());
+    @Test
+    public void test2() {
 
-		// 对于某些对象，在程序关闭时，需要进行销毁操作
-		loader.ifInitialized(BigObject::destroy);
+        LazyFunLoader<BigObject> loader = new LazyFunLoader<>(BigObject::new);
 
-		Assert.assertTrue(loader.get().isDestroy);
-	}
+        // 若从未使用，则可以避免不必要的初始化
+        loader.ifInitialized(it -> {
 
-	@Test
-	public void test2() {
+            Assert.fail();
+            it.destroy();
+        });
 
-		LazyFunLoader<BigObject> loader = new LazyFunLoader<>(BigObject::new);
+        Assert.assertFalse(loader.isInitialize());
+    }
 
-		// 若从未使用，则可以避免不必要的初始化
-		loader.ifInitialized(it -> {
+    static class BigObject {
 
-			Assert.fail();
-			it.destroy();
-		});
+        private boolean isDestroy = false;
 
-		Assert.assertFalse(loader.isInitialize());
-	}
+        public void destroy() {
+            this.isDestroy = true;
+        }
+    }
 }

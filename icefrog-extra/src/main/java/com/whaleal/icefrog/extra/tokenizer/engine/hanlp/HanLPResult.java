@@ -1,12 +1,11 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.hanlp;
 
-import java.util.Iterator;
-import java.util.List;
-
 import com.hankcs.hanlp.seg.common.Term;
-
 import com.whaleal.icefrog.extra.tokenizer.Result;
 import com.whaleal.icefrog.extra.tokenizer.Word;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * HanLP分词结果实现<br>
@@ -14,35 +13,34 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
  *
  * @author Looly
  * @author wh
- *
  */
 public class HanLPResult implements Result {
 
-	Iterator<Term> result;
+    Iterator<Term> result;
 
-	public HanLPResult(List<Term> termList) {
-		this.result = termList.iterator();
-	}
+    public HanLPResult( List<Term> termList ) {
+        this.result = termList.iterator();
+    }
 
-	@Override
-	public boolean hasNext() {
-		return result.hasNext();
-	}
+    @Override
+    public boolean hasNext() {
+        return result.hasNext();
+    }
 
-	@Override
-	public Word next() {
-		return new HanLPWord(result.next());
-	}
+    @Override
+    public Word next() {
+        return new HanLPWord(result.next());
+    }
 
-	@Override
-	public void remove() {
-		result.remove();
-	}
+    @Override
+    public void remove() {
+        result.remove();
+    }
 
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
+    @Override
+    public Iterator<Word> iterator() {
+        return this;
+    }
 
 
 }

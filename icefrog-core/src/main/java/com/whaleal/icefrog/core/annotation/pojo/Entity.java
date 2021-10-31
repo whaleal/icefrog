@@ -1,4 +1,3 @@
-
 package com.whaleal.icefrog.core.annotation.pojo;
 
 
@@ -9,7 +8,6 @@ import java.lang.annotation.*;
  * 主要用于修改相关表名
  *
  * @author wh
- *
  */
 @Documented
 @Inherited

@@ -12,19 +12,19 @@ import com.whaleal.icefrog.core.util.ReflectUtil;
  */
 public class ObjectGenerator<T> implements Generator<T> {
 
-	private final Class<T> clazz;
+    private final Class<T> clazz;
 
-	/**
-	 * 构造
-	 *
-	 * @param clazz 对象类型
-	 */
-	public ObjectGenerator(Class<T> clazz) {
-		this.clazz = clazz;
-	}
+    /**
+     * 构造
+     *
+     * @param clazz 对象类型
+     */
+    public ObjectGenerator( Class<T> clazz ) {
+        this.clazz = clazz;
+    }
 
-	@Override
-	public T next() {
-		return ReflectUtil.newInstanceIfPossible(this.clazz);
-	}
+    @Override
+    public T next() {
+        return ReflectUtil.newInstanceIfPossible(this.clazz);
+    }
 }

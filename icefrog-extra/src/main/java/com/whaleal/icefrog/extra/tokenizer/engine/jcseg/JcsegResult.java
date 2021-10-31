@@ -16,57 +16,57 @@ import java.util.NoSuchElementException;
  *
  * @author Looly
  * @author wh
- *
  */
-public class JcsegResult implements Result{
+public class JcsegResult implements Result {
 
-	private final ISegment result;
-	private Word cachedWord;
+    private final ISegment result;
+    private Word cachedWord;
 
-	/**
-	 * 构造
-	 * @param segment 分词结果
-	 */
-	public JcsegResult(ISegment segment) {
-		this.result = segment;
-	}
+    /**
+     * 构造
+     *
+     * @param segment 分词结果
+     */
+    public JcsegResult( ISegment segment ) {
+        this.result = segment;
+    }
 
-	@Override
-	public boolean hasNext() {
-		if (this.cachedWord != null) {
-			return true;
-		}
-		IWord next;
-		try {
-			next = this.result.next();
-		} catch (IOException e) {
-			throw new TokenizerException(e);
-		}
-		if(null != next) {
-			this.cachedWord = new JcsegWord(next);
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean hasNext() {
+        if (this.cachedWord != null) {
+            return true;
+        }
+        IWord next;
+        try {
+            next = this.result.next();
+        } catch (IOException e) {
+            throw new TokenizerException(e);
+        }
+        if (null != next) {
+            this.cachedWord = new JcsegWord(next);
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public Word next() {
-		if (false == hasNext()) {
-			throw new NoSuchElementException("No more word !");
-		}
-		final Word currentWord = this.cachedWord;
-		this.cachedWord = null;
-		return currentWord;
-	}
+    @Override
+    public Word next() {
+        if (false == hasNext()) {
+            throw new NoSuchElementException("No more word !");
+        }
+        final Word currentWord = this.cachedWord;
+        this.cachedWord = null;
+        return currentWord;
+    }
 
-	@Override
-	public void remove() {
-		throw new UnsupportedOperationException("Jcseg result not allow to remove !");
-	}
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Jcseg result not allow to remove !");
+    }
 
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
+    @Override
+    public Iterator<Word> iterator() {
+        return this;
+    }
 
 }

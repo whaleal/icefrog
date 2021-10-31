@@ -8,6 +8,5 @@
  *
  * @author Looly
  * @author wh
- *
  */
 package com.whaleal.icefrog.cron.timingwheel;

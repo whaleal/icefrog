@@ -4,22 +4,11 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.util.PredicateUtil;
-
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NavigableSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.SortedSet;
-
 import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 import junit.framework.TestCase;
 
-import static org.junit.Assert.assertThat;
+import java.util.*;
 
 /**
  * Tests for filtered collection views.

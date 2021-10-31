@@ -18,54 +18,54 @@ import java.nio.charset.Charset;
  * @since 1.0.0
  */
 public class BytesResource implements Resource, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final byte[] bytes;
-	private final String name;
+    private final byte[] bytes;
+    private final String name;
 
-	/**
-	 * 构造
-	 *
-	 * @param bytes 字节数组
-	 */
-	public BytesResource(byte[] bytes) {
-		this(bytes, null);
-	}
+    /**
+     * 构造
+     *
+     * @param bytes 字节数组
+     */
+    public BytesResource( byte[] bytes ) {
+        this(bytes, null);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param bytes 字节数组
-	 * @param name 资源名称
-	 */
-	public BytesResource(byte[] bytes, String name) {
-		this.bytes = bytes;
-		this.name = name;
-	}
+    /**
+     * 构造
+     *
+     * @param bytes 字节数组
+     * @param name  资源名称
+     */
+    public BytesResource( byte[] bytes, String name ) {
+        this.bytes = bytes;
+        this.name = name;
+    }
 
-	@Override
-	public String getName() {
-		return this.name;
-	}
+    @Override
+    public String getName() {
+        return this.name;
+    }
 
-	@Override
-	public URL getUrl() {
-		return null;
-	}
+    @Override
+    public URL getUrl() {
+        return null;
+    }
 
-	@Override
-	public InputStream getStream() {
-		return new ByteArrayInputStream(this.bytes);
-	}
+    @Override
+    public InputStream getStream() {
+        return new ByteArrayInputStream(this.bytes);
+    }
 
-	@Override
-	public String readStr(Charset charset) throws IORuntimeException {
-		return StrUtil.str(this.bytes, charset);
-	}
+    @Override
+    public String readStr( Charset charset ) throws IORuntimeException {
+        return StrUtil.str(this.bytes, charset);
+    }
 
-	@Override
-	public byte[] readBytes() throws IORuntimeException {
-		return this.bytes;
-	}
+    @Override
+    public byte[] readBytes() throws IORuntimeException {
+        return this.bytes;
+    }
 
 }

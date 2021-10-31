@@ -3,10 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
-
-
 import com.whaleal.icefrog.collections.Table.Cell;
-import com.whaleal.icefrog.collections.*;
 
 /**  */
 

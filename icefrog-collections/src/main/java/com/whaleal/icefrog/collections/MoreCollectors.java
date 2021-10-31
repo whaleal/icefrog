@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;

@@ -10,31 +10,30 @@ import java.io.Serializable;
  *
  * @author Looly
  * @author wh
- *
  * @since 1.0.0
  */
 @FunctionalInterface
 public interface VoidFunc1<P> extends Serializable {
 
-	/**
-	 * 执行函数
-	 *
-	 * @param parameter 参数
-	 * @throws Exception 自定义异常
-	 */
-	void apply(P parameter) throws Exception;
+    /**
+     * 执行函数
+     *
+     * @param parameter 参数
+     * @throws Exception 自定义异常
+     */
+    void apply( P parameter ) throws Exception;
 
-	/**
-	 * 执行函数，异常包装为RuntimeException
-	 *
-	 * @param parameter 参数
-	 * @since 1.0.0
-	 */
-	default void applyWithRuntimeException(P parameter){
-		try {
-			apply(parameter);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    /**
+     * 执行函数，异常包装为RuntimeException
+     *
+     * @param parameter 参数
+     * @since 1.0.0
+     */
+    default void applyWithRuntimeException( P parameter ) {
+        try {
+            apply(parameter);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

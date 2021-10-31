@@ -4,7 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.InvalidObjectException;

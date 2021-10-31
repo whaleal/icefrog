@@ -1,12 +1,10 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.IterUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;

@@ -3,26 +3,21 @@
 package com.whaleal.icefrog.collections;
 
 
-import static com.whaleal.icefrog.collections.Lists.transform;
-import static com.whaleal.icefrog.collections.Sets.difference;
-import static java.lang.reflect.Modifier.isPublic;
-import static java.lang.reflect.Modifier.isStatic;
-
-
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Function;
-
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import junit.framework.TestCase;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.util.*;
+import java.util.function.Function;
+
+import static com.whaleal.icefrog.collections.Lists.transform;
+import static com.whaleal.icefrog.collections.Sets.difference;
+import static java.lang.reflect.Modifier.isPublic;
+import static java.lang.reflect.Modifier.isStatic;
 
 /**
  * Tests that all {@code public static} methods "inherited" from superclasses are "overridden" in

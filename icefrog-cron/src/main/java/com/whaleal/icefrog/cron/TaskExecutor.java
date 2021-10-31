@@ -13,49 +13,49 @@ import com.whaleal.icefrog.cron.task.Task;
  */
 public class TaskExecutor implements Runnable {
 
-	private final Scheduler scheduler;
-	private final CronTask task;
+    private final Scheduler scheduler;
+    private final CronTask task;
 
-	/**
-	 * 获得原始任务对象
-	 *
-	 * @return 任务对象
-	 */
-	public Task getTask() {
-		return this.task.getRaw();
-	}
+    /**
+     * 构造
+     *
+     * @param scheduler 调度器
+     * @param task      被执行的任务
+     */
+    public TaskExecutor( Scheduler scheduler, CronTask task ) {
+        this.scheduler = scheduler;
+        this.task = task;
+    }
 
-	/**
-	 * 获得原始任务对象
-	 *
-	 * @return 任务对象
-	 * @since 1.0.0
-	 */
-	public CronTask getCronTask() {
-		return this.task;
-	}
+    /**
+     * 获得原始任务对象
+     *
+     * @return 任务对象
+     */
+    public Task getTask() {
+        return this.task.getRaw();
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param scheduler 调度器
-	 * @param task 被执行的任务
-	 */
-	public TaskExecutor(Scheduler scheduler, CronTask task) {
-		this.scheduler = scheduler;
-		this.task = task;
-	}
+    /**
+     * 获得原始任务对象
+     *
+     * @return 任务对象
+     * @since 1.0.0
+     */
+    public CronTask getCronTask() {
+        return this.task;
+    }
 
-	@Override
-	public void run() {
-		try {
-			scheduler.listenerManager.notifyTaskStart(this);
-			task.execute();
-			scheduler.listenerManager.notifyTaskSucceeded(this);
-		} catch (Exception e) {
-			scheduler.listenerManager.notifyTaskFailed(this, e);
-		} finally {
-			scheduler.taskExecutorManager.notifyExecutorCompleted(this);
-		}
-	}
+    @Override
+    public void run() {
+        try {
+            scheduler.listenerManager.notifyTaskStart(this);
+            task.execute();
+            scheduler.listenerManager.notifyTaskSucceeded(this);
+        } catch (Exception e) {
+            scheduler.listenerManager.notifyTaskFailed(this, e);
+        } finally {
+            scheduler.taskExecutorManager.notifyExecutorCompleted(this);
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.mynlp;
 
 import com.mayabot.nlp.segment.WordTerm;
-
 import com.whaleal.icefrog.extra.tokenizer.Word;
 
 /**
@@ -11,36 +10,36 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
  * @author wh
  */
 public class MynlpWord implements Word {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final WordTerm word;
+    private final WordTerm word;
 
-	/**
-	 * 构造
-	 *
-	 * @param word {@link WordTerm}
-	 */
-	public MynlpWord(WordTerm word) {
-		this.word = word;
-	}
+    /**
+     * 构造
+     *
+     * @param word {@link WordTerm}
+     */
+    public MynlpWord( WordTerm word ) {
+        this.word = word;
+    }
 
-	@Override
-	public String getText() {
-		return word.getWord();
-	}
+    @Override
+    public String getText() {
+        return word.getWord();
+    }
 
-	@Override
-	public int getStartOffset() {
-		return this.word.offset;
-	}
+    @Override
+    public int getStartOffset() {
+        return this.word.offset;
+    }
 
-	@Override
-	public int getEndOffset() {
-		return getStartOffset() + word.word.length();
-	}
+    @Override
+    public int getEndOffset() {
+        return getStartOffset() + word.word.length();
+    }
 
-	@Override
-	public String toString() {
-		return getText();
-	}
+    @Override
+    public String toString() {
+        return getText();
+    }
 }

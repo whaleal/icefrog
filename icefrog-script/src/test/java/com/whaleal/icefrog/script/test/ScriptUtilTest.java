@@ -15,46 +15,45 @@ import javax.script.ScriptException;
  *
  * @author Looly
  * @author wh
- *
  */
 public class ScriptUtilTest {
 
-	@Test
-	public void compileTest() {
-		CompiledScript script = ScriptUtil.compile("print('Script test!');");
-		try {
-			script.eval();
-		} catch (ScriptException e) {
-			throw new ScriptRuntimeException(e);
-		}
-	}
+    @Test
+    public void compileTest() {
+        CompiledScript script = ScriptUtil.compile("print('Script test!');");
+        try {
+            script.eval();
+        } catch (ScriptException e) {
+            throw new ScriptRuntimeException(e);
+        }
+    }
 
-	@Test
-	public void evalTest() {
-		ScriptUtil.eval("print('Script test!');");
-	}
+    @Test
+    public void evalTest() {
+        ScriptUtil.eval("print('Script test!');");
+    }
 
-	@Test
-	public void invokeTest() {
-		final Object result = ScriptUtil.invoke(ResourceUtil.readUtf8Str("filter1.js"), "filter1", 2, 1);
-		Assert.assertTrue((Boolean) result);
-	}
+    @Test
+    public void invokeTest() {
+        final Object result = ScriptUtil.invoke(ResourceUtil.readUtf8Str("filter1.js"), "filter1", 2, 1);
+        Assert.assertTrue((Boolean) result);
+    }
 
-	@Test
-	public void pythonTest() throws ScriptException {
-		final ScriptEngine pythonEngine = ScriptUtil.getPythonEngine();
-		pythonEngine.eval("print('Hello Python')");
-	}
+    @Test
+    public void pythonTest() throws ScriptException {
+        final ScriptEngine pythonEngine = ScriptUtil.getPythonEngine();
+        pythonEngine.eval("print('Hello Python')");
+    }
 
-	@Test
-	public void luaTest() throws ScriptException {
-		final ScriptEngine engine = ScriptUtil.getLuaEngine();
-		engine.eval("print('Hello Lua')");
-	}
+    @Test
+    public void luaTest() throws ScriptException {
+        final ScriptEngine engine = ScriptUtil.getLuaEngine();
+        engine.eval("print('Hello Lua')");
+    }
 
-	@Test
-	public void groovyTest() throws ScriptException {
-		final ScriptEngine engine = ScriptUtil.getGroovyEngine();
-		engine.eval("println 'Hello Groovy'");
-	}
+    @Test
+    public void groovyTest() throws ScriptException {
+        final ScriptEngine engine = ScriptUtil.getGroovyEngine();
+        engine.eval("println 'Hello Groovy'");
+    }
 }

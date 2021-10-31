@@ -5,18 +5,17 @@ package com.whaleal.icefrog.http.useragent;
  *
  * @author Looly
  * @author wh
- *
  */
 public class UserAgentUtil {
 
-	/**
-	 * 解析User-Agent
-	 *
-	 * @param userAgentString User-Agent字符串
-	 * @return {@link UserAgent}
-	 */
-	public static UserAgent parse(String userAgentString) {
-		return UserAgentParser.parse(userAgentString);
-	}
+    /**
+     * 解析User-Agent
+     *
+     * @param userAgentString User-Agent字符串
+     * @return {@link UserAgent}
+     */
+    public static UserAgent parse( String userAgentString ) {
+        return UserAgentParser.parse(userAgentString);
+    }
 
 }

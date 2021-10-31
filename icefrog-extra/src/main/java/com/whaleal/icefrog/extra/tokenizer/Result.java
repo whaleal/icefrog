@@ -8,8 +8,7 @@ import java.util.Iterator;
  *
  * @author Looly
  * @author wh
- *
  */
-public interface Result extends Iterator<Word>, Iterable<Word>{
+public interface Result extends Iterator<Word>, Iterable<Word> {
 
 }

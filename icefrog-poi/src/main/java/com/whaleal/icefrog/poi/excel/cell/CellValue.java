@@ -10,10 +10,10 @@ package com.whaleal.icefrog.poi.excel.cell;
  */
 public interface CellValue<T> {
 
-	/**
-	 * 获取单元格值
-	 *
-	 * @return 值
-	 */
-	T getValue();
+    /**
+     * 获取单元格值
+     *
+     * @return 值
+     */
+    T getValue();
 }

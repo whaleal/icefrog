@@ -3,19 +3,10 @@
 package com.whaleal.icefrog.collections;
 
 
-
-
-
-
+import junit.framework.TestCase;
 
 import java.util.Collection;
 import java.util.Queue;
-
-import com.whaleal.icefrog.collections.ForwardingQueue;
-import com.whaleal.icefrog.collections.Lists;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests for {@code ForwardingQueue}.

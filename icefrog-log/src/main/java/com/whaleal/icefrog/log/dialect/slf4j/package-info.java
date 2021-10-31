@@ -3,6 +3,5 @@
  *
  * @author Looly
  * @author wh
- *
  */
 package com.whaleal.icefrog.log.dialect.slf4j;

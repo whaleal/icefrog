@@ -10,11 +10,11 @@ package com.whaleal.icefrog.core.lang.hash;
  */
 @FunctionalInterface
 public interface Hash32<T> {
-	/**
-	 * 计算Hash值
-	 *
-	 * @param t 对象
-	 * @return hash
-	 */
-	int hash32(T t);
+    /**
+     * 计算Hash值
+     *
+     * @param t 对象
+     * @return hash
+     */
+    int hash32( T t );
 }

@@ -2,30 +2,13 @@
 
 package com.whaleal.icefrog.collections;
 
-import static java.util.Arrays.asList;
-
-
-
-
-
-
-
-
-
-
-
+import junit.framework.TestCase;
 
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Set;
 
-import com.whaleal.icefrog.collections.EnumMultiset;
-import com.whaleal.icefrog.collections.ImmutableList;
-import com.whaleal.icefrog.collections.Multiset;
-import com.whaleal.icefrog.collections.Sets;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static java.util.Arrays.asList;
 
 /**
  * Tests for an {@link EnumMultiset}.

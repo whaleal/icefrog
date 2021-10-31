@@ -20,21 +20,27 @@ import java.util.regex.Pattern;
  */
 public class EmojiFactory {
 
+    private static final Pattern ALIAS_CANDIDATE_PATTERN = Pattern.compile("(?<=:)\\+?(\\w|\\||\\-)+(?=:)");
     private static List<Emoji> ALL_EMOJIS = null;                   // all emoji
     private static EmojiTrie EMOJI_TRIE = null;                     // tree trie
-
     private static Map<String, Emoji> EMOJIS_BY_ALIAS = null;       // alias-emoji, N:1
     private static Map<String, Set<Emoji>> EMOJIS_BY_TAG = null;    // tag-emoji, N:1
-
     private static EmojiDataLoader emojiLoader = new LocalEmojiDataLoader();
 
-    public static void setEmojiLoader(EmojiDataLoader emojiLoader) {
+    static {
+        loadEmoji();
+    }
+
+    public static void setEmojiLoader( EmojiDataLoader emojiLoader ) {
         EmojiFactory.emojiLoader = emojiLoader;
     }
 
-    public static void loadEmoji(){
+
+    // ---------------------- get unicode/alias emoji util ----------------------
+
+    public static void loadEmoji() {
         List<Emoji> emojis = emojiLoader.loadEmojiData();
-        if (emojis==null || emojis.size()==0) {
+        if (emojis == null || emojis.size() == 0) {
             throw new EmojiException("emoji loader fail");
         }
 
@@ -58,21 +64,14 @@ public class EmojiFactory {
 
     }
 
-    static {
-        loadEmoji();
-    }
-
-
-    // ---------------------- get unicode/alias emoji util ----------------------
-
-    public static Emoji getForAlias(String alias) {
+    public static Emoji getForAlias( String alias ) {
         if (alias == null) {
             return null;
         }
         return EMOJIS_BY_ALIAS.get(trimAlias(alias));
     }
 
-    private static String trimAlias(String alias) {
+    private static String trimAlias( String alias ) {
         String result = alias;
         if (result.startsWith(":")) {
             result = result.substring(1, result.length());
@@ -83,7 +82,7 @@ public class EmojiFactory {
         return result;
     }
 
-    public static Set<Emoji> getForTag(String tag) {
+    public static Set<Emoji> getForTag( String tag ) {
         if (tag == null) {
             return null;
         }
@@ -94,21 +93,19 @@ public class EmojiFactory {
         return EMOJIS_BY_TAG.keySet();
     }
 
-    public static Emoji getByUnicode(String unicode) {
+    public static Emoji getByUnicode( String unicode ) {
         if (unicode == null) {
             return null;
         }
         return EMOJI_TRIE.getEmoji(unicode);
     }
 
-    public static List<Emoji> getAll() {
-        return ALL_EMOJIS;
-    }
-
 
     // ------------------------ find unicode/alias emoji util ------------------------
 
-    private static final Pattern ALIAS_CANDIDATE_PATTERN = Pattern.compile("(?<=:)\\+?(\\w|\\||\\-)+(?=:)");
+    public static List<Emoji> getAll() {
+        return ALL_EMOJIS;
+    }
 
     /**
      * find AliasCandidate (alias) for each emoji alias
@@ -116,7 +113,7 @@ public class EmojiFactory {
      * @param input input
      * @return return
      */
-    public static List<AliasCandidate> getAliasCandidates(String input) {
+    public static List<AliasCandidate> getAliasCandidates( String input ) {
         List<AliasCandidate> candidates = new ArrayList<AliasCandidate>();
 
         Matcher matcher = ALIAS_CANDIDATE_PATTERN.matcher(input);
@@ -139,13 +136,13 @@ public class EmojiFactory {
 
     /**
      * find UnicodeCandidate (unicode) for each unicode emoji, include Fitzpatrick modifier if follwing emoji.
-     *
-     *      Finally, it contains start and end index of unicode emoji itself (WITHOUT Fitzpatrick modifier whether it is there or not!).
+     * <p>
+     * Finally, it contains start and end index of unicode emoji itself (WITHOUT Fitzpatrick modifier whether it is there or not!).
      *
      * @param input input
      * @return return
      */
-    public static List<UnicodeCandidate> getUnicodeCandidates(String input) {
+    public static List<UnicodeCandidate> getUnicodeCandidates( String input ) {
         char[] inputCharArray = input.toCharArray();
         List<UnicodeCandidate> candidates = new ArrayList<UnicodeCandidate>();
         UnicodeCandidate next;
@@ -163,7 +160,7 @@ public class EmojiFactory {
      * @param start start
      * @return return
      */
-    protected static UnicodeCandidate getNextUnicodeCandidate(char[] chars, int start) {
+    protected static UnicodeCandidate getNextUnicodeCandidate( char[] chars, int start ) {
         for (int i = start; i < chars.length; i++) {
             int emojiEnd = getFirstEmojiEndPos(chars, i);
 
@@ -179,14 +176,14 @@ public class EmojiFactory {
 
     /**
      * find end index of first unicode emoji, starting at index startPos, -1 if not found
-     *
+     * <p>
      * match the longest matching emoji, when emoji contain others
      *
-     * @param text start
+     * @param text     start
      * @param startPos startPos
      * @return return
      */
-    protected static int getFirstEmojiEndPos(char[] text, int startPos) {
+    protected static int getFirstEmojiEndPos( char[] text, int startPos ) {
         int best = -1;
         for (int j = startPos + 1; j <= text.length; j++) {
             EmojiTrie.Matches status = EMOJI_TRIE.isEmoji(Arrays.copyOfRange(text, startPos, j));

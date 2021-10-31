@@ -24,8 +24,8 @@ import java.util.Set;
 
 /**
  * <p>
- *     秋千水，竹马道，一眼见你，万物不及。<br>
- *     春水生，春林初胜，春风十里不如你。
+ * 秋千水，竹马道，一眼见你，万物不及。<br>
+ * 春水生，春林初胜，春风十里不如你。
  * </p>
  *
  * <p>
@@ -43,31 +43,31 @@ import java.util.Set;
  */
 public class IceFrogTool {
 
-	public static final String AUTHOR = "wh";
+    public static final String AUTHOR = "wh";
 
-	private IceFrogTool() {
-	}
+    private IceFrogTool() {
+    }
 
-	/**
-	 * 显示icefrog所有的工具类
-	 *
-	 * @return 工具类名集合
-	 * @since 1.0.0
-	 */
-	public static Set<Class<?>> getAllUtils() {
-		return ClassUtil.scanPackage("com.whaleal.icefrog",
-				(clazz) -> (false == clazz.isInterface()) && StrUtil.endWith(clazz.getSimpleName(), "Util"));
-	}
+    /**
+     * 显示icefrog所有的工具类
+     *
+     * @return 工具类名集合
+     * @since 1.0.0
+     */
+    public static Set<Class<?>> getAllUtils() {
+        return ClassUtil.scanPackage("com.whaleal.icefrog",
+                ( clazz ) -> (false == clazz.isInterface()) && StrUtil.endWith(clazz.getSimpleName(), "Util"));
+    }
 
-	/**
-	 * 控制台打印所有工具类
-	 */
-	public static void printAllUtils() {
-		final Set<Class<?>> allUtils = getAllUtils();
-		final ConsoleTable consoleTable = ConsoleTable.create().addHeader("工具类名", "所在包");
-		for (Class<?> clazz : allUtils) {
-			consoleTable.addBody(clazz.getSimpleName(), clazz.getPackage().getName());
-		}
-		consoleTable.print();
-	}
+    /**
+     * 控制台打印所有工具类
+     */
+    public static void printAllUtils() {
+        final Set<Class<?>> allUtils = getAllUtils();
+        final ConsoleTable consoleTable = ConsoleTable.create().addHeader("工具类名", "所在包");
+        for (Class<?> clazz : allUtils) {
+            consoleTable.addBody(clazz.getSimpleName(), clazz.getPackage().getName());
+        }
+        consoleTable.print();
+    }
 }

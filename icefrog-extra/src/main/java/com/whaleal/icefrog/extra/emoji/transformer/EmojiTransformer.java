@@ -12,10 +12,10 @@ import com.whaleal.icefrog.extra.emoji.model.UnicodeCandidate;
 public interface EmojiTransformer {
 
     /**
-     * @param unicodeCandidate unicodeCandidate
-     * @param fitzpatrickAction     the action to apply for the fitzpatrick modifiers
-     * @return return 
+     * @param unicodeCandidate  unicodeCandidate
+     * @param fitzpatrickAction the action to apply for the fitzpatrick modifiers
+     * @return return
      */
-    public String transform(UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction);
+    public String transform( UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction );
 
 }

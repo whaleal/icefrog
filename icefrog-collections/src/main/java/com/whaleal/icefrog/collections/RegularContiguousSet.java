@@ -3,13 +3,12 @@
 package com.whaleal.icefrog.collections;
 
 
-import static com.whaleal.icefrog.collections.BoundType.CLOSED;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
-
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.Collection;
 
+import static com.whaleal.icefrog.collections.BoundType.CLOSED;
+import static com.whaleal.icefrog.core.lang.Preconditions.*;
 import static java.util.Objects.requireNonNull;
 
 /**

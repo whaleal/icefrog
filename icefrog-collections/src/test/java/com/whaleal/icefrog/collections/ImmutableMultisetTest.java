@@ -3,24 +3,14 @@
 package com.whaleal.icefrog.collections;
 
 
-import static java.util.Arrays.asList;
+import junit.framework.TestCase;
 
-
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
-import java.util.function.BiPredicate;
-import java.util.stream.Collector;
 
-import com.whaleal.icefrog.collections.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static java.util.Arrays.asList;
 
 /**
  * Tests for {@link ImmutableMultiset}.

@@ -1,13 +1,7 @@
-
-
 package com.whaleal.icefrog.core.annotation;
 
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * The class to which this annotation is applied is not thread-safe. This annotation primarily exists for clarifying the non-thread-safety

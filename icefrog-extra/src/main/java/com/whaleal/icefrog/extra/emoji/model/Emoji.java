@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.extra.emoji.model;
 
 
-
 import com.whaleal.icefrog.extra.emoji.exception.EmojiException;
 import com.whaleal.icefrog.extra.emoji.fitzpatrick.Fitzpatrick;
 
@@ -24,10 +23,10 @@ public class Emoji {
     private final String htmlHex;
 
 
-    public Emoji(String unicode,
-                 List<String> aliases,
-                 List<String> tags,
-                 boolean supportsFitzpatrick) {
+    public Emoji( String unicode,
+                  List<String> aliases,
+                  List<String> tags,
+                  boolean supportsFitzpatrick ) {
 
         // fill data
         this.unicode = unicode;
@@ -57,7 +56,7 @@ public class Emoji {
     /**
      * string join, like "String.join" in java8
      */
-    private String stringJoin(String[] array, int count) {
+    private String stringJoin( String[] array, int count ) {
         String joined = "";
         for (int i = 0; i < count; i++)
             joined += array[i];
@@ -94,7 +93,7 @@ public class Emoji {
 
     // ---------------------- other ----------------------
 
-    public String getUnicode(Fitzpatrick fitzpatrick) {
+    public String getUnicode( Fitzpatrick fitzpatrick ) {
         if (!this.supportsFitzpatrick()) {
             throw new EmojiException("cannot get unicode with given fitzpatrick modifier, the emoji doesn't support fitzpatrick.");
         } else if (fitzpatrick == null) {
@@ -105,7 +104,7 @@ public class Emoji {
 
     // effect when equals
     @Override
-    public boolean equals(Object other) {
+    public boolean equals( Object other ) {
         return !(other == null || !(other instanceof Emoji)) &&
                 ((Emoji) other).getUnicode().equals(getUnicode());
     }

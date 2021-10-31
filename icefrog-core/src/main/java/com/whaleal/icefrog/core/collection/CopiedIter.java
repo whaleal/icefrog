@@ -16,52 +16,53 @@ import java.util.List;
  * <p>
  * 需要注意的是，在构造此对象时需要保证原子性（原对象不被修改），最好加锁构造此对象，构造完毕后解锁。
  *
- *
  * @param <E> 元素类型
  * @author Looly
  * @author wh
  * @since 1.0.0
  */
 public class CopiedIter<E> implements Iterator<E>, Iterable<E>, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final Iterator<E> listIterator;
+    private final Iterator<E> listIterator;
 
-	public static <V> CopiedIter<V> copyOf(Iterator<V> iterator){
-		return new CopiedIter<>(iterator);
-	}
+    /**
+     * 构造
+     *
+     * @param iterator 被复制的Iterator
+     */
+    public CopiedIter( Iterator<E> iterator ) {
+        final List<E> eleList = CollUtil.newArrayList(iterator);
+        this.listIterator = eleList.iterator();
+    }
 
-	/**
-	 * 构造
-	 * @param iterator 被复制的Iterator
-	 */
-	public CopiedIter(Iterator<E> iterator) {
-		final List<E> eleList = CollUtil.newArrayList(iterator);
-		this.listIterator = eleList.iterator();
-	}
+    public static <V> CopiedIter<V> copyOf( Iterator<V> iterator ) {
+        return new CopiedIter<>(iterator);
+    }
 
-	@Override
-	public boolean hasNext() {
-		return this.listIterator.hasNext();
-	}
+    @Override
+    public boolean hasNext() {
+        return this.listIterator.hasNext();
+    }
 
-	@Override
-	public E next() {
-		return this.listIterator.next();
-	}
+    @Override
+    public E next() {
+        return this.listIterator.next();
+    }
 
-	/**
-	 * 此对象不支持移除元素
-	 * @throws UnsupportedOperationException 当调用此方法时始终抛出此异常
-	 */
-	@Override
-	public void remove() throws UnsupportedOperationException{
-		throw new UnsupportedOperationException("This is a read-only iterator.");
-	}
+    /**
+     * 此对象不支持移除元素
+     *
+     * @throws UnsupportedOperationException 当调用此方法时始终抛出此异常
+     */
+    @Override
+    public void remove() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("This is a read-only iterator.");
+    }
 
-	@Override
-	public Iterator<E> iterator() {
-		return this;
-	}
+    @Override
+    public Iterator<E> iterator() {
+        return this;
+    }
 
 }

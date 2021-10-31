@@ -1,8 +1,8 @@
 package com.whaleal.icefrog.extra.pinyin.engine.houbbpinyin;
 
-import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
 import com.github.houbb.pinyin.constant.enums.PinyinStyleEnum;
 import com.github.houbb.pinyin.util.PinyinHelper;
+import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
 
 /**
  * 封装了 houbb Pinyin 的引擎。
@@ -26,50 +26,50 @@ import com.github.houbb.pinyin.util.PinyinHelper;
  */
 public class HoubbPinyinEngine implements PinyinEngine {
 
-	/**
-	 * 汉字拼音输出的格式
-	 */
-	PinyinStyleEnum format;
+    /**
+     * 汉字拼音输出的格式
+     */
+    PinyinStyleEnum format;
 
-	/**
-	 * 构造
-	 */
-	public HoubbPinyinEngine() {
-		this(null);
-	}
+    /**
+     * 构造
+     */
+    public HoubbPinyinEngine() {
+        this(null);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param format 格式
-	 */
-	public HoubbPinyinEngine(PinyinStyleEnum format) {
-		init(format);
-	}
+    /**
+     * 构造
+     *
+     * @param format 格式
+     */
+    public HoubbPinyinEngine( PinyinStyleEnum format ) {
+        init(format);
+    }
 
-	/**
-	 * 初始化
-	 *
-	 * @param format 格式
-	 */
-	public void init(PinyinStyleEnum format) {
-		if (null == format) {
-			format = PinyinStyleEnum.NORMAL;
-		}
-		this.format = format;
-	}
+    /**
+     * 初始化
+     *
+     * @param format 格式
+     */
+    public void init( PinyinStyleEnum format ) {
+        if (null == format) {
+            format = PinyinStyleEnum.NORMAL;
+        }
+        this.format = format;
+    }
 
-	@Override
-	public String getPinyin(char c) {
-		String result;
-		result = PinyinHelper.toPinyin(String.valueOf(c), format);
-		return result;
-	}
+    @Override
+    public String getPinyin( char c ) {
+        String result;
+        result = PinyinHelper.toPinyin(String.valueOf(c), format);
+        return result;
+    }
 
-	@Override
-	public String getPinyin(String str, String separator) {
-		String result;
-		result = PinyinHelper.toPinyin(str, format, separator);
-		return result;
-	}
+    @Override
+    public String getPinyin( String str, String separator ) {
+        String result;
+        result = PinyinHelper.toPinyin(str, format, separator);
+        return result;
+    }
 }

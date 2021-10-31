@@ -5,8 +5,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
-
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

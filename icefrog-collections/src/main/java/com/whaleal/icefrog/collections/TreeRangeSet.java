@@ -5,16 +5,10 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.TreeMap;
 import javax.annotation.CheckForNull;
+import java.io.Serializable;
+import java.util.*;
+import java.util.Map.Entry;
 
 import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;

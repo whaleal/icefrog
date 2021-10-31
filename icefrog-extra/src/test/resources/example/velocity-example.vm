@@ -18,31 +18,31 @@ $iAmVariable
 #set ($admin = "admin")
 #set ($user = "user")
 #if ($admin == $user)
-	Welcome admin!
+Welcome admin!
 #else
-	Welcome user!
+Welcome user!
 #end
 
 //--------------4.迭代数据List---------------------
 #foreach( $product in $list )
-	$product
+    $product
 #end
 
 // ------------5.迭代数据HashSet-----------------
 #foreach($key in $hashVariable.keySet() )
-	$key ‘s value: $ hashVariable.get($key)
+    $key ‘s value: $ hashVariable.get($key)
 #end
 
 //-----------6.迭代数据List Bean($velocityCount为列举序号，默认从1开始，可调整)
 #foreach ($s in $listBean)
-	<$velocityCount> Address: $s.address
+<$velocityCount> Address: $s.address
 #end
 
 //-------------7.模板嵌套---------------------
 #foreach ($element in $list)
-	#foreach ($element in $list)
-		inner:This is ($velocityCount)- $element.
-	#end
+    #foreach ($element in $list)
+    inner:This is ($velocityCount)- $element.
+    #end
 outer:This is ($velocityCount)- $element.
 #end
 

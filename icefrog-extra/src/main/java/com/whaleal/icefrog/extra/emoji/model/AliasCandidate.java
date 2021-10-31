@@ -13,7 +13,7 @@ public class AliasCandidate {
     public final String alias;
     public final Fitzpatrick fitzpatrick;
 
-    public AliasCandidate(String fullString, String alias, String fitzpatrickString) {
+    public AliasCandidate( String fullString, String alias, String fitzpatrickString ) {
         this.fullString = fullString;
         this.alias = alias;
         if (fitzpatrickString == null) {

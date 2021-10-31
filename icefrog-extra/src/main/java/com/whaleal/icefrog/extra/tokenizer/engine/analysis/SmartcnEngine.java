@@ -8,15 +8,14 @@ import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
  *
  * @author Looly
  * @author wh
- *
  */
 public class SmartcnEngine extends AnalysisEngine {
 
-	/**
-	 * 构造
-	 */
-	public SmartcnEngine() {
-		super(new SmartChineseAnalyzer());
-	}
+    /**
+     * 构造
+     */
+    public SmartcnEngine() {
+        super(new SmartChineseAnalyzer());
+    }
 
 }

@@ -13,27 +13,27 @@ import com.whaleal.icefrog.core.lang.Snowflake;
  */
 public class SnowflakeGenerator implements Generator<Long> {
 
-	private final Snowflake snowflake;
+    private final Snowflake snowflake;
 
-	/**
-	 * 构造
-	 */
-	public SnowflakeGenerator() {
-		this(0, 0);
-	}
+    /**
+     * 构造
+     */
+    public SnowflakeGenerator() {
+        this(0, 0);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param workerId     终端ID
-	 * @param dataCenterId 数据中心ID
-	 */
-	public SnowflakeGenerator(long workerId, long dataCenterId) {
-		snowflake = new Snowflake(workerId, dataCenterId);
-	}
+    /**
+     * 构造
+     *
+     * @param workerId     终端ID
+     * @param dataCenterId 数据中心ID
+     */
+    public SnowflakeGenerator( long workerId, long dataCenterId ) {
+        snowflake = new Snowflake(workerId, dataCenterId);
+    }
 
-	@Override
-	public Long next() {
-		return this.snowflake.nextId();
-	}
+    @Override
+    public Long next() {
+        return this.snowflake.nextId();
+    }
 }

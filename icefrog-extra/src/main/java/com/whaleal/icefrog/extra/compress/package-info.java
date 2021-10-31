@@ -4,11 +4,10 @@
  * ar, arj, cpio, dump, tar and zip等格式。
  *
  * <p>
- *     见：https://icefrogs.apache.org/proper/icefrogs-compress/
+ * 见：https://icefrogs.apache.org/proper/icefrogs-compress/
  * </p>
  *
  * @author Looly
  * @author wh
- *
  */
 package com.whaleal.icefrog.extra.compress;

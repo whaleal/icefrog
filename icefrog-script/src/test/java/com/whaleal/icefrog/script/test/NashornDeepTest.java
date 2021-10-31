@@ -11,12 +11,12 @@ import javax.script.ScriptException;
 
 public class NashornDeepTest {
 
-	public static void main(String[] args) throws ScriptException, NoSuchMethodException {
-		ScriptEngine engine = new ScriptEngineManager().getEngineByName("js");
+    public static void main( String[] args ) throws ScriptException, NoSuchMethodException {
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("js");
 
-		engine.eval(ResourceUtil.readUtf8Str("filter1.js"));
+        engine.eval(ResourceUtil.readUtf8Str("filter1.js"));
 
-		final Object filter1 = ((Invocable) engine).invokeFunction("filter1", 1, 2);
-		Assert.assertFalse((Boolean) filter1);
-	}
+        final Object filter1 = ((Invocable) engine).invokeFunction("filter1", 1, 2);
+        Assert.assertFalse((Boolean) filter1);
+    }
 }

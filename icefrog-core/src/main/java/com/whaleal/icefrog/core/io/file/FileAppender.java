@@ -19,70 +19,74 @@ import java.util.List;
  * @author wh
  * @since 1.0.0
  */
-public class FileAppender implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class FileAppender implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	private final FileWriter writer;
-	/** 内存中持有的字符串数 */
-	private final int capacity;
-	/** 追加内容是否为新行 */
-	private final boolean isNewLineMode;
-	private final List<String> list = new ArrayList<>(100);
+    private final FileWriter writer;
+    /**
+     * 内存中持有的字符串数
+     */
+    private final int capacity;
+    /**
+     * 追加内容是否为新行
+     */
+    private final boolean isNewLineMode;
+    private final List<String> list = new ArrayList<>(100);
 
-	/**
-	 * 构造
-	 *
-	 * @param destFile 目标文件
-	 * @param capacity 当行数积累多少条时刷入到文件
-	 * @param isNewLineMode 追加内容是否为新行
-	 */
-	public FileAppender(File destFile, int capacity, boolean isNewLineMode) {
-		this(destFile, CharsetUtil.CHARSET_UTF_8, capacity, isNewLineMode);
-	}
+    /**
+     * 构造
+     *
+     * @param destFile      目标文件
+     * @param capacity      当行数积累多少条时刷入到文件
+     * @param isNewLineMode 追加内容是否为新行
+     */
+    public FileAppender( File destFile, int capacity, boolean isNewLineMode ) {
+        this(destFile, CharsetUtil.CHARSET_UTF_8, capacity, isNewLineMode);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param destFile 目标文件
-	 * @param charset 编码
-	 * @param capacity 当行数积累多少条时刷入到文件
-	 * @param isNewLineMode 追加内容是否为新行
-	 */
-	public FileAppender(File destFile, Charset charset, int capacity, boolean isNewLineMode) {
-		this.capacity = capacity;
-		this.isNewLineMode = isNewLineMode;
-		this.writer = FileWriter.create(destFile, charset);
-	}
+    /**
+     * 构造
+     *
+     * @param destFile      目标文件
+     * @param charset       编码
+     * @param capacity      当行数积累多少条时刷入到文件
+     * @param isNewLineMode 追加内容是否为新行
+     */
+    public FileAppender( File destFile, Charset charset, int capacity, boolean isNewLineMode ) {
+        this.capacity = capacity;
+        this.isNewLineMode = isNewLineMode;
+        this.writer = FileWriter.create(destFile, charset);
+    }
 
-	/**
-	 * 追加
-	 *
-	 * @param line 行
-	 * @return this
-	 */
-	public FileAppender append(String line) {
-		if (list.size() >= capacity) {
-			flush();
-		}
-		list.add(line);
-		return this;
-	}
+    /**
+     * 追加
+     *
+     * @param line 行
+     * @return this
+     */
+    public FileAppender append( String line ) {
+        if (list.size() >= capacity) {
+            flush();
+        }
+        list.add(line);
+        return this;
+    }
 
-	/**
-	 * 刷入到文件
-	 *
-	 * @return this
-	 */
-	public FileAppender flush() {
-		try(PrintWriter pw = writer.getPrintWriter(true)){
-			for (String str : list) {
-				pw.print(str);
-				if (isNewLineMode) {
-					pw.println();
-				}
-			}
-		}
-		list.clear();
-		return this;
-	}
+    /**
+     * 刷入到文件
+     *
+     * @return this
+     */
+    public FileAppender flush() {
+        try (PrintWriter pw = writer.getPrintWriter(true)) {
+            for (String str : list) {
+                pw.print(str);
+                if (isNewLineMode) {
+                    pw.println();
+                }
+            }
+        }
+        list.clear();
+        return this;
+    }
 }

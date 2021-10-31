@@ -9,28 +9,34 @@ package com.whaleal.icefrog.core.io.file;
  * Windows系统换行符："\r\n"
  * </pre>
  *
+ * @author Looly
+ * @author wh
  * @see #MAC
  * @see #LINUX
  * @see #WINDOWS
- * @author Looly
- * @author wh
  * @since 1.0.0
  */
 public enum LineSeparator {
-	/** Mac系统换行符："\r" */
-	MAC("\r"),
-	/** Linux系统换行符："\n" */
-	LINUX("\n"),
-	/** Windows系统换行符："\r\n" */
-	WINDOWS("\r\n");
+    /**
+     * Mac系统换行符："\r"
+     */
+    MAC("\r"),
+    /**
+     * Linux系统换行符："\n"
+     */
+    LINUX("\n"),
+    /**
+     * Windows系统换行符："\r\n"
+     */
+    WINDOWS("\r\n");
 
-	private final String value;
+    private final String value;
 
-	LineSeparator(String lineSeparator) {
-		this.value = lineSeparator;
-	}
+    LineSeparator( String lineSeparator ) {
+        this.value = lineSeparator;
+    }
 
-	public String getValue() {
-		return this.value;
-	}
+    public String getValue() {
+        return this.value;
+    }
 }

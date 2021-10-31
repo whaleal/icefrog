@@ -7,28 +7,28 @@ package com.whaleal.icefrog.core.io.checksum.crc16;
  * @author wh
  * @since 1.0.0
  */
-public class CRC16Ansi extends CRC16Checksum{
-	private static final long serialVersionUID = 1L;
+public class CRC16Ansi extends CRC16Checksum {
+    private static final long serialVersionUID = 1L;
 
-	private static final int WC_POLY = 0xa001;
+    private static final int WC_POLY = 0xa001;
 
-	@Override
-	public void reset() {
-		this.wCRCin = 0xffff;
-	}
+    @Override
+    public void reset() {
+        this.wCRCin = 0xffff;
+    }
 
-	@Override
-	public void update(int b) {
-		int hi = wCRCin >> 8;
-		hi ^= b;
-		wCRCin = hi;
+    @Override
+    public void update( int b ) {
+        int hi = wCRCin >> 8;
+        hi ^= b;
+        wCRCin = hi;
 
-		for (int i = 0; i < 8; i++) {
-			int flag = wCRCin & 0x0001;
-			wCRCin = wCRCin >> 1;
-			if (flag == 1) {
-				wCRCin ^= WC_POLY;
-			}
-		}
-	}
+        for (int i = 0; i < 8; i++) {
+            int flag = wCRCin & 0x0001;
+            wCRCin = wCRCin >> 1;
+            if (flag == 1) {
+                wCRCin ^= WC_POLY;
+            }
+        }
+    }
 }

@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.jieba;
 
 import com.huaban.analysis.jieba.SegToken;
-
 import com.whaleal.icefrog.extra.tokenizer.Word;
 
 /**
@@ -9,39 +8,38 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
  *
  * @author Looly
  * @author wh
- *
  */
 public class JiebaWord implements Word {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final SegToken segToken;
+    private final SegToken segToken;
 
-	/**
-	 * 构造
-	 *
-	 * @param segToken {@link SegToken}
-	 */
-	public JiebaWord(SegToken segToken) {
-		this.segToken = segToken;
-	}
+    /**
+     * 构造
+     *
+     * @param segToken {@link SegToken}
+     */
+    public JiebaWord( SegToken segToken ) {
+        this.segToken = segToken;
+    }
 
-	@Override
-	public String getText() {
-		return segToken.word.toString();
-	}
+    @Override
+    public String getText() {
+        return segToken.word.toString();
+    }
 
-	@Override
-	public int getStartOffset() {
-		return segToken.startOffset;
-	}
+    @Override
+    public int getStartOffset() {
+        return segToken.startOffset;
+    }
 
-	@Override
-	public int getEndOffset() {
-		return segToken.endOffset;
-	}
+    @Override
+    public int getEndOffset() {
+        return segToken.endOffset;
+    }
 
-	@Override
-	public String toString() {
-		return getText();
-	}
+    @Override
+    public String toString() {
+        return getText();
+    }
 }

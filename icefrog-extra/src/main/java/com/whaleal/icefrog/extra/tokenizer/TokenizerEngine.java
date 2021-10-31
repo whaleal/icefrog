@@ -5,15 +5,14 @@ package com.whaleal.icefrog.extra.tokenizer;
  *
  * @author Looly
  * @author wh
- *
  */
 public interface TokenizerEngine {
 
-	/**
-	 * 文本分词处理接口，通过实现此接口完成分词，产生分词结果
-	 *
-	 * @param text 需要分词的文本
-	 * @return {@link Result}分词结果实现
-	 */
-	Result parse(CharSequence text);
+    /**
+     * 文本分词处理接口，通过实现此接口完成分词，产生分词结果
+     *
+     * @param text 需要分词的文本
+     * @return {@link Result}分词结果实现
+     */
+    Result parse( CharSequence text );
 }

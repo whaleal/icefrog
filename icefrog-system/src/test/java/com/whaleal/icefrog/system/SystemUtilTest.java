@@ -8,46 +8,46 @@ import java.io.File;
 
 public class SystemUtilTest {
 
-	@Test
-	@Ignore
-	public void dumpTest() {
-		SystemUtil.dumpSystemInfo();
-	}
+    @Test
+    @Ignore
+    public void dumpTest() {
+        SystemUtil.dumpSystemInfo();
+    }
 
-	@Test
-	public void getCurrentPidTest() {
-		long pid = SystemUtil.getCurrentPID();
-		Assert.assertTrue(pid > 0);
-	}
+    @Test
+    public void getCurrentPidTest() {
+        long pid = SystemUtil.getCurrentPID();
+        Assert.assertTrue(pid > 0);
+    }
 
-	@Test
-	public void getJavaInfoTest() {
-		JavaInfo javaInfo = SystemUtil.getJavaInfo();
-		Assert.assertNotNull(javaInfo);
-	}
+    @Test
+    public void getJavaInfoTest() {
+        JavaInfo javaInfo = SystemUtil.getJavaInfo();
+        Assert.assertNotNull(javaInfo);
+    }
 
-	@Test
-	public void getJavaRuntimeInfoTest() {
-		JavaRuntimeInfo info = SystemUtil.getJavaRuntimeInfo();
-		Assert.assertNotNull(info);
-	}
+    @Test
+    public void getJavaRuntimeInfoTest() {
+        JavaRuntimeInfo info = SystemUtil.getJavaRuntimeInfo();
+        Assert.assertNotNull(info);
+    }
 
-	@Test
-	public void getOsInfoTest() {
-		OsInfo osInfo = SystemUtil.getOsInfo();
-		Assert.assertNotNull(osInfo);
-	}
+    @Test
+    public void getOsInfoTest() {
+        OsInfo osInfo = SystemUtil.getOsInfo();
+        Assert.assertNotNull(osInfo);
+    }
 
-	@Test
-	public void getHostInfo() {
-		HostInfo hostInfo = SystemUtil.getHostInfo();
-		Assert.assertNotNull(hostInfo);
-	}
+    @Test
+    public void getHostInfo() {
+        HostInfo hostInfo = SystemUtil.getHostInfo();
+        Assert.assertNotNull(hostInfo);
+    }
 
-	@Test
-	public void getUserInfoTest(){
-		// https://github.com/whaleal/icefrog/issues/I3NM39
-		final UserInfo userInfo = SystemUtil.getUserInfo();
-		Assert.assertTrue(userInfo.getTempDir().endsWith(File.separator));
-	}
+    @Test
+    public void getUserInfoTest() {
+        // https://github.com/whaleal/icefrog/issues/I3NM39
+        final UserInfo userInfo = SystemUtil.getUserInfo();
+        Assert.assertTrue(userInfo.getTempDir().endsWith(File.separator));
+    }
 }

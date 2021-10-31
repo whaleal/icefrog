@@ -13,19 +13,19 @@ import org.apache.poi.ss.usermodel.RichTextString;
  */
 public class RichTextCellSetter implements CellSetter {
 
-	private final RichTextString value;
+    private final RichTextString value;
 
-	/**
-	 * 构造
-	 *
-	 * @param value 值
-	 */
-	RichTextCellSetter(RichTextString value) {
-		this.value = value;
-	}
+    /**
+     * 构造
+     *
+     * @param value 值
+     */
+    RichTextCellSetter( RichTextString value ) {
+        this.value = value;
+    }
 
-	@Override
-	public void setValue(Cell cell) {
-		cell.setCellValue(value);
-	}
+    @Override
+    public void setValue( Cell cell ) {
+        cell.setCellValue(value);
+    }
 }

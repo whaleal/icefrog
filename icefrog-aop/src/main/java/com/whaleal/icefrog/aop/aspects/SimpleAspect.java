@@ -11,24 +11,24 @@ import java.lang.reflect.Method;
  * @author wh
  */
 public class SimpleAspect implements Aspect, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public boolean before(Object target, Method method, Object[] args) {
-		//继承此类后实现此方法
-		return true;
-	}
+    @Override
+    public boolean before( Object target, Method method, Object[] args ) {
+        //继承此类后实现此方法
+        return true;
+    }
 
-	@Override
-	public boolean after(Object target, Method method, Object[] args, Object returnVal) {
-		//继承此类后实现此方法
-		return true;
-	}
+    @Override
+    public boolean after( Object target, Method method, Object[] args, Object returnVal ) {
+        //继承此类后实现此方法
+        return true;
+    }
 
-	@Override
-	public boolean afterException(Object target, Method method, Object[] args, Throwable e) {
-		//继承此类后实现此方法
-		return true;
-	}
+    @Override
+    public boolean afterException( Object target, Method method, Object[] args, Throwable e ) {
+        //继承此类后实现此方法
+        return true;
+    }
 
 }

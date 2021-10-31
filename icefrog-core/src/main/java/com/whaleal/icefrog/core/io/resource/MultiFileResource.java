@@ -9,57 +9,56 @@ import java.util.Collection;
  *
  * @author Looly
  * @author wh
- *
  */
-public class MultiFileResource extends MultiResource{
-	private static final long serialVersionUID = 1L;
+public class MultiFileResource extends MultiResource {
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 构造
-	 *
-	 * @param files 文件资源列表
-	 */
-	public MultiFileResource(Collection<File> files) {
-		add(files);
-	}
+    /**
+     * 构造
+     *
+     * @param files 文件资源列表
+     */
+    public MultiFileResource( Collection<File> files ) {
+        add(files);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param files 文件资源列表
-	 */
-	public MultiFileResource(File... files) {
-		add(files);
-	}
+    /**
+     * 构造
+     *
+     * @param files 文件资源列表
+     */
+    public MultiFileResource( File... files ) {
+        add(files);
+    }
 
-	/**
-	 * 增加文件资源
-	 *
-	 * @param files 文件资源
-	 * @return this
-	 */
-	public MultiFileResource add(File... files) {
-		for (File file : files) {
-			this.add(new FileResource(file));
-		}
-		return this;
-	}
+    /**
+     * 增加文件资源
+     *
+     * @param files 文件资源
+     * @return this
+     */
+    public MultiFileResource add( File... files ) {
+        for (File file : files) {
+            this.add(new FileResource(file));
+        }
+        return this;
+    }
 
-	/**
-	 * 增加文件资源
-	 *
-	 * @param files 文件资源
-	 * @return this
-	 */
-	public MultiFileResource add(Collection<File> files) {
-		for (File file : files) {
-			this.add(new FileResource(file));
-		}
-		return this;
-	}
+    /**
+     * 增加文件资源
+     *
+     * @param files 文件资源
+     * @return this
+     */
+    public MultiFileResource add( Collection<File> files ) {
+        for (File file : files) {
+            this.add(new FileResource(file));
+        }
+        return this;
+    }
 
-	@Override
-	public MultiFileResource add(Resource resource) {
-		return (MultiFileResource)super.add(resource);
-	}
+    @Override
+    public MultiFileResource add( Resource resource ) {
+        return (MultiFileResource) super.add(resource);
+    }
 }

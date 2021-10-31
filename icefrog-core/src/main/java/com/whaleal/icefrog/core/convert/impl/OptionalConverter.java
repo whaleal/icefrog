@@ -5,7 +5,6 @@ import com.whaleal.icefrog.core.convert.AbstractConverter;
 import java.util.Optional;
 
 /**
- *
  * {@link Optional}对象转换器
  *
  * @author Looly
@@ -13,11 +12,11 @@ import java.util.Optional;
  * @since 1.0.0
  */
 public class OptionalConverter extends AbstractConverter<Optional<?>> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected Optional<?> convertInternal(Object value) {
-		return Optional.ofNullable(value);
-	}
+    @Override
+    protected Optional<?> convertInternal( Object value ) {
+        return Optional.ofNullable(value);
+    }
 
 }

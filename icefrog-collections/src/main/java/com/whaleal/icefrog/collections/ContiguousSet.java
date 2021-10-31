@@ -2,9 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Set;

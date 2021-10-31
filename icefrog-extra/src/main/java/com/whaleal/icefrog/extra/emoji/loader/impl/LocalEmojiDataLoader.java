@@ -22,7 +22,19 @@ public class LocalEmojiDataLoader extends EmojiDataLoader {
 
     private static final String PATH = "/xxl-tool/emoji/xxl-tool-emoji.json";
 
-    public List<Emoji> loadEmojiData()  {
+    private static String inputStreamToString( InputStream stream ) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
+        BufferedReader br = new BufferedReader(isr);
+        String read;
+        while ((read = br.readLine()) != null) {
+            sb.append(read);
+        }
+        br.close();
+        return sb.toString();
+    }
+
+    public List<Emoji> loadEmojiData() {
 
         InputStream stream = null;
         try {
@@ -33,14 +45,14 @@ public class LocalEmojiDataLoader extends EmojiDataLoader {
             // emoji data
             Gson gson = new Gson();
             List<Object> emojiArr = gson.fromJson(emojiJson, List.class);
-            if (emojiArr==null || emojiArr.size()==0) {
+            if (emojiArr == null || emojiArr.size() == 0) {
                 return null;
             }
 
             // parse dto
             List<Emoji> emojis = new ArrayList<Emoji>();
-            for (Object emojiItem: emojiArr) {
-                if (emojiItem instanceof Map){
+            for (Object emojiItem : emojiArr) {
+                if (emojiItem instanceof Map) {
 
                     Map<String, Object> emojiItemMap = (Map<String, Object>) emojiItem;
 
@@ -70,7 +82,7 @@ public class LocalEmojiDataLoader extends EmojiDataLoader {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (stream!=null) {
+            if (stream != null) {
                 try {
                     stream.close();
                 } catch (IOException e) {
@@ -79,18 +91,6 @@ public class LocalEmojiDataLoader extends EmojiDataLoader {
             }
         }
         return null;
-    }
-
-    private static String inputStreamToString(InputStream stream) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
-        BufferedReader br = new BufferedReader(isr);
-        String read;
-        while ((read = br.readLine()) != null) {
-            sb.append(read);
-        }
-        br.close();
-        return sb.toString();
     }
 
 }

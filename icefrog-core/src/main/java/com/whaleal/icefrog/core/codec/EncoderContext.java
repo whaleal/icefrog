@@ -17,96 +17,92 @@
 package com.whaleal.icefrog.core.codec;
 
 
-import com.whaleal.icefrog.core.builder.Builder;
-
 /**
  * The context for encoding values to yours
  *
- * @see Encoder
- *
  * @author wh
- *
+ * @see Encoder
  */
 public final class EncoderContext {
 
-	private static final EncoderContext DEFAULT_CONTEXT = EncoderContext.builder().build();
+    private static final EncoderContext DEFAULT_CONTEXT = EncoderContext.builder().build();
 
-	//  一个标记  Collectible means 有价值的 可以用于编码的等级
-	private final boolean encodingCollectibleObject;
+    //  一个标记  Collectible means 有价值的 可以用于编码的等级
+    private final boolean encodingCollectibleObject;
 
-	private EncoderContext(final Builder builder) {
-		encodingCollectibleObject = builder.encodingCollectibleObject;
-	}
+    private EncoderContext( final Builder builder ) {
+        encodingCollectibleObject = builder.encodingCollectibleObject;
+    }
 
-	/**
-	 * Create a builder.
-	 *
-	 * @return the builder
-	 */
-	public static Builder builder() {
-		return new Builder();
-	}
+    /**
+     * Create a builder.
+     *
+     * @return the builder
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
 
-	/**
-	 * Returns true if the the value to be encoded is a document that will be put in a MongoDB collection.  Encoders for such documents
-	 * might choose to act differently when encoding such as documents, e.g. by re-ordering the fields in some way (like encoding the _id
-	 * field first).
-	 *
-	 * @return true if the value to be encoded is a document that will be put in a MongoDB collection
-	 */
-	public boolean isEncodingCollectibleObject() {
-		return encodingCollectibleObject;
-	}
+    /**
+     * Returns true if the the value to be encoded is a document that will be put in a MongoDB collection.  Encoders for such documents
+     * might choose to act differently when encoding such as documents, e.g. by re-ordering the fields in some way (like encoding the _id
+     * field first).
+     *
+     * @return true if the value to be encoded is a document that will be put in a MongoDB collection
+     */
+    public boolean isEncodingCollectibleObject() {
+        return encodingCollectibleObject;
+    }
 
-	/**
-	 * Creates a child context based on this and serializes the value with it to the writer.
-	 *
-	 * @param encoder the encoder to encode value with
-	 * @param writer  the writer to encode to
-	 * @param value   the value to encode
-	 * @param <T>     the type of the value
-	 */
-	public <T> void encodeWithChildContext(final Encoder<T> encoder, final Writer writer, final T value) {
-		encoder.encode(writer, value, DEFAULT_CONTEXT);
-	}
+    /**
+     * Creates a child context based on this and serializes the value with it to the writer.
+     *
+     * @param encoder the encoder to encode value with
+     * @param writer  the writer to encode to
+     * @param value   the value to encode
+     * @param <T>     the type of the value
+     */
+    public <T> void encodeWithChildContext( final Encoder<T> encoder, final Writer writer, final T value ) {
+        encoder.encode(writer, value, DEFAULT_CONTEXT);
+    }
 
-	/**
-	 * Gets a child context based on this.
-	 *
-	 * @return the child context
-	 */
-	public EncoderContext getChildContext() {
-		return DEFAULT_CONTEXT;
-	}
+    /**
+     * Gets a child context based on this.
+     *
+     * @return the child context
+     */
+    public EncoderContext getChildContext() {
+        return DEFAULT_CONTEXT;
+    }
 
-	/**
-	 * A builder for {@code EncoderContext} instances.
-	 */
-	public static final class Builder implements com.whaleal.icefrog.core.builder.Builder<EncoderContext> {
-		private boolean encodingCollectibleObject;
+    /**
+     * A builder for {@code EncoderContext} instances.
+     */
+    public static final class Builder implements com.whaleal.icefrog.core.builder.Builder<EncoderContext> {
+        private boolean encodingCollectibleObject;
 
-		private Builder() {
-		}
+        private Builder() {
+        }
 
-		/**
-		 * Set to true if the the value to be encoded is a document that will be put in a MongoDB collection.
-		 *
-		 * @param encodingCollectibleObject true if the value to be encoded is a document that will be put in a MongoDB collection
-		 * @return this
-		 */
-		public Builder isencodingCollectibleObject(final boolean encodingCollectibleObject) {
-			this.encodingCollectibleObject = encodingCollectibleObject;
-			return this;
-		}
+        /**
+         * Set to true if the the value to be encoded is a document that will be put in a MongoDB collection.
+         *
+         * @param encodingCollectibleObject true if the value to be encoded is a document that will be put in a MongoDB collection
+         * @return this
+         */
+        public Builder isencodingCollectibleObject( final boolean encodingCollectibleObject ) {
+            this.encodingCollectibleObject = encodingCollectibleObject;
+            return this;
+        }
 
-		/**
-		 * Build an instance of {@code EncoderContext}.
-		 *
-		 * @return the encoder context
-		 */
-		@Override
-		public EncoderContext build() {
-			return new EncoderContext(this);
-		}
-	}
+        /**
+         * Build an instance of {@code EncoderContext}.
+         *
+         * @return the encoder context
+         */
+        @Override
+        public EncoderContext build() {
+            return new EncoderContext(this);
+        }
+    }
 }

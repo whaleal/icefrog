@@ -14,20 +14,20 @@ import org.apache.poi.ss.usermodel.FormulaError;
  */
 public class ErrorCellValue implements CellValue<String> {
 
-	private final Cell cell;
+    private final Cell cell;
 
-	/**
-	 * 构造
-	 *
-	 * @param cell {@link Cell}
-	 */
-	public ErrorCellValue(Cell cell){
-		this.cell = cell;
-	}
+    /**
+     * 构造
+     *
+     * @param cell {@link Cell}
+     */
+    public ErrorCellValue( Cell cell ) {
+        this.cell = cell;
+    }
 
-	@Override
-	public String getValue() {
-		final FormulaError error = FormulaError.forInt(cell.getErrorCellValue());
-		return (null == error) ? StrUtil.EMPTY : error.getString();
-	}
+    @Override
+    public String getValue() {
+        final FormulaError error = FormulaError.forInt(cell.getErrorCellValue());
+        return (null == error) ? StrUtil.EMPTY : error.getString();
+    }
 }

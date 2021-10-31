@@ -21,56 +21,55 @@ import java.util.List;
  * @since 1.0.0
  */
 public class TaskExecutorManager implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    /**
+     * 执行器列表
+     */
+    private final List<TaskExecutor> executors = new ArrayList<>();
+    protected Scheduler scheduler;
 
-	protected Scheduler scheduler;
-	/**
-	 * 执行器列表
-	 */
-	private final List<TaskExecutor> executors = new ArrayList<>();
+    public TaskExecutorManager( Scheduler scheduler ) {
+        this.scheduler = scheduler;
+    }
 
-	public TaskExecutorManager(Scheduler scheduler) {
-		this.scheduler = scheduler;
-	}
+    /**
+     * 获取所有正在执行的任务调度执行器
+     *
+     * @return 任务执行器列表
+     * @since 1.0.0
+     */
+    public List<TaskExecutor> getExecutors() {
+        return Collections.unmodifiableList(this.executors);
+    }
 
-	/**
-	 * 获取所有正在执行的任务调度执行器
-	 *
-	 * @return 任务执行器列表
-	 * @since 1.0.0
-	 */
-	public List<TaskExecutor> getExecutors() {
-		return Collections.unmodifiableList(this.executors);
-	}
-
-	/**
-	 * 启动 执行器TaskExecutor，即启动作业
-	 *
-	 * @param task {@link Task}
-	 * @return {@link TaskExecutor}
-	 */
-	public TaskExecutor spawnExecutor(CronTask task) {
-		final TaskExecutor executor = new TaskExecutor(this.scheduler, task);
-		synchronized (this.executors) {
-			this.executors.add(executor);
-		}
-		// 子线程是否为deamon线程取决于父线程，因此此处无需显示调用
-		// executor.setDaemon(this.scheduler.daemon);
+    /**
+     * 启动 执行器TaskExecutor，即启动作业
+     *
+     * @param task {@link Task}
+     * @return {@link TaskExecutor}
+     */
+    public TaskExecutor spawnExecutor( CronTask task ) {
+        final TaskExecutor executor = new TaskExecutor(this.scheduler, task);
+        synchronized (this.executors) {
+            this.executors.add(executor);
+        }
+        // 子线程是否为deamon线程取决于父线程，因此此处无需显示调用
+        // executor.setDaemon(this.scheduler.daemon);
 //		executor.start();
-		this.scheduler.threadExecutor.execute(executor);
-		return executor;
-	}
+        this.scheduler.threadExecutor.execute(executor);
+        return executor;
+    }
 
-	/**
-	 * 执行器执行完毕调用此方法，将执行器从执行器列表移除，此方法由{@link TaskExecutor}对象调用，用于通知管理器自身已完成执行
-	 *
-	 * @param executor 执行器 {@link TaskExecutor}
-	 * @return this
-	 */
-	public TaskExecutorManager notifyExecutorCompleted(TaskExecutor executor) {
-		synchronized (executors) {
-			executors.remove(executor);
-		}
-		return this;
-	}
+    /**
+     * 执行器执行完毕调用此方法，将执行器从执行器列表移除，此方法由{@link TaskExecutor}对象调用，用于通知管理器自身已完成执行
+     *
+     * @param executor 执行器 {@link TaskExecutor}
+     * @return this
+     */
+    public TaskExecutorManager notifyExecutorCompleted( TaskExecutor executor ) {
+        synchronized (executors) {
+            executors.remove(executor);
+        }
+        return this;
+    }
 }

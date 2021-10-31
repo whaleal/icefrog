@@ -9,20 +9,20 @@ package com.whaleal.icefrog.core.io.checksum.crc16;
  * @since 1.0.0
  */
 public class CRC16CCITT extends CRC16Checksum {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private static final int WC_POLY = 0x8408;
+    private static final int WC_POLY = 0x8408;
 
-	@Override
-	public void update(int b) {
-		wCRCin ^= (b & 0x00ff);
-		for (int j = 0; j < 8; j++) {
-			if ((wCRCin & 0x0001) != 0) {
-				wCRCin >>= 1;
-				wCRCin ^= WC_POLY;
-			} else {
-				wCRCin >>= 1;
-			}
-		}
-	}
+    @Override
+    public void update( int b ) {
+        wCRCin ^= (b & 0x00ff);
+        for (int j = 0; j < 8; j++) {
+            if ((wCRCin & 0x0001) != 0) {
+                wCRCin >>= 1;
+                wCRCin ^= WC_POLY;
+            } else {
+                wCRCin >>= 1;
+            }
+        }
+    }
 }

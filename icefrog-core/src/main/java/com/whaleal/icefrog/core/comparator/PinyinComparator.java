@@ -13,20 +13,20 @@ import java.util.Locale;
  * @since 1.0.0
  */
 public class PinyinComparator implements Comparator<String>, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	final Collator collator;
+    final Collator collator;
 
-	/**
-	 * 构造
-	 */
-	public PinyinComparator() {
-		collator = Collator.getInstance(Locale.CHINESE);
-	}
+    /**
+     * 构造
+     */
+    public PinyinComparator() {
+        collator = Collator.getInstance(Locale.CHINESE);
+    }
 
-	@Override
-	public int compare(String o1, String o2) {
-		return collator.compare(o1, o2);
-	}
+    @Override
+    public int compare( String o1, String o2 ) {
+        return collator.compare(o1, o2);
+    }
 
 }

@@ -3,8 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.collection.IterUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;

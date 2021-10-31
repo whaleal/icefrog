@@ -17,112 +17,112 @@ import java.util.*;
  **/
 
 public class CombinationAnnotationElement implements AnnotatedElement, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 元注解
-	 */
-	private static final Set<Class<? extends Annotation>> META_ANNOTATIONS = CollUtil.newHashSet(Target.class, //
-			Retention.class, //
-			Inherited.class, //
-			Documented.class, //
-			SuppressWarnings.class, //
-			Override.class, //
-			Deprecated.class//
-	);
+    /**
+     * 元注解
+     */
+    private static final Set<Class<? extends Annotation>> META_ANNOTATIONS = CollUtil.newHashSet(Target.class, //
+            Retention.class, //
+            Inherited.class, //
+            Documented.class, //
+            SuppressWarnings.class, //
+            Override.class, //
+            Deprecated.class//
+    );
 
-	/**
-	 * 注解类型与注解对象对应表
-	 */
+    /**
+     * 注解类型与注解对象对应表
+     */
 
-	private Map<Class<? extends Annotation>, Annotation> annotationMap;
-	/**
-	 * 直接注解类型与注解对象对应表
-	 */
-	private Map<Class<? extends Annotation>, Annotation> declaredAnnotationMap;
+    private Map<Class<? extends Annotation>, Annotation> annotationMap;
+    /**
+     * 直接注解类型与注解对象对应表
+     */
+    private Map<Class<? extends Annotation>, Annotation> declaredAnnotationMap;
 
-	/**
-	 * 构造
-	 *
-	 * @param element 需要解析注解的元素：可以是Class、Method、Field、Constructor、ReflectPermission
-	 */
-	public CombinationAnnotationElement(AnnotatedElement element) {
-		init(element);
-	}
+    /**
+     * 构造
+     *
+     * @param element 需要解析注解的元素：可以是Class、Method、Field、Constructor、ReflectPermission
+     */
+    public CombinationAnnotationElement( AnnotatedElement element ) {
+        init(element);
+    }
 
-	@Override
-	public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
-		return annotationMap.containsKey(annotationClass);
-	}
+    @Override
+    public boolean isAnnotationPresent( Class<? extends Annotation> annotationClass ) {
+        return annotationMap.containsKey(annotationClass);
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
-		Annotation annotation = annotationMap.get(annotationClass);
-		return (annotation == null) ? null : (T) annotation;
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends Annotation> T getAnnotation( Class<T> annotationClass ) {
+        Annotation annotation = annotationMap.get(annotationClass);
+        return (annotation == null) ? null : (T) annotation;
+    }
 
-	@Override
-	public Annotation[] getAnnotations() {
-		final Collection<Annotation> annotations = this.annotationMap.values();
-		return annotations.toArray(new Annotation[0]);
-	}
+    @Override
+    public Annotation[] getAnnotations() {
+        final Collection<Annotation> annotations = this.annotationMap.values();
+        return annotations.toArray(new Annotation[0]);
+    }
 
-	@Override
-	public Annotation[] getDeclaredAnnotations() {
-		final Collection<Annotation> annotations = this.declaredAnnotationMap.values();
-		return annotations.toArray(new Annotation[0]);
-	}
+    @Override
+    public Annotation[] getDeclaredAnnotations() {
+        final Collection<Annotation> annotations = this.declaredAnnotationMap.values();
+        return annotations.toArray(new Annotation[0]);
+    }
 
-	/**
-	 * 初始化
-	 *
-	 * @param element 元素
-	 */
-	private void init(AnnotatedElement element) {
-		final Annotation[] declaredAnnotations = element.getDeclaredAnnotations();
-		this.declaredAnnotationMap = new HashMap<>();
-		parseDeclared(declaredAnnotations);
+    /**
+     * 初始化
+     *
+     * @param element 元素
+     */
+    private void init( AnnotatedElement element ) {
+        final Annotation[] declaredAnnotations = element.getDeclaredAnnotations();
+        this.declaredAnnotationMap = new HashMap<>();
+        parseDeclared(declaredAnnotations);
 
-		final Annotation[] annotations = element.getAnnotations();
-		if (Arrays.equals(declaredAnnotations, annotations)) {
-			this.annotationMap = this.declaredAnnotationMap;
-		} else {
-			this.annotationMap = new HashMap<>();
-			parse(annotations);
-		}
-	}
+        final Annotation[] annotations = element.getAnnotations();
+        if (Arrays.equals(declaredAnnotations, annotations)) {
+            this.annotationMap = this.declaredAnnotationMap;
+        } else {
+            this.annotationMap = new HashMap<>();
+            parse(annotations);
+        }
+    }
 
-	/**
-	 * 进行递归解析注解，直到全部都是元注解为止
-	 *
-	 * @param annotations Class, Method, Field等
-	 */
-	private void parseDeclared(Annotation[] annotations) {
-		Class<? extends Annotation> annotationType;
-		// 直接注解
-		for (Annotation annotation : annotations) {
-			annotationType = annotation.annotationType();
-			if (false == META_ANNOTATIONS.contains(annotationType)) {
-				declaredAnnotationMap.put(annotationType, annotation);
-				parseDeclared(annotationType.getDeclaredAnnotations());
-			}
-		}
-	}
+    /**
+     * 进行递归解析注解，直到全部都是元注解为止
+     *
+     * @param annotations Class, Method, Field等
+     */
+    private void parseDeclared( Annotation[] annotations ) {
+        Class<? extends Annotation> annotationType;
+        // 直接注解
+        for (Annotation annotation : annotations) {
+            annotationType = annotation.annotationType();
+            if (false == META_ANNOTATIONS.contains(annotationType)) {
+                declaredAnnotationMap.put(annotationType, annotation);
+                parseDeclared(annotationType.getDeclaredAnnotations());
+            }
+        }
+    }
 
-	/**
-	 * 进行递归解析注解，直到全部都是元注解为止
-	 *
-	 * @param annotations Class, Method, Field等
-	 */
-	private void parse(Annotation[] annotations) {
-		Class<? extends Annotation> annotationType;
-		for (Annotation annotation : annotations) {
-			annotationType = annotation.annotationType();
-			if (false == META_ANNOTATIONS.contains(annotationType)) {
-				annotationMap.put(annotationType, annotation);
-				parse(annotationType.getAnnotations());
-			}
-		}
-	}
+    /**
+     * 进行递归解析注解，直到全部都是元注解为止
+     *
+     * @param annotations Class, Method, Field等
+     */
+    private void parse( Annotation[] annotations ) {
+        Class<? extends Annotation> annotationType;
+        for (Annotation annotation : annotations) {
+            annotationType = annotation.annotationType();
+            if (false == META_ANNOTATIONS.contains(annotationType)) {
+                annotationMap.put(annotationType, annotation);
+                parse(annotationType.getAnnotations());
+            }
+        }
+    }
 }

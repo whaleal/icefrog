@@ -1,12 +1,11 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.jieba;
 
-import java.util.Iterator;
-import java.util.List;
-
 import com.huaban.analysis.jieba.SegToken;
-
 import com.whaleal.icefrog.extra.tokenizer.Result;
 import com.whaleal.icefrog.extra.tokenizer.Word;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Jieba分词结果实现<br>
@@ -14,38 +13,38 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
  *
  * @author Looly
  * @author wh
- *
  */
-public class JiebaResult implements Result{
+public class JiebaResult implements Result {
 
-	Iterator<SegToken> result;
+    Iterator<SegToken> result;
 
-	/**
-	 * 构造
-	 * @param segTokenList 分词结果
-	 */
-	public JiebaResult(List<SegToken> segTokenList) {
-		this.result = segTokenList.iterator();
-	}
+    /**
+     * 构造
+     *
+     * @param segTokenList 分词结果
+     */
+    public JiebaResult( List<SegToken> segTokenList ) {
+        this.result = segTokenList.iterator();
+    }
 
-	@Override
-	public boolean hasNext() {
-		return result.hasNext();
-	}
+    @Override
+    public boolean hasNext() {
+        return result.hasNext();
+    }
 
-	@Override
-	public Word next() {
-		return new JiebaWord(result.next());
-	}
+    @Override
+    public Word next() {
+        return new JiebaWord(result.next());
+    }
 
-	@Override
-	public void remove() {
-		result.remove();
-	}
+    @Override
+    public void remove() {
+        result.remove();
+    }
 
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
+    @Override
+    public Iterator<Word> iterator() {
+        return this;
+    }
 
 }

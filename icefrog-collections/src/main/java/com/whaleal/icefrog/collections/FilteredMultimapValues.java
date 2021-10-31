@@ -3,9 +3,9 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.IterUtil;
+import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;

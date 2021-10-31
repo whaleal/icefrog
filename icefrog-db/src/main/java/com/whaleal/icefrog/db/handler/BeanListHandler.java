@@ -14,31 +14,32 @@ import java.util.List;
  * @since 1.0.0
  */
 public class BeanListHandler<E> implements RsHandler<List<E>> {
-	private static final long serialVersionUID = 4510569754766197707L;
+    private static final long serialVersionUID = 4510569754766197707L;
 
-	private final Class<E> elementBeanType;
+    private final Class<E> elementBeanType;
 
-	/**
-	 * 创建一个 BeanListHandler对象
-	 *
-	 * @param <E> 处理对象类型
-	 * @param beanType Bean类型
-	 * @return BeanListHandler对象
-	 */
-	public static <E> BeanListHandler<E> create(Class<E> beanType) {
-		return new BeanListHandler<>(beanType);
-	}
+    /**
+     * 构造
+     *
+     * @param beanType Bean类型
+     */
+    public BeanListHandler( Class<E> beanType ) {
+        this.elementBeanType = beanType;
+    }
 
-	/**
-	 * 构造
-	 * @param beanType Bean类型
-	 */
-	public BeanListHandler(Class<E> beanType) {
-		this.elementBeanType = beanType;
-	}
+    /**
+     * 创建一个 BeanListHandler对象
+     *
+     * @param <E>      处理对象类型
+     * @param beanType Bean类型
+     * @return BeanListHandler对象
+     */
+    public static <E> BeanListHandler<E> create( Class<E> beanType ) {
+        return new BeanListHandler<>(beanType);
+    }
 
-	@Override
-	public List<E> handle(ResultSet rs) throws SQLException {
-		return HandleHelper.handleRsToBeanList(rs, new ArrayList<>(), elementBeanType);
-	}
+    @Override
+    public List<E> handle( ResultSet rs ) throws SQLException {
+        return HandleHelper.handleRsToBeanList(rs, new ArrayList<>(), elementBeanType);
+    }
 }

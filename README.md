@@ -82,7 +82,7 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 | icefrog-poi         |     针对POI中Excel和Word的封装                                                       |
 | icefrog-socket      |     基于Java的NIO和AIO的Socket封装                                                   |
 | icefrog-jwt         |     JSON Web Token (JWT)封装实现                                                    |
-| icefrog-collection   |    Java集合类的一些拓展 如Map<k,Map<T,V>> List<List<E>> 等                            |
+| icefrog-collections   |    Java集合类的一些拓展 如Map<k,Map<T,V>> List<List<E>> 等                            |
 
 
 可以根据需求对每个模块单独引入，也可以通过引入`icefrog-all`方式引入所有模块。

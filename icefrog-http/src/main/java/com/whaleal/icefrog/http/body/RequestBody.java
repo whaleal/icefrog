@@ -7,10 +7,10 @@ import java.io.OutputStream;
  */
 public interface RequestBody {
 
-	/**
-	 * 写出数据，不关闭流
-	 *
-	 * @param out out流
-	 */
-	void write(OutputStream out);
+    /**
+     * 写出数据，不关闭流
+     *
+     * @param out out流
+     */
+    void write( OutputStream out );
 }

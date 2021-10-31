@@ -9,10 +9,10 @@ import java.io.File;
 
 public class ZipReaderTest {
 
-	@Test
-	@Ignore
-	public void unzipTest() {
-		File unzip = ZipUtil.unzip("d:/java.zip", "d:/test/java");
-		Console.log(unzip);
-	}
+    @Test
+    @Ignore
+    public void unzipTest() {
+        File unzip = ZipUtil.unzip("d:/java.zip", "d:/test/java");
+        Console.log(unzip);
+    }
 }

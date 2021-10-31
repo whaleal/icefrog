@@ -6,14 +6,13 @@ package com.whaleal.icefrog.json;
  *
  * @author Looly
  * @author wh
- *
  */
 public interface JSONString {
 
-	/**
-	 * 自定义转JSON字符串的方法
-	 *
-	 * @return JSON字符串
-	 */
-	String toJSONString();
+    /**
+     * 自定义转JSON字符串的方法
+     *
+     * @return JSON字符串
+     */
+    String toJSONString();
 }

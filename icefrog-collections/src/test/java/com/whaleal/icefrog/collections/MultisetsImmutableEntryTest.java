@@ -3,13 +3,10 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.collections.Multiset.Entry;
+import junit.framework.TestCase;
 
 import java.util.Collections;
-
-import com.whaleal.icefrog.collections.HashMultiset;
-import com.whaleal.icefrog.collections.Multisets;
-import junit.framework.TestCase;
-import com.whaleal.icefrog.collections.Multiset.Entry;
 
 /**
  * Tests for {@link Multisets#immutableEntry}.

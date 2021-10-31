@@ -13,10 +13,10 @@ import org.apache.poi.ss.usermodel.Cell;
  */
 public class NullCellSetter implements CellSetter {
 
-	public static final NullCellSetter INSTANCE = new NullCellSetter();
+    public static final NullCellSetter INSTANCE = new NullCellSetter();
 
-	@Override
-	public void setValue(Cell cell) {
-		cell.setCellValue(StrUtil.EMPTY);
-	}
+    @Override
+    public void setValue( Cell cell ) {
+        cell.setCellValue(StrUtil.EMPTY);
+    }
 }

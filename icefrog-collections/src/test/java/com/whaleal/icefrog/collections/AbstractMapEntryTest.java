@@ -3,11 +3,10 @@
 package com.whaleal.icefrog.collections;
 
 
+import junit.framework.TestCase;
+
 import java.util.Collections;
 import java.util.Map.Entry;
-
-import com.whaleal.icefrog.collections.AbstractMapEntry;
-import junit.framework.TestCase;
 
 /**
  * Tests for {@code AbstractMapEntry}.

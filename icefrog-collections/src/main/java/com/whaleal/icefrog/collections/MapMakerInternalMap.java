@@ -5,7 +5,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.collections.MapMaker.Dummy;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

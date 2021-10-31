@@ -14,19 +14,18 @@ public enum EmojiEncode {
 
     /**
      * encode unicode to aliases
-     *
+     * <p>
      * replace emoji unicode by one of their first alias (between 2 ':')
-     *
+     * <p>
      * [unicode emoji  first alias ]
-     *
      */
     ALIASES(new EmojiTransformer() {
-        public String transform(UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction) {
+        public String transform( UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction ) {
             if (fitzpatrickAction == null) {
                 fitzpatrickAction = FitzpatrickAction.PARSE;
             }
 
-            if (fitzpatrickAction==FitzpatrickAction.PARSE && unicodeCandidate.hasFitzpatrick()) {
+            if (fitzpatrickAction == FitzpatrickAction.PARSE && unicodeCandidate.hasFitzpatrick()) {
                 return ":" +
                         unicodeCandidate.getEmoji().getAliases().get(0) +
                         "|" +
@@ -48,15 +47,14 @@ public enum EmojiEncode {
 
     /**
      * encode unicode html decimal
-     *
+     * <p>
      * replace unicode emoji by their html representation.
-     *
+     * <p>
      * [unicode emoji  html hex ]
-     *
      */
     HTML_DECIMAL(new EmojiTransformer() {
         @Override
-        public String transform(UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction) {
+        public String transform( UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction ) {
             if (fitzpatrickAction == null) {
                 fitzpatrickAction = FitzpatrickAction.PARSE;
             }
@@ -71,14 +69,14 @@ public enum EmojiEncode {
 
     /**
      * encode unicode html hex decimal
-     *
+     * <p>
      * replace unicode emoji by their html hex representation
-     *
+     * <p>
      * [unicode emoji  html hex ]
      */
     HTML_HEX_DECIMAL(new EmojiTransformer() {
         @Override
-        public String transform(UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction) {
+        public String transform( UnicodeCandidate unicodeCandidate, FitzpatrickAction fitzpatrickAction ) {
             if (fitzpatrickAction == null) {
                 fitzpatrickAction = FitzpatrickAction.PARSE;
             }
@@ -93,9 +91,10 @@ public enum EmojiEncode {
 
     private EmojiTransformer emojiTransformer;
 
-    EmojiEncode(EmojiTransformer emojiTransformer) {
+    EmojiEncode( EmojiTransformer emojiTransformer ) {
         this.emojiTransformer = emojiTransformer;
     }
+
     public EmojiTransformer getEmojiTransformer() {
         return emojiTransformer;
     }

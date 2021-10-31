@@ -24,83 +24,93 @@ import java.util.Set;
  */
 public class DelayWatcher implements Watcher {
 
-	/** Path集合。此集合用于去重在指定delay内多次触发的文件Path */
-	private final Set<Path> eventSet = new ConcurrentHashSet<>();
-	/** 实际处理 */
-	private final Watcher watcher;
-	/** 延迟，单位毫秒 */
-	private final long delay;
+    /**
+     * Path集合。此集合用于去重在指定delay内多次触发的文件Path
+     */
+    private final Set<Path> eventSet = new ConcurrentHashSet<>();
+    /**
+     * 实际处理
+     */
+    private final Watcher watcher;
+    /**
+     * 延迟，单位毫秒
+     */
+    private final long delay;
 
-	//---------------------------------------------------------------------------------------------------------- Constructor start
-	/**
-	 * 构造
-	 * @param watcher 实际处理触发事件的监视器{@link Watcher}，不可以是{@link DelayWatcher}
-	 * @param delay 延迟时间，单位毫秒
-	 */
-	public DelayWatcher(Watcher watcher, long delay) {
-		Preconditions.notNull(watcher);
-		if(watcher instanceof DelayWatcher) {
-			throw new IllegalArgumentException("Watcher must not be a DelayWatcher");
-		}
-		this.watcher = watcher;
-		this.delay = delay;
-	}
-	//---------------------------------------------------------------------------------------------------------- Constructor end
+    //---------------------------------------------------------------------------------------------------------- Constructor start
 
-	@Override
-	public void onModify(WatchEvent<?> event, Path currentPath) {
-		if(this.delay < 1) {
-			this.watcher.onModify(event, currentPath);
-		}else {
-			onDelayModify(event, currentPath);
-		}
-	}
+    /**
+     * 构造
+     *
+     * @param watcher 实际处理触发事件的监视器{@link Watcher}，不可以是{@link DelayWatcher}
+     * @param delay   延迟时间，单位毫秒
+     */
+    public DelayWatcher( Watcher watcher, long delay ) {
+        Preconditions.notNull(watcher);
+        if (watcher instanceof DelayWatcher) {
+            throw new IllegalArgumentException("Watcher must not be a DelayWatcher");
+        }
+        this.watcher = watcher;
+        this.delay = delay;
+    }
+    //---------------------------------------------------------------------------------------------------------- Constructor end
 
-	@Override
-	public void onCreate(WatchEvent<?> event, Path currentPath) {
-		watcher.onCreate(event, currentPath);
-	}
+    @Override
+    public void onModify( WatchEvent<?> event, Path currentPath ) {
+        if (this.delay < 1) {
+            this.watcher.onModify(event, currentPath);
+        } else {
+            onDelayModify(event, currentPath);
+        }
+    }
 
-	@Override
-	public void onDelete(WatchEvent<?> event, Path currentPath) {
-		watcher.onDelete(event, currentPath);
-	}
+    @Override
+    public void onCreate( WatchEvent<?> event, Path currentPath ) {
+        watcher.onCreate(event, currentPath);
+    }
 
-	@Override
-	public void onOverflow(WatchEvent<?> event, Path currentPath) {
-		watcher.onOverflow(event, currentPath);
-	}
+    @Override
+    public void onDelete( WatchEvent<?> event, Path currentPath ) {
+        watcher.onDelete(event, currentPath);
+    }
 
-	//---------------------------------------------------------------------------------------------------------- Private method start
-	/**
-	 * 触发延迟修改
-	 * @param event 事件
-	 * @param currentPath 事件发生的当前Path路径
-	 */
-	private void onDelayModify(WatchEvent<?> event, Path currentPath) {
-		Path eventPath = Paths.get(currentPath.toString(), event.context().toString());
-		if(eventSet.contains(eventPath)) {
-			//此事件已经被触发过，后续事件忽略，等待统一处理。
-			return;
-		}
+    @Override
+    public void onOverflow( WatchEvent<?> event, Path currentPath ) {
+        watcher.onOverflow(event, currentPath);
+    }
 
-		//事件第一次触发，此时标记事件，并启动处理线程延迟处理，处理结束后会删除标记
-		eventSet.add(eventPath);
-		startHandleModifyThread(event, currentPath);
-	}
+    //---------------------------------------------------------------------------------------------------------- Private method start
 
-	/**
-	 * 开启处理线程
-	 *
-	 * @param event 事件
-	 * @param currentPath 事件发生的当前Path路径
-	 */
-	private void startHandleModifyThread(final WatchEvent<?> event, final Path currentPath) {
-		ThreadUtil.execute(() -> {
-			ThreadUtil.sleep(delay);
-			eventSet.remove(Paths.get(currentPath.toString(), event.context().toString()));
-			watcher.onModify(event, currentPath);
-		});
-	}
-	//---------------------------------------------------------------------------------------------------------- Private method end
+    /**
+     * 触发延迟修改
+     *
+     * @param event       事件
+     * @param currentPath 事件发生的当前Path路径
+     */
+    private void onDelayModify( WatchEvent<?> event, Path currentPath ) {
+        Path eventPath = Paths.get(currentPath.toString(), event.context().toString());
+        if (eventSet.contains(eventPath)) {
+            //此事件已经被触发过，后续事件忽略，等待统一处理。
+            return;
+        }
+
+        //事件第一次触发，此时标记事件，并启动处理线程延迟处理，处理结束后会删除标记
+        eventSet.add(eventPath);
+        startHandleModifyThread(event, currentPath);
+    }
+
+    /**
+     * 开启处理线程
+     *
+     * @param event       事件
+     * @param currentPath 事件发生的当前Path路径
+     */
+    private void startHandleModifyThread( final WatchEvent<?> event, final Path currentPath ) {
+        ThreadUtil.execute(() -> {
+            ThreadUtil.sleep(delay);
+            eventSet.remove(Paths.get(currentPath.toString(), event.context().toString()));
+            watcher.onModify(event, currentPath);
+        });
+    }
+    //---------------------------------------------------------------------------------------------------------- Private method end
 }
