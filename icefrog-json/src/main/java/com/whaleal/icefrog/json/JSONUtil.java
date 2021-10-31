@@ -3,6 +3,7 @@ package com.whaleal.icefrog.json;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.file.FileReader;
 import com.whaleal.icefrog.core.lang.TypeReference;
+import com.whaleal.icefrog.core.map.MapWrapper;
 import com.whaleal.icefrog.core.util.*;
 import com.whaleal.icefrog.json.serialize.*;
 
@@ -40,7 +41,7 @@ public class JSONUtil {
      *
      * @param config JSON配置
      * @return JSONObject
-     * @since 1.0.0
+     * @since 5.2.5
      */
     public static JSONObject createObj( JSONConfig config ) {
         return new JSONObject(config);
@@ -60,7 +61,7 @@ public class JSONUtil {
      *
      * @param config JSON配置
      * @return JSONArray
-     * @since 1.0.0
+     * @since 5.2.5
      */
     public static JSONArray createArray( JSONConfig config ) {
         return new JSONArray(config);
@@ -94,7 +95,7 @@ public class JSONUtil {
      * @param obj    Bean对象或者Map
      * @param config JSON配置
      * @return JSONObject
-     * @since 1.0.0
+     * @since 5.3.1
      */
     public static JSONObject parseObj( Object obj, JSONConfig config ) {
         // 默认配置，根据对象类型决定是否有序
@@ -113,7 +114,7 @@ public class JSONUtil {
      * @param obj             Bean对象或者Map
      * @param ignoreNullValue 是否忽略空值，如果source为JSON字符串，不忽略空值
      * @return JSONObject
-     * @since 1.0.0
+     * @since 3.0.9
      */
     public static JSONObject parseObj( Object obj, boolean ignoreNullValue ) {
         return parseObj(obj, ignoreNullValue, InternalJSONUtil.isOrder(obj));
@@ -126,7 +127,7 @@ public class JSONUtil {
      * @param ignoreNullValue 是否忽略空值，如果source为JSON字符串，不忽略空值
      * @param isOrder         是否有序
      * @return JSONObject
-     * @since 1.0.0
+     * @since 4.2.2
      */
     public static JSONObject parseObj( Object obj, boolean ignoreNullValue, boolean isOrder ) {
         return new JSONObject(obj, ignoreNullValue, isOrder);
@@ -147,7 +148,7 @@ public class JSONUtil {
      *
      * @param arrayOrCollection 数组或集合对象
      * @return JSONArray
-     * @since 1.0.0
+     * @since 3.0.8
      */
     public static JSONArray parseArray( Object arrayOrCollection ) {
         return parseArray(arrayOrCollection, null);
@@ -159,7 +160,7 @@ public class JSONUtil {
      * @param arrayOrCollection 数组或集合对象
      * @param config            JSON配置
      * @return JSONArray
-     * @since 1.0.0
+     * @since 5.3.1
      */
     public static JSONArray parseArray( Object arrayOrCollection, JSONConfig config ) {
         return new JSONArray(arrayOrCollection, config);
@@ -171,7 +172,7 @@ public class JSONUtil {
      * @param arrayOrCollection 数组或集合对象
      * @param ignoreNullValue   是否忽略空值
      * @return JSONArray
-     * @since 1.0.0
+     * @since 3.2.3
      */
     public static JSONArray parseArray( Object arrayOrCollection, boolean ignoreNullValue ) {
         return new JSONArray(arrayOrCollection, ignoreNullValue);
@@ -205,7 +206,7 @@ public class JSONUtil {
      * @param obj    对象
      * @param config JSON配置，{@code null}使用默认配置
      * @return JSON
-     * @since 1.0.0
+     * @since 5.3.1
      */
     public static JSON parse( Object obj, JSONConfig config ) {
         if (null == obj) {
@@ -217,6 +218,9 @@ public class JSONUtil {
         } else if (obj instanceof CharSequence) {
             final String jsonStr = StrUtil.trim((CharSequence) obj);
             json = isJsonArray(jsonStr) ? parseArray(jsonStr, config) : parseObj(jsonStr, config);
+        } else if (obj instanceof MapWrapper) {
+            // MapWrapper实现了Iterable会被当作JSONArray，此处做修正
+            json = parseObj(obj, config);
         } else if (obj instanceof Iterable || obj instanceof Iterator || ArrayUtil.isArray(obj)) {// 列表
             json = parseArray(obj, config);
         } else {// 对象
@@ -311,7 +315,7 @@ public class JSONUtil {
      *
      * @param json   JSON
      * @param writer Writer
-     * @since 1.0.0
+     * @since 5.3.3
      */
     public static void toJsonStr( JSON json, Writer writer ) {
         if (null != json) {
@@ -345,10 +349,10 @@ public class JSONUtil {
     /**
      * 转换为JSON字符串
      *
-     * @param jsonConfig jsonconfig
      * @param obj        被转为JSON的对象
+     * @param jsonConfig JSON配置
      * @return JSON字符串
-     * @since 1.0.0
+     * @since 5.7.12
      */
     public static String toJsonStr( Object obj, JSONConfig jsonConfig ) {
         if (null == obj) {
@@ -365,7 +369,7 @@ public class JSONUtil {
      *
      * @param obj    被转为JSON的对象
      * @param writer Writer
-     * @since 1.0.0
+     * @since 5.3.3
      */
     public static void toJsonStr( Object obj, Writer writer ) {
         if (null != obj) {
@@ -403,7 +407,7 @@ public class JSONUtil {
      * @param jsonString JSON字符串
      * @param beanClass  实体类对象
      * @return 实体类对象
-     * @since 1.0.0
+     * @since 3.1.2
      */
     public static <T> T toBean( String jsonString, Class<T> beanClass ) {
         return toBean(parseObj(jsonString), beanClass);
@@ -429,7 +433,7 @@ public class JSONUtil {
      * @param typeReference {@link TypeReference}类型参考子类，可以获取其泛型参数中的Type类型
      * @param ignoreError   是否忽略错误
      * @return 实体类对象
-     * @since 1.0.0
+     * @since 4.3.2
      */
     public static <T> T toBean( String jsonString, TypeReference<T> typeReference, boolean ignoreError ) {
         return toBean(jsonString, typeReference.getType(), ignoreError);
@@ -443,7 +447,7 @@ public class JSONUtil {
      * @param beanType    实体类对象类型
      * @param ignoreError 是否忽略错误
      * @return 实体类对象
-     * @since 1.0.0
+     * @since 4.3.2
      */
     public static <T> T toBean( String jsonString, Type beanType, boolean ignoreError ) {
         return toBean(parse(jsonString), beanType, ignoreError);
@@ -457,7 +461,7 @@ public class JSONUtil {
      * @param typeReference {@link TypeReference}类型参考子类，可以获取其泛型参数中的Type类型
      * @param ignoreError   是否忽略转换错误
      * @return 实体类对象
-     * @since 1.0.0
+     * @since 4.6.2
      */
     public static <T> T toBean( JSON json, TypeReference<T> typeReference, boolean ignoreError ) {
         return toBean(json, typeReference.getType(), ignoreError);
@@ -471,7 +475,7 @@ public class JSONUtil {
      * @param beanType    实体类对象类型
      * @param ignoreError 是否忽略转换错误
      * @return 实体类对象
-     * @since 1.0.0
+     * @since 4.3.2
      */
     public static <T> T toBean( JSON json, Type beanType, boolean ignoreError ) {
         if (null == json) {
@@ -488,7 +492,7 @@ public class JSONUtil {
      * @param jsonArray   JSONArray字符串
      * @param elementType List中元素类型
      * @return List
-     * @since 1.0.0
+     * @since 5.5.2
      */
     public static <T> List<T> toList( String jsonArray, Class<T> elementType ) {
         return toList(parseArray(jsonArray), elementType);
@@ -501,7 +505,7 @@ public class JSONUtil {
      * @param jsonArray   {@link JSONArray}
      * @param elementType List中元素类型
      * @return List
-     * @since 1.0.0
+     * @since 4.0.7
      */
     public static <T> List<T> toList( JSONArray jsonArray, Class<T> elementType ) {
         return null == jsonArray ? null : jsonArray.toList(elementType);
@@ -554,7 +558,7 @@ public class JSONUtil {
      * @param defaultValue 默认值
      * @return 对象
      * @see JSON#getByPath(String)
-     * @since 1.0.0
+     * @since 5.6.0
      */
     @SuppressWarnings("unchecked")
     public static <T> T getByPath( JSON json, String expression, T defaultValue ) {
@@ -615,7 +619,7 @@ public class JSONUtil {
      * @param string 字符串
      * @param isWrap 是否使用双引号包装字符串
      * @return 适合在JSON中显示的字符串
-     * @since 1.0.0
+     * @since 3.3.1
      */
     public static String quote( String string, boolean isWrap ) {
         StringWriter sw = new StringWriter();
@@ -651,7 +655,7 @@ public class JSONUtil {
      * @param isWrap 是否使用双引号包装字符串
      * @return Writer
      * @throws IOException IO异常
-     * @since 1.0.0
+     * @since 3.3.1
      */
     public static Writer quote( String str, Writer writer, boolean isWrap ) throws IOException {
         if (StrUtil.isEmpty(str)) {
@@ -793,7 +797,7 @@ public class JSONUtil {
      *
      * @param jsonStr JSON字符串
      * @return 格式化后的字符串
-     * @since 1.0.0
+     * @since 3.1.2
      */
     public static String formatJsonStr( String jsonStr ) {
         return JSONStrFormatter.format(jsonStr);
@@ -804,7 +808,7 @@ public class JSONUtil {
      *
      * @param str 字符串
      * @return 是否为JSON字符串
-     * @since 1.0.0
+     * @since 3.3.0
      */
     public static boolean isJson( String str ) {
         return isJsonObj(str) || isJsonArray(str);
@@ -815,7 +819,7 @@ public class JSONUtil {
      *
      * @param str 字符串
      * @return 是否为JSON字符串
-     * @since 1.0.0
+     * @since 3.3.0
      */
     public static boolean isJsonObj( String str ) {
         if (StrUtil.isBlank(str)) {
@@ -829,7 +833,7 @@ public class JSONUtil {
      *
      * @param str 字符串
      * @return 是否为JSON字符串
-     * @since 1.0.0
+     * @since 3.3.0
      */
     public static boolean isJsonArray( String str ) {
         if (StrUtil.isBlank(str)) {
@@ -848,7 +852,7 @@ public class JSONUtil {
      *
      * @param obj 对象
      * @return 是否为null
-     * @since 1.0.0
+     * @since 4.5.7
      */
     public static boolean isNull( Object obj ) {
         return null == obj || obj instanceof JSONNull;
@@ -860,7 +864,7 @@ public class JSONUtil {
      *
      * @param xml XML字符串
      * @return JSONObject
-     * @since 1.0.0
+     * @since 4.0.8
      */
     public static JSONObject xmlToJson( String xml ) {
         return XML.toJSONObject(xml);
@@ -872,7 +876,7 @@ public class JSONUtil {
      * @param type       对象类型
      * @param serializer 序列化器实现
      * @see GlobalSerializeMapping#put(Type, JSONArraySerializer)
-     * @since 1.0.0
+     * @since 4.6.5
      */
     public static void putSerializer( Type type, JSONArraySerializer<?> serializer ) {
         GlobalSerializeMapping.put(type, serializer);
@@ -884,7 +888,7 @@ public class JSONUtil {
      * @param type       对象类型
      * @param serializer 序列化器实现
      * @see GlobalSerializeMapping#put(Type, JSONObjectSerializer)
-     * @since 1.0.0
+     * @since 4.6.5
      */
     public static void putSerializer( Type type, JSONObjectSerializer<?> serializer ) {
         GlobalSerializeMapping.put(type, serializer);
@@ -896,7 +900,7 @@ public class JSONUtil {
      * @param type         对象类型
      * @param deserializer 反序列化器实现
      * @see GlobalSerializeMapping#put(Type, JSONDeserializer)
-     * @since 1.0.0
+     * @since 4.6.5
      */
     public static void putDeserializer( Type type, JSONDeserializer<?> deserializer ) {
         GlobalSerializeMapping.put(type, deserializer);
