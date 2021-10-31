@@ -84,6 +84,7 @@ A Java-based tool class for files, streams, encryption and decryption, transcodi
 | icefrog-poi         |     Tools for working with Excel and Word in POI                                                                        |
 | icefrog-socket      |     Java-based tool classes for NIO and AIO sockets                                                                     |
 | icefrog-jwt         |     JSON Web Token (JWT) implement                                                                                      |
+| icefrog-collections |     Java  collection  expand tools                                                                                     |
 
 Each module can be introduced individually, or all modules can be introduced by introducing `icefrog-all` as required.
 
@@ -104,18 +105,18 @@ Each module can be introduced individually, or all modules can be introduced by 
 <dependency>
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.4</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'com.whaleal.icefrog:icefrog-all:1.1.2'
+implementation 'com.whaleal.icefrog:icefrog-all:1.1.4'
 ```
 
 ## 📥Download
 
-- [Maven Repo](https://repo1.maven.org/maven2/com/whaleal/icefrog/icefrog-all/1.1.2/)
+- [Maven Repo](https://repo1.maven.org/maven2/com/whaleal/icefrog/icefrog-all/1.1.4/)
 
 > 🔔️note:
 > icefrog 1.x supports JDK8+ and is not tested on Android platforms, and cannot guarantee that all tool classes or tool methods are available.
@@ -143,6 +144,7 @@ icefrog's source code is divided into two branches:
 
 | branch | description                                               |
 |-----------|---------------------------------------------------------------|
+| main | The main branch, the branch used by the release version, is the same as the jar committed to the central repository and does not receive any pr or modifications. |
 | v1-main | The main branch, the branch used by the release version, is the same as the jar committed to the central repository and does not receive any pr or modifications. |
 | v1-dev    | Development branch, which defaults to the next SNAPSHOT version, accepts modifications or pr |
 

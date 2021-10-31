@@ -82,6 +82,8 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 | icefrog-poi         |     针对POI中Excel和Word的封装                                                       |
 | icefrog-socket      |     基于Java的NIO和AIO的Socket封装                                                   |
 | icefrog-jwt         |     JSON Web Token (JWT)封装实现                                                    |
+| icefrog-collection   |    Java集合类的一些拓展 如Map<k,Map<T,V>> List<List<E>> 等                            |
+
 
 可以根据需求对每个模块单独引入，也可以通过引入`icefrog-all`方式引入所有模块。
 
@@ -101,20 +103,20 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 <dependency>
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.4</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'com.whaleal.icefrog:icefrog-all:1.1.2'
+implementation 'com.whaleal.icefrog:icefrog-all:1.1.4'
 ```
 
 ### 📥下载jar
 
 点击以下链接，下载`icefrog-all-X.X.X.jar`即可：
 
-- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.1.2/)
+- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.1.4/)
 
 > 🔔️注意
 > icefrog 1.x支持JDK8+，对Android平台没有测试，不能保证所有工具类或工具方法可用。
@@ -167,7 +169,8 @@ icefrog欢迎任何人为icefrog添砖加瓦，贡献代码，不过维护者是
 1. 注释完备，尤其每个新增的方法应按照Java文档规范标明方法说明、参数说明、返回值说明等信息，必要时请添加单元测试，如果愿意，也可以加上你的大名。
 2. icefrog的缩进按照IDEA,IDEA真香，默认（tab）缩进，所以请遵守（不要和我争执空格与tab的问题，这是一个病人的习惯）。
 3. 新加的方法不要使用第三方库的方法，icefrog遵循无依赖原则（除非在extra模块中加方法工具）。
-4. 请pull request到`v1-dev`分支。icefrog在1.x版本后使用了新的分支：`v1-main`是主分支，表示已经发布中央库的版本，这个分支不允许pr，也不允许修改。
+4. 请pull request到`v1-dev`分支，icefrog在1.x版本后使用了新的分支：`v1-main`是大版本主分支，表示已经发布中央库的版本，这个分支不允许pr，也不允许修改。
+5. mian  分支 主要用于 release  相关版本等 
 
 -------------------------------------------------------------------------------
 
