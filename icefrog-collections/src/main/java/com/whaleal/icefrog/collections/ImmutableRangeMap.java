@@ -15,7 +15,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collector;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 
 /**

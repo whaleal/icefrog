@@ -5,25 +5,19 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.NavigableMap;
-import java.util.NoSuchElementException;
-import java.util.Set;
-import java.util.TreeMap;
 import javax.annotation.CheckForNull;
+import java.io.Serializable;
+import java.util.*;
+import java.util.Map.Entry;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * An implementation of {@link RangeSet} backed by a {@link TreeMap}.
  *
  * 
- * @since 14.0
+ * .0
  */
 
 // uses NavigableMap
@@ -52,7 +46,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
    * element will be contained in this {@code RangeSet} if and only if it is contained in at least
    * one {@code Range} in {@code ranges}.
    *
-   * @since 21.0
+   *
    */
   public static <C extends Comparable<?>> TreeRangeSet<C> create(Iterable<Range<C>> ranges) {
     TreeRangeSet<C> result = create();

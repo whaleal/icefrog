@@ -16,31 +16,31 @@ import java.util.regex.Pattern;
  */
 public class EscapeStrCellSetter extends CharSequenceCellSetter {
 
-	private static final Pattern utfPtrn = Pattern.compile("_x[0-9A-Fa-f]{4}_");
+    private static final Pattern utfPtrn = Pattern.compile("_x[0-9A-Fa-f]{4}_");
 
-	/**
-	 * 构造
-	 *
-	 * @param value 值
-	 */
-	public EscapeStrCellSetter(CharSequence value) {
-		super(escape(StrUtil.str(value)));
-	}
+    /**
+     * 构造
+     *
+     * @param value 值
+     */
+    public EscapeStrCellSetter( CharSequence value ) {
+        super(escape(StrUtil.str(value)));
+    }
 
-	/**
-	 * 使用 _x005F前缀转义_xXXXX_，避免被decode的问题<br>
-	 * issue#I466ZZ@github
-	 *
-	 * @param value 被转义的字符串
-	 * @return 转义后的字符串
-	 */
-	private static String escape(String value) {
-		if (value == null || false == value.contains("_x")) {
-			return value;
-		}
+    /**
+     * 使用 _x005F前缀转义_xXXXX_，避免被decode的问题<br>
+     * issue#I466ZZ@github
+     *
+     * @param value 被转义的字符串
+     * @return 转义后的字符串
+     */
+    private static String escape( String value ) {
+        if (value == null || false == value.contains("_x")) {
+            return value;
+        }
 
-		// 使用 _x005F前缀转义_xXXXX_，避免被decode的问题
-		// issue#I466ZZ@github
-		return ReUtil.replaceAll(value, utfPtrn, "_x005F$0");
-	}
+        // 使用 _x005F前缀转义_xXXXX_，避免被decode的问题
+        // issue#I466ZZ@github
+        return ReUtil.replaceAll(value, utfPtrn, "_x005F$0");
+    }
 }

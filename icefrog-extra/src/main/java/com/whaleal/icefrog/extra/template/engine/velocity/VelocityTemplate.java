@@ -17,8 +17,7 @@ import java.util.Map;
 /**
  * Velocity模板包装
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class VelocityTemplate extends AbstractTemplate implements Serializable {

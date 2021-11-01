@@ -10,20 +10,20 @@ package com.whaleal.icefrog.core.thread.threadlocal;
  */
 public class NamedThreadLocal<T> extends ThreadLocal<T> {
 
-	private final String name;
+    private final String name;
 
-	/**
-	 * 构造
-	 *
-	 * @param name 名字
-	 */
-	public NamedThreadLocal(String name) {
-		this.name = name;
-	}
+    /**
+     * 构造
+     *
+     * @param name 名字
+     */
+    public NamedThreadLocal( String name ) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return this.name;
-	}
+    @Override
+    public String toString() {
+        return this.name;
+    }
 
 }

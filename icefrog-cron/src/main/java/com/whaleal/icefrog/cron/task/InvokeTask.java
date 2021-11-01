@@ -16,54 +16,54 @@ import java.lang.reflect.Method;
  *
  * @author Looly
  * @author wh
- *
  */
-public class InvokeTask implements Task{
+public class InvokeTask implements Task {
 
-	private final Object obj;
-	private final Method method;
+    private final Object obj;
+    private final Method method;
 
-	/**
-	 * 构造
-	 * @param classNameWithMethodName 类名与方法名的字符串表示，方法名和类名使用#隔开或者.隔开
-	 */
-	public InvokeTask(String classNameWithMethodName) {
-		int splitIndex = classNameWithMethodName.lastIndexOf('#');
-		if(splitIndex <= 0){
-			splitIndex = classNameWithMethodName.lastIndexOf('.');
-		}
-		if (splitIndex <= 0) {
-			throw new UtilException("Invalid classNameWithMethodName [{}]!", classNameWithMethodName);
-		}
+    /**
+     * 构造
+     *
+     * @param classNameWithMethodName 类名与方法名的字符串表示，方法名和类名使用#隔开或者.隔开
+     */
+    public InvokeTask( String classNameWithMethodName ) {
+        int splitIndex = classNameWithMethodName.lastIndexOf('#');
+        if (splitIndex <= 0) {
+            splitIndex = classNameWithMethodName.lastIndexOf('.');
+        }
+        if (splitIndex <= 0) {
+            throw new UtilException("Invalid classNameWithMethodName [{}]!", classNameWithMethodName);
+        }
 
-		//类
-		final String className = classNameWithMethodName.substring(0, splitIndex);
-		if(StrUtil.isBlank(className)) {
-			throw new IllegalArgumentException("Class name is blank !");
-		}
-		final Class<?> clazz = ClassLoaderUtil.loadClass(className);
-		if(null == clazz) {
-			throw new IllegalArgumentException("Load class with name of [" + className + "] fail !");
-		}
-		this.obj = ReflectUtil.newInstanceIfPossible(clazz);
+        //类
+        final String className = classNameWithMethodName.substring(0, splitIndex);
+        if (StrUtil.isBlank(className)) {
+            throw new IllegalArgumentException("Class name is blank !");
+        }
+        final Class<?> clazz = ClassLoaderUtil.loadClass(className);
+        if (null == clazz) {
+            throw new IllegalArgumentException("Load class with name of [" + className + "] fail !");
+        }
+        this.obj = ReflectUtil.newInstanceIfPossible(clazz);
 
-		//方法
-		final String methodName = classNameWithMethodName.substring(splitIndex + 1);
-		if(StrUtil.isBlank(methodName)) {
-			throw new IllegalArgumentException("Method name is blank !");
-		}
-		this.method = ClassUtil.getPublicMethod(clazz, methodName);
-		if(null == this.method) {
-			throw new IllegalArgumentException("No method with name of [" + methodName + "] !");
-		}
-	}
+        //方法
+        final String methodName = classNameWithMethodName.substring(splitIndex + 1);
+        if (StrUtil.isBlank(methodName)) {
+            throw new IllegalArgumentException("Method name is blank !");
+        }
+        this.method = ClassUtil.getPublicMethod(clazz, methodName);
+        if (null == this.method) {
+            throw new IllegalArgumentException("No method with name of [" + methodName + "] !");
+        }
+    }
 
-	@Override
-	public void execute() {
-		try {
-			ReflectUtil.invoke(this.obj, this.method);
-		} catch (UtilException e) {
-			throw new CronException(e.getCause());
-		}
-	}
+    @Override
+    public void execute() {
+        try {
+            ReflectUtil.invoke(this.obj, this.method);
+        } catch (UtilException e) {
+            throw new CronException(e.getCause());
+        }
+    }
 }

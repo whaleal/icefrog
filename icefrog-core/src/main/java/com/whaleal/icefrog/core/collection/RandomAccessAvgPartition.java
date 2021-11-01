@@ -21,13 +21,13 @@ import java.util.RandomAccess;
  */
 public class RandomAccessAvgPartition<T> extends AvgPartition<T> implements RandomAccess {
 
-	/**
-	 * 列表分区
-	 *
-	 * @param list  被分区的列表
-	 * @param limit 分区个数
-	 */
-	public RandomAccessAvgPartition(List<T> list, int limit) {
-		super(list, limit);
-	}
+    /**
+     * 列表分区
+     *
+     * @param list  被分区的列表
+     * @param limit 分区个数
+     */
+    public RandomAccessAvgPartition( List<T> list, int limit ) {
+        super(list, limit);
+    }
 }

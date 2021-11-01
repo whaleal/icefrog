@@ -6,8 +6,7 @@ import java.nio.charset.Charset;
 /**
  * FTP配置项，提供FTP各种参数信息
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class FtpConfig implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -86,7 +85,7 @@ public class FtpConfig implements Serializable {
 	 * @param charset            编码
 	 * @param serverLanguageCode 服务器语言
 	 * @param systemKey          系统关键字
-	 * @since 1.0.0
+	 *
 	 */
 	public FtpConfig(String host, int port, String user, String password, Charset charset, String serverLanguageCode, String systemKey) {
 		this.host = host;

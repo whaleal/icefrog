@@ -6,5 +6,5 @@ import java.util.Map;
 
 @Data
 public class UserWithMap {
-	private Map<String, String> data;
+    private Map<String, String> data;
 }

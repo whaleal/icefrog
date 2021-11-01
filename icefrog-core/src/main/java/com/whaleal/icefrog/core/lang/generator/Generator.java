@@ -9,10 +9,10 @@ package com.whaleal.icefrog.core.lang.generator;
  */
 public interface Generator<T> {
 
-	/**
-	 * 生成新的对象
-	 *
-	 * @return 新的对象
-	 */
-	T next();
+    /**
+     * 生成新的对象
+     *
+     * @return 新的对象
+     */
+    T next();
 }

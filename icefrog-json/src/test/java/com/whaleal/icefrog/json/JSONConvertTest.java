@@ -14,9 +14,8 @@ import java.util.Map;
 
 /**
  * JSON转换单元测试
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly   wh，质量过关
  *
  */
 public class JSONConvertTest {
@@ -61,7 +60,7 @@ public class JSONConvertTest {
 		JSONObject examInfoDictsJson = obj.getJSONObject("userInfoDict");
 		Assert.assertEquals(new Integer(1), examInfoDictsJson.getInt("id"));
 		Assert.assertEquals("质量过关", examInfoDictsJson.getStr("realName"));
-
+		
 		Object id = JSONUtil.getByPath(obj, "userInfoDict.examInfoDict[0].id");
 		Assert.assertEquals(1, id);
 	}
@@ -77,7 +76,7 @@ public class JSONConvertTest {
 
 		JSONObject jsonObject = JSONUtil.parseObj(examJson).getJSONObject("examInfoDicts");
 		UserInfoDict userInfoDict = jsonObject.toBean(UserInfoDict.class);
-
+		
 		Assert.assertEquals(userInfoDict.getId(), new Integer(1));
 		Assert.assertEquals(userInfoDict.getRealName(), "质量过关");
 
@@ -88,7 +87,7 @@ public class JSONConvertTest {
 		UserInfoDict userInfoDict2 = jsonObject2.toBean(UserInfoDict.class);
 		Assert.assertNull(userInfoDict2.getId());
 	}
-
+	
 	/**
 	 * 针对Bean中Setter返回this测试是否可以成功调用Setter方法并注入
 	 */
@@ -97,7 +96,7 @@ public class JSONConvertTest {
 		String jsonStr = ResourceUtil.readUtf8Str("evaluation.json");
 		JSONObject obj = JSONUtil.parseObj(jsonStr);
 		PerfectEvaluationProductResVo vo = obj.toBean(PerfectEvaluationProductResVo.class);
-
+		
 		Assert.assertEquals(obj.getStr("HA001"), vo.getHA001());
 		Assert.assertEquals(obj.getInt("costTotal"), vo.getCostTotal());
 	}

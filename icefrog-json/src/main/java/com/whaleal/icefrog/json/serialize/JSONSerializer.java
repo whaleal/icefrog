@@ -7,8 +7,7 @@ import com.whaleal.icefrog.json.JSON;
  *
  * @param <T> JSON类型，可以是JSONObject或者JSONArray
  * @param <V> 对象类型
- * @author Looly
- * @author wh
+ * @author looly   wh
  */
 @FunctionalInterface
 public interface JSONSerializer<T extends JSON, V> {

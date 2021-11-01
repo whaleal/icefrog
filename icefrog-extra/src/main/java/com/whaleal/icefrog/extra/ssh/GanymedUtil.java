@@ -14,9 +14,8 @@ import java.nio.charset.Charset;
 /**
  * Ganymed-SSH2封装，见：http://www.ganymed.ethz.ch/ssh2/
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class GanymedUtil {
 

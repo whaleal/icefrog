@@ -9,9 +9,8 @@ import com.whaleal.icefrog.core.util.CharsetUtil;
 /**
  * 模板配置
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class TemplateConfig implements Serializable {
 	private static final long serialVersionUID = 2933113779920339523L;
@@ -87,7 +86,7 @@ public class TemplateConfig implements Serializable {
 	 * 获取编码
 	 *
 	 * @return 编码
-	 * @since 1.0.0
+	 *
 	 */
 	public String getCharsetStr() {
 		if (null == this.charset) {
@@ -145,7 +144,7 @@ public class TemplateConfig implements Serializable {
 	 * 获取自定义引擎，null表示系统自动判断
 	 *
 	 * @return 自定义引擎，null表示系统自动判断
-	 * @since 1.0.0
+	 *
 	 */
 	public Class<? extends TemplateEngine> getCustomEngine() {
 		return customEngine;
@@ -157,7 +156,7 @@ public class TemplateConfig implements Serializable {
 	 *
 	 * @param customEngine 自定义引擎，null表示系统自动判断
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public TemplateConfig setCustomEngine(Class<? extends TemplateEngine> customEngine) {
 		this.customEngine = customEngine;
@@ -167,8 +166,7 @@ public class TemplateConfig implements Serializable {
 	/**
 	 * 资源加载方式枚举
 	 *
-	 * @author Looly
- * @author wh
+	 * @author looly
 	 */
 	public enum ResourceMode {
 		/**

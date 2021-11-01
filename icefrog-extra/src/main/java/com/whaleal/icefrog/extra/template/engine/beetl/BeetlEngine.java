@@ -7,19 +7,14 @@ import com.whaleal.icefrog.extra.template.TemplateEngine;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.ResourceLoader;
-import org.beetl.core.resource.ClasspathResourceLoader;
-import org.beetl.core.resource.CompositeResourceLoader;
-import org.beetl.core.resource.FileResourceLoader;
-import org.beetl.core.resource.StringTemplateResourceLoader;
-import org.beetl.core.resource.WebAppResourceLoader;
+import org.beetl.core.resource.*;
 
 import java.io.IOException;
 
 /**
  * Beetl模板引擎封装
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class BeetlEngine implements TemplateEngine {
 
@@ -107,7 +102,7 @@ public class BeetlEngine implements TemplateEngine {
 	 *
 	 * @param loader {@link ResourceLoader}，资源加载器
 	 * @return {@link GroupTemplate}
-	 * @since 1.0.0
+	 *
 	 */
 	private static GroupTemplate createGroupTemplate(ResourceLoader<?> loader) {
 		try {

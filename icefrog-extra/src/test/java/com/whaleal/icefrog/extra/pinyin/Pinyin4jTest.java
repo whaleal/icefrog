@@ -6,17 +6,17 @@ import org.junit.Test;
 
 public class Pinyin4jTest {
 
-	final Pinyin4jEngine engine = new Pinyin4jEngine();
+    final Pinyin4jEngine engine = new Pinyin4jEngine();
 
-	@Test
-	public void getFirstLetterByPinyin4jTest(){
-		final String result = engine.getFirstLetter("林海", "");
-		Assert.assertEquals("lh", result);
-	}
+    @Test
+    public void getFirstLetterByPinyin4jTest() {
+        final String result = engine.getFirstLetter("林海", "");
+        Assert.assertEquals("lh", result);
+    }
 
-	@Test
-	public void getPinyinByPinyin4jTest() {
-		final String pinyin = engine.getPinyin("你好h", " ");
-		Assert.assertEquals("ni hao h", pinyin);
-	}
+    @Test
+    public void getPinyinByPinyin4jTest() {
+        final String pinyin = engine.getPinyin("你好h", " ");
+        Assert.assertEquals("ni hao h", pinyin);
+    }
 }

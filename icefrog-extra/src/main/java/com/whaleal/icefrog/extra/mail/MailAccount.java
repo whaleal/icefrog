@@ -14,8 +14,7 @@ import java.util.Properties;
 /**
  * 邮件账户对象
  *
- * @author Looly
- * @author wh
+ * @author Luxiaolei
  */
 public class MailAccount implements Serializable {
 	private static final long serialVersionUID = -6937313421815719204L;
@@ -277,7 +276,7 @@ public class MailAccount implements Serializable {
 	 * 是否打开调试模式，调试模式会显示与邮件服务器通信过程，默认不开启
 	 *
 	 * @return 是否打开调试模式，调试模式会显示与邮件服务器通信过程，默认不开启
-	 * @since 1.0.0
+	 *
 	 */
 	public boolean isDebug() {
 		return debug;
@@ -288,7 +287,7 @@ public class MailAccount implements Serializable {
 	 *
 	 * @param debug 是否打开调试模式，调试模式会显示与邮件服务器通信过程，默认不开启
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public MailAccount setDebug(boolean debug) {
 		this.debug = debug;
@@ -376,7 +375,7 @@ public class MailAccount implements Serializable {
 	/**
 	 * 获取SSL协议，多个协议用空格分隔
 	 * @return SSL协议，多个协议用空格分隔
-	 * @since 1.0.0
+	 *
 	 */
 	public String getSslProtocols() {
 		return sslProtocols;
@@ -386,7 +385,7 @@ public class MailAccount implements Serializable {
 	 * 设置SSL协议，多个协议用空格分隔
 	 *
 	 * @param sslProtocols SSL协议，多个协议用空格分隔
-	 * @since 1.0.0
+	 *
 	 */
 	public void setSslProtocols(String sslProtocols) {
 		this.sslProtocols = sslProtocols;
@@ -457,7 +456,7 @@ public class MailAccount implements Serializable {
 	 *
 	 * @param timeout SMTP超时时长，单位毫秒，缺省值不超时
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public MailAccount setTimeout(long timeout) {
 		this.timeout = timeout;
@@ -469,7 +468,7 @@ public class MailAccount implements Serializable {
 	 *
 	 * @param connectionTimeout Socket连接超时值，单位毫秒，缺省值不超时
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public MailAccount setConnectionTimeout(long connectionTimeout) {
 		this.connectionTimeout = connectionTimeout;
@@ -480,7 +479,7 @@ public class MailAccount implements Serializable {
 	 * 获取自定义属性列表
 	 *
 	 * @return 自定义参数列表
-	 * @since 1.0.0
+	 *
 	 */
 	public Map<String, Object> getCustomProperty() {
 		return customProperty;
@@ -492,7 +491,7 @@ public class MailAccount implements Serializable {
 	 * @param key   属性名，空白被忽略
 	 * @param value 属性值， null被忽略
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public MailAccount setCustomProperty(String key, Object value) {
 		if (StrUtil.isNotBlank(key) && ObjectUtil.isNotNull(value)) {
@@ -540,7 +539,7 @@ public class MailAccount implements Serializable {
 			p.put(SOCKET_FACTORY, socketFactoryClass);
 			p.put(SOCKET_FACTORY_FALLBACK, String.valueOf(this.socketFactoryFallback));
 			p.put(SOCKET_FACTORY_PORT, String.valueOf(this.socketFactoryPort));
-			// issue#IZN95@github，在Linux下需自定义SSL协议版本
+			// issue#IZN95@Gitee，在Linux下需自定义SSL协议版本
 			if (StrUtil.isNotBlank(this.sslProtocols)) {
 				p.put(SSL_PROTOCOLS, this.sslProtocols);
 			}

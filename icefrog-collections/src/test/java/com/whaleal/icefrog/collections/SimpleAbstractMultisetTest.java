@@ -3,20 +3,16 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.util.ObjectUtil;
+import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.whaleal.icefrog.collections.*;
-import com.whaleal.icefrog.core.util.ObjectUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
 
 
 /**
@@ -29,6 +25,9 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
 
 public class SimpleAbstractMultisetTest extends TestCase {
 
+  @Test
+  public void test(){
+  }
 
   public void testFastAddAllMultiset() {
     final AtomicInteger addCalls = new AtomicInteger();

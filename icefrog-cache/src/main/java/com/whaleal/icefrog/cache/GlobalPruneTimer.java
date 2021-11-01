@@ -17,67 +17,67 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author wh
  */
 public enum GlobalPruneTimer {
-	/**
-	 * 单例对象
-	 */
-	INSTANCE;
+    /**
+     * 单例对象
+     */
+    INSTANCE;
 
-	/**
-	 * 缓存任务计数
-	 */
-	private final AtomicInteger cacheTaskNumber = new AtomicInteger(1);
+    /**
+     * 缓存任务计数
+     */
+    private final AtomicInteger cacheTaskNumber = new AtomicInteger(1);
 
-	/**
-	 * 定时器
-	 */
-	private ScheduledExecutorService pruneTimer;
+    /**
+     * 定时器
+     */
+    private ScheduledExecutorService pruneTimer;
 
-	/**
-	 * 构造
-	 */
-	GlobalPruneTimer() {
-		create();
-	}
+    /**
+     * 构造
+     */
+    GlobalPruneTimer() {
+        create();
+    }
 
-	/**
-	 * 启动定时任务
-	 *
-	 * @param task  任务
-	 * @param delay 周期
-	 * @return {@link ScheduledFuture}对象，可手动取消此任务
-	 */
-	public ScheduledFuture<?> schedule(Runnable task, long delay) {
-		return this.pruneTimer.scheduleAtFixedRate(task, delay, delay, TimeUnit.MILLISECONDS);
-	}
+    /**
+     * 启动定时任务
+     *
+     * @param task  任务
+     * @param delay 周期
+     * @return {@link ScheduledFuture}对象，可手动取消此任务
+     */
+    public ScheduledFuture<?> schedule( Runnable task, long delay ) {
+        return this.pruneTimer.scheduleAtFixedRate(task, delay, delay, TimeUnit.MILLISECONDS);
+    }
 
-	/**
-	 * 创建定时器
-	 */
-	public void create() {
-		if (null != pruneTimer) {
-			shutdownNow();
-		}
-		this.pruneTimer = new ScheduledThreadPoolExecutor(1, r -> ThreadUtil.newThread(r, StrUtil.format("Pure-Timer-{}", cacheTaskNumber.getAndIncrement())));
-	}
+    /**
+     * 创建定时器
+     */
+    public void create() {
+        if (null != pruneTimer) {
+            shutdownNow();
+        }
+        this.pruneTimer = new ScheduledThreadPoolExecutor(1, r -> ThreadUtil.newThread(r, StrUtil.format("Pure-Timer-{}", cacheTaskNumber.getAndIncrement())));
+    }
 
-	/**
-	 * 销毁全局定时器
-	 */
-	public void shutdown() {
-		if (null != pruneTimer) {
-			pruneTimer.shutdown();
-		}
-	}
+    /**
+     * 销毁全局定时器
+     */
+    public void shutdown() {
+        if (null != pruneTimer) {
+            pruneTimer.shutdown();
+        }
+    }
 
-	/**
-	 * 销毁全局定时器
-	 *
-	 * @return 销毁时未被执行的任务列表
-	 */
-	public List<Runnable> shutdownNow() {
-		if (null != pruneTimer) {
-			return pruneTimer.shutdownNow();
-		}
-		return null;
-	}
+    /**
+     * 销毁全局定时器
+     *
+     * @return 销毁时未被执行的任务列表
+     */
+    public List<Runnable> shutdownNow() {
+        if (null != pruneTimer) {
+            return pruneTimer.shutdownNow();
+        }
+        return null;
+    }
 }

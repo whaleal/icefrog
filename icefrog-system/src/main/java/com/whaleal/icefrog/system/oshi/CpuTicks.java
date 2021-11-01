@@ -12,135 +12,135 @@ import oshi.util.Util;
  */
 public class CpuTicks {
 
-	long idle;
-	long nice;
-	long irq;
-	long softIrq;
-	long steal;
-	long cSys;
-	long user;
-	long ioWait;
+    long idle;
+    long nice;
+    long irq;
+    long softIrq;
+    long steal;
+    long cSys;
+    long user;
+    long ioWait;
 
-	/**
-	 * 构造，等待时间为用于计算在一定时长内的CPU负载情况，如传入1000表示最近1秒的负载情况
-	 *
-	 * @param processor   {@link CentralProcessor}
-	 * @param waitingTime 设置等待时间，单位毫秒
-	 */
-	public CpuTicks(CentralProcessor processor, long waitingTime) {
-		// CPU信息
-		final long[] prevTicks = processor.getSystemCpuLoadTicks();
-		// 这里必须要设置延迟
-		Util.sleep(waitingTime);
-		final long[] ticks = processor.getSystemCpuLoadTicks();
+    /**
+     * 构造，等待时间为用于计算在一定时长内的CPU负载情况，如传入1000表示最近1秒的负载情况
+     *
+     * @param processor   {@link CentralProcessor}
+     * @param waitingTime 设置等待时间，单位毫秒
+     */
+    public CpuTicks( CentralProcessor processor, long waitingTime ) {
+        // CPU信息
+        final long[] prevTicks = processor.getSystemCpuLoadTicks();
+        // 这里必须要设置延迟
+        Util.sleep(waitingTime);
+        final long[] ticks = processor.getSystemCpuLoadTicks();
 
-		this.idle = tick(prevTicks, ticks, CentralProcessor.TickType.IDLE);
-		this.nice = tick(prevTicks, ticks, CentralProcessor.TickType.NICE);
-		this.irq = tick(prevTicks, ticks, CentralProcessor.TickType.IRQ);
-		this.softIrq = tick(prevTicks, ticks, CentralProcessor.TickType.SOFTIRQ);
-		this.steal = tick(prevTicks, ticks, CentralProcessor.TickType.STEAL);
-		this.cSys = tick(prevTicks, ticks, CentralProcessor.TickType.SYSTEM);
-		this.user = tick(prevTicks, ticks, CentralProcessor.TickType.USER);
-		this.ioWait = tick(prevTicks, ticks, CentralProcessor.TickType.IOWAIT);
-	}
+        this.idle = tick(prevTicks, ticks, CentralProcessor.TickType.IDLE);
+        this.nice = tick(prevTicks, ticks, CentralProcessor.TickType.NICE);
+        this.irq = tick(prevTicks, ticks, CentralProcessor.TickType.IRQ);
+        this.softIrq = tick(prevTicks, ticks, CentralProcessor.TickType.SOFTIRQ);
+        this.steal = tick(prevTicks, ticks, CentralProcessor.TickType.STEAL);
+        this.cSys = tick(prevTicks, ticks, CentralProcessor.TickType.SYSTEM);
+        this.user = tick(prevTicks, ticks, CentralProcessor.TickType.USER);
+        this.ioWait = tick(prevTicks, ticks, CentralProcessor.TickType.IOWAIT);
+    }
 
-	public long getIdle() {
-		return idle;
-	}
+    /**
+     * 获取一段时间内的CPU负载标记差
+     *
+     * @param prevTicks 开始的ticks
+     * @param ticks     结束的ticks
+     * @param tickType  tick类型
+     * @return 标记差
+     * @since 1.0.0
+     */
+    private static long tick( long[] prevTicks, long[] ticks, CentralProcessor.TickType tickType ) {
+        return ticks[tickType.getIndex()] - prevTicks[tickType.getIndex()];
+    }
 
-	public void setIdle(long idle) {
-		this.idle = idle;
-	}
+    public long getIdle() {
+        return idle;
+    }
 
-	public long getNice() {
-		return nice;
-	}
+    public void setIdle( long idle ) {
+        this.idle = idle;
+    }
 
-	public void setNice(long nice) {
-		this.nice = nice;
-	}
+    public long getNice() {
+        return nice;
+    }
 
-	public long getIrq() {
-		return irq;
-	}
+    public void setNice( long nice ) {
+        this.nice = nice;
+    }
 
-	public void setIrq(long irq) {
-		this.irq = irq;
-	}
+    public long getIrq() {
+        return irq;
+    }
 
-	public long getSoftIrq() {
-		return softIrq;
-	}
+    public void setIrq( long irq ) {
+        this.irq = irq;
+    }
 
-	public void setSoftIrq(long softIrq) {
-		this.softIrq = softIrq;
-	}
+    public long getSoftIrq() {
+        return softIrq;
+    }
 
-	public long getSteal() {
-		return steal;
-	}
+    public void setSoftIrq( long softIrq ) {
+        this.softIrq = softIrq;
+    }
 
-	public void setSteal(long steal) {
-		this.steal = steal;
-	}
+    public long getSteal() {
+        return steal;
+    }
 
-	public long getcSys() {
-		return cSys;
-	}
+    public void setSteal( long steal ) {
+        this.steal = steal;
+    }
 
-	public void setcSys(long cSys) {
-		this.cSys = cSys;
-	}
+    public long getcSys() {
+        return cSys;
+    }
 
-	public long getUser() {
-		return user;
-	}
+    public void setcSys( long cSys ) {
+        this.cSys = cSys;
+    }
 
-	public void setUser(long user) {
-		this.user = user;
-	}
+    public long getUser() {
+        return user;
+    }
 
-	public long getIoWait() {
-		return ioWait;
-	}
+    public void setUser( long user ) {
+        this.user = user;
+    }
 
-	public void setIoWait(long ioWait) {
-		this.ioWait = ioWait;
-	}
+    public long getIoWait() {
+        return ioWait;
+    }
 
-	/**
-	 * 获取CPU总的使用率
-	 *
-	 * @return CPU总使用率
-	 */
-	public long totalCpu() {
-		return Math.max(user + nice + cSys + idle + ioWait + irq + softIrq + steal, 0);
-	}
+    public void setIoWait( long ioWait ) {
+        this.ioWait = ioWait;
+    }
 
-	@Override
-	public String toString() {
-		return "CpuTicks{" +
-				"idle=" + idle +
-				", nice=" + nice +
-				", irq=" + irq +
-				", softIrq=" + softIrq +
-				", steal=" + steal +
-				", cSys=" + cSys +
-				", user=" + user +
-				", ioWait=" + ioWait +
-				'}';
-	}
+    /**
+     * 获取CPU总的使用率
+     *
+     * @return CPU总使用率
+     */
+    public long totalCpu() {
+        return Math.max(user + nice + cSys + idle + ioWait + irq + softIrq + steal, 0);
+    }
 
-	/**
-	 * 获取一段时间内的CPU负载标记差
-	 *
-	 * @param prevTicks 开始的ticks
-	 * @param ticks     结束的ticks
-	 * @param tickType  tick类型
-	 * @return 标记差
-	 * @since 1.0.0
-	 */
-	private static long tick(long[] prevTicks, long[] ticks, CentralProcessor.TickType tickType) {
-		return ticks[tickType.getIndex()] - prevTicks[tickType.getIndex()];
-	}
+    @Override
+    public String toString() {
+        return "CpuTicks{" +
+                "idle=" + idle +
+                ", nice=" + nice +
+                ", irq=" + irq +
+                ", softIrq=" + softIrq +
+                ", steal=" + steal +
+                ", cSys=" + cSys +
+                ", user=" + user +
+                ", ioWait=" + ioWait +
+                '}';
+    }
 }

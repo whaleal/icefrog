@@ -3,6 +3,5 @@
  * 用于建造特定对象或结果
  *
  * @author wh
- *
  */
 package com.whaleal.icefrog.core.builder;

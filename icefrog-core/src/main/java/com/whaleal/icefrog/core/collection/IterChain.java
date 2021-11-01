@@ -17,76 +17,76 @@ import java.util.NoSuchElementException;
  */
 public class IterChain<T> implements Iterator<T>, Chain<Iterator<T>, IterChain<T>> {
 
-	protected final List<Iterator<T>> allIterators = new ArrayList<>();
+    protected final List<Iterator<T>> allIterators = new ArrayList<>();
+    protected int currentIter = -1;
 
-	/**
-	 * 构造
-	 * 可以使用 {@link #addChain(Iterator)} 方法加入更多的集合。
-	 */
-	public IterChain() {
-	}
+    /**
+     * 构造
+     * 可以使用 {@link #addChain(Iterator)} 方法加入更多的集合。
+     */
+    public IterChain() {
+    }
 
-	/**
-	 * 构造
-	 * @param iterators 多个{@link Iterator}
-	 */
-	@SafeVarargs
-	public IterChain(Iterator<T>... iterators) {
-		for (final Iterator<T> iterator : iterators) {
-			addChain(iterator);
-		}
-	}
+    /**
+     * 构造
+     *
+     * @param iterators 多个{@link Iterator}
+     */
+    @SafeVarargs
+    public IterChain( Iterator<T>... iterators ) {
+        for (final Iterator<T> iterator : iterators) {
+            addChain(iterator);
+        }
+    }
 
-	@Override
-	public IterChain<T> addChain(Iterator<T> iterator) {
-		if (allIterators.contains(iterator)) {
-			throw new IllegalArgumentException("Duplicate iterator");
-		}
-		allIterators.add(iterator);
-		return this;
-	}
+    // ---------------------------------------------------------------- interface
 
-	// ---------------------------------------------------------------- interface
+    @Override
+    public IterChain<T> addChain( Iterator<T> iterator ) {
+        if (allIterators.contains(iterator)) {
+            throw new IllegalArgumentException("Duplicate iterator");
+        }
+        allIterators.add(iterator);
+        return this;
+    }
 
-	protected int currentIter = -1;
+    @Override
+    public boolean hasNext() {
+        if (currentIter == -1) {
+            currentIter = 0;
+        }
 
-	@Override
-	public boolean hasNext() {
-		if (currentIter == -1) {
-			currentIter = 0;
-		}
+        final int size = allIterators.size();
+        for (int i = currentIter; i < size; i++) {
+            final Iterator<T> iterator = allIterators.get(i);
+            if (iterator.hasNext()) {
+                currentIter = i;
+                return true;
+            }
+        }
+        return false;
+    }
 
-		final int size = allIterators.size();
-		for (int i = currentIter; i < size; i++) {
-			final Iterator<T> iterator = allIterators.get(i);
-			if (iterator.hasNext()) {
-				currentIter = i;
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public T next() {
+        if (false == hasNext()) {
+            throw new NoSuchElementException();
+        }
 
-	@Override
-	public T next() {
-		if (false == hasNext()) {
-			throw new NoSuchElementException();
-		}
+        return allIterators.get(currentIter).next();
+    }
 
-		return allIterators.get(currentIter).next();
-	}
+    @Override
+    public void remove() {
+        if (-1 == currentIter) {
+            throw new IllegalStateException("next() has not yet been called");
+        }
 
-	@Override
-	public void remove() {
-		if (-1 == currentIter) {
-			throw new IllegalStateException("next() has not yet been called");
-		}
+        allIterators.get(currentIter).remove();
+    }
 
-		allIterators.get(currentIter).remove();
-	}
-
-	@Override
-	public Iterator<Iterator<T>> iterator() {
-		return this.allIterators.iterator();
-	}
+    @Override
+    public Iterator<Iterator<T>> iterator() {
+        return this.allIterators.iterator();
+    }
 }

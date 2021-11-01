@@ -12,9 +12,8 @@ import java.util.Map;
  * rhino引擎封装<br>
  * 见：https://github.com/mozilla/rhino
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author lzpeng
+ *
  */
 public class RhinoEngine implements ExpressionEngine {
 

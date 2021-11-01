@@ -26,21 +26,21 @@ package com.whaleal.icefrog.core.codec;
  */
 public interface Encoder<T> {
 
-	/**
-	 * Encode an instance of the type parameter {@code T} into a BSON value.
-	 *
-	 * @param writer         the BSON writer to encode into
-	 * @param value          the value to encode
-	 * @param encoderContext the encoder context
-	 */
-	void encode(Writer writer, T value, EncoderContext encoderContext);
+    /**
+     * Encode an instance of the type parameter {@code T} into a BSON value.
+     *
+     * @param writer         the BSON writer to encode into
+     * @param value          the value to encode
+     * @param encoderContext the encoder context
+     */
+    void encode( Writer writer, T value, EncoderContext encoderContext );
 
-	/**
-	 * Returns the Class instance that this encodes. This is necessary because Java does not reify generic types.
-	 *
-	 * @return the Class instance that this encodes.
-	 */
-	Class<T> getEncoderClass();
+    /**
+     * Returns the Class instance that this encodes. This is necessary because Java does not reify generic types.
+     *
+     * @return the Class instance that this encodes.
+     */
+    Class<T> getEncoderClass();
 }
 
 

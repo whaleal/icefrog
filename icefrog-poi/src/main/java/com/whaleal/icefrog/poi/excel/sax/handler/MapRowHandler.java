@@ -17,34 +17,34 @@ import java.util.Map;
  */
 public abstract class MapRowHandler extends AbstractRowHandler<Map<String, Object>> {
 
-	/**
-	 * 标题所在行（从0开始计数）
-	 */
-	private final int headerRowIndex;
-	/**
-	 * 标题行
-	 */
-	List<String> headerList;
+    /**
+     * 标题所在行（从0开始计数）
+     */
+    private final int headerRowIndex;
+    /**
+     * 标题行
+     */
+    List<String> headerList;
 
-	/**
-	 * 构造
-	 *
-	 * @param headerRowIndex 标题所在行（从0开始计数）
-	 * @param startRowIndex 读取起始行（包含，从0开始计数）
-	 * @param endRowIndex 读取结束行（包含，从0开始计数）
-	 */
-	public MapRowHandler(int headerRowIndex, int startRowIndex, int endRowIndex){
-		super(startRowIndex, endRowIndex);
-		this.headerRowIndex = headerRowIndex;
-		this.convertFunc = (rowList)-> IterUtil.toMap(headerList, rowList);
-	}
+    /**
+     * 构造
+     *
+     * @param headerRowIndex 标题所在行（从0开始计数）
+     * @param startRowIndex  读取起始行（包含，从0开始计数）
+     * @param endRowIndex    读取结束行（包含，从0开始计数）
+     */
+    public MapRowHandler( int headerRowIndex, int startRowIndex, int endRowIndex ) {
+        super(startRowIndex, endRowIndex);
+        this.headerRowIndex = headerRowIndex;
+        this.convertFunc = ( rowList ) -> IterUtil.toMap(headerList, rowList);
+    }
 
-	@Override
-	public void handle(int sheetIndex, long rowIndex, List<Object> rowList) {
-		if (rowIndex == this.headerRowIndex) {
-			this.headerList = ListUtil.unmodifiable(Convert.toList(String.class, rowList));
-			return;
-		}
-		super.handle(sheetIndex, rowIndex, rowList);
-	}
+    @Override
+    public void handle( int sheetIndex, long rowIndex, List<Object> rowList ) {
+        if (rowIndex == this.headerRowIndex) {
+            this.headerList = ListUtil.unmodifiable(Convert.toList(String.class, rowList));
+            return;
+        }
+        super.handle(sheetIndex, rowIndex, rowList);
+    }
 }

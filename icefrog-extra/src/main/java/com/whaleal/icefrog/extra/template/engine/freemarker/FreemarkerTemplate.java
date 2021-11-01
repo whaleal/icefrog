@@ -1,21 +1,21 @@
 package com.whaleal.icefrog.extra.template.engine.freemarker;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.io.Writer;
-import java.util.Map;
-
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.extra.template.AbstractTemplate;
 import com.whaleal.icefrog.extra.template.TemplateException;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Serializable;
+import java.io.Writer;
+import java.nio.charset.Charset;
+import java.util.Map;
+
 /**
  * Freemarker模板实现
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class FreemarkerTemplate extends AbstractTemplate implements Serializable{
 	private static final long serialVersionUID = -8157926902932567280L;
@@ -26,7 +26,7 @@ public class FreemarkerTemplate extends AbstractTemplate implements Serializable
 	 * 包装Freemarker模板
 	 *
 	 * @param beetlTemplate Beetl的模板对象 {@link freemarker.template.Template}
-	 * @return {@link FreemarkerTemplate}
+	 * @return this
 	 */
 	public static FreemarkerTemplate wrap(freemarker.template.Template beetlTemplate) {
 		return (null == beetlTemplate) ? null : new FreemarkerTemplate(beetlTemplate);
@@ -54,7 +54,7 @@ public class FreemarkerTemplate extends AbstractTemplate implements Serializable
 
 	@Override
 	public void render(Map<?, ?> bindingMap, OutputStream out) {
-		render(bindingMap, IoUtil.getWriter(out, this.rawTemplate.getEncoding()));
+		render(bindingMap, IoUtil.getWriter(out, Charset.forName(this.rawTemplate.getEncoding())));
 	}
 
 }

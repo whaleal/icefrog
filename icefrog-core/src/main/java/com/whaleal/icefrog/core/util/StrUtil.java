@@ -2,13 +2,9 @@ package com.whaleal.icefrog.core.util;
 
 
 import com.whaleal.icefrog.core.collection.CollectionUtil;
-import com.whaleal.icefrog.core.io.IoUtil;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
-
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.text.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -17,6 +13,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 
 /**
@@ -37,7 +34,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     private static final String TOP_PATH = "..";
     private static final String CURRENT_PATH = ".";
     private static final char EXTENSION_SEPARATOR = '.';
-
 
 
     /**
@@ -64,7 +60,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see StrUtil#isBlank(CharSequence)
      * @since 1.0.0
      */
-    public static boolean isBlankIfStr(Object obj) {
+    public static boolean isBlankIfStr( Object obj ) {
         if (null == obj) {
             return true;
         } else if (obj instanceof CharSequence) {
@@ -94,7 +90,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 如果为字符串是否为空串
      * @since 1.0.0
      */
-    public static boolean isEmptyIfStr(Object obj) {
+    public static boolean isEmptyIfStr( Object obj ) {
         if (null == obj) {
             return true;
         } else if (obj instanceof CharSequence) {
@@ -107,9 +103,8 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * 给定字符串数组全部做去首尾空格
      *
      * @param strs 字符串数组
-     *
      */
-    public static void trim(String[] strs) {
+    public static void trim( String[] strs ) {
         if (null == strs) {
             return;
         }
@@ -133,12 +128,9 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param obj 对象
      * @return 字符串
      */
-    public static String utf8Str(Object obj) {
+    public static String utf8Str( Object obj ) {
         return str(obj, CharsetUtil.CHARSET_UTF_8);
     }
-
-
-
 
 
     /**
@@ -152,7 +144,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset 字符集
      * @return 字符串
      */
-    public static String str(Object obj, Charset charset) {
+    public static String str( Object obj, Charset charset ) {
         if (null == obj) {
             return null;
         }
@@ -179,7 +171,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset 字符集
      * @return 字符串
      */
-    public static String str(byte[] bytes, String charset) {
+    public static String str( byte[] bytes, String charset ) {
         return str(bytes, isBlank(charset) ? Charset.defaultCharset() : Charset.forName(charset));
     }
 
@@ -190,20 +182,17 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * should never happen for a required charset name. Use this method when the encoding is required to be in the JRE.
      * </p>
      *
-     * @return
-     * or {@code null} if the input byte array was {@code null}.
+     * @param data    字符串  The bytes to be decoded into characters, may be {@code null}
+     * @param charset 字符集，如果此字段为空，则解码的结果取决于平台  The name of a required {@link java.nio.charset.Charset}
+     * @return 解码后的字符串  A new {@code String} decoded from the specified array of bytes using the given charset,
      * @throws IllegalStateException Thrown when a {@link UnsupportedEncodingException} is caught, which should never happen for a
      *                               required charset name.
      * @see CharEncoding
      * @see String#String(byte[], String)
-     *
+     * <p>
      * 解码字节码
-     *
-     * @param data    字符串  The bytes to be decoded into characters, may be {@code null}
-     * @param charset 字符集，如果此字段为空，则解码的结果取决于平台  The name of a required {@link java.nio.charset.Charset}
-     * @return 解码后的字符串  A new {@code String} decoded from the specified array of bytes using the given charset,
      */
-    public static String str(byte[] data, Charset charset) {
+    public static String str( byte[] data, Charset charset ) {
         if (data == null) {
             return null;
         }
@@ -223,7 +212,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset 字符集
      * @return 字符串
      */
-    public static String str(Byte[] bytes, String charset) {
+    public static String str( Byte[] bytes, String charset ) {
         return str(bytes, isBlank(charset) ? Charset.defaultCharset() : Charset.forName(charset));
     }
 
@@ -234,7 +223,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset 字符集，如果此字段为空，则解码的结果取决于平台
      * @return 解码后的字符串
      */
-    public static String str(Byte[] data, Charset charset) {
+    public static String str( Byte[] data, Charset charset ) {
         if (data == null) {
             return null;
         }
@@ -256,7 +245,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset 字符集，如果为空使用当前系统字符集
      * @return 字符串
      */
-    public static String str(ByteBuffer data, String charset) {
+    public static String str( ByteBuffer data, String charset ) {
         if (data == null) {
             return null;
         }
@@ -271,7 +260,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset 字符集，如果为空使用当前系统字符集
      * @return 字符串
      */
-    public static String str(ByteBuffer data, Charset charset) {
+    public static String str( ByteBuffer data, Charset charset ) {
         if (null == charset) {
             charset = Charset.defaultCharset();
         }
@@ -286,7 +275,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see String#valueOf(Object)
      * @since 1.0.0
      */
-    public static String toString(Object obj) {
+    public static String toString( Object obj ) {
         return String.valueOf(obj);
     }
 
@@ -317,7 +306,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param capacity 初始大小
      * @return StringBuilder对象
      */
-    public static StringBuilder builder(int capacity) {
+    public static StringBuilder builder( int capacity ) {
         return new StringBuilder(capacity);
     }
 
@@ -328,19 +317,18 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return StrBuilder对象
      * @since 1.0.0
      */
-    public static StrBuilder strBuilder(int capacity) {
+    public static StrBuilder strBuilder( int capacity ) {
         return StrBuilder.create(capacity);
     }
 
     /**
-     *
      * 获得StringReader
      *
-     * @see java.io.StringReader
      * @param str 字符串
      * @return StringReader
+     * @see java.io.StringReader
      */
-    public static StringReader getReader(CharSequence str) {
+    public static StringReader getReader( CharSequence str ) {
         if (null == str) {
             return null;
         }
@@ -350,9 +338,9 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 
     /**
      * 获得StringWriter
-     * @see java.io.StringWriter
      *
      * @return StringWriter
+     * @see java.io.StringWriter
      */
     public static StringWriter getWriter() {
         return new StringWriter();
@@ -366,8 +354,8 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 反转后的字符串
      * @since 1.0.0
      */
-    public static String reverse(String str) {
-        notNull(str,"the input String to reverse can't be null ");
+    public static String reverse( String str ) {
+        notNull(str, "the input String to reverse can't be null ");
         return new String(ArrayUtil.reverse(str.toCharArray()));
     }
 
@@ -381,7 +369,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 填充后的字符串
      * @since 1.0.0
      */
-    public static String fillBefore(String str, char filledChar, int len) {
+    public static String fillBefore( String str, char filledChar, int len ) {
         return fill(str, filledChar, len, true);
     }
 
@@ -395,7 +383,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 填充后的字符串
      * @since 1.0.0
      */
-    public static String fillAfter(String str, char filledChar, int len) {
+    public static String fillAfter( String str, char filledChar, int len ) {
         return fill(str, filledChar, len, false);
     }
 
@@ -410,7 +398,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 填充后的字符串
      * @since 1.0.0
      */
-    public static String fill(String str, char filledChar, int len, boolean isPre) {
+    public static String fill( String str, char filledChar, int len, boolean isPre ) {
         final int strLen = str.length();
         if (strLen > len) {
             return str;
@@ -429,7 +417,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 相似度
      * @since 1.0.0
      */
-    public static double similar(String str1, String str2) {
+    public static double similar( String str1, String str2 ) {
         return TextSimilarity.similar(str1, str2);
     }
 
@@ -442,7 +430,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 相似度百分比
      * @since 1.0.0
      */
-    public static String similar(String str1, String str2, int scale) {
+    public static String similar( String str1, String str2, int scale ) {
         return TextSimilarity.similar(str1, str2, scale);
     }
 
@@ -465,7 +453,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param map      参数值对
      * @return 格式化后的文本
      */
-    public static String format(CharSequence template, Map<?, ?> map) {
+    public static String format( CharSequence template, Map<?, ?> map ) {
         return format(template, map, true);
     }
 
@@ -479,11 +467,9 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return 格式化后的文本
      * @since 1.0.0
      */
-    public static String format(CharSequence template, Map<?, ?> map, boolean ignoreNull) {
+    public static String format( CharSequence template, Map<?, ?> map, boolean ignoreNull ) {
         return StrFormatter.format(template, map, ignoreNull);
     }
-
-
 
 
     /**
@@ -497,13 +483,10 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param string a string reference to check
      * @return {@code true} if the string is null or is the empty string
      */
-    public static boolean isNullOrEmpty(String string) {
+    public static boolean isNullOrEmpty( String string ) {
         return isEmptyIfStr(string);
         //return string == null || string.isEmpty();
     }
-
-
-
 
 
     /**
@@ -525,7 +508,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * this method is made for; it instead generates a best-effort string with all supplied argument
      * values present. This method is also useful in environments such as GWT where {@code
      * String.format} is not available. As an example, method implementations of the {@link
-     * Preconditions} class use this formatter, for both of the reasons just discussed.
+     * Precondition} class use this formatter, for both of the reasons just discussed.
      *
      * <p><b>Warning:</b> Only the exact two-character placeholder sequence {@code "%s"} is
      * recognized.
@@ -536,11 +519,11 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                 specified is substituted for the first occurrence of {@code "%s"} in the template, and so
      *                 forth. A {@code null} argument is converted to the four-character string {@code "null"};
      *                 non-null values are converted to strings using {@link Object#toString()}.
-     * @return  String
+     * @return String
      */
     // TODO(diamondm) consider using Arrays.toString() for array parameters
     public static String lenientFormat(
-            String template, Object... args) {
+            String template, Object... args ) {
         template = String.valueOf(template); // null -> "null"
 
         if (args == null) {
@@ -581,9 +564,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     }
 
 
-
-
-
     /**
      * Calls {@link String#getBytes(Charset)}
      *
@@ -591,7 +571,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset The {@link Charset} to encode the {@code String}
      * @return the encoded bytes
      */
-    private static ByteBuffer getByteBuffer(final String string, final Charset charset) {
+    private static ByteBuffer getByteBuffer( final String string, final Charset charset ) {
         if (string == null) {
             return null;
         }
@@ -608,9 +588,8 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                              required by the Java platform specification.
      * @see <a href="http://download.oracle.com/javase/7/docs/api/java/nio/charset/Charset.html">Standard charsets</a>
      * @see #getBytesUnchecked(String, String)
-     *
      */
-    public static ByteBuffer getByteBufferUtf8(final String string) {
+    public static ByteBuffer getByteBufferUtf8( final String string ) {
         return getByteBuffer(string, StandardCharsets.UTF_8);
     }
 
@@ -621,7 +600,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param charset The {@link Charset} to encode the {@code String}
      * @return the encoded bytes
      */
-    private static byte[] getBytes(final String string, final Charset charset) {
+    private static byte[] getBytes( final String string, final Charset charset ) {
         if (string == null) {
             return null;
         }
@@ -640,7 +619,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #getBytesUnchecked(String, String)
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static byte[] getBytesIso8859_1(final String string) {
+    public static byte[] getBytesIso8859_1( final String string ) {
         return getBytes(string, StandardCharsets.ISO_8859_1);
     }
 
@@ -660,7 +639,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see CharEncoding
      * @see String#getBytes(String)
      */
-    public static byte[] getBytesUnchecked(final String string, final String charsetName) {
+    public static byte[] getBytesUnchecked( final String string, final String charsetName ) {
         if (string == null) {
             return null;
         }
@@ -683,7 +662,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #getBytesUnchecked(String, String)
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static byte[] getBytesUsAscii(final String string) {
+    public static byte[] getBytesUsAscii( final String string ) {
         return getBytes(string, StandardCharsets.US_ASCII);
     }
 
@@ -699,7 +678,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #getBytesUnchecked(String, String)
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static byte[] getBytesUtf16(final String string) {
+    public static byte[] getBytesUtf16( final String string ) {
         return getBytes(string, StandardCharsets.UTF_16);
     }
 
@@ -715,7 +694,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #getBytesUnchecked(String, String)
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static byte[] getBytesUtf16Be(final String string) {
+    public static byte[] getBytesUtf16Be( final String string ) {
         return getBytes(string, StandardCharsets.UTF_16BE);
     }
 
@@ -731,7 +710,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #getBytesUnchecked(String, String)
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static byte[] getBytesUtf16Le(final String string) {
+    public static byte[] getBytesUtf16Le( final String string ) {
         return getBytes(string, StandardCharsets.UTF_16LE);
     }
 
@@ -747,12 +726,12 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #getBytesUnchecked(String, String)
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
-    public static byte[] getBytesUtf8(final String string) {
+    public static byte[] getBytesUtf8( final String string ) {
         return getBytes(string, StandardCharsets.UTF_8);
     }
 
-    private static IllegalStateException newIllegalStateException(final String charsetName,
-                                                                  final UnsupportedEncodingException e) {
+    private static IllegalStateException newIllegalStateException( final String charsetName,
+                                                                   final UnsupportedEncodingException e ) {
         return new IllegalStateException(charsetName + ": " + e);
     }
 
@@ -774,7 +753,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #hasLength(String)
      * @see #hasText(CharSequence)
      */
-    public static boolean hasLength(CharSequence str) {
+    public static boolean hasLength( CharSequence str ) {
         return (str != null && str.length() > 0);
     }
 
@@ -788,7 +767,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #hasLength(CharSequence)
      * @see #hasText(String)
      */
-    public static boolean hasLength(String str) {
+    public static boolean hasLength( String str ) {
         return (str != null && !str.isEmpty());
     }
 
@@ -812,7 +791,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #hasLength(CharSequence)
      * @see Character#isWhitespace
      */
-    public static boolean hasText(CharSequence str) {
+    public static boolean hasText( CharSequence str ) {
         return (str != null && str.length() > 0 && containsText(str));
     }
 
@@ -821,6 +800,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * <p>More specifically, this method returns {@code true} if the
      * {@code String} is not {@code null}, its length is greater than 0,
      * and it contains at least one non-whitespace character.
+     *
      * @param str the {@code String} to check (may be {@code null})
      * @return {@code true} if the {@code String} is not {@code null}, its
      * length is greater than 0, and it does not contain whitespace only
@@ -828,11 +808,11 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #hasLength(String)
      * @see Character#isWhitespace
      */
-    public static boolean hasText(String str) {
+    public static boolean hasText( String str ) {
         return (str != null && !str.isEmpty() && containsText(str));
     }
 
-    private static boolean containsText(CharSequence str) {
+    private static boolean containsText( CharSequence str ) {
         int strLen = str.length();
         for (int i = 0; i < strLen; i++) {
             if (!Character.isWhitespace(str.charAt(i))) {
@@ -850,7 +830,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * contains at least 1 whitespace character
      * @see Character#isWhitespace
      */
-    public static boolean containsWhitespace(CharSequence str) {
+    public static boolean containsWhitespace( CharSequence str ) {
         if (!hasLength(str)) {
             return false;
         }
@@ -872,7 +852,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * contains at least 1 whitespace character
      * @see #containsWhitespace(CharSequence)
      */
-    public static boolean containsWhitespace(String str) {
+    public static boolean containsWhitespace( String str ) {
         return containsWhitespace((CharSequence) str);
     }
 
@@ -883,7 +863,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the trimmed {@code String}
      * @see Character#isWhitespace
      */
-    public static String trimWhitespace(String str) {
+    public static String trimWhitespace( String str ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -910,7 +890,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the trimmed {@code String}
      * @see Character#isWhitespace
      */
-    public static String trimAllWhitespace(String str) {
+    public static String trimAllWhitespace( String str ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -933,7 +913,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the trimmed {@code String}
      * @see Character#isWhitespace
      */
-    public static String trimLeadingWhitespace(String str) {
+    public static String trimLeadingWhitespace( String str ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -952,7 +932,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the trimmed {@code String}
      * @see Character#isWhitespace
      */
-    public static String trimTrailingWhitespace(String str) {
+    public static String trimTrailingWhitespace( String str ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -971,7 +951,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param leadingCharacter the leading character to be trimmed
      * @return the trimmed {@code String}
      */
-    public static String trimLeadingCharacter(String str, char leadingCharacter) {
+    public static String trimLeadingCharacter( String str, char leadingCharacter ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -990,7 +970,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param trailingCharacter the trailing character to be trimmed
      * @return the trimmed {@code String}
      */
-    public static String trimTrailingCharacter(String str, char trailingCharacter) {
+    public static String trimTrailingCharacter( String str, char trailingCharacter ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -1009,7 +989,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param singleCharacter the character to compare to
      * @return boolean
      */
-    public static boolean matchesCharacter(String str, char singleCharacter) {
+    public static boolean matchesCharacter( String str, char singleCharacter ) {
         return (str != null && str.length() == 1 && str.charAt(0) == singleCharacter);
     }
 
@@ -1019,10 +999,10 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *
      * @param str    the {@code String} to check
      * @param prefix the prefix to look for
-     * @see String#startsWith
      * @return boolean
+     * @see String#startsWith
      */
-    public static boolean startsWithIgnoreCase(String str, String prefix) {
+    public static boolean startsWithIgnoreCase( String str, String prefix ) {
         return (str != null && prefix != null && str.length() >= prefix.length() &&
                 str.regionMatches(true, 0, prefix, 0, prefix.length()));
     }
@@ -1033,10 +1013,10 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *
      * @param str    the {@code String} to check
      * @param suffix the suffix to look for
-     * @see String#endsWith
      * @return boolean
+     * @see String#endsWith
      */
-    public static boolean endsWithIgnoreCase(String str, String suffix) {
+    public static boolean endsWithIgnoreCase( String str, String suffix ) {
         return (str != null && suffix != null && str.length() >= suffix.length() &&
                 str.regionMatches(true, str.length() - suffix.length(), suffix, 0, suffix.length()));
     }
@@ -1050,7 +1030,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param substring the substring to match at the given index
      * @return boolean
      */
-    public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
+    public static boolean substringMatch( CharSequence str, int index, CharSequence substring ) {
         if (index + substring.length() > str.length()) {
             return false;
         }
@@ -1069,7 +1049,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param sub string to search for
      * @return int
      */
-    public static int countOccurrencesOf(String str, String sub) {
+    public static int countOccurrencesOf( String str, String sub ) {
         if (!hasLength(str) || !hasLength(sub)) {
             return 0;
         }
@@ -1092,7 +1072,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param newPattern {@code String} to insert
      * @return a {@code String} with the replacements
      */
-    public static String replace(String inString, String oldPattern, String newPattern) {
+    public static String replace( String inString, String oldPattern, String newPattern ) {
         if (!hasLength(inString) || !hasLength(oldPattern) || newPattern == null) {
             return inString;
         }
@@ -1129,7 +1109,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param pattern  the pattern to delete all occurrences of
      * @return the resulting {@code String}
      */
-    public static String delete(String inString, String pattern) {
+    public static String delete( String inString, String pattern ) {
         return replace(inString, pattern, "");
     }
 
@@ -1141,7 +1121,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                      E.g. "az\n" will delete 'a's, 'z's and new lines.
      * @return the resulting {@code String}
      */
-    public static String deleteAny(String inString, String charsToDelete) {
+    public static String deleteAny( String inString, String charsToDelete ) {
         if (!hasLength(inString) || !hasLength(charsToDelete)) {
             return inString;
         }
@@ -1172,7 +1152,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * or {@code null} if the input was {@code null}
      */
 
-    public static String quote(String str) {
+    public static String quote( String str ) {
         return (str != null ? "'" + str + "'" : null);
     }
 
@@ -1185,7 +1165,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * or the input object as-is if not a {@code String}
      */
 
-    public static Object quoteIfString(Object obj) {
+    public static Object quoteIfString( Object obj ) {
         return (obj instanceof String ? quote((String) obj) : obj);
     }
 
@@ -1196,7 +1176,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param qualifiedName the qualified name
      * @return String
      */
-    public static String unqualify(String qualifiedName) {
+    public static String unqualify( String qualifiedName ) {
         return unqualify(qualifiedName, '.');
     }
 
@@ -1208,7 +1188,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param separator     the separator
      * @return boolean
      */
-    public static String unqualify(String qualifiedName, char separator) {
+    public static String unqualify( String qualifiedName, char separator ) {
         return qualifiedName.substring(qualifiedName.lastIndexOf(separator) + 1);
     }
 
@@ -1220,7 +1200,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param str the {@code String} to capitalize
      * @return the capitalized {@code String}
      */
-    public static String capitalize(String str) {
+    public static String capitalize( String str ) {
         return changeFirstCharacterCase(str, true);
     }
 
@@ -1232,7 +1212,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param str the {@code String} to uncapitalize
      * @return the uncapitalized {@code String}
      */
-    public static String uncapitalize(String str) {
+    public static String uncapitalize( String str ) {
 
         return changeFirstCharacterCase(
                 removeStrAndAfterCharacterToUpperCase(str, "_"),
@@ -1243,11 +1223,11 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * 删除指定字符 并且 将后一位字符转成大写
      * 3个循环肯定是写的很蠢，等有时间再改，水平太低了一时间想不出来其他办法
      *
-     * @param sourceString  source
+     * @param sourceString source
      * @param strElemData  elem
      * @return 返回新生成的字符串
      */
-    public static String removeStrAndAfterCharacterToUpperCase(String sourceString, String strElemData) {
+    public static String removeStrAndAfterCharacterToUpperCase( String sourceString, String strElemData ) {
         if (!hasLength(sourceString)) {
             return sourceString;
         }
@@ -1286,7 +1266,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param capitalize 是否为大写
      * @return 返回新的字符串
      */
-    private static String changeFirstCharacterCase(String str, boolean capitalize) {
+    private static String changeFirstCharacterCase( String str, boolean capitalize ) {
         if (!hasLength(str)) {
             return str;
         }
@@ -1315,7 +1295,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the extracted filename, or {@code null} if none
      */
 
-    public static String getFilename(String path) {
+    public static String getFilename( String path ) {
         if (path == null) {
             return null;
         }
@@ -1332,7 +1312,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the extracted filename extension, or {@code null} if none
      */
 
-    public static String getFilenameExtension(String path) {
+    public static String getFilenameExtension( String path ) {
         if (path == null) {
             return null;
         }
@@ -1357,7 +1337,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param path the file path
      * @return the path with stripped filename extension
      */
-    public static String stripFilenameExtension(String path) {
+    public static String stripFilenameExtension( String path ) {
         int extIndex = path.lastIndexOf(EXTENSION_SEPARATOR);
         if (extIndex == -1) {
             return path;
@@ -1380,7 +1360,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                     (relative to the full file path above)
      * @return the full file path that results from applying the relative path
      */
-    public static String applyRelativePath(String path, String relativePath) {
+    public static String applyRelativePath( String path, String relativePath ) {
         int separatorIndex = path.lastIndexOf(FOLDER_SEPARATOR);
         if (separatorIndex != -1) {
             String newPath = path.substring(0, separatorIndex);
@@ -1405,7 +1385,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param path the original path
      * @return the normalized path
      */
-    public static String cleanPath(String path) {
+    public static String cleanPath( String path ) {
         if (!hasLength(path)) {
             return path;
         }
@@ -1480,57 +1460,11 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param path2 second path for comparison
      * @return whether the two paths are equivalent after normalization
      */
-    public static boolean pathEquals(String path1, String path2) {
+    public static boolean pathEquals( String path1, String path2 ) {
         return cleanPath(path1).equals(cleanPath(path2));
     }
 
-    /**
-     * Decode the given encoded URI component value. Based on the following rules:
-     * <ul>
-     * <li>Alphanumeric characters {@code "a"} through {@code "z"}, {@code "A"} through {@code "Z"},
-     * and {@code "0"} through {@code "9"} stay the same.</li>
-     * <li>Special characters {@code "-"}, {@code "_"}, {@code "."}, and {@code "*"} stay the same.</li>
-     * <li>A sequence "{@code %<i>xy</i>}" is interpreted as a hexadecimal representation of the character.</li>
-     * </ul>
-     *
-     * @param source  the encoded String
-     * @param charset the character set
-     * @return the decoded value
-     * @throws IllegalArgumentException when the given source contains invalid encoded sequences
-     * @see java.net.URLDecoder#decode(String, String)
-     */
-    public static String uriDecode(String source, Charset charset) {
-        int length = source.length();
-        if (length == 0) {
-            return source;
-        }
-        notNull(charset, "Charset must not be null");
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(length);
-        boolean changed = false;
-        for (int i = 0; i < length; i++) {
-            int ch = source.charAt(i);
-            if (ch == '%') {
-                if (i + 2 < length) {
-                    char hex1 = source.charAt(i + 1);
-                    char hex2 = source.charAt(i + 2);
-                    int u = Character.digit(hex1, 16);
-                    int l = Character.digit(hex2, 16);
-                    if (u == -1 || l == -1) {
-                        throw new IllegalArgumentException("Invalid encoded sequence \"" + source.substring(i) + "\"");
-                    }
-                    baos.write((char) ((u << 4) + l));
-                    i += 2;
-                    changed = true;
-                } else {
-                    throw new IllegalArgumentException("Invalid encoded sequence \"" + source.substring(i) + "\"");
-                }
-            } else {
-                baos.write(ch);
-            }
-        }
-        return (changed ? IoUtil.copyToString(baos, charset) : source);
-    }
 
     /**
      * Parse the given {@code String} value into a {@link Locale}, accepting
@@ -1546,7 +1480,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see Locale#forLanguageTag
      */
 
-    public static Locale parseLocale(String localeValue) {
+    public static Locale parseLocale( String localeValue ) {
         String[] tokens = tokenizeLocaleSource(localeValue);
         if (tokens.length == 1) {
             validateLocalePart(localeValue);
@@ -1574,16 +1508,16 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @throws IllegalArgumentException in case of an invalid locale specification
      */
 
-    public static Locale parseLocaleString(String localeString) {
+    public static Locale parseLocaleString( String localeString ) {
         return parseLocaleTokens(localeString, tokenizeLocaleSource(localeString));
     }
 
-    private static String[] tokenizeLocaleSource(String localeSource) {
+    private static String[] tokenizeLocaleSource( String localeSource ) {
         return tokenizeToStringArray(localeSource, "_ ", false, false);
     }
 
 
-    private static Locale parseLocaleTokens(String localeString, String[] tokens) {
+    private static Locale parseLocaleTokens( String localeString, String[] tokens ) {
         String language = (tokens.length > 0 ? tokens[0] : "");
         String country = (tokens.length > 1 ? tokens[1] : "");
         validateLocalePart(language);
@@ -1609,7 +1543,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
         return (language.length() > 0 ? new Locale(language, country, variant) : null);
     }
 
-    private static void validateLocalePart(String localePart) {
+    private static void validateLocalePart( String localePart ) {
         for (int i = 0; i < localePart.length(); i++) {
             char ch = localePart.charAt(i);
             if (ch != ' ' && ch != '_' && ch != '-' && ch != '#' && !Character.isLetterOrDigit(ch)) {
@@ -1628,7 +1562,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return a corresponding {@link TimeZone} instance
      * @throws IllegalArgumentException in case of an invalid time zone specification
      */
-    public static TimeZone parseTimeZoneString(String timeZoneString) {
+    public static TimeZone parseTimeZoneString( String timeZoneString ) {
         TimeZone timeZone = TimeZone.getTimeZone(timeZoneString);
         if ("GMT".equals(timeZone.getID()) && !timeZoneString.startsWith("GMT")) {
             // We don't want that GMT fallback...
@@ -1650,7 +1584,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                   (potentially {@code null} or empty)
      * @return the resulting {@code String} array
      */
-    public static String[] toStringArray(Collection<String> collection) {
+    public static String[] toStringArray( Collection<String> collection ) {
         return (!CollectionUtil.isEmpty(collection) ? collection.toArray(EMPTY_STRING_ARRAY) : EMPTY_STRING_ARRAY);
     }
 
@@ -1662,7 +1596,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *                    (potentially {@code null} or empty)
      * @return the resulting {@code String} array
      */
-    public static String[] toStringArray(Enumeration<String> enumeration) {
+    public static String[] toStringArray( Enumeration<String> enumeration ) {
         return (enumeration != null ? toStringArray(Collections.list(enumeration)) : EMPTY_STRING_ARRAY);
     }
 
@@ -1675,7 +1609,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param str   the {@code String} to append
      * @return the new array (never {@code null})
      */
-    public static String[] addStringToArray(String[] array, String str) {
+    public static String[] addStringToArray( String[] array, String str ) {
         if (ObjectUtil.isEmpty(array)) {
             return new String[]{str};
         }
@@ -1696,7 +1630,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the new array ({@code null} if both given arrays were {@code null})
      */
 
-    public static String[] concatenateStringArrays(String[] array1, String[] array2) {
+    public static String[] concatenateStringArrays( String[] array1, String[] array2 ) {
         if (ObjectUtil.isEmpty(array1)) {
             return array2;
         }
@@ -1725,7 +1659,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      */
     @Deprecated
 
-    public static String[] mergeStringArrays(String[] array1, String[] array2) {
+    public static String[] mergeStringArrays( String[] array1, String[] array2 ) {
         if (ObjectUtil.isEmpty(array1)) {
             return array2;
         }
@@ -1748,7 +1682,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param array the original array (potentially empty)
      * @return the array in sorted form (never {@code null})
      */
-    public static String[] sortStringArray(String[] array) {
+    public static String[] sortStringArray( String[] array ) {
         if (ObjectUtil.isEmpty(array)) {
             return array;
         }
@@ -1764,7 +1698,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param array the original {@code String} array (potentially empty)
      * @return the resulting array (of the same size) with trimmed elements
      */
-    public static String[] trimArrayElements(String[] array) {
+    public static String[] trimArrayElements( String[] array ) {
         if (ObjectUtil.isEmpty(array)) {
             return array;
         }
@@ -1784,7 +1718,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param array the {@code String} array (potentially empty)
      * @return an array without duplicates, in natural sort order
      */
-    public static String[] removeDuplicateStrings(String[] array) {
+    public static String[] removeDuplicateStrings( String[] array ) {
         if (ObjectUtil.isEmpty(array)) {
             return array;
         }
@@ -1810,7 +1744,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see String#trim()
      * @see #delimitedListToStringArray
      */
-    public static String[] tokenizeToStringArray(String str, String delimiters) {
+    public static String[] tokenizeToStringArray( String str, String delimiters ) {
         return tokenizeToStringArray(str, delimiters, true, true);
     }
 
@@ -1835,7 +1769,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #delimitedListToStringArray
      */
     public static String[] tokenizeToStringArray(
-            String str, String delimiters, boolean trimTokens, boolean ignoreEmptyTokens) {
+            String str, String delimiters, boolean trimTokens, boolean ignoreEmptyTokens ) {
 
         if (str == null) {
             return EMPTY_STRING_ARRAY;
@@ -1869,7 +1803,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return an array of the tokens in the list
      * @see #tokenizeToStringArray
      */
-    public static String[] delimitedListToStringArray(String str, String delimiter) {
+    public static String[] delimitedListToStringArray( String str, String delimiter ) {
         return delimitedListToStringArray(str, delimiter, null);
     }
 
@@ -1890,7 +1824,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @see #tokenizeToStringArray
      */
     public static String[] delimitedListToStringArray(
-            String str, String delimiter, String charsToDelete) {
+            String str, String delimiter, String charsToDelete ) {
 
         if (str == null) {
             return EMPTY_STRING_ARRAY;
@@ -1926,7 +1860,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param str the input {@code String} (potentially {@code null} or empty)
      * @return an array of strings, or the empty array in case of empty input
      */
-    public static String[] commaDelimitedListToStringArray(String str) {
+    public static String[] commaDelimitedListToStringArray( String str ) {
         return delimitedListToStringArray(str, ",");
     }
 
@@ -1939,7 +1873,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return a set of {@code String} entries in the list
      * @see #removeDuplicateStrings(String[])
      */
-    public static Set<String> commaDelimitedListToSet(String str) {
+    public static Set<String> commaDelimitedListToSet( String str ) {
         String[] tokens = commaDelimitedListToStringArray(str);
         return new LinkedHashSet<>(Arrays.asList(tokens));
     }
@@ -1955,7 +1889,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the delimited {@code String}
      */
     public static String collectionToDelimitedString(
-            Collection<?> coll, String delim, String prefix, String suffix) {
+            Collection<?> coll, String delim, String prefix, String suffix ) {
 
         if (CollectionUtil.isEmpty(coll)) {
             return "";
@@ -1980,7 +1914,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param delim the delimiter to use (typically a ",")
      * @return the delimited {@code String}
      */
-    public static String collectionToDelimitedString(Collection<?> coll, String delim) {
+    public static String collectionToDelimitedString( Collection<?> coll, String delim ) {
         return collectionToDelimitedString(coll, delim, "", "");
     }
 
@@ -1991,7 +1925,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param coll the {@code Collection} to convert (potentially {@code null} or empty)
      * @return the delimited {@code String}
      */
-    public static String collectionToCommaDelimitedString(Collection<?> coll) {
+    public static String collectionToCommaDelimitedString( Collection<?> coll ) {
         return collectionToDelimitedString(coll, ",");
     }
 
@@ -2003,7 +1937,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param delim the delimiter to use (typically a ",")
      * @return the delimited {@code String}
      */
-    public static String arrayToDelimitedString(Object[] arr, String delim) {
+    public static String arrayToDelimitedString( Object[] arr, String delim ) {
         if (ObjectUtil.isEmpty(arr)) {
             return "";
         }
@@ -2025,9 +1959,8 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      *
      * @param arr the array to display (potentially {@code null} or empty)
      * @return the delimited {@code String}
-     *
      */
-    public static String arrayToCommaDelimitedString(Object[] arr) {
+    public static String arrayToCommaDelimitedString( Object[] arr ) {
         return arrayToDelimitedString(arr, ",");
     }
 

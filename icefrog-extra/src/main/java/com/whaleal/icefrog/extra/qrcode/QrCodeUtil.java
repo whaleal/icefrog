@@ -35,9 +35,8 @@ import java.util.Map;
  *     <li>条形码生成和识别，见{@link BarcodeFormat#CODE_39}等很多标准格式</li>
  * </ul>
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class QrCodeUtil {
 
@@ -105,7 +104,7 @@ public class QrCodeUtil {
 	 * @param width   宽度
 	 * @param height  高度
 	 * @return 图片的byte[]
-	 * @since 1.0.0
+	 *
 	 */
 	public static byte[] generatePng(String content, int width, int height) {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -119,7 +118,7 @@ public class QrCodeUtil {
 	 * @param content 内容
 	 * @param config  二维码配置，包括长、宽、边距、颜色等
 	 * @return 图片的byte[]
-	 * @since 1.0.0
+	 *
 	 */
 	public static byte[] generatePng(String content, QrConfig config) {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -149,7 +148,7 @@ public class QrCodeUtil {
 	 * @param config     二维码配置，包括长、宽、边距、颜色等
 	 * @param targetFile 目标文件，扩展名决定输出格式
 	 * @return 目标文件
-	 * @since 1.0.0
+	 *
 	 */
 	public static File generate(String content, QrConfig config, File targetFile) {
 		final BufferedImage image = generate(content, config);
@@ -178,7 +177,7 @@ public class QrCodeUtil {
 	 * @param config    二维码配置，包括长、宽、边距、颜色等
 	 * @param imageType 图片类型（图片扩展名），见{@link ImgUtil}
 	 * @param out       目标流
-	 * @since 1.0.0
+	 *
 	 */
 	public static void generate(String content, QrConfig config, String imageType, OutputStream out) {
 		final BufferedImage image = generate(content, config);
@@ -216,7 +215,7 @@ public class QrCodeUtil {
 	 * @param content 文本内容
 	 * @param config  二维码配置，包括长、宽、边距、颜色等
 	 * @return 二维码图片（黑白）
-	 * @since 1.0.0
+	 *
 	 */
 	public static BufferedImage generate(String content, QrConfig config) {
 		return generate(content, BarcodeFormat.QR_CODE, config);
@@ -230,7 +229,7 @@ public class QrCodeUtil {
 	 * @param format  格式，可选二维码、条形码等
 	 * @param config  二维码配置，包括长、宽、边距、颜色等
 	 * @return 二维码图片（黑白）
-	 * @since 1.0.0
+	 *
 	 */
 	public static BufferedImage generate(String content, BarcodeFormat format, QrConfig config) {
 		final BitMatrix bitMatrix = encode(content, format, config);
@@ -280,7 +279,7 @@ public class QrCodeUtil {
 	 * @param content 文本内容
 	 * @param config  二维码配置，包括长、宽、边距、颜色等
 	 * @return {@link BitMatrix}
-	 * @since 1.0.0
+	 *
 	 */
 	public static BitMatrix encode(String content, QrConfig config) {
 		return encode(content, BarcodeFormat.QR_CODE, config);
@@ -306,7 +305,7 @@ public class QrCodeUtil {
 	 * @param format  格式枚举
 	 * @param config  二维码配置，包括长、宽、边距、颜色等
 	 * @return {@link BitMatrix}
-	 * @since 1.0.0
+	 *
 	 */
 	public static BitMatrix encode(String content, BarcodeFormat format, QrConfig config) {
 		final MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -365,7 +364,7 @@ public class QrCodeUtil {
 	 * @param isTryHarder   是否优化精度
 	 * @param isPureBarcode 是否使用复杂模式，扫描带logo的二维码设为true
 	 * @return 解码后的文本
-	 * @since 1.0.0
+	 *
 	 */
 	public static String decode(Image image, boolean isTryHarder, boolean isPureBarcode) {
 		return decode(image, buildHints(isTryHarder, isPureBarcode));
@@ -379,7 +378,7 @@ public class QrCodeUtil {
 	 * @param image {@link Image} 二维码图片
 	 * @param hints 自定义扫码配置，包括算法、编码、复杂模式等
 	 * @return 解码后的文本
-	 * @since 1.0.0
+	 *
 	 */
 	public static String decode(Image image, Map<DecodeHintType, Object> hints) {
 		final MultiFormatReader formatReader = new MultiFormatReader();
@@ -402,7 +401,7 @@ public class QrCodeUtil {
 	 * @param foreColor 前景色
 	 * @param backColor 背景色(null表示透明背景)
 	 * @return BufferedImage
-	 * @since 1.0.0
+	 *
 	 */
 	public static BufferedImage toImage(BitMatrix matrix, int foreColor, Integer backColor) {
 		final int width = matrix.getWidth();

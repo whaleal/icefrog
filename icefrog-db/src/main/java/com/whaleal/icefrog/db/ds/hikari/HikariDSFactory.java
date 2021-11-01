@@ -14,50 +14,48 @@ import javax.sql.DataSource;
  *
  * @author Looly
  * @author wh
- *
  */
 public class HikariDSFactory extends AbstractDSFactory {
-	private static final long serialVersionUID = -8834744983614749401L;
+    public static final String DS_NAME = "HikariCP";
+    private static final long serialVersionUID = -8834744983614749401L;
 
-	public static final String DS_NAME = "HikariCP";
+    public HikariDSFactory() {
+        this(null);
+    }
 
-	public HikariDSFactory() {
-		this(null);
-	}
+    public HikariDSFactory( Setting setting ) {
+        super(DS_NAME, HikariDataSource.class, setting);
+    }
 
-	public HikariDSFactory(Setting setting) {
-		super(DS_NAME, HikariDataSource.class, setting);
-	}
+    @Override
+    protected DataSource createDataSource( String jdbcUrl, String driver, String user, String pass, Setting poolSetting ) {
+        // remarks等特殊配置，since 5.3.8
+        final Props connProps = new Props();
+        String connValue;
+        for (String key : KEY_CONN_PROPS) {
+            connValue = poolSetting.getAndRemoveStr(key);
+            if (StrUtil.isNotBlank(connValue)) {
+                connProps.setProperty(key, connValue);
+            }
+        }
 
-	@Override
-	protected DataSource createDataSource(String jdbcUrl, String driver, String user, String pass, Setting poolSetting) {
-		// remarks等特殊配置，since 5.3.8
-		final Props connProps = new Props();
-		String connValue;
-		for (String key : KEY_CONN_PROPS) {
-			connValue = poolSetting.getAndRemoveStr(key);
-			if(StrUtil.isNotBlank(connValue)){
-				connProps.setProperty(key, connValue);
-			}
-		}
+        final Props config = new Props();
+        config.putAll(poolSetting);
 
-		final Props config = new Props();
-		config.putAll(poolSetting);
+        config.put("jdbcUrl", jdbcUrl);
+        if (null != driver) {
+            config.put("driverClassName", driver);
+        }
+        if (null != user) {
+            config.put("username", user);
+        }
+        if (null != pass) {
+            config.put("password", pass);
+        }
 
-		config.put("jdbcUrl", jdbcUrl);
-		if (null != driver) {
-			config.put("driverClassName", driver);
-		}
-		if (null != user) {
-			config.put("username", user);
-		}
-		if (null != pass) {
-			config.put("password", pass);
-		}
+        final HikariConfig hikariConfig = new HikariConfig(config);
+        hikariConfig.setDataSourceProperties(connProps);
 
-		final HikariConfig hikariConfig = new HikariConfig(config);
-		hikariConfig.setDataSourceProperties(connProps);
-
-		return new HikariDataSource(hikariConfig);
-	}
+        return new HikariDataSource(hikariConfig);
+    }
 }

@@ -11,34 +11,35 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Looly
  * @author wh
  * @since 1.0.0
- *
  */
-public class LocalPortGenerater implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class LocalPortGenerater implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	/** 备选的本地端口 */
-	private final AtomicInteger alternativePort;
+    /**
+     * 备选的本地端口
+     */
+    private final AtomicInteger alternativePort;
 
-	/**
-	 * 构造
-	 *
-	 * @param beginPort 起始端口号
-	 */
-	public LocalPortGenerater(int beginPort) {
-		alternativePort = new AtomicInteger(beginPort);
-	}
+    /**
+     * 构造
+     *
+     * @param beginPort 起始端口号
+     */
+    public LocalPortGenerater( int beginPort ) {
+        alternativePort = new AtomicInteger(beginPort);
+    }
 
-	/**
-	 * 生成一个本地端口，用于远程端口映射
-	 *
-	 * @return 未被使用的本地端口
-	 */
-	public int generate() {
-		int validPort = alternativePort.get();
-		// 获取可用端口
-		while (false == NetUtil.isUsableLocalPort(validPort)) {
-			validPort = alternativePort.incrementAndGet();
-		}
-		return validPort;
-	}
+    /**
+     * 生成一个本地端口，用于远程端口映射
+     *
+     * @return 未被使用的本地端口
+     */
+    public int generate() {
+        int validPort = alternativePort.get();
+        // 获取可用端口
+        while (false == NetUtil.isUsableLocalPort(validPort)) {
+            validPort = alternativePort.incrementAndGet();
+        }
+        return validPort;
+    }
 }

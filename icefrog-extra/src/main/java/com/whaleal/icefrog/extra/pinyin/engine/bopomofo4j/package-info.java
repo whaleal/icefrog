@@ -2,7 +2,7 @@
  * 封装了Bopomofo4j的引擎。
  *
  * <p>
- * Bopomofo4j封装，项目：https://github.com/rnkrsoft/Bopomofo4j。
+ * Bopomofo4j封装，项目：https://gitee.com/rnkrsoft/Bopomofo4j。
  * </p>
  *
  * <p>
@@ -15,7 +15,6 @@
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 package com.whaleal.icefrog.extra.pinyin.engine.bopomofo4j;

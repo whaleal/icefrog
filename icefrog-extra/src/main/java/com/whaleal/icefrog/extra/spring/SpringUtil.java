@@ -27,9 +27,8 @@ import java.util.Map;
  *     <li>注册和注销Bean</li>
  * </ol>
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author loolly
+ *
  */
 @Component
 public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
@@ -69,7 +68,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * 获取{@link ListableBeanFactory}，可能为{@link ConfigurableListableBeanFactory} 或 {@link ApplicationContextAware}
 	 *
 	 * @return {@link ListableBeanFactory}
-	 * @since 1.0.0
+	 *
 	 */
 	public static ListableBeanFactory getBeanFactory() {
 		return null == beanFactory ? applicationContext : beanFactory;
@@ -80,7 +79,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 *
 	 * @return {@link ConfigurableListableBeanFactory}
 	 * @throws UtilException 当上下文非ConfigurableListableBeanFactory抛出异常
-	 * @since 1.0.0
+	 *
 	 */
 	public static ConfigurableListableBeanFactory getConfigurableBeanFactory() throws UtilException {
 		final ConfigurableListableBeanFactory factory;
@@ -137,7 +136,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * @param reference 类型参考，用于持有转换后的泛型类型
 	 * @param <T>       Bean类型
 	 * @return 带泛型参数的Bean
-	 * @since 1.0.0
+	 *
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T getBean(TypeReference<T> reference) {
@@ -154,7 +153,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * @param <T>  Bean类型
 	 * @param type 类、接口，null表示获取所有bean
 	 * @return 类型对应的bean，key是bean注册的name，value是Bean
-	 * @since 1.0.0
+	 *
 	 */
 	public static <T> Map<String, T> getBeansOfType(Class<T> type) {
 		return getBeanFactory().getBeansOfType(type);
@@ -165,7 +164,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 *
 	 * @param type 类、接口，null表示获取所有bean名称
 	 * @return bean名称
-	 * @since 1.0.0
+	 *
 	 */
 	public static String[] getBeanNamesForType(Class<?> type) {
 		return getBeanFactory().getBeanNamesForType(type);
@@ -176,7 +175,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 *
 	 * @param key 配置项key
 	 * @return 属性值
-	 * @since 1.0.0
+	 *
 	 */
 	public static String getProperty(String key) {
 		if (null == applicationContext) {
@@ -189,7 +188,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * 获取应用程序名称
 	 *
 	 * @return 应用程序名称
-	 * @since 1.0.0
+	 *
 	 */
 	public static String getApplicationName() {
 		return getProperty("spring.application.name");
@@ -199,7 +198,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * 获取当前的环境配置，无配置返回null
 	 *
 	 * @return 当前的环境配置
-	 * @since 1.0.0
+	 *
 	 */
 	public static String[] getActiveProfiles() {
 		if (null == applicationContext) {
@@ -212,7 +211,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * 获取当前的环境配置，当有多个环境配置时，只获取第一个
 	 *
 	 * @return 当前的环境配置
-	 * @since 1.0.0
+	 *
 	 */
 	public static String getActiveProfile() {
 		final String[] activeProfiles = getActiveProfiles();
@@ -229,9 +228,8 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * @param <T>      Bean类型
 	 * @param beanName 名称
 	 * @param bean     bean
-	 * @author Looly
- * @author wh
-	 * @since 1.0.0
+	 * @author shadow
+	 *
 	 */
 	public static <T> void registerBean(String beanName, T bean) {
 		final ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
@@ -245,9 +243,8 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * 将Spring中的bean注销，请谨慎使用
 	 *
 	 * @param beanName bean名称
-	 * @author Looly
- * @author wh
-	 * @since 1.0.0
+	 * @author shadow
+	 *
 	 */
 	public static void unregisterBean(String beanName) {
 		final ConfigurableListableBeanFactory factory = getConfigurableBeanFactory();
@@ -263,7 +260,7 @@ public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextA
 	 * 发布事件
 	 *
 	 * @param event the event to publish
-	 * @since 1.0.0
+	 *
 	 */
 	public static void publishEvent(ApplicationEvent event) {
 		if (null != applicationContext) {

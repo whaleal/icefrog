@@ -2,6 +2,8 @@
 
 package com.whaleal.icefrog.collections;
 
+import org.junit.Test;
+
 import java.util.Random;
 
 /**
@@ -13,6 +15,9 @@ import java.util.Random;
  * @author Nicholaus Shupe
  */
 public final class SpecialRandom extends Random {
+  @Test
+  public void test(){
+  }
   public static SpecialRandom valueOf(String s) {
     return (s.length() == 0) ? new SpecialRandom() : new SpecialRandom(Long.parseLong(s));
   }

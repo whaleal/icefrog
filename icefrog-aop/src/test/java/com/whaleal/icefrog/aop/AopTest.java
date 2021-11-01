@@ -14,77 +14,77 @@ import org.junit.Test;
  */
 public class AopTest {
 
-	@Test
-	public void aopTest() {
-		Animal cat = ProxyUtil.proxy(new Cat(), TimeIntervalAspect.class);
-		String result = cat.eat();
-		Assert.assertEquals("猫吃鱼", result);
-		cat.seize();
-	}
+    @Test
+    public void aopTest() {
+        Animal cat = ProxyUtil.proxy(new Cat(), TimeIntervalAspect.class);
+        String result = cat.eat();
+        Assert.assertEquals("猫吃鱼", result);
+        cat.seize();
+    }
 
-	@Test
-	public void aopByAutoCglibTest() {
-		Dog dog = ProxyUtil.proxy(new Dog(), TimeIntervalAspect.class);
-		String result = dog.eat();
-		Assert.assertEquals("狗吃肉", result);
+    @Test
+    public void aopByAutoCglibTest() {
+        Dog dog = ProxyUtil.proxy(new Dog(), TimeIntervalAspect.class);
+        String result = dog.eat();
+        Assert.assertEquals("狗吃肉", result);
 
-		dog.seize();
-	}
+        dog.seize();
+    }
 
-	interface Animal {
-		String eat();
+    @Test
+    public void testCGLIBProxy() {
+        TagObj target = new TagObj();
+        //目标类设置标记
+        target.setTag("tag");
 
-		void seize();
-	}
+        TagObj proxy = ProxyUtil.proxy(target, TimeIntervalAspect.class);
+        //代理类获取标记tag (断言错误)
+        Assert.assertEquals("tag", proxy.getTag());
+    }
 
-	/**
-	 * 有接口
-	 *
-	 * @author Looly
- * @author wh
-	 */
-	static class Cat implements Animal {
+    interface Animal {
+        String eat();
 
-		@Override
-		public String eat() {
-			return "猫吃鱼";
-		}
+        void seize();
+    }
 
-		@Override
-		public void seize() {
-			Console.log("抓了条鱼");
-		}
-	}
+    /**
+     * 有接口
+     *
+     * @author Looly
+     * @author wh
+     */
+    static class Cat implements Animal {
 
-	/**
-	 * 无接口
-	 *
-	 * @author Looly
- * @author wh
-	 */
-	static class Dog {
-		public String eat() {
-			return "狗吃肉";
-		}
+        @Override
+        public String eat() {
+            return "猫吃鱼";
+        }
 
-		public void seize() {
+        @Override
+        public void seize() {
+            Console.log("抓了条鱼");
+        }
+    }
+
+    /**
+     * 无接口
+     *
+     * @author Looly
+     * @author wh
+     */
+    static class Dog {
+        public String eat() {
+            return "狗吃肉";
+        }
+
+        public void seize() {
             Console.log("抓了只鸡");
-		}
-	}
+        }
+    }
 
-	@Test
-	public void testCGLIBProxy() {
-		TagObj target = new TagObj();
-		//目标类设置标记
-		target.setTag("tag");
-
-		TagObj proxy = ProxyUtil.proxy(target, TimeIntervalAspect.class);
-		//代理类获取标记tag (断言错误)
-		Assert.assertEquals("tag", proxy.getTag());
-	}
-
-	@Data
-	public static class TagObj{
-		private String tag;
-	}
+    @Data
+    public static class TagObj {
+        private String tag;
+    }
 }

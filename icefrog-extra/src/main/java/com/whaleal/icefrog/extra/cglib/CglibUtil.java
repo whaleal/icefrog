@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.extra.cglib;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.beans.BeanMap;
@@ -16,9 +16,8 @@ import java.util.stream.Collectors;
 /**
  * Cglib工具类
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class CglibUtil {
 
@@ -69,8 +68,8 @@ public class CglibUtil {
 	 * @param converter 转换器，无需可传{@code null}
 	 */
 	public static void copy(Object source, Object target, Converter converter) {
-		Preconditions.notNull(source, "Source bean must be not null.");
-		Preconditions.notNull(target, "Target bean must be not null.");
+		Precondition.notNull(source, "Source bean must be not null.");
+		Precondition.notNull(target, "Target bean must be not null.");
 
 		final Class<?> sourceClass = source.getClass();
 		final Class<?> targetClass = target.getClass();
@@ -101,7 +100,7 @@ public class CglibUtil {
 	 * @param <S>       源bean类型
 	 * @param <T>       目标bean类型
 	 * @return 目标bean对象list
-	 * @since 1.0.0
+	 *
 	 */
 	public static <S, T> List<T> copyList(Collection<S> source, Supplier<T> target, Converter converter) {
 		return copyList(source, target, converter, null);
@@ -116,7 +115,7 @@ public class CglibUtil {
 	 * @param <S>      源bean类型
 	 * @param <T>      目标bean类型
 	 * @return 目标bean对象list
-	 * @since 1.0.0
+	 *
 	 */
 	public static <S, T> List<T> copyList(Collection<S> source, Supplier<T> target, BiConsumer<S, T> callback) {
 		return copyList(source, target, null, callback);
@@ -149,7 +148,7 @@ public class CglibUtil {
 	 *
 	 * @param bean Bean对象
 	 * @return {@link BeanMap}
-	 * @since 1.0.0
+	 *
 	 */
 	public static BeanMap toMap(Object bean) {
 		return BeanMap.create(bean);
@@ -161,7 +160,7 @@ public class CglibUtil {
 	 * @param bean Bean
 	 * @param <T> Bean类型
 	 * @return bean
-	 * @since 1.0.0
+	 *
 	 */
 	@SuppressWarnings("rawtypes")
 	public static <T> T fillBean(Map map, T bean){
@@ -175,7 +174,7 @@ public class CglibUtil {
 	 * @param beanClass Bean类
 	 * @param <T> Bean类型
 	 * @return bean
-	 * @since 1.0.0
+	 *
 	 */
 	@SuppressWarnings("rawtypes")
 	public static <T> T toBean(Map map, Class<T> beanClass){

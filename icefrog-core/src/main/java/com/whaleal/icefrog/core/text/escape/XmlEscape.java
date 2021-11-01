@@ -20,20 +20,19 @@ import com.whaleal.icefrog.core.text.replacer.ReplacerChain;
  * @since 1.0.0
  */
 public class XmlEscape extends ReplacerChain {
-	private static final long serialVersionUID = 1L;
-
-	protected static final String[][] BASIC_ESCAPE = { //
+    protected static final String[][] BASIC_ESCAPE = { //
 //			{"'", "&apos;"}, // " - single-quote
-			{"\"", "&quot;"}, // " - double-quote
-			{"&", "&amp;"}, // & - ampersand
-			{"<", "&lt;"}, // < - less-than
-			{">", "&gt;"}, // > - greater-than
-	};
+            {"\"", "&quot;"}, // " - double-quote
+            {"&", "&amp;"}, // & - ampersand
+            {"<", "&lt;"}, // < - less-than
+            {">", "&gt;"}, // > - greater-than
+    };
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 构造
-	 */
-	public XmlEscape() {
-		addChain(new LookupReplacer(BASIC_ESCAPE));
-	}
+    /**
+     * 构造
+     */
+    public XmlEscape() {
+        addChain(new LookupReplacer(BASIC_ESCAPE));
+    }
 }

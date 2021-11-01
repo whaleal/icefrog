@@ -12,22 +12,22 @@ import com.whaleal.icefrog.log.LogFactory;
  */
 public class JbossLogFactory extends LogFactory {
 
-	/**
-	 * 构造
-	 */
-	public JbossLogFactory() {
-		super("JBoss Logging");
-		checkLogExist(org.jboss.logging.Logger.class);
-	}
+    /**
+     * 构造
+     */
+    public JbossLogFactory() {
+        super("JBoss Logging");
+        checkLogExist(org.jboss.logging.Logger.class);
+    }
 
-	@Override
-	public Log createLog(String name) {
-		return new JbossLog(name);
-	}
+    @Override
+    public Log createLog( String name ) {
+        return new JbossLog(name);
+    }
 
-	@Override
-	public Log createLog(Class<?> clazz) {
-		return new JbossLog(clazz);
-	}
+    @Override
+    public Log createLog( Class<?> clazz ) {
+        return new JbossLog(clazz);
+    }
 
 }

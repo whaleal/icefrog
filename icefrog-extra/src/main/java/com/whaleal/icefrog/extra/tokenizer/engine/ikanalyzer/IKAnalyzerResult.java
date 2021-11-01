@@ -12,8 +12,7 @@ import java.io.IOException;
  * IKAnalyzer分词结果实现<br>
  * 项目地址：https://github.com/yozhao/IKAnalyzer
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class IKAnalyzerResult extends AbstractResult {
@@ -37,9 +36,9 @@ public class IKAnalyzerResult extends AbstractResult {
 		} catch (IOException e) {
 			throw new TokenizerException(e);
 		}
-		if (null != next) {
-			return new IKAnalyzerWord(next);
+		if (null == next) {
+			return null;
 		}
-		return null;
+		return new IKAnalyzerWord(next);
 	}
 }

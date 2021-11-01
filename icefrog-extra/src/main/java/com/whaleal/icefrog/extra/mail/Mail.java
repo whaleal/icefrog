@@ -32,9 +32,8 @@ import java.util.Date;
 /**
  * 邮件发送客户端
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class Mail implements Builder<MimeMessage> {
 
@@ -152,7 +151,7 @@ public class Mail implements Builder<MimeMessage> {
 	 *
 	 * @param ccs 抄送人列表
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail setCcs(String... ccs) {
 		this.ccs = ccs;
@@ -164,7 +163,7 @@ public class Mail implements Builder<MimeMessage> {
 	 *
 	 * @param bccs 密送人列表
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail setBccs(String... bccs) {
 		this.bccs = bccs;
@@ -176,7 +175,7 @@ public class Mail implements Builder<MimeMessage> {
 	 *
 	 * @param reply 回复地址(reply-to)列表
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail setReply(String... reply) {
 		this.reply = reply;
@@ -252,7 +251,7 @@ public class Mail implements Builder<MimeMessage> {
 	 *
 	 * @param attachments 附件列表
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail setAttachments(DataSource... attachments) {
 		if (ArrayUtil.isNotEmpty(attachments)) {
@@ -285,7 +284,7 @@ public class Mail implements Builder<MimeMessage> {
 	 * @param cid         图片与占位符，占位符格式为cid:${cid}
 	 * @param imageStream 图片文件
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail addImage(String cid, InputStream imageStream) {
 		return addImage(cid, imageStream, null);
@@ -298,7 +297,7 @@ public class Mail implements Builder<MimeMessage> {
 	 * @param imageStream 图片流，不关闭
 	 * @param contentType 图片类型，null赋值默认的"image/jpeg"
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail addImage(String cid, InputStream imageStream, String contentType) {
 		ByteArrayDataSource imgSource;
@@ -317,7 +316,7 @@ public class Mail implements Builder<MimeMessage> {
 	 * @param cid       图片与占位符，占位符格式为cid:${cid}
 	 * @param imageFile 图片文件
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail addImage(String cid, File imageFile) {
 		InputStream in = null;
@@ -346,7 +345,7 @@ public class Mail implements Builder<MimeMessage> {
 	 *
 	 * @param isUseGlobalSession 是否使用全局会话，默认为true
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail setUseGlobalSession(boolean isUseGlobalSession) {
 		this.useGlobalSession = isUseGlobalSession;
@@ -358,7 +357,7 @@ public class Mail implements Builder<MimeMessage> {
 	 *
 	 * @param debugOutput debug输出位置
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Mail setDebugOutput(PrintStream debugOutput) {
 		this.debugOutput = debugOutput;

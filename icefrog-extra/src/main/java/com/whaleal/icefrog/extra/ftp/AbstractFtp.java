@@ -13,9 +13,8 @@ import java.util.List;
 /**
  * 抽象FTP类，用于定义通用的FTP方法
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public abstract class AbstractFtp implements Closeable {
 
@@ -27,7 +26,7 @@ public abstract class AbstractFtp implements Closeable {
 	 * 构造
 	 *
 	 * @param config FTP配置
-	 * @since 1.0.0
+	 *
 	 */
 	protected AbstractFtp(FtpConfig config) {
 		this.ftpConfig = config;
@@ -37,7 +36,7 @@ public abstract class AbstractFtp implements Closeable {
 	 * 如果连接超时的话，重新进行连接
 	 *
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public abstract AbstractFtp reconnectIfTimeout();
 
@@ -53,7 +52,7 @@ public abstract class AbstractFtp implements Closeable {
 	 * 打开上级目录
 	 *
 	 * @return 是否打开目录
-	 * @since 1.0.0
+	 *
 	 */
 	public boolean toParent() {
 		return cd("..");
@@ -71,7 +70,7 @@ public abstract class AbstractFtp implements Closeable {
 	 *
 	 * @param dir 被判断的路径
 	 * @return 是否为目录
-	 * @since 1.0.0
+	 *
 	 */
 	public boolean isDir(String dir) {
 		return cd(dir);
@@ -181,13 +180,13 @@ public abstract class AbstractFtp implements Closeable {
 
 	/**
 	 * 下载文件-避免未完成的文件<br>
-	 * 来自：https://github.com/whaleal/icefrog/pulls/407<br>
+	 * 来自：https://gitee.com/dromara/hutool/pulls/407<br>
 	 * 此方法原理是先在目标文件同级目录下创建临时文件，下载之，等下载完毕后重命名，避免因下载错误导致的文件不完整。
 	 *
 	 * @param path     文件路径
 	 * @param outFile  输出文件或目录
 	 * @param tempFileSuffix 临时文件后缀，默认".temp"
-	 * @since 1.0.0
+	 *
 	 */
 	public void download(String path, File outFile, String tempFileSuffix) {
 		if(StrUtil.isBlank(tempFileSuffix)){
@@ -219,7 +218,7 @@ public abstract class AbstractFtp implements Closeable {
 	 *
 	 * @param sourcePath ftp服务器目录
 	 * @param destDir    本地目录
-	 * @since 1.0.0
+	 *
 	 */
 	public abstract void recursiveDownloadFolder(String sourcePath, File destDir);
 

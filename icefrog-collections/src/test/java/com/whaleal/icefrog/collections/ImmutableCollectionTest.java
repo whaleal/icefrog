@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests for {@code ImmutableCollection}.
@@ -11,6 +12,9 @@ import junit.framework.TestCase;
  * 
  */
 public class ImmutableCollectionTest extends TestCase {
+  @Test
+  public void test(){
+  }
   public void testCapacityExpansion() {
     assertEquals(1, ImmutableCollection.Builder.expandedCapacity(0, 1));
     assertEquals(2, ImmutableCollection.Builder.expandedCapacity(0, 2));

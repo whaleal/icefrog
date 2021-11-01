@@ -8,9 +8,8 @@ import java.util.List;
 /**
  * 拼音引擎接口，具体的拼音实现通过实现此接口，完成具体实现功能
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public interface PinyinEngine {
 

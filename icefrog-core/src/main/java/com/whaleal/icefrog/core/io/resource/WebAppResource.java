@@ -12,15 +12,15 @@ import java.io.File;
  * @since 1.0.0
  */
 public class WebAppResource extends FileResource {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 构造
-	 *
-	 * @param path 相对于Web root的路径
-	 */
-	public WebAppResource(String path) {
-		super(new File(FileUtil.getWebRoot(), path));
-	}
+    /**
+     * 构造
+     *
+     * @param path 相对于Web root的路径
+     */
+    public WebAppResource( String path ) {
+        super(new File(FileUtil.getWebRoot(), path));
+    }
 
 }

@@ -13,7 +13,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collector;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

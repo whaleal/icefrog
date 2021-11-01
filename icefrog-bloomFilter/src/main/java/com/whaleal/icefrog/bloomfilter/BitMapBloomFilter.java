@@ -1,10 +1,6 @@
 package com.whaleal.icefrog.bloomfilter;
 
-import com.whaleal.icefrog.bloomfilter.filter.DefaultFilter;
-import com.whaleal.icefrog.bloomfilter.filter.ELFFilter;
-import com.whaleal.icefrog.bloomfilter.filter.JSFilter;
-import com.whaleal.icefrog.bloomfilter.filter.PJWFilter;
-import com.whaleal.icefrog.bloomfilter.filter.SDBMFilter;
+import com.whaleal.icefrog.bloomfilter.filter.*;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 /**
@@ -18,66 +14,66 @@ import com.whaleal.icefrog.core.util.NumberUtil;
  * @author wh
  */
 public class BitMapBloomFilter implements BloomFilter {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private BloomFilter[] filters;
+    private BloomFilter[] filters;
 
-	/**
-	 * 构造，使用默认的5个过滤器
-	 *
-	 * @param m M值决定BitMap的大小
-	 */
-	public BitMapBloomFilter(int m) {
-		long mNum = NumberUtil.div(String.valueOf(m), String.valueOf(5)).longValue();
-		long size = mNum * 1024 * 1024 * 8;
+    /**
+     * 构造，使用默认的5个过滤器
+     *
+     * @param m M值决定BitMap的大小
+     */
+    public BitMapBloomFilter( int m ) {
+        long mNum = NumberUtil.div(String.valueOf(m), String.valueOf(5)).longValue();
+        long size = mNum * 1024 * 1024 * 8;
 
-		filters = new BloomFilter[]{
-				new DefaultFilter(size),
-				new ELFFilter(size),
-				new JSFilter(size),
-				new PJWFilter(size),
-				new SDBMFilter(size)
-		};
-	}
+        filters = new BloomFilter[]{
+                new DefaultFilter(size),
+                new ELFFilter(size),
+                new JSFilter(size),
+                new PJWFilter(size),
+                new SDBMFilter(size)
+        };
+    }
 
-	/**
-	 * 使用自定的多个过滤器建立BloomFilter
-	 *
-	 * @param m       M值决定BitMap的大小
-	 * @param filters Bloom过滤器列表
-	 */
-	public BitMapBloomFilter(int m, BloomFilter... filters) {
-		this(m);
-		this.filters = filters;
-	}
+    /**
+     * 使用自定的多个过滤器建立BloomFilter
+     *
+     * @param m       M值决定BitMap的大小
+     * @param filters Bloom过滤器列表
+     */
+    public BitMapBloomFilter( int m, BloomFilter... filters ) {
+        this(m);
+        this.filters = filters;
+    }
 
-	/**
-	 * 增加字符串到Filter映射中
-	 *
-	 * @param str 字符串
-	 */
-	@Override
-	public boolean add(String str) {
-		boolean flag = false;
-		for (BloomFilter filter : filters) {
-			flag |= filter.add(str);
-		}
-		return flag;
-	}
+    /**
+     * 增加字符串到Filter映射中
+     *
+     * @param str 字符串
+     */
+    @Override
+    public boolean add( String str ) {
+        boolean flag = false;
+        for (BloomFilter filter : filters) {
+            flag |= filter.add(str);
+        }
+        return flag;
+    }
 
-	/**
-	 * 是否可能包含此字符串，此处存在误判
-	 *
-	 * @param str 字符串
-	 * @return 是否存在
-	 */
-	@Override
-	public boolean contains(String str) {
-		for (BloomFilter filter : filters) {
-			if (filter.contains(str) == false) {
-				return false;
-			}
-		}
-		return true;
-	}
+    /**
+     * 是否可能包含此字符串，此处存在误判
+     *
+     * @param str 字符串
+     * @return 是否存在
+     */
+    @Override
+    public boolean contains( String str ) {
+        for (BloomFilter filter : filters) {
+            if (filter.contains(str) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -17,71 +17,71 @@ import java.util.List;
  */
 public class RootAction implements Action {
 
-	public static final String DEFAULT_INDEX_FILE_NAME = "index.html";
+    public static final String DEFAULT_INDEX_FILE_NAME = "index.html";
 
-	private final File rootDir;
-	private final List<String> indexFileNames;
+    private final File rootDir;
+    private final List<String> indexFileNames;
 
-	/**
-	 * 构造
-	 *
-	 * @param rootDir 网页根目录
-	 */
-	public RootAction(String rootDir) {
-		this(new File(rootDir));
-	}
+    /**
+     * 构造
+     *
+     * @param rootDir 网页根目录
+     */
+    public RootAction( String rootDir ) {
+        this(new File(rootDir));
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param rootDir 网页根目录
-	 */
-	public RootAction(File rootDir) {
-		this(rootDir, DEFAULT_INDEX_FILE_NAME);
-	}
+    /**
+     * 构造
+     *
+     * @param rootDir 网页根目录
+     */
+    public RootAction( File rootDir ) {
+        this(rootDir, DEFAULT_INDEX_FILE_NAME);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param rootDir        网页根目录
-	 * @param indexFileNames 主页文件名列表
-	 */
-	public RootAction(String rootDir, String... indexFileNames) {
-		this(new File(rootDir), indexFileNames);
-	}
+    /**
+     * 构造
+     *
+     * @param rootDir        网页根目录
+     * @param indexFileNames 主页文件名列表
+     */
+    public RootAction( String rootDir, String... indexFileNames ) {
+        this(new File(rootDir), indexFileNames);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param rootDir        网页根目录
-	 * @param indexFileNames 主页文件名列表
-	 * @since 1.0.0
-	 */
-	public RootAction(File rootDir, String... indexFileNames) {
-		this.rootDir = rootDir;
-		this.indexFileNames = CollUtil.toList(indexFileNames);
-	}
+    /**
+     * 构造
+     *
+     * @param rootDir        网页根目录
+     * @param indexFileNames 主页文件名列表
+     * @since 1.0.0
+     */
+    public RootAction( File rootDir, String... indexFileNames ) {
+        this.rootDir = rootDir;
+        this.indexFileNames = CollUtil.toList(indexFileNames);
+    }
 
-	@Override
-	public void doAction(HttpServerRequest request, HttpServerResponse response) {
-		final String path = request.getPath();
+    @Override
+    public void doAction( HttpServerRequest request, HttpServerResponse response ) {
+        final String path = request.getPath();
 
-		File file = FileUtil.file(rootDir, path);
-		if (file.exists()) {
-			if (file.isDirectory()) {
-				for (String indexFileName : indexFileNames) {
-					//默认读取主页
-					file = FileUtil.file(file, indexFileName);
-					if (file.exists() && file.isFile()) {
-						response.write(file);
-					}
-				}
-			} else{
-				final String name = request.getParam("name");
-				response.write(file, name);
-			}
-		}
+        File file = FileUtil.file(rootDir, path);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                for (String indexFileName : indexFileNames) {
+                    //默认读取主页
+                    file = FileUtil.file(file, indexFileName);
+                    if (file.exists() && file.isFile()) {
+                        response.write(file);
+                    }
+                }
+            } else {
+                final String name = request.getParam("name");
+                response.write(file, name);
+            }
+        }
 
-		response.send404("404 Not Found !");
-	}
+        response.send404("404 Not Found !");
+    }
 }

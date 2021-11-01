@@ -5,9 +5,8 @@ import com.whaleal.icefrog.extra.tokenizer.engine.TokenizerFactory;
 /**
  * 分词工具类
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class TokenizerUtil {
 

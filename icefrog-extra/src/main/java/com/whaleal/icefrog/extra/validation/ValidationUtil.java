@@ -14,9 +14,8 @@ import java.util.Set;
  * <p>在实际使用中，用户需引入validation-api的实现，如：hibernate-validator</p>
  * <p>注意：hibernate-validator还依赖了javax.el，需自行引入。</p>
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author chengqiang
+ *
  */
 public class ValidationUtil {
 	/**

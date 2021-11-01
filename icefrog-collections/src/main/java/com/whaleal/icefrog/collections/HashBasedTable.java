@@ -4,18 +4,12 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.MapUtil;
 
-
-
-
-
-
-
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNonnegative;
 
 /**
  * Implementation of {@link Table} using linked hash tables. This guarantees predictable iteration

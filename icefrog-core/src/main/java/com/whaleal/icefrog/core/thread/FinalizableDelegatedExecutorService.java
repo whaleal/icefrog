@@ -10,17 +10,17 @@ import java.util.concurrent.ExecutorService;
  */
 public class FinalizableDelegatedExecutorService extends DelegatedExecutorService {
 
-	/**
-	 * 构造
-	 *
-	 * @param executor {@link ExecutorService}
-	 */
-	FinalizableDelegatedExecutorService(ExecutorService executor) {
-		super(executor);
-	}
+    /**
+     * 构造
+     *
+     * @param executor {@link ExecutorService}
+     */
+    FinalizableDelegatedExecutorService( ExecutorService executor ) {
+        super(executor);
+    }
 
-	@Override
-	protected void finalize() {
-		super.shutdown();
-	}
+    @Override
+    protected void finalize() {
+        super.shutdown();
+    }
 }

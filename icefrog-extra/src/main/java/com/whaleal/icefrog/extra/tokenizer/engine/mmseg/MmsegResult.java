@@ -11,8 +11,7 @@ import java.io.IOException;
  * mmseg4j分词结果实现<br>
  * 项目地址：https://github.com/chenlb/mmseg4j-core
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class MmsegResult extends AbstractResult {
@@ -36,9 +35,9 @@ public class MmsegResult extends AbstractResult {
 		} catch (IOException e) {
 			throw new TokenizerException(e);
 		}
-		if (null != next) {
-			return new MmsegWord(next);
+		if (null == next) {
+			return null;
 		}
-		return null;
+		return new MmsegWord(next);
 	}
 }

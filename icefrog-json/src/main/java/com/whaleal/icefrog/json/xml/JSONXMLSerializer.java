@@ -11,9 +11,8 @@ import com.whaleal.icefrog.json.JSONObject;
 /**
  * JSON转XML字符串工具
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
 public class JSONXMLSerializer {
 	/**
@@ -126,7 +125,7 @@ public class JSONXMLSerializer {
 	 * @param sb       XML内容
 	 * @param tagName  标签名
 	 * @param isEndTag 是否结束标签
-	 * @since 1.0.0
+	 *
 	 */
 	private static void appendTag(StringBuilder sb, String tagName, boolean isEndTag) {
 		if (StrUtil.isNotBlank(tagName)) {
@@ -144,7 +143,7 @@ public class JSONXMLSerializer {
 	 * @param tagName 标签名
 	 * @param content 内容
 	 * @return 包装后的XML
-	 * @since 1.0.0
+	 *
 	 */
 	private static String wrapWithTag(String content, String tagName) {
 		if (StrUtil.isBlank(tagName)) {

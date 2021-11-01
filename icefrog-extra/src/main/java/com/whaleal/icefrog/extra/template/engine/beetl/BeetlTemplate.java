@@ -9,28 +9,27 @@ import java.util.Map;
 
 /**
  * Beetl模板实现
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  */
 public class BeetlTemplate extends AbstractTemplate implements Serializable{
 	private static final long serialVersionUID = -8157926902932567280L;
 
 	private final org.beetl.core.Template rawTemplate;
-
+	
 	/**
 	 * 包装Beetl模板
-	 *
+	 * 
 	 * @param beetlTemplate Beetl的模板对象 {@link org.beetl.core.Template}
 	 * @return BeetlTemplate
 	 */
 	public static BeetlTemplate wrap(org.beetl.core.Template beetlTemplate) {
 		return (null == beetlTemplate) ? null : new BeetlTemplate(beetlTemplate);
 	}
-
+	
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param beetlTemplate Beetl的模板对象 {@link org.beetl.core.Template}
 	 */
 	public BeetlTemplate(org.beetl.core.Template beetlTemplate) {

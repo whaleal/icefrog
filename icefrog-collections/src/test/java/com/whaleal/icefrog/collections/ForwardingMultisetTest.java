@@ -4,6 +4,8 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -16,6 +18,12 @@ import java.util.Set;
  * 
  */
 public class ForwardingMultisetTest extends TestCase {
+
+  @Test
+  public void test(){
+    Assert.assertTrue(true);
+
+  }
 
   static final class StandardImplForwardingMultiset<T> extends ForwardingMultiset<T> {
     private final Multiset<T> backingCollection;

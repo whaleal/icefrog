@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NavigableSet;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

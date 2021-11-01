@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.AbstractList;
 import java.util.List;
@@ -17,6 +18,9 @@ import java.util.NoSuchElementException;
 
 public class EvictingQueueTest extends TestCase {
 
+  @Test
+  public void test(){
+  }
   public void testCreateWithNegativeSize() throws Exception {
     try {
       EvictingQueue.create(-1);

@@ -6,9 +6,8 @@ import java.util.List;
 /**
  * bean 校验结果
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author chengqiang
+ *
  */
 public class BeanValidationResult {
 	/**

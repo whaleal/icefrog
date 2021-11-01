@@ -12,8 +12,7 @@ import com.whaleal.icefrog.log.StaticLog;
 /**
  * 简单模板工厂，用于根据用户引入的模板引擎jar，自动创建对应的模板引擎对象
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class TemplateFactory {
 
@@ -32,7 +31,7 @@ public class TemplateFactory {
 	 * 推荐创建的引擎单例使用，此方法每次调用会返回新的引擎
 	 *
 	 * @return {@link TemplateEngine}
-	 * @since 1.0.0
+	 *
 	 */
 	public static TemplateEngine create() {
 		return create(new TemplateConfig());

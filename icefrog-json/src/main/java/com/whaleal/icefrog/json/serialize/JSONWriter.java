@@ -9,14 +9,7 @@ import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
-import com.whaleal.icefrog.json.JSON;
-import com.whaleal.icefrog.json.JSONArray;
-import com.whaleal.icefrog.json.JSONConfig;
-import com.whaleal.icefrog.json.JSONException;
-import com.whaleal.icefrog.json.JSONNull;
-import com.whaleal.icefrog.json.JSONObject;
-import com.whaleal.icefrog.json.JSONString;
-import com.whaleal.icefrog.json.JSONUtil;
+import com.whaleal.icefrog.json.*;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -30,9 +23,8 @@ import java.util.Map;
  * JSON数据写出器<br>
  * 通过简单的append方式将JSON的键值对等信息写出到{@link Writer}中。
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
 public class JSONWriter extends Writer {
 
@@ -63,13 +55,13 @@ public class JSONWriter extends Writer {
 	private boolean arrayMode;
 
 	/**
-	 * 创建{@link JSONWriter}
+	 * 创建JSONWriter
 	 *
 	 * @param writer       {@link Writer}
 	 * @param indentFactor 缩进因子，定义每一级别增加的缩进量
 	 * @param indent       本级别缩进量
 	 * @param config       JSON选项
-	 * @return {@link JSONWriter}
+	 * @return JSONWriter
 	 */
 	public static JSONWriter of(Writer writer, int indentFactor, int indent, JSONConfig config) {
 		return new JSONWriter(writer, indentFactor, indent, config);
@@ -162,7 +154,7 @@ public class JSONWriter extends Writer {
 	 * @param key 字段名
 	 * @param value 字段值
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONWriter writeField(String key, Object value){
 		if(JSONUtil.isNull(value) && config.isIgnoreNullValue()){
@@ -384,7 +376,7 @@ public class JSONWriter extends Writer {
 
 			if (GlobalCustomFormat.FORMAT_SECONDS.equals(format)
 					|| GlobalCustomFormat.FORMAT_MILLISECONDS.equals(format)) {
-				// icefrog自定义的秒和毫秒表示，默认不包装双引号
+				// Hutool自定义的秒和毫秒表示，默认不包装双引号
 				return dateStr;
 			}
 			//用户定义了日期格式

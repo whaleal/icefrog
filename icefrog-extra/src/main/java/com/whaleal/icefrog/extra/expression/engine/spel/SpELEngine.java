@@ -12,9 +12,8 @@ import java.util.Map;
  * Spring-Expression引擎封装<br>
  * 见：https://github.com/spring-projects/spring-framework/tree/master/spring-expression
  *
- * @since 1.0.0
- * @author Looly
- * @author wh
+ *
+ * @author looly
  */
 public class SpELEngine implements ExpressionEngine {
 

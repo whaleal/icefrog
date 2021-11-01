@@ -11,14 +11,7 @@ import com.whaleal.icefrog.core.io.resource.ResourceUtil;
 import com.whaleal.icefrog.core.lang.Console;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
-import com.whaleal.icefrog.json.test.bean.JSONBean;
-import com.whaleal.icefrog.json.test.bean.ResultDto;
-import com.whaleal.icefrog.json.test.bean.Seq;
-import com.whaleal.icefrog.json.test.bean.TokenAuthResponse;
-import com.whaleal.icefrog.json.test.bean.TokenAuthWarp2;
-import com.whaleal.icefrog.json.test.bean.UserA;
-import com.whaleal.icefrog.json.test.bean.UserB;
-import com.whaleal.icefrog.json.test.bean.UserWithMap;
+import com.whaleal.icefrog.json.test.bean.*;
 import com.whaleal.icefrog.json.test.bean.report.CaseReport;
 import com.whaleal.icefrog.json.test.bean.report.StepReport;
 import com.whaleal.icefrog.json.test.bean.report.SuiteReport;
@@ -29,18 +22,12 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * JSONObject单元测试
  *
- * @author Looly
- * @author wh
+ * @author looly   wh
  */
 public class JSONObjectTest {
 
@@ -487,8 +474,7 @@ public class JSONObjectTest {
 	/**
 	 * 测试Bean
 	 *
-	 * @author Looly
- * @author wh
+	 * @author looly   wh
 	 */
 	@Data
 	public static class TestBean {
@@ -503,8 +489,7 @@ public class JSONObjectTest {
 	/**
 	 * 测试子Bean
 	 *
-	 * @author Looly
- * @author wh
+	 * @author looly   wh
 	 */
 	@Data
 	public static class SubBean {
@@ -534,8 +519,7 @@ public class JSONObjectTest {
 	/**
 	 * 测试子Bean
 	 *
-	 * @author Looly
- * @author wh
+	 * @author looly   wh
 	 */
 	@SuppressWarnings("FieldCanBeLocal")
 	public static class SameNameBean {
@@ -591,5 +575,50 @@ public class JSONObjectTest {
 
 		jsonObject.accumulate("key1", "value3");
 		Assert.assertEquals("{\"key1\":[\"value1\",\"value2\",\"value3\"]}", jsonObject.toString());
+	}
+
+	@Test
+	public void putByPathTest() {
+		JSONObject json = new JSONObject();
+		json.putByPath("aa.bb", "BB");
+		Assert.assertEquals("{\"aa\":{\"bb\":\"BB\"}}", json.toString());
+	}
+
+
+	@Test
+	public void bigDecimalTest(){
+		String jsonStr = "{\"orderId\":\"1704747698891333662002277\"}";
+		BigDecimalBean bigDecimalBean = JSONUtil.toBean(jsonStr, BigDecimalBean.class);
+		Assert.assertEquals("{\"orderId\":1704747698891333662002277}", JSONUtil.toJsonStr(bigDecimalBean));
+	}
+
+	@Data
+	static
+	class BigDecimalBean{
+		private BigDecimal orderId;
+	}
+
+	@Test
+	public void filterIncludeTest(){
+		JSONObject json1 = JSONUtil.createObj(JSONConfig.create().setOrder(true))
+				.set("a", "value1")
+				.set("b", "value2")
+				.set("c", "value3")
+				.set("d", true);
+
+		final String s = json1.toJSONString(0, (pair) -> pair.getKey().equals("b"));
+		Assert.assertEquals("{\"b\":\"value2\"}", s);
+	}
+
+	@Test
+	public void filterExcludeTest(){
+		JSONObject json1 = JSONUtil.createObj(JSONConfig.create().setOrder(true))
+				.set("a", "value1")
+				.set("b", "value2")
+				.set("c", "value3")
+				.set("d", true);
+
+		final String s = json1.toJSONString(0, (pair) -> false == pair.getKey().equals("b"));
+		Assert.assertEquals("{\"a\":\"value1\",\"c\":\"value3\",\"d\":true}", s);
 	}
 }

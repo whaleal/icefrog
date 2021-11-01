@@ -18,16 +18,16 @@ import com.whaleal.icefrog.core.util.BooleanUtil;
  * @author wh
  */
 public class BooleanConverter extends AbstractConverter<Boolean> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected Boolean convertInternal(Object value) {
-		if (value instanceof Number) {
-			// 0为false，其它数字为true
-			return 0 != ((Number) value).doubleValue();
-		}
-		//Object不可能出现Primitive类型，故忽略
-		return BooleanUtil.toBoolean(convertToStr(value));
-	}
+    @Override
+    protected Boolean convertInternal( Object value ) {
+        if (value instanceof Number) {
+            // 0为false，其它数字为true
+            return 0 != ((Number) value).doubleValue();
+        }
+        //Object不可能出现Primitive类型，故忽略
+        return BooleanUtil.toBoolean(convertToStr(value));
+    }
 
 }

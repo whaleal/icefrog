@@ -20,7 +20,7 @@ import com.whaleal.icefrog.core.collection.AbstractIterator;
 import javax.annotation.CheckForNull;
 import java.util.Queue;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

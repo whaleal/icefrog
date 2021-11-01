@@ -8,11 +8,10 @@ import java.util.Map;
 
 /**
  * Jexl3引擎封装<br>
- * 见：https://github.com/apache/icefrogs-jexl
+ * 见：https://github.com/apache/commons-jexl
  *
- * @since 1.0.0
- * @author Looly
- * @author wh
+ *
+ * @author looly
  */
 public class JexlEngine implements ExpressionEngine {
 
@@ -24,7 +23,15 @@ public class JexlEngine implements ExpressionEngine {
 
 	@Override
 	public Object eval(String expression, Map<String, Object> context) {
-		return engine.createExpression(expression).evaluate(new MapContext(context));
+		final MapContext mapContext = new MapContext(context);
+
+		try{
+			return engine.createExpression(expression).evaluate(mapContext);
+		} catch (Exception ignore){
+			// https://gitee.com/dromara/hutool/issues/I4B70D
+			// 支持脚本
+			return engine.createScript(expression).execute(mapContext);
+		}
 	}
 
 	/**

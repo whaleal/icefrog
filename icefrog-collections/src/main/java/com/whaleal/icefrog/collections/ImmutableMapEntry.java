@@ -2,14 +2,9 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
 import javax.annotation.CheckForNull;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkEntryNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkEntryNotNull;
 
 /**
  * Implementation of {@code Entry} for {@link ImmutableMap} that adds extra methods to traverse hash

@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.NavigableSet;
@@ -15,6 +16,12 @@ import java.util.SortedSet;
  * 
  */
 public class ForwardingNavigableSetTest extends TestCase {
+
+  @Test
+  public void test(){
+
+  }
+
   static class StandardImplForwardingNavigableSet<T> extends ForwardingNavigableSet<T> {
     private final NavigableSet<T> backingSet;
 

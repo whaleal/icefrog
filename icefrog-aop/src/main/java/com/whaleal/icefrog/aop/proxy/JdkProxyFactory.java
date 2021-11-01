@@ -11,13 +11,13 @@ import com.whaleal.icefrog.aop.interceptor.JdkInterceptor;
  * @author wh
  */
 public class JdkProxyFactory extends ProxyFactory {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public <T> T proxy(T target, Aspect aspect) {
-		return ProxyUtil.newProxyInstance(//
-				target.getClass().getClassLoader(), //
-				new JdkInterceptor(target, aspect), //
-				target.getClass().getInterfaces());
-	}
+    @Override
+    public <T> T proxy( T target, Aspect aspect ) {
+        return ProxyUtil.newProxyInstance(//
+                target.getClass().getClassLoader(), //
+                new JdkInterceptor(target, aspect), //
+                target.getClass().getInterfaces());
+    }
 }

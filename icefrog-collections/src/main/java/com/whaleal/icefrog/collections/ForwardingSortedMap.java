@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.SortedMap;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
 
 
 /**

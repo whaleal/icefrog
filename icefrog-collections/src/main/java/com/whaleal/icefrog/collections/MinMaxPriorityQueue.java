@@ -2,13 +2,10 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
 import javax.annotation.CheckForNull;
 import java.util.*;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static com.whaleal.icefrog.core.math.MathUtil.checkedMultiply;
 import static java.util.Objects.requireNonNull;
 

@@ -3,8 +3,9 @@ package com.whaleal.icefrog.extra.compress.extractor;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.lang.Precondition;
+import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.util.StrUtil;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry;
 import org.apache.commons.compress.archivers.sevenz.SevenZFile;
@@ -14,15 +15,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.SeekableByteChannel;
+import java.util.RandomAccess;
 
 /**
  * 7z格式数据解压器，即将归档打包的数据释放
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
-public class SenvenZExtractor implements Extractor {
+public class SevenZExtractor implements Extractor, RandomAccess {
 
 	private final SevenZFile sevenZFile;
 
@@ -31,7 +32,7 @@ public class SenvenZExtractor implements Extractor {
 	 *
 	 * @param file     包文件
 	 */
-	public SenvenZExtractor(File file) {
+	public SevenZExtractor(File file) {
 		this(file, null);
 	}
 
@@ -41,7 +42,7 @@ public class SenvenZExtractor implements Extractor {
 	 * @param file     包文件
 	 * @param password 密码，null表示无密码
 	 */
-	public SenvenZExtractor(File file, char[] password) {
+	public SevenZExtractor(File file, char[] password) {
 		try {
 			this.sevenZFile = new SevenZFile(file, password);
 		} catch (IOException e) {
@@ -54,7 +55,7 @@ public class SenvenZExtractor implements Extractor {
 	 *
 	 * @param in       包流
 	 */
-	public SenvenZExtractor(InputStream in) {
+	public SevenZExtractor(InputStream in) {
 		this(in, null);
 	}
 
@@ -64,7 +65,7 @@ public class SenvenZExtractor implements Extractor {
 	 * @param in       包流
 	 * @param password 密码，null表示无密码
 	 */
-	public SenvenZExtractor(InputStream in, char[] password) {
+	public SevenZExtractor(InputStream in, char[] password) {
 		this(new SeekableInMemoryByteChannel(IoUtil.readBytes(in)), password);
 	}
 
@@ -73,7 +74,7 @@ public class SenvenZExtractor implements Extractor {
 	 *
 	 * @param channel  {@link SeekableByteChannel}
 	 */
-	public SenvenZExtractor(SeekableByteChannel channel) {
+	public SevenZExtractor(SeekableByteChannel channel) {
 		this(channel, null);
 	}
 
@@ -83,7 +84,7 @@ public class SenvenZExtractor implements Extractor {
 	 * @param channel  {@link SeekableByteChannel}
 	 * @param password 密码，null表示无密码
 	 */
-	public SenvenZExtractor(SeekableByteChannel channel, char[] password) {
+	public SevenZExtractor(SeekableByteChannel channel, char[] password) {
 		try {
 			this.sevenZFile = new SevenZFile(channel, password);
 		} catch (IOException e) {
@@ -95,12 +96,12 @@ public class SenvenZExtractor implements Extractor {
 	 * 释放（解压）到指定目录，结束后自动关闭流，此方法只能调用一次
 	 *
 	 * @param targetDir 目标目录
-	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
+	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
 	 */
 	@Override
-	public void extract(File targetDir, Predicate<ArchiveEntry> predicate) {
+	public void extract(File targetDir, Filter<ArchiveEntry> filter) {
 		try {
-			extractInternal(targetDir, predicate);
+			extractInternal(targetDir, filter);
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		} finally {
@@ -109,18 +110,59 @@ public class SenvenZExtractor implements Extractor {
 	}
 
 	/**
+	 * 获取满足指定过滤要求的压缩包内的第一个文件流
+	 *
+	 * @param filter 用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时返回对应流。
+	 * @return 满足过滤要求的第一个文件的流,无满足条件的文件返回{@code null}
+	 *
+	 */
+	public InputStream getFirst(Filter<ArchiveEntry> filter) {
+		final SevenZFile sevenZFile = this.sevenZFile;
+		for(SevenZArchiveEntry entry : sevenZFile.getEntries()){
+			if(null != filter && false == filter.accept(entry)){
+				continue;
+			}
+			if(entry.isDirectory()){
+				continue;
+			}
+
+			try {
+				return sevenZFile.getInputStream(entry);
+			} catch (IOException e) {
+				throw new IORuntimeException(e);
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * 获取指定名称的文件流
+	 *
+	 * @param entryName entry名称
+	 * @return 文件流，无文件返回{@code null}
+	 *
+	 */
+	public InputStream get(String entryName){
+		return getFirst((entry)-> StrUtil.equals(entryName, entry.getName()));
+	}
+
+	/**
 	 * 释放（解压）到指定目录
 	 *
 	 * @param targetDir 目标目录
-	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
+	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
 	 * @throws IOException IO异常
 	 */
-	private void extractInternal(File targetDir, Predicate<ArchiveEntry> predicate) throws IOException {
-		Preconditions.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
+	private void extractInternal(File targetDir, Filter<ArchiveEntry> filter) throws IOException {
+		Precondition.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
 		final SevenZFile sevenZFile = this.sevenZFile;
 		SevenZArchiveEntry entry;
 		File outItemFile;
 		while (null != (entry = this.sevenZFile.getNextEntry())) {
+			if(null != filter && false == filter.accept(entry)){
+				continue;
+			}
 			outItemFile = FileUtil.file(targetDir, entry.getName());
 			if (entry.isDirectory()) {
 				// 创建对应目录

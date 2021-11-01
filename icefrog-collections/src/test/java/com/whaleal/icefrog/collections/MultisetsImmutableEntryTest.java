@@ -3,13 +3,11 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.collections.Multiset.Entry;
+import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Collections;
-
-import com.whaleal.icefrog.collections.HashMultiset;
-import com.whaleal.icefrog.collections.Multisets;
-import junit.framework.TestCase;
-import com.whaleal.icefrog.collections.Multiset.Entry;
 
 /**
  * Tests for {@link Multisets#immutableEntry}.
@@ -18,6 +16,9 @@ import com.whaleal.icefrog.collections.Multiset.Entry;
  */
 
 public class MultisetsImmutableEntryTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final String NE = null;
 
   private static <E> Multiset.Entry<E> entry(final E element, final int count) {

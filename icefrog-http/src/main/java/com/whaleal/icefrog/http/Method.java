@@ -7,5 +7,5 @@ package com.whaleal.icefrog.http;
  * @author wh
  */
 public enum Method {
-	GET, POST, HEAD, OPTIONS, PUT, DELETE, TRACE, CONNECT, PATCH
+    GET, POST, HEAD, OPTIONS, PUT, DELETE, TRACE, CONNECT, PATCH
 }

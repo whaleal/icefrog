@@ -13,21 +13,21 @@ import org.apache.poi.ss.usermodel.Cell;
  */
 public class NumberCellSetter implements CellSetter {
 
-	private final Number value;
+    private final Number value;
 
-	/**
-	 * 构造
-	 *
-	 * @param value 值
-	 */
-	NumberCellSetter(Number value) {
-		this.value = value;
-	}
+    /**
+     * 构造
+     *
+     * @param value 值
+     */
+    NumberCellSetter( Number value ) {
+        this.value = value;
+    }
 
-	@Override
-	public void setValue(Cell cell) {
-		// issue https://github.com/whaleal/icefrog/issues/I43U9G
-		// 避免float到double的精度问题
-		cell.setCellValue(NumberUtil.toDouble(value));
-	}
+    @Override
+    public void setValue( Cell cell ) {
+        // issue https://github.com/whaleal/icefrog/issues/I43U9G
+        // 避免float到double的精度问题
+        cell.setCellValue(NumberUtil.toDouble(value));
+    }
 }

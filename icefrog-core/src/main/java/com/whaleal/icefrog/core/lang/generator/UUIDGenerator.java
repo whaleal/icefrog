@@ -10,8 +10,8 @@ import com.whaleal.icefrog.core.util.IdUtil;
  * @since 1.0.0
  */
 public class UUIDGenerator implements Generator<String> {
-	@Override
-	public String next() {
-		return IdUtil.fastUUID();
-	}
+    @Override
+    public String next() {
+        return IdUtil.fastUUID();
+    }
 }

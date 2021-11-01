@@ -3,6 +3,5 @@
  *
  * @author Looly
  * @author wh
- *
  */
 package com.whaleal.icefrog.core.io.checksum.crc16;

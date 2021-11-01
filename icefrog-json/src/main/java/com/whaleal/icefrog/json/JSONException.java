@@ -6,9 +6,8 @@ import com.whaleal.icefrog.core.util.StrUtil;
 /**
  * JSON异常
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
 public class JSONException extends RuntimeException {
 	private static final long serialVersionUID = 0;

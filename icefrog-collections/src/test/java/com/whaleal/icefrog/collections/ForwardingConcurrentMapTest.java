@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -13,6 +14,9 @@ import java.util.concurrent.ConcurrentMap;
  *
  */
 public class ForwardingConcurrentMapTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
   private static class TestMap extends ForwardingConcurrentMap<String, Integer> {
     final ConcurrentMap<String, Integer> delegate = new ConcurrentHashMap<>();

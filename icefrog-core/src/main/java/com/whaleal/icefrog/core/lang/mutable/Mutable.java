@@ -8,16 +8,18 @@ package com.whaleal.icefrog.core.lang.mutable;
  */
 public interface Mutable<T> {
 
-	/**
-	 * 获得原始值
-	 * @return 原始值
-	 */
-	T get();
+    /**
+     * 获得原始值
+     *
+     * @return 原始值
+     */
+    T get();
 
-	/**
-	 * 设置值
-	 * @param value 值
-	 */
-	void set(T value);
+    /**
+     * 设置值
+     *
+     * @param value 值
+     */
+    void set( T value );
 
 }

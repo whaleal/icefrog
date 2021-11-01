@@ -6,8 +6,7 @@ import org.junit.Test;
 
 /**
  * JSON字符串格式化单元测试
- * @author Looly
- * @author wh
+ * @author looly   wh
  *
  */
 public class JSONStrFormatterTest {

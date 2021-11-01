@@ -2,20 +2,20 @@ package com.whaleal.icefrog.json.test.bean;
 
 import java.io.Serializable;
 
-public class UUMap<T> implements Serializable{
-	private static final long serialVersionUID = 1L;
+public class UUMap<T> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	private T result;
+    private T result;
 
-	public T getResult() {
-		return result;
-	}
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
-	public void setResult(T result) {
-		this.result = result;
-	}
+    public T getResult() {
+        return result;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public void setResult( T result ) {
+        this.result = result;
+    }
 }

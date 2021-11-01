@@ -9,30 +9,30 @@ package com.whaleal.icefrog.cron.pattern.parser;
  */
 public interface ValueParser {
 
-	/**
-	 * 处理String值并转为int<br>
-	 * 转换包括：
-	 * <ol>
-	 * <li>数字字符串转为数字</li>
-	 * <li>别名转为对应的数字（如月份和星期）</li>
-	 * </ol>
-	 *
-	 * @param value String值
-	 * @return int
-	 */
-	int parse(String value);
+    /**
+     * 处理String值并转为int<br>
+     * 转换包括：
+     * <ol>
+     * <li>数字字符串转为数字</li>
+     * <li>别名转为对应的数字（如月份和星期）</li>
+     * </ol>
+     *
+     * @param value String值
+     * @return int
+     */
+    int parse( String value );
 
-	/**
-	 * 返回最小值
-	 *
-	 * @return 最小值
-	 */
-	int getMin();
+    /**
+     * 返回最小值
+     *
+     * @return 最小值
+     */
+    int getMin();
 
-	/**
-	 * 返回最大值
-	 *
-	 * @return 最大值
-	 */
-	int getMax();
+    /**
+     * 返回最大值
+     *
+     * @return 最大值
+     */
+    int getMax();
 }

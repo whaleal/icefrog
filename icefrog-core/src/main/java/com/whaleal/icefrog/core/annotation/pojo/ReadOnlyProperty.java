@@ -23,11 +23,10 @@ import static java.lang.annotation.ElementType.*;
 
 /**
  * Marks a field to be {@literal read-only} for the mapping framework and therefore will not be persisted.
- *
+ * <p>
  * 用于标记字段为只读字段，因此在 映射框架中它也不会被持久化。
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { FIELD, METHOD, ANNOTATION_TYPE })
+@Target(value = {FIELD, METHOD, ANNOTATION_TYPE})
 public @interface ReadOnlyProperty {
 }

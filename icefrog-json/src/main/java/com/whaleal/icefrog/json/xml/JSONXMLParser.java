@@ -1,17 +1,12 @@
 package com.whaleal.icefrog.json.xml;
 
-import com.whaleal.icefrog.json.InternalJSONUtil;
-import com.whaleal.icefrog.json.JSONException;
-import com.whaleal.icefrog.json.JSONObject;
-import com.whaleal.icefrog.json.XML;
-import com.whaleal.icefrog.json.XMLTokener;
+import com.whaleal.icefrog.json.*;
 
 /**
  * XML解析器，将XML解析为JSON对象
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author JSON.org, looly
+ *
  */
 public class JSONXMLParser {
 

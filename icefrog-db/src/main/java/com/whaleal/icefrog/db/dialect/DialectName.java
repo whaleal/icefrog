@@ -10,16 +10,16 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * @author wh
  */
 public enum DialectName {
-	ANSI, MYSQL, ORACLE, POSTGREESQL, SQLITE3, H2, SQLSERVER, SQLSERVER2012, PHOENIX;
+    ANSI, MYSQL, ORACLE, POSTGREESQL, SQLITE3, H2, SQLSERVER, SQLSERVER2012, PHOENIX;
 
-	/**
-	 * 是否为指定数据库方言，检查时不分区大小写
-	 *
-	 * @param dialectName     方言名
-	 * @return 是否时Oracle数据库
-	 * @since 1.0.0
-	 */
-	public boolean match(String dialectName) {
-		return StrUtil.equalsIgnoreCase(dialectName, name());
-	}
+    /**
+     * 是否为指定数据库方言，检查时不分区大小写
+     *
+     * @param dialectName 方言名
+     * @return 是否时Oracle数据库
+     * @since 1.0.0
+     */
+    public boolean match( String dialectName ) {
+        return StrUtil.equalsIgnoreCase(dialectName, name());
+    }
 }

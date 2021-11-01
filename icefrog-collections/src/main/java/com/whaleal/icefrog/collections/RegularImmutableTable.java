@@ -5,8 +5,8 @@ package com.whaleal.icefrog.collections;
 import javax.annotation.CheckForNull;
 import java.util.*;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * An implementation of {@link ImmutableTable} holding an arbitrary number of cells.

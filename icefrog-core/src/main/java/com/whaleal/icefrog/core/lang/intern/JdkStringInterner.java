@@ -7,12 +7,12 @@ package com.whaleal.icefrog.core.lang.intern;
  * @author wh
  * @since 1.0.0
  */
-public class JdkStringInterner implements Interner<String>{
-	@Override
-	public String intern(String sample) {
-		if(null == sample){
-			return null;
-		}
-		return sample.intern();
-	}
+public class JdkStringInterner implements Interner<String> {
+    @Override
+    public String intern( String sample ) {
+        if (null == sample) {
+            return null;
+        }
+        return sample.intern();
+    }
 }

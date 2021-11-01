@@ -11,25 +11,25 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * @since 1.0.0
  */
 public class CompilerException extends RuntimeException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CompilerException(Throwable e) {
-		super(ExceptionUtil.getMessage(e), e);
-	}
+    public CompilerException( Throwable e ) {
+        super(ExceptionUtil.getMessage(e), e);
+    }
 
-	public CompilerException(String message) {
-		super(message);
-	}
+    public CompilerException( String message ) {
+        super(message);
+    }
 
-	public CompilerException(String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params));
-	}
+    public CompilerException( String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params));
+    }
 
-	public CompilerException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+    public CompilerException( String message, Throwable throwable ) {
+        super(message, throwable);
+    }
 
-	public CompilerException(Throwable throwable, String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params), throwable);
-	}
+    public CompilerException( Throwable throwable, String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params), throwable);
+    }
 }

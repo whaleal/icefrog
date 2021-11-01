@@ -13,12 +13,12 @@ import org.apache.poi.ss.usermodel.Cell;
 @FunctionalInterface
 public interface CellEditor {
 
-	/**
-	 * 编辑，根据单元格信息处理结果值，返回处理后的结果
-	 *
-	 * @param cell  单元格对象，可以获取单元格行、列样式等信息
-	 * @param value 单元格值
-	 * @return 编辑后的对象
-	 */
-	Object edit(Cell cell, Object value);
+    /**
+     * 编辑，根据单元格信息处理结果值，返回处理后的结果
+     *
+     * @param cell  单元格对象，可以获取单元格行、列样式等信息
+     * @param value 单元格值
+     * @return 编辑后的对象
+     */
+    Object edit( Cell cell, Object value );
 }

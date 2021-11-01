@@ -6,7 +6,7 @@ package com.whaleal.icefrog.collections;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndex;
+import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndex;
 
 
 /**

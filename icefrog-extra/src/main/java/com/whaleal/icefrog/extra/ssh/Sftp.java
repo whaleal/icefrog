@@ -3,6 +3,7 @@ package com.whaleal.icefrog.extra.ssh;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.io.FileUtil;
+import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.ftp.AbstractFtp;
 import com.whaleal.icefrog.extra.ftp.FtpConfig;
@@ -21,7 +22,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-import com.whaleal.icefrog.core.lang.Predicate;
 
 /**
  * SFTP是Secure File Transfer Protocol的缩写，安全文件传送协议。可以为传输文件提供一种安全的加密方法。<br>
@@ -33,9 +33,8 @@ import com.whaleal.icefrog.core.lang.Predicate;
  * 参考：https://www.cnblogs.com/longyg/archive/2012/06/25/2556576.html
  * </p>
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class Sftp extends AbstractFtp {
 
@@ -64,7 +63,7 @@ public class Sftp extends AbstractFtp {
 	 * @param sshUser 远程主机用户名
 	 * @param sshPass 远程主机密码
 	 * @param charset 编码
-	 * @since 1.0.0
+	 *
 	 */
 	public Sftp(String sshHost, int sshPort, String sshUser, String sshPass, Charset charset) {
 		this(new FtpConfig(sshHost, sshPort, sshUser, sshPass, charset));
@@ -74,7 +73,7 @@ public class Sftp extends AbstractFtp {
 	 * 构造
 	 *
 	 * @param config FTP配置
-	 * @since 1.0.0
+	 *
 	 */
 	public Sftp(FtpConfig config) {
 		super(config);
@@ -95,7 +94,7 @@ public class Sftp extends AbstractFtp {
 	 *
 	 * @param session {@link Session}
 	 * @param charset 编码
-	 * @since 1.0.0
+	 *
 	 */
 	public Sftp(Session session, Charset charset) {
 		super(FtpConfig.create().setCharset(charset));
@@ -130,7 +129,7 @@ public class Sftp extends AbstractFtp {
 	/**
 	 * 初始化
 	 *
-	 * @since 1.0.0
+	 *
 	 */
 	public void init() {
 		init(this.ftpConfig);
@@ -140,7 +139,7 @@ public class Sftp extends AbstractFtp {
 	 * 初始化
 	 *
 	 * @param config FTP配置
-	 * @since 1.0.0
+	 *
 	 */
 	public void init(FtpConfig config) {
 		init(config.getHost(), config.getPort(), config.getUser(), config.getPassword(), config.getCharset());
@@ -191,7 +190,7 @@ public class Sftp extends AbstractFtp {
 	 * 获取SFTP通道客户端
 	 *
 	 * @return 通道客户端
-	 * @since 1.0.0
+	 *
 	 */
 	public ChannelSftp getClient() {
 		return this.channel;
@@ -215,7 +214,7 @@ public class Sftp extends AbstractFtp {
 	 * 获取HOME路径
 	 *
 	 * @return HOME路径
-	 * @since 1.0.0
+	 *
 	 */
 	public String home() {
 		try {
@@ -230,7 +229,7 @@ public class Sftp extends AbstractFtp {
 	 *
 	 * @param path 遍历某个目录下所有文件或目录
 	 * @return 目录或文件名列表
-	 * @since 1.0.0
+	 *
 	 */
 	@Override
 	public List<String> ls(String path) {
@@ -242,10 +241,10 @@ public class Sftp extends AbstractFtp {
 	 *
 	 * @param path 遍历某个目录下所有目录
 	 * @return 目录名列表
-	 * @since 1.0.0
+	 *
 	 */
 	public List<String> lsDirs(String path) {
-		 return ls(path, t -> t.getAttrs().isDir());
+		return ls(path, t -> t.getAttrs().isDir());
 	}
 
 	/**
@@ -253,7 +252,7 @@ public class Sftp extends AbstractFtp {
 	 *
 	 * @param path 遍历某个目录下所有文件
 	 * @return 文件名列表
-	 * @since 1.0.0
+	 *
 	 */
 	public List<String> lsFiles(String path) {
 		return ls(path, t -> false == t.getAttrs().isDir());
@@ -264,12 +263,12 @@ public class Sftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   遍历某个目录下所有文件或目录
-	 * @param predicate 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
+	 * @param filter 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
 	 * @return 目录或文件名列表
-	 * @since 1.0.0
+	 *
 	 */
-	public List<String> ls(String path, final Predicate<LsEntry> predicate) {
-		final List<LsEntry> entries = lsEntries(path, predicate);
+	public List<String> ls(String path, final Filter<LsEntry> filter) {
+		final List<LsEntry> entries = lsEntries(path, filter);
 		if (CollUtil.isEmpty(entries)) {
 			return ListUtil.empty();
 		}
@@ -282,7 +281,7 @@ public class Sftp extends AbstractFtp {
 	 *
 	 * @param path 遍历某个目录下所有文件或目录
 	 * @return 目录或文件名列表
-	 * @since 1.0.0
+	 *
 	 */
 	public List<LsEntry> lsEntries(String path) {
 		return lsEntries(path, null);
@@ -293,17 +292,17 @@ public class Sftp extends AbstractFtp {
 	 * 此方法自动过滤"."和".."两种目录
 	 *
 	 * @param path   遍历某个目录下所有文件或目录
-	 * @param predicate 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
+	 * @param filter 文件或目录过滤器，可以实现过滤器返回自己需要的文件或目录名列表
 	 * @return 目录或文件名列表
-	 * @since 1.0.0
+	 *
 	 */
-	public List<LsEntry> lsEntries(String path, Predicate<LsEntry> predicate) {
+	public List<LsEntry> lsEntries(String path, Filter<LsEntry> filter) {
 		final List<LsEntry> entryList = new ArrayList<>();
 		try {
 			channel.ls(path, entry -> {
 				final String fileName = entry.getFilename();
 				if (false == StrUtil.equals(".", fileName) && false == StrUtil.equals("..", fileName)) {
-					if (null == predicate || predicate.apply(entry)) {
+					if (null == filter || filter.accept(entry)) {
 						entryList.add(entry);
 					}
 				}
@@ -340,7 +339,7 @@ public class Sftp extends AbstractFtp {
 		} catch (SftpException e) {
 			if(e.getMessage().contains("No such file")){
 				// 文件不存在直接返回false
-				// pr#378@github
+				// pr#378@Gitee
 				return false;
 			}
 			throw new FtpException(e);
@@ -434,7 +433,7 @@ public class Sftp extends AbstractFtp {
 	 *
 	 * @param file       文件或者文件夹
 	 * @param remotePath 远程路径
-	 * @since 1.0.0
+	 *
 	 */
 	public void syncUpload(File file, String remotePath) {
 		if (false == FileUtil.exist(file)) {
@@ -496,7 +495,7 @@ public class Sftp extends AbstractFtp {
 	 * @param monitor     上传进度监控，通过实现此接口完成进度显示
 	 * @param mode        {@link Mode} 模式
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Sftp put(String srcFilePath, String destPath, SftpProgressMonitor monitor, Mode mode) {
 		try {
@@ -576,7 +575,7 @@ public class Sftp extends AbstractFtp {
 	 * @param src 远程文件路径
 	 * @param out 目标流
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public Sftp get(String src, OutputStream out) {
 		try {
@@ -605,8 +604,7 @@ public class Sftp extends AbstractFtp {
 	/**
 	 * JSch支持的三种文件传输模式
 	 *
-	 * @author Looly
- * @author wh
+	 * @author looly
 	 */
 	public enum Mode {
 		/**

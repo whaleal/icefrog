@@ -6,7 +6,7 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.Supplier;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * Implementation of {@code Table} whose iteration ordering across row keys is sorted by their

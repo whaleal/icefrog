@@ -6,6 +6,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test cases for {@link Table} read operations.
@@ -14,6 +15,9 @@ import junit.framework.TestCase;
  */
 
 public abstract class AbstractTableReadTest extends TestCase {
+  @Test
+  public void test(){
+  }
   protected Table<String, Integer, Character> table;
 
   /**

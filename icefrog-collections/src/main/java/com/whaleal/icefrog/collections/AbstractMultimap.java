@@ -7,7 +7,7 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

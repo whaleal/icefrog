@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.RandomAccess;
 
@@ -16,6 +17,9 @@ import static java.util.Arrays.asList;
  */
 
 public class ArrayListMultimapTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
 
   protected ListMultimap<String, Integer> create() {

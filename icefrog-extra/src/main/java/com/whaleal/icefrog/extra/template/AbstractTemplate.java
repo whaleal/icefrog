@@ -10,13 +10,12 @@ import com.whaleal.icefrog.core.io.IoUtil;
 
 /**
  * 抽象模板，提供将模板融合后写出到文件、返回字符串等方法
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public abstract class AbstractTemplate implements Template{
-
+	
 	@Override
 	public void render(Map<?, ?> bindingMap, File file) {
 		BufferedOutputStream out = null;
@@ -27,7 +26,7 @@ public abstract class AbstractTemplate implements Template{
 			IoUtil.close(out);
 		}
 	}
-
+	
 	@Override
 	public String render(Map<?, ?> bindingMap) {
 		final StringWriter writer = new StringWriter();

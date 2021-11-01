@@ -1,8 +1,9 @@
 
 package com.whaleal.icefrog.collections;
 
-import java.util.Arrays;
-import java.util.Collections;
+import junit.framework.TestCase;
+import org.junit.Test;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -10,16 +11,15 @@ import java.util.function.BiConsumer;
 import java.util.function.IntToDoubleFunction;
 import java.util.function.Supplier;
 
-
-import com.whaleal.icefrog.core.collection.CollUtil;
-import junit.framework.TestCase;
-
 /**
  * Abstract superclass for tests that hash flooding a collection has controlled worst-case
  * performance.
  */
 
 public abstract class AbstractHashFloodingTest<T> extends TestCase {
+  @Test
+  public void test(){
+  }
   private final List<Construction<T>> constructions;
   private final IntToDoubleFunction constructionAsymptotics;
   private final List<QueryOp<T>> queries;

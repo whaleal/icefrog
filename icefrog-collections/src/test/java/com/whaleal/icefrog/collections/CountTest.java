@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests for {@code Count}.
@@ -12,6 +13,9 @@ import junit.framework.TestCase;
  */
 
 public class CountTest extends TestCase {
+  @Test
+  public void test(){
+  }
   public void testGet() {
     assertEquals(20, new Count(20).get());
   }

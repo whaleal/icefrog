@@ -2,11 +2,11 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
-import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.map.MapUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -15,7 +15,7 @@ import java.util.Map.Entry;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.map.MapUtil.safeContainsKey;
 import static com.whaleal.icefrog.core.map.MapUtil.safeGet;
 import static com.whaleal.icefrog.core.util.PredicateUtil.*;

@@ -9,9 +9,8 @@ import com.whaleal.icefrog.extra.tokenizer.Result;
 /**
  * IKAnalyzer分词引擎实现<br>
  * 项目地址：https://github.com/yozhao/IKAnalyzer
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class IKAnalyzerEngine implements TokenizerEngine {
@@ -20,7 +19,7 @@ public class IKAnalyzerEngine implements TokenizerEngine {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 */
 	public IKAnalyzerEngine() {
 		this(new IKSegmenter(null, true));
@@ -28,7 +27,7 @@ public class IKAnalyzerEngine implements TokenizerEngine {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param seg {@link IKSegmenter}
 	 */
 	public IKAnalyzerEngine(IKSegmenter seg) {

@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -15,6 +16,9 @@ import java.util.NoSuchElementException;
  */
 
 public class UnmodifiableIteratorTest extends TestCase {
+    @Test
+    public void test(){
+    }
 
   @SuppressWarnings("DoNotCall")
   public void testRemove() {

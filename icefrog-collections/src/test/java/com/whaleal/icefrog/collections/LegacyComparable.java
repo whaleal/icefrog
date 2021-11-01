@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import org.junit.Test;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -16,6 +18,9 @@ import java.util.Arrays;
 @SuppressWarnings("ComparableType")
 
 class LegacyComparable implements Comparable, Serializable {
+  @Test
+  public void test(){
+  }
   static final LegacyComparable X = new LegacyComparable("x");
   static final LegacyComparable Y = new LegacyComparable("y");
   static final LegacyComparable Z = new LegacyComparable("z");

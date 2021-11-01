@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import org.junit.Test;
 
 /**
  * Tests
@@ -11,6 +12,9 @@ package com.whaleal.icefrog.collections;
  */
 
 public class EmptyImmutableTableTest extends AbstractImmutableTableTest {
+  @Test
+  public void test(){
+  }
   private static final ImmutableTable<Character, Integer, String> INSTANCE = ImmutableTable.of();
 
   @Override

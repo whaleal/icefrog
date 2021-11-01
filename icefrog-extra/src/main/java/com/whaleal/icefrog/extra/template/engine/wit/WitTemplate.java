@@ -13,8 +13,7 @@ import java.util.Map;
 /**
  * Wit模板实现
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class WitTemplate extends AbstractTemplate implements Serializable{
 	private static final long serialVersionUID = 1L;

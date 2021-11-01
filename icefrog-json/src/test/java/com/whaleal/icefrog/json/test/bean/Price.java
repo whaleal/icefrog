@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Price {
 
-	private List<List<ADT>> ADT;
+    private List<List<ADT>> ADT;
 
-	public void setADT(List<List<ADT>> ADT) {
-		this.ADT = ADT;
-	}
+    public List<List<ADT>> getADT() {
+        return ADT;
+    }
 
-	public List<List<ADT>> getADT() {
-		return ADT;
-	}
+    public void setADT( List<List<ADT>> ADT ) {
+        this.ADT = ADT;
+    }
 }

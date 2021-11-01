@@ -16,9 +16,8 @@ import com.whaleal.icefrog.extra.template.TemplateEngine;
 /**
  * Thymeleaf模板引擎实现
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class ThymeleafEngine implements TemplateEngine {
 

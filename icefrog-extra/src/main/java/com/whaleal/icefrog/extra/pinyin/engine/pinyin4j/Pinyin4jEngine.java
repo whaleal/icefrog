@@ -29,8 +29,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class Pinyin4jEngine implements PinyinEngine {
 

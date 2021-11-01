@@ -4,12 +4,13 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * Package up sample data for common collections benchmarking.
@@ -17,6 +18,9 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
  * @author Nicholaus Shupe
  */
 class CollectionBenchmarkSampleData {
+  @Test
+  public void test(){
+  }
   private final boolean isUserTypeFast;
   private final SpecialRandom random;
   private final double hitRate;

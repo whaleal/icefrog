@@ -7,7 +7,6 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * 表达式语言异常
  *
  * @author Looly
- * @author wh
  */
 public class ExpressionException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

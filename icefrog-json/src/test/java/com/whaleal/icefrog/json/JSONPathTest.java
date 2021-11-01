@@ -6,8 +6,7 @@ import org.junit.Test;
 /**
  * JSON路径单元测试
  *
- * @author Looly
- * @author wh
+ * @author looly   wh
  *
  */
 public class JSONPathTest {

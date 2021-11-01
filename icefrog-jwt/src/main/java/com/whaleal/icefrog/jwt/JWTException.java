@@ -11,29 +11,29 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * @since 1.0.0
  */
 public class JWTException extends RuntimeException {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public JWTException(Throwable e) {
-		super(ExceptionUtil.getMessage(e), e);
-	}
+    public JWTException( Throwable e ) {
+        super(ExceptionUtil.getMessage(e), e);
+    }
 
-	public JWTException(String message) {
-		super(message);
-	}
+    public JWTException( String message ) {
+        super(message);
+    }
 
-	public JWTException(String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params));
-	}
+    public JWTException( String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params));
+    }
 
-	public JWTException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public JWTException( String message, Throwable cause ) {
+        super(message, cause);
+    }
 
-	public JWTException(String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, throwable, enableSuppression, writableStackTrace);
-	}
+    public JWTException( String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace ) {
+        super(message, throwable, enableSuppression, writableStackTrace);
+    }
 
-	public JWTException(Throwable throwable, String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params), throwable);
-	}
+    public JWTException( Throwable throwable, String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params), throwable);
+    }
 }

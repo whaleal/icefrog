@@ -3,9 +3,8 @@ package com.whaleal.icefrog.extra.ssh;
 /**
  * Jsch支持的Channel类型
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public enum ChannelType {
 	/** Session */

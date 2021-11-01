@@ -2,9 +2,8 @@ package com.whaleal.icefrog.extra.ssh;
 
 /**
  * 连接者对象，提供一些连接的基本信息
- *
- * @author Looly
- * @author wh
+ * 
+ * @author Luxiaolei
  *
  */
 public class Connector {
@@ -20,7 +19,7 @@ public class Connector {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param user 用户名
 	 * @param password 密码
 	 * @param group 组
@@ -33,7 +32,7 @@ public class Connector {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param host 主机名
 	 * @param port 端口
 	 * @param user 用户名
@@ -49,7 +48,7 @@ public class Connector {
 
 	/**
 	 * 获得主机名
-	 *
+	 * 
 	 * @return 主机名
 	 */
 	public String getHost() {
@@ -58,7 +57,7 @@ public class Connector {
 
 	/**
 	 * 设定主机名
-	 *
+	 * 
 	 * @param host 主机名
 	 */
 	public void setHost(String host) {
@@ -67,7 +66,7 @@ public class Connector {
 
 	/**
 	 * 获得端口号
-	 *
+	 * 
 	 * @return 端口号
 	 */
 	public int getPort() {
@@ -76,7 +75,7 @@ public class Connector {
 
 	/**
 	 * 设定端口号
-	 *
+	 * 
 	 * @param port 端口号
 	 */
 	public void setPort(int port) {
@@ -85,7 +84,7 @@ public class Connector {
 
 	/**
 	 * 获得用户名
-	 *
+	 * 
 	 * @return 用户名
 	 */
 	public String getUser() {
@@ -94,7 +93,7 @@ public class Connector {
 
 	/**
 	 * 设定用户名
-	 *
+	 * 
 	 * @param name 用户名
 	 */
 	public void setUser(String name) {
@@ -103,7 +102,7 @@ public class Connector {
 
 	/**
 	 * 获得密码
-	 *
+	 * 
 	 * @return 密码
 	 */
 	public String getPassword() {
@@ -112,7 +111,7 @@ public class Connector {
 
 	/**
 	 * 设定密码
-	 *
+	 * 
 	 * @param password 密码
 	 */
 	public void setPassword(String password) {
@@ -121,7 +120,7 @@ public class Connector {
 
 	/**
 	 * 获得用户组名
-	 *
+	 * 
 	 * @return 用户组
 	 */
 	public String getGroup() {
@@ -130,7 +129,7 @@ public class Connector {
 
 	/**
 	 * 设定用户组名
-	 *
+	 * 
 	 * @param group 用户组
 	 */
 	public void setGroup(String group) {

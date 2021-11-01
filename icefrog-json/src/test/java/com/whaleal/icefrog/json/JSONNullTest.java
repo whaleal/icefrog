@@ -20,6 +20,7 @@ public class JSONNullTest {
 		Assert.assertEquals("{\"act_date\":\"2021-07-23T06:23:26.000+00:00\"}", bodyjson.toString());
 	}
 
+
 	@Test
 	public void parseNullTest2(){
 		JSONObject bodyjson = JSONUtil.parseObj("{\n" +
@@ -27,6 +28,7 @@ public class JSONNullTest {
 				"            \"device_status_date\": null,\n" +
 				"            \"imsi\": null,\n" +
 				"            \"act_date\": \"2021-07-23T06:23:26.000+00:00\"}", true, true);
+		System.out.println(bodyjson);
 		Assert.assertFalse(bodyjson.containsKey("device_model"));
 		Assert.assertFalse(bodyjson.containsKey("device_status_date"));
 		Assert.assertFalse(bodyjson.containsKey("imsi"));

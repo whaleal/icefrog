@@ -2,7 +2,7 @@ package com.whaleal.icefrog.extra.ssh;
 
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.net.LocalPortGenerater;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -19,8 +19,7 @@ import java.nio.charset.Charset;
  * 它允许你连接到一个SSH服务器，并且可以使用端口转发，X11转发，文件传输等。<br>
  *
  * @author Looly
- * @author wh
- * @since 1.0.0
+ *
  */
 public class JschUtil {
 
@@ -92,7 +91,7 @@ public class JschUtil {
 	 * @param sshPass 密码
 	 * @param timeout Socket连接超时时长，单位毫秒
 	 * @return SSH会话
-	 * @since 1.0.0
+	 *
 	 */
 	public static Session openSession(String sshHost, int sshPort, String sshUser, String sshPass, int timeout) {
 		final Session session = createSession(sshHost, sshPort, sshUser, sshPass);
@@ -132,7 +131,7 @@ public class JschUtil {
 	 * @param sshUser 用户名，如果为null，默认root
 	 * @param sshPass 密码
 	 * @return SSH会话
-	 * @since 1.0.0
+	 *
 	 */
 	public static Session createSession(String sshHost, int sshPort, String sshUser, String sshPass) {
 		final JSch jsch = new JSch();
@@ -154,10 +153,10 @@ public class JschUtil {
 	 * @param privateKeyPath 私钥的路径
 	 * @param passphrase     私钥文件的密码，可以为null
 	 * @return SSH会话
-	 * @since 1.0.0
+	 *
 	 */
 	public static Session createSession(String sshHost, int sshPort, String sshUser, String privateKeyPath, byte[] passphrase) {
-		Preconditions.notEmpty(privateKeyPath, "PrivateKey Path must be not empty!");
+		Precondition.notEmpty(privateKeyPath, "PrivateKey Path must be not empty!");
 
 		final JSch jsch = new JSch();
 		try {
@@ -177,11 +176,11 @@ public class JschUtil {
 	 * @param sshPort 端口
 	 * @param sshUser 用户名，如果为null，默认root
 	 * @return {@link Session}
-	 * @since 1.0.0
+	 *
 	 */
 	public static Session createSession(JSch jsch, String sshHost, int sshPort, String sshUser) {
-		Preconditions.notEmpty(sshHost, "SSH Host must be not empty!");
-		Preconditions.isTrue(sshPort > 0, "SSH port must be > 0");
+		Precondition.notEmpty(sshHost, "SSH Host must be not empty!");
+		Precondition.isTrue(sshPort > 0, "SSH port must be > 0");
 
 		// 默认root用户
 		if (StrUtil.isEmpty(sshUser)) {
@@ -229,7 +228,7 @@ public class JschUtil {
 	 * @param localPort  本地端口
 	 * @return 成功与否
 	 * @throws JschRuntimeException 端口绑定失败异常
-	 * @since 1.0.0
+	 *
 	 */
 	public static boolean bindPort(Session session, String remoteHost, int remotePort, String localHost, int localPort) throws JschRuntimeException {
 		if (session != null && session.isConnected()) {
@@ -254,7 +253,7 @@ public class JschUtil {
 	 * @param port     host上的端口
 	 * @return 成功与否
 	 * @throws JschRuntimeException 端口绑定失败异常
-	 * @since 1.0.0
+	 *
 	 */
 	public static boolean bindRemotePort(Session session, int bindPort, String host, int port) throws JschRuntimeException {
 		if (session != null && session.isConnected()) {
@@ -306,7 +305,7 @@ public class JschUtil {
 	 *
 	 * @param session Session会话
 	 * @return {@link ChannelSftp}
-	 * @since 1.0.0
+	 *
 	 */
 	public static ChannelSftp openSftp(Session session) {
 		return openSftp(session, 0);
@@ -318,7 +317,7 @@ public class JschUtil {
 	 * @param session Session会话
 	 * @param timeout 连接超时时长，单位毫秒
 	 * @return {@link ChannelSftp}
-	 * @since 1.0.0
+	 *
 	 */
 	public static ChannelSftp openSftp(Session session, int timeout) {
 		return (ChannelSftp) openChannel(session, ChannelType.SFTP, timeout);
@@ -332,7 +331,7 @@ public class JschUtil {
 	 * @param sshUser 远程主机用户名
 	 * @param sshPass 远程主机密码
 	 * @return {@link Sftp}
-	 * @since 1.0.0
+	 *
 	 */
 	public static Sftp createSftp(String sshHost, int sshPort, String sshUser, String sshPass) {
 		return new Sftp(sshHost, sshPort, sshUser, sshPass);
@@ -343,7 +342,7 @@ public class JschUtil {
 	 *
 	 * @param session SSH会话
 	 * @return {@link Sftp}
-	 * @since 1.0.0
+	 *
 	 */
 	public static Sftp createSftp(Session session) {
 		return new Sftp(session);
@@ -354,7 +353,7 @@ public class JschUtil {
 	 *
 	 * @param session Session会话
 	 * @return {@link ChannelShell}
-	 * @since 1.0.0
+	 *
 	 */
 	public static ChannelShell openShell(Session session) {
 		return (ChannelShell) openChannel(session, ChannelType.SHELL);
@@ -366,7 +365,7 @@ public class JschUtil {
 	 * @param session     Session会话
 	 * @param channelType 通道类型，可以是shell或sftp等，见{@link ChannelType}
 	 * @return {@link Channel}
-	 * @since 1.0.0
+	 *
 	 */
 	public static Channel openChannel(Session session, ChannelType channelType) {
 		return openChannel(session, channelType, 0);
@@ -379,7 +378,7 @@ public class JschUtil {
 	 * @param channelType 通道类型，可以是shell或sftp等，见{@link ChannelType}
 	 * @param timeout     连接超时时长，单位毫秒
 	 * @return {@link Channel}
-	 * @since 1.0.0
+	 *
 	 */
 	public static Channel openChannel(Session session, ChannelType channelType, int timeout) {
 		final Channel channel = createChannel(session, channelType);
@@ -397,7 +396,7 @@ public class JschUtil {
 	 * @param session     Session会话
 	 * @param channelType 通道类型，可以是shell或sftp等，见{@link ChannelType}
 	 * @return {@link Channel}
-	 * @since 1.0.0
+	 *
 	 */
 	public static Channel createChannel(Session session, ChannelType channelType) {
 		Channel channel;
@@ -419,7 +418,7 @@ public class JschUtil {
 	 * @param cmd     命令
 	 * @param charset 发送和读取内容的编码
 	 * @return {@link ChannelExec}
-	 * @since 1.0.0
+	 *
 	 */
 	public static String exec(Session session, String cmd, Charset charset) {
 		return exec(session, cmd, charset, System.err);
@@ -436,7 +435,7 @@ public class JschUtil {
 	 * @param charset   发送和读取内容的编码
 	 * @param errStream 错误信息输出到的位置
 	 * @return 执行结果内容
-	 * @since 1.0.0
+	 *
 	 */
 	public static String exec(Session session, String cmd, Charset charset, OutputStream errStream) {
 		if (null == charset) {
@@ -471,7 +470,7 @@ public class JschUtil {
 	 * @param cmd     命令
 	 * @param charset 发送和读取内容的编码
 	 * @return {@link ChannelExec}
-	 * @since 1.0.0
+	 *
 	 */
 	public static String execByShell(Session session, String cmd, Charset charset) {
 		final ChannelShell shell = openShell(session);
@@ -512,7 +511,7 @@ public class JschUtil {
 	 * 关闭会话通道
 	 *
 	 * @param channel 会话通道
-	 * @since 1.0.0
+	 *
 	 */
 	public static void close(Channel channel) {
 		if (channel != null && channel.isConnected()) {

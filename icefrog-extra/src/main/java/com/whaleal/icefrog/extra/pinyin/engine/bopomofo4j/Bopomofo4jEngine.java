@@ -9,7 +9,7 @@ import com.rnkrsoft.bopomofo4j.ToneType;
  * 封装了Bopomofo4j的引擎。
  *
  * <p>
- * Bopomofo4j封装，项目：https://github.com/rnkrsoft/Bopomofo4j。
+ * Bopomofo4j封装，项目：https://gitee.com/rnkrsoft/Bopomofo4j。
  * </p>
  *
  * <p>
@@ -22,9 +22,8 @@ import com.rnkrsoft.bopomofo4j.ToneType;
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class Bopomofo4jEngine implements PinyinEngine {
 

@@ -6,75 +6,80 @@ import java.util.Objects;
 
 /**
  * 用户信息
- * @author Looly
- * @author wh
  *
+ * @author looly   wh
+ * @author wh
  */
 public class UserInfoDict implements Serializable {
-	private static final long serialVersionUID = -936213991463284306L;
-	// 用户Id
-	private Integer id;
-	// 要展示的名字
-	private String realName;
-	// 头像地址
-	private String photoPath;
-	private List<ExamInfoDict> examInfoDict;
-	private UserInfoRedundCount userInfoRedundCount;
+    private static final long serialVersionUID = -936213991463284306L;
+    // 用户Id
+    private Integer id;
+    // 要展示的名字
+    private String realName;
+    // 头像地址
+    private String photoPath;
+    private List<ExamInfoDict> examInfoDict;
+    private UserInfoRedundCount userInfoRedundCount;
 
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getRealName() {
-		return realName;
-	}
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public void setId( Integer id ) {
+        this.id = id;
+    }
 
-	public String getPhotoPath() {
-		return photoPath;
-	}
-	public void setPhotoPath(String photoPath) {
-		this.photoPath = photoPath;
-	}
+    public String getRealName() {
+        return realName;
+    }
 
-	public List<ExamInfoDict> getExamInfoDict() {
-		return examInfoDict;
-	}
-	public void setExamInfoDict(List<ExamInfoDict> examInfoDict) {
-		this.examInfoDict = examInfoDict;
-	}
+    public void setRealName( String realName ) {
+        this.realName = realName;
+    }
 
-	public UserInfoRedundCount getUserInfoRedundCount() {
-		return userInfoRedundCount;
-	}
-	public void setUserInfoRedundCount(UserInfoRedundCount userInfoRedundCount) {
-		this.userInfoRedundCount = userInfoRedundCount;
-	}
+    public String getPhotoPath() {
+        return photoPath;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		UserInfoDict that = (UserInfoDict) o;
-		return Objects.equals(id, that.id) && Objects.equals(realName, that.realName) && Objects.equals(photoPath, that.photoPath) && Objects.equals(examInfoDict, that.examInfoDict);
-	}
+    public void setPhotoPath( String photoPath ) {
+        this.photoPath = photoPath;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, realName, photoPath, examInfoDict);
-	}
+    public List<ExamInfoDict> getExamInfoDict() {
+        return examInfoDict;
+    }
 
-	@Override
-	public String toString() {
-		return "UserInfoDict [id=" + id + ", realName=" + realName + ", photoPath=" + photoPath + ", examInfoDict=" + examInfoDict + ", userInfoRedundCount=" + userInfoRedundCount + "]";
-	}
+    public void setExamInfoDict( List<ExamInfoDict> examInfoDict ) {
+        this.examInfoDict = examInfoDict;
+    }
+
+    public UserInfoRedundCount getUserInfoRedundCount() {
+        return userInfoRedundCount;
+    }
+
+    public void setUserInfoRedundCount( UserInfoRedundCount userInfoRedundCount ) {
+        this.userInfoRedundCount = userInfoRedundCount;
+    }
+
+    @Override
+    public boolean equals( Object o ) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserInfoDict that = (UserInfoDict) o;
+        return Objects.equals(id, that.id) && Objects.equals(realName, that.realName) && Objects.equals(photoPath, that.photoPath) && Objects.equals(examInfoDict, that.examInfoDict);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, realName, photoPath, examInfoDict);
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfoDict [id=" + id + ", realName=" + realName + ", photoPath=" + photoPath + ", examInfoDict=" + examInfoDict + ", userInfoRedundCount=" + userInfoRedundCount + "]";
+    }
 }

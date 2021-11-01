@@ -1,14 +1,9 @@
-
 package com.whaleal.icefrog.core.annotation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.meta.TypeQualifierNickname;
 import javax.annotation.meta.When;
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * A common annotation to declare that annotated elements can be {@code null} under some circumstance. Leverages JSR 305 meta-annotations to
@@ -19,10 +14,9 @@ import java.lang.annotation.Target;
  *
  * <p>Can be used in association with {@code NonNullApi} to override the default non-nullable semantic to nullable.</p>
  *
+ * @author wh
  * @see NonNullApi
  * @see NonNull
- *
- * @author wh
  */
 @Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)

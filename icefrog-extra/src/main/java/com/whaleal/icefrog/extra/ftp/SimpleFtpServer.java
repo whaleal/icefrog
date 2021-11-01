@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.extra.ftp;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.net.NetUtil;
 import org.apache.ftpserver.ConnectionConfig;
 import org.apache.ftpserver.FtpServerFactory;
@@ -22,9 +22,8 @@ import java.util.List;
 /**
  * 基于 Apache FtpServer（http://mina.apache.org/ftpserver-project/）的FTP服务端简单封装。
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class SimpleFtpServer {
 
@@ -84,7 +83,7 @@ public class SimpleFtpServer {
 	 * @return this
 	 */
 	public SimpleFtpServer setPort(int port) {
-		Preconditions.isTrue(NetUtil.isValidPort(port), "Invalid port!");
+		Precondition.isTrue(NetUtil.isValidPort(port), "Invalid port!");
 		this.listenerFactory.setPort(port);
 		return this;
 	}

@@ -1,19 +1,17 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.jieba;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.huaban.analysis.jieba.SegToken;
-
 import com.whaleal.icefrog.extra.tokenizer.Result;
 import com.whaleal.icefrog.extra.tokenizer.Word;
+import com.huaban.analysis.jieba.SegToken;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Jieba分词结果实现<br>
  * 项目地址：https://github.com/huaban/jieba-analysis
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class JiebaResult implements Result{
@@ -42,10 +40,4 @@ public class JiebaResult implements Result{
 	public void remove() {
 		result.remove();
 	}
-
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
-
 }

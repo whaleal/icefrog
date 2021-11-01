@@ -23,13 +23,13 @@ package com.whaleal.icefrog.core.codec;
  * @param <T> the type to decode into, the return type of the {@link #decode(Reader, DecoderContext)} method.
  */
 public interface Decoder<T> {
-	/**
-	 * Decodes a value from the given reader into an instance of the type parameter {@code T}.
-	 *
-	 * @param reader         the BSON reader
-	 * @param decoderContext the decoder context
-	 * @return an instance of the type parameter {@code T}.
-	 */
-	T decode(Reader reader, DecoderContext decoderContext);
+    /**
+     * Decodes a value from the given reader into an instance of the type parameter {@code T}.
+     *
+     * @param reader         the BSON reader
+     * @param decoderContext the decoder context
+     * @return an instance of the type parameter {@code T}.
+     */
+    T decode( Reader reader, DecoderContext decoderContext );
 }
 

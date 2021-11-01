@@ -23,8 +23,7 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class JPinyinEngine implements PinyinEngine {
 

@@ -5,9 +5,8 @@ import java.util.Iterator;
 /**
  * 此类用于在JSONAray中便于遍历JSONObject而封装的Iterable，可以借助foreach语法遍历
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
 public class JSONObjectIter implements Iterable<JSONObject> {
 

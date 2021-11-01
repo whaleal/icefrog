@@ -10,26 +10,25 @@ import com.whaleal.icefrog.extra.tokenizer.Result;
 /**
  * Jieba分词引擎实现<br>
  * 项目地址：https://github.com/huaban/jieba-analysis
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class JiebaEngine implements TokenizerEngine {
 
 	private final JiebaSegmenter jiebaSegmenter;
 	private final SegMode mode;
-
+	
 	/**
 	 * 构造
 	 */
 	public JiebaEngine() {
 		this(SegMode.SEARCH);
 	}
-
+	
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param mode 模式{@link SegMode}
 	 */
 	public JiebaEngine(SegMode mode) {

@@ -1,8 +1,7 @@
 /**
  * Cglib库方法封装
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 package com.whaleal.icefrog.extra.cglib;

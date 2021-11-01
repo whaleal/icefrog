@@ -13,9 +13,8 @@ import java.util.List;
 
 /**
  * 邮件内部工具类
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class InternalMailUtil {
 
@@ -26,7 +25,7 @@ public class InternalMailUtil {
 	 * @param addrStrs 地址数组
 	 * @param charset 编码（主要用于中文用户名的编码）
 	 * @return 地址数组
-	 * @since 1.0.0
+	 *
 	 */
 	public static InternetAddress[] parseAddressFromStrs(String[] addrStrs, Charset charset) {
 		final List<InternetAddress> resultList = new ArrayList<>(addrStrs.length);

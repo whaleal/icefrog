@@ -7,5 +7,5 @@ package com.whaleal.icefrog.core.lang.hash;
  */
 public class MurmurHashTest {
 
-	//public void test
+    //public void test
 }

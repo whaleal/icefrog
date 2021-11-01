@@ -12,11 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class JSONUtilTest {
 
@@ -144,13 +140,6 @@ public class JSONUtilTest {
 	}
 
 	@Test
-	public void putByPathTest() {
-		JSONObject json = new JSONObject();
-		json.putByPath("aa.bb", "BB");
-		Assert.assertEquals("{\"aa\":{\"bb\":\"BB\"}}", json.toString());
-	}
-
-	@Test
 	public void getStrTest() {
 		String html = "{\"name\":\"Something must have been changed since you leave\"}";
 		JSONObject jsonObject = JSONUtil.parseObj(html);
@@ -219,7 +208,7 @@ public class JSONUtilTest {
 
 	@Test
 	public void sqlExceptionTest(){
-		//https://github.com/whaleal/icefrog/issues/1399
+		//https://github.com/looly/hutool/issues/1399
 		// SQLException实现了Iterable接口，默认是遍历之，会栈溢出，修正后只返回string
 		final JSONObject set = JSONUtil.createObj().set("test", new SQLException("test"));
 		Assert.assertEquals("{\"test\":\"java.sql.SQLException: test\"}", set.toString());

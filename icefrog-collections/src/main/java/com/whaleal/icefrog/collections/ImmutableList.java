@@ -17,7 +17,7 @@ import java.util.stream.Collector;
 
 import static com.whaleal.icefrog.collections.ObjectArrays.checkElementsNotNull;
 import static com.whaleal.icefrog.collections.RegularImmutableList.EMPTY;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
 
 

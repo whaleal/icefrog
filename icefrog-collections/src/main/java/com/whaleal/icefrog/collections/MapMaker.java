@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.collections.MapMakerInternalMap.Strength;
@@ -14,7 +12,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 /**
  * A builder of {@link ConcurrentMap} instances that can have keys or values automatically wrapped
@@ -66,234 +64,232 @@ import static com.whaleal.icefrog.core.lang.Preconditions.*;
  *
  * @author Bob Lee
  * @author Charles Fry
- *
- * 
  */
 
 
 public final class MapMaker {
-  private static final int DEFAULT_INITIAL_CAPACITY = 16;
-  private static final int DEFAULT_CONCURRENCY_LEVEL = 4;
+    static final int UNSET_INT = -1;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+    private static final int DEFAULT_CONCURRENCY_LEVEL = 4;
+    // TODO(kevinb): dispense with this after benchmarking
+    boolean useCustomMap;
 
-  static final int UNSET_INT = -1;
+    int initialCapacity = UNSET_INT;
+    int concurrencyLevel = UNSET_INT;
 
-  // TODO(kevinb): dispense with this after benchmarking
-  boolean useCustomMap;
+    @CheckForNull
+    MapMakerInternalMap.Strength keyStrength;
+    @CheckForNull
+    MapMakerInternalMap.Strength valueStrength;
 
-  int initialCapacity = UNSET_INT;
-  int concurrencyLevel = UNSET_INT;
+    @CheckForNull
+    Equivalence<Object> keyEquivalence;
 
-  @CheckForNull
-  MapMakerInternalMap.Strength keyStrength;
-  @CheckForNull
-  MapMakerInternalMap.Strength valueStrength;
-
-  @CheckForNull Equivalence<Object> keyEquivalence;
-
-  /**
-   * Constructs a new {@code MapMaker} instance with default settings, including strong keys, strong
-   * values, and no automatic eviction of any kind.
-   */
-  public MapMaker() {}
-
-  /**
-   * Sets a custom {@code Equivalence} strategy for comparing keys.
-   *
-   * <p>By default, the map uses {@link Equivalence#identity} to determine key equality when {@link
-   * #weakKeys} is specified, and {@link Equivalence#equals()} otherwise. The only place this is
-   * used is in {@link Interners}.
-   */
-  
- // To be supported
-  MapMaker keyEquivalence(Equivalence<Object> equivalence) {
-    checkState(keyEquivalence == null, "key equivalence was already set to %s", keyEquivalence);
-    keyEquivalence = checkNotNull(equivalence);
-    this.useCustomMap = true;
-    return this;
-  }
-
-  Equivalence<Object> getKeyEquivalence() {
-    return ArrayUtil.firstNonNull(keyEquivalence, getKeyStrength().defaultEquivalence());
-  }
-
-  /**
-   * Sets the minimum total size for the internal hash tables. For example, if the initial capacity
-   * is {@code 60}, and the concurrency level is {@code 8}, then eight segments are created, each
-   * having a hash table of size eight. Providing a large enough estimate at construction time
-   * avoids the need for expensive resizing operations later, but setting this value unnecessarily
-   * high wastes memory.
-   *
-   * @throws IllegalArgumentException if {@code initialCapacity} is negative
-   * @throws IllegalStateException if an initial capacity was already set
-   */
-  
-  public MapMaker initialCapacity(int initialCapacity) {
-    checkState(
-        this.initialCapacity == UNSET_INT,
-        "initial capacity was already set to %s",
-        this.initialCapacity);
-    checkArgument(initialCapacity >= 0);
-    this.initialCapacity = initialCapacity;
-    return this;
-  }
-
-  int getInitialCapacity() {
-    return (initialCapacity == UNSET_INT) ? DEFAULT_INITIAL_CAPACITY : initialCapacity;
-  }
-
-  /**
-   * Guides the allowed concurrency among update operations. Used as a hint for internal sizing. The
-   * table is internally partitioned to try to permit the indicated number of concurrent updates
-   * without contention. Because assignment of entries to these partitions is not necessarily
-   * uniform, the actual concurrency observed may vary. Ideally, you should choose a value to
-   * accommodate as many threads as will ever concurrently modify the table. Using a significantly
-   * higher value than you need can waste space and time, and a significantly lower value can lead
-   * to thread contention. But overestimates and underestimates within an order of magnitude do not
-   * usually have much noticeable impact. A value of one permits only one thread to modify the map
-   * at a time, but since read operations can proceed concurrently, this still yields higher
-   * concurrency than full synchronization. Defaults to 4.
-   *
-   * <p><b>Note:</b> Prior to Guava release 9.0, the default was 16. It is possible the default will
-   * change again in the future. If you care about this value, you should always choose it
-   * explicitly.
-   *
-   * @throws IllegalArgumentException if {@code concurrencyLevel} is nonpositive
-   * @throws IllegalStateException if a concurrency level was already set
-   */
-  
-  public MapMaker concurrencyLevel(int concurrencyLevel) {
-    checkState(
-        this.concurrencyLevel == UNSET_INT,
-        "concurrency level was already set to %s",
-        this.concurrencyLevel);
-    checkArgument(concurrencyLevel > 0);
-    this.concurrencyLevel = concurrencyLevel;
-    return this;
-  }
-
-  int getConcurrencyLevel() {
-    return (concurrencyLevel == UNSET_INT) ? DEFAULT_CONCURRENCY_LEVEL : concurrencyLevel;
-  }
-
-  /**
-   * Specifies that each key (not value) stored in the map should be wrapped in a {@link
-   * WeakReference} (by default, strong references are used).
-   *
-   * <p><b>Warning:</b> when this method is used, the resulting map will use identity ({@code ==})
-   * comparison to determine equality of keys, which is a technical violation of the {@link Map}
-   * specification, and may not be what you expect.
-   *
-   * @throws IllegalStateException if the key strength was already set
-   * @see WeakReference
-   */
-  
- // java.lang.ref.WeakReference
-  public MapMaker weakKeys() {
-    return setKeyStrength(MapMakerInternalMap.Strength.WEAK);
-  }
-
-  MapMaker setKeyStrength(MapMakerInternalMap.Strength strength) {
-    checkState(keyStrength == null, "Key strength was already set to %s", keyStrength);
-    keyStrength = checkNotNull(strength);
-    if (strength != MapMakerInternalMap.Strength.STRONG) {
-      // STRONG could be used during deserialization.
-      useCustomMap = true;
+    /**
+     * Constructs a new {@code MapMaker} instance with default settings, including strong keys, strong
+     * values, and no automatic eviction of any kind.
+     */
+    public MapMaker() {
     }
-    return this;
-  }
 
-  MapMakerInternalMap.Strength getKeyStrength() {
-    return ArrayUtil.firstNonNull(keyStrength, Strength.STRONG);
-  }
+    /**
+     * Sets a custom {@code Equivalence} strategy for comparing keys.
+     *
+     * <p>By default, the map uses {@link Equivalence#identity} to determine key equality when {@link
+     * #weakKeys} is specified, and {@link Equivalence#equals()} otherwise. The only place this is
+     * used is in {@link Interners}.
+     */
 
-  /**
-   * Specifies that each value (not key) stored in the map should be wrapped in a {@link
-   * WeakReference} (by default, strong references are used).
-   *
-   * <p>Weak values will be garbage collected once they are weakly reachable. This makes them a poor
-   * candidate for caching.
-   *
-   * <p><b>Warning:</b> when this method is used, the resulting map will use identity ({@code ==})
-   * comparison to determine equality of values. This technically violates the specifications of the
-   * methods {@link Map#containsValue containsValue}, {@link ConcurrentMap#remove(Object, Object)
-   * remove(Object, Object)} and {@link ConcurrentMap#replace(Object, Object, Object) replace(K, V,
-   * V)}, and may not be what you expect.
-   *
-   * @throws IllegalStateException if the value strength was already set
-   * @see WeakReference
-   */
-  
- // java.lang.ref.WeakReference
-  public MapMaker weakValues() {
-    return setValueStrength(Strength.WEAK);
-  }
-
-  /**
-   * A dummy singleton value type used by {@link Interners}.
-   *
-   * <p>{@link MapMakerInternalMap} can optimize for memory usage in this case; see {@link
-   * MapMakerInternalMap#createWithDummyValues}.
-   */
-  enum Dummy {
-    VALUE
-  }
-
-  MapMaker setValueStrength(Strength strength) {
-    checkState(valueStrength == null, "Value strength was already set to %s", valueStrength);
-    valueStrength = checkNotNull(strength);
-    if (strength != Strength.STRONG) {
-      // STRONG could be used during deserialization.
-      useCustomMap = true;
+    // To be supported
+    MapMaker keyEquivalence( Equivalence<Object> equivalence ) {
+        checkState(keyEquivalence == null, "key equivalence was already set to %s", keyEquivalence);
+        keyEquivalence = checkNotNull(equivalence);
+        this.useCustomMap = true;
+        return this;
     }
-    return this;
-  }
 
-  Strength getValueStrength() {
-    return ArrayUtil.firstNonNull(valueStrength, Strength.STRONG);
-  }
+    Equivalence<Object> getKeyEquivalence() {
+        return ArrayUtil.firstNonNull(keyEquivalence, getKeyStrength().defaultEquivalence());
+    }
 
-  /**
-   * Builds a thread-safe map. This method does not alter the state of this {@code MapMaker}
-   * instance, so it can be invoked again to create multiple independent MapUtil.
-   *
-   * <p>The bulk operations {@code putAll}, {@code equals}, and {@code clear} are not guaranteed to
-   * be performed atomically on the returned map. Additionally, {@code size} and {@code
-   * containsValue} are implemented as bulk read operations, and thus may fail to observe concurrent
-   * writes.
-   *
-   * @return a serializable concurrent map having the requested features
-   */
-  public <K, V> ConcurrentMap<K, V> makeMap() {
-    if (!useCustomMap) {
-      return new ConcurrentHashMap<>(getInitialCapacity(), 0.75f, getConcurrencyLevel());
-    }
-    return MapMakerInternalMap.create(this);
-  }
+    /**
+     * Sets the minimum total size for the internal hash tables. For example, if the initial capacity
+     * is {@code 60}, and the concurrency level is {@code 8}, then eight segments are created, each
+     * having a hash table of size eight. Providing a large enough estimate at construction time
+     * avoids the need for expensive resizing operations later, but setting this value unnecessarily
+     * high wastes memory.
+     *
+     * @throws IllegalArgumentException if {@code initialCapacity} is negative
+     * @throws IllegalStateException    if an initial capacity was already set
+     */
 
-  /**
-   * Returns a string representation for this MapMaker instance. The exact form of the returned
-   * string is not specified.
-   */
-  @Override
-  public String toString() {
-    StrBuilder s = StrUtil.strBuilder();
-    s.append(this);
+    public MapMaker initialCapacity( int initialCapacity ) {
+        checkState(
+                this.initialCapacity == UNSET_INT,
+                "initial capacity was already set to %s",
+                this.initialCapacity);
+        checkArgument(initialCapacity >= 0);
+        this.initialCapacity = initialCapacity;
+        return this;
+    }
 
-    if (initialCapacity != UNSET_INT) {
-      s.append("initialCapacity" +initialCapacity);
+    int getInitialCapacity() {
+        return (initialCapacity == UNSET_INT) ? DEFAULT_INITIAL_CAPACITY : initialCapacity;
     }
-    if (concurrencyLevel != UNSET_INT) {
-      s.append("concurrencyLevel" + concurrencyLevel);
+
+    /**
+     * Guides the allowed concurrency among update operations. Used as a hint for internal sizing. The
+     * table is internally partitioned to try to permit the indicated number of concurrent updates
+     * without contention. Because assignment of entries to these partitions is not necessarily
+     * uniform, the actual concurrency observed may vary. Ideally, you should choose a value to
+     * accommodate as many threads as will ever concurrently modify the table. Using a significantly
+     * higher value than you need can waste space and time, and a significantly lower value can lead
+     * to thread contention. But overestimates and underestimates within an order of magnitude do not
+     * usually have much noticeable impact. A value of one permits only one thread to modify the map
+     * at a time, but since read operations can proceed concurrently, this still yields higher
+     * concurrency than full synchronization. Defaults to 4.
+     *
+     * <p><b>Note:</b> Prior to Guava release 9.0, the default was 16. It is possible the default will
+     * change again in the future. If you care about this value, you should always choose it
+     * explicitly.
+     *
+     * @throws IllegalArgumentException if {@code concurrencyLevel} is nonpositive
+     * @throws IllegalStateException    if a concurrency level was already set
+     */
+
+    public MapMaker concurrencyLevel( int concurrencyLevel ) {
+        checkState(
+                this.concurrencyLevel == UNSET_INT,
+                "concurrency level was already set to %s",
+                this.concurrencyLevel);
+        checkArgument(concurrencyLevel > 0);
+        this.concurrencyLevel = concurrencyLevel;
+        return this;
     }
-    if (keyStrength != null) {
-      s.append("keyStrength" +keyStrength.toString().toLowerCase());
+
+    int getConcurrencyLevel() {
+        return (concurrencyLevel == UNSET_INT) ? DEFAULT_CONCURRENCY_LEVEL : concurrencyLevel;
     }
-    if (valueStrength != null) {
-      s.append("valueStrength"+ valueStrength.toString());
+
+    /**
+     * Specifies that each key (not value) stored in the map should be wrapped in a {@link
+     * WeakReference} (by default, strong references are used).
+     *
+     * <p><b>Warning:</b> when this method is used, the resulting map will use identity ({@code ==})
+     * comparison to determine equality of keys, which is a technical violation of the {@link Map}
+     * specification, and may not be what you expect.
+     *
+     * @throws IllegalStateException if the key strength was already set
+     * @see WeakReference
+     */
+
+    // java.lang.ref.WeakReference
+    public MapMaker weakKeys() {
+        return setKeyStrength(MapMakerInternalMap.Strength.WEAK);
     }
-    if (keyEquivalence != null) {
-      s.append("keyEquivalence");
+
+    MapMakerInternalMap.Strength getKeyStrength() {
+        return ArrayUtil.firstNonNull(keyStrength, Strength.STRONG);
     }
-    return s.toString();
-  }
+
+    MapMaker setKeyStrength( MapMakerInternalMap.Strength strength ) {
+        checkState(keyStrength == null, "Key strength was already set to %s", keyStrength);
+        keyStrength = checkNotNull(strength);
+        if (strength != MapMakerInternalMap.Strength.STRONG) {
+            // STRONG could be used during deserialization.
+            useCustomMap = true;
+        }
+        return this;
+    }
+
+    /**
+     * Specifies that each value (not key) stored in the map should be wrapped in a {@link
+     * WeakReference} (by default, strong references are used).
+     *
+     * <p>Weak values will be garbage collected once they are weakly reachable. This makes them a poor
+     * candidate for caching.
+     *
+     * <p><b>Warning:</b> when this method is used, the resulting map will use identity ({@code ==})
+     * comparison to determine equality of values. This technically violates the specifications of the
+     * methods {@link Map#containsValue containsValue}, {@link ConcurrentMap#remove(Object, Object)
+     * remove(Object, Object)} and {@link ConcurrentMap#replace(Object, Object, Object) replace(K, V,
+     * V)}, and may not be what you expect.
+     *
+     * @throws IllegalStateException if the value strength was already set
+     * @see WeakReference
+     */
+
+    // java.lang.ref.WeakReference
+    public MapMaker weakValues() {
+        return setValueStrength(Strength.WEAK);
+    }
+
+    Strength getValueStrength() {
+        return ArrayUtil.firstNonNull(valueStrength, Strength.STRONG);
+    }
+
+    MapMaker setValueStrength( Strength strength ) {
+        checkState(valueStrength == null, "Value strength was already set to %s", valueStrength);
+        valueStrength = checkNotNull(strength);
+        if (strength != Strength.STRONG) {
+            // STRONG could be used during deserialization.
+            useCustomMap = true;
+        }
+        return this;
+    }
+
+    /**
+     * Builds a thread-safe map. This method does not alter the state of this {@code MapMaker}
+     * instance, so it can be invoked again to create multiple independent MapUtil.
+     *
+     * <p>The bulk operations {@code putAll}, {@code equals}, and {@code clear} are not guaranteed to
+     * be performed atomically on the returned map. Additionally, {@code size} and {@code
+     * containsValue} are implemented as bulk read operations, and thus may fail to observe concurrent
+     * writes.
+     *
+     * @return a serializable concurrent map having the requested features
+     */
+    public <K, V> ConcurrentMap<K, V> makeMap() {
+        if (!useCustomMap) {
+            return new ConcurrentHashMap<>(getInitialCapacity(), 0.75f, getConcurrencyLevel());
+        }
+        return MapMakerInternalMap.create(this);
+    }
+
+    /**
+     * Returns a string representation for this MapMaker instance. The exact form of the returned
+     * string is not specified.
+     */
+    @Override
+    public String toString() {
+        StrBuilder s = StrUtil.strBuilder();
+        s.append(this);
+
+        if (initialCapacity != UNSET_INT) {
+            s.append("initialCapacity" + initialCapacity);
+        }
+        if (concurrencyLevel != UNSET_INT) {
+            s.append("concurrencyLevel" + concurrencyLevel);
+        }
+        if (keyStrength != null) {
+            s.append("keyStrength" + keyStrength.toString().toLowerCase());
+        }
+        if (valueStrength != null) {
+            s.append("valueStrength" + valueStrength.toString());
+        }
+        if (keyEquivalence != null) {
+            s.append("keyEquivalence");
+        }
+        return s.toString();
+    }
+
+    /**
+     * A dummy singleton value type used by {@link Interners}.
+     *
+     * <p>{@link MapMakerInternalMap} can optimize for memory usage in this case; see {@link
+     * MapMakerInternalMap#createWithDummyValues}.
+     */
+    enum Dummy {
+        VALUE
+    }
 }

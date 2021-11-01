@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.core.util;
 
 import com.whaleal.icefrog.core.annotation.CombinationAnnotationElement;
-import com.whaleal.icefrog.core.annotation.pojo.PropIgnore;
 import com.whaleal.icefrog.core.thread.lock.NoLock;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,121 +17,120 @@ import java.util.concurrent.locks.Lock;
 public class SerializeUtilTest {
 
 
-	@Test
-	public void testserialize() {
-		Person p = new Person("001", "wh", new Date());
+    @Test
+    public void testserialize() {
+        Person p = new Person("001", "wh", new Date());
 
-		byte[] serialize = SerializeUtil.serialize(p);
+        byte[] serialize = SerializeUtil.serialize(p);
 
-		Assert.assertNotNull(serialize);
+        Assert.assertNotNull(serialize);
 
-	}
-
-
-	@Test
-	public void testdeserialize() {
-		Person p = new Person("001", "wh", new Date());
-
-		byte[] serialize = SerializeUtil.serialize(p);
+    }
 
 
-		Person pp = (Person) SerializeUtil.deserialize(serialize);
+    @Test
+    public void testdeserialize() {
+        Person p = new Person("001", "wh", new Date());
 
-		Assert.assertNotNull(pp);
-	}
-
-
-	@Test
-	public void testserialize01() {
-
-		CombinationAnnotationElement combinationAnnotationElement = new CombinationAnnotationElement(Person.class);
-
-		byte[] serialize = SerializeUtil.serialize(combinationAnnotationElement);
-
-		Assert.assertNotNull(serialize);
-
-	}
+        byte[] serialize = SerializeUtil.serialize(p);
 
 
-	@Test
-	public void testdeserialize01() {
-		CombinationAnnotationElement combinationAnnotationElement = new CombinationAnnotationElement(Person.class);
+        Person pp = (Person) SerializeUtil.deserialize(serialize);
 
-		byte[] serialize = SerializeUtil.serialize(combinationAnnotationElement);
-
-		Assert.assertNotNull(serialize);
-
-		CombinationAnnotationElement deserialize = SerializeUtil.deserialize(serialize);
-
-		Assert.assertNotNull(deserialize);
-
-	}
-
-	@Test
-	public void testserialize02() {
-
-		Lock lock = new NoLock();
-
-		byte[] serialize = SerializeUtil.serialize(lock);
-
-		Assert.assertNotNull(serialize);
-
-	}
+        Assert.assertNotNull(pp);
+    }
 
 
-	@Test
-	public void testdeserialize02() {
-		CombinationAnnotationElement combinationAnnotationElement = new CombinationAnnotationElement(Person.class);
+    @Test
+    public void testserialize01() {
 
-		byte[] serialize = SerializeUtil.serialize(combinationAnnotationElement);
+        CombinationAnnotationElement combinationAnnotationElement = new CombinationAnnotationElement(Person.class);
 
-		Assert.assertNotNull(serialize);
+        byte[] serialize = SerializeUtil.serialize(combinationAnnotationElement);
 
-		CombinationAnnotationElement deserialize = SerializeUtil.deserialize(serialize);
+        Assert.assertNotNull(serialize);
 
-		Assert.assertNotNull(deserialize);
+    }
 
-	}
+
+    @Test
+    public void testdeserialize01() {
+        CombinationAnnotationElement combinationAnnotationElement = new CombinationAnnotationElement(Person.class);
+
+        byte[] serialize = SerializeUtil.serialize(combinationAnnotationElement);
+
+        Assert.assertNotNull(serialize);
+
+        CombinationAnnotationElement deserialize = SerializeUtil.deserialize(serialize);
+
+        Assert.assertNotNull(deserialize);
+
+    }
+
+    @Test
+    public void testserialize02() {
+
+        Lock lock = new NoLock();
+
+        byte[] serialize = SerializeUtil.serialize(lock);
+
+        Assert.assertNotNull(serialize);
+
+    }
+
+
+    @Test
+    public void testdeserialize02() {
+        CombinationAnnotationElement combinationAnnotationElement = new CombinationAnnotationElement(Person.class);
+
+        byte[] serialize = SerializeUtil.serialize(combinationAnnotationElement);
+
+        Assert.assertNotNull(serialize);
+
+        CombinationAnnotationElement deserialize = SerializeUtil.deserialize(serialize);
+
+        Assert.assertNotNull(deserialize);
+
+    }
 
 
 }
 
 
-
 class Person implements Serializable {
-	String id;
-	String name;
-	Date birthday;
+    String id;
+    String name;
+    Date birthday;
 
-	public Person(String id, String name, Date birthday) {
-		this.id = id;
-		this.name = name;
-		this.birthday = birthday;
-	}
+    public Person( String id, String name, Date birthday ) {
+        this.id = id;
+        this.name = name;
+        this.birthday = birthday;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId( String id ) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName( String name ) {
+        this.name = name;
+    }
 
-	public Date getBirthday() {
-		return birthday;
-	}
+    public Date getBirthday() {
+        return birthday;
+    }
 
-	public void setBirthday(Date birthday) {
-		this.birthday = birthday;
-	}
+    public void setBirthday( Date birthday ) {
+        this.birthday = birthday;
+    }
 
 
 }

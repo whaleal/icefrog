@@ -3,11 +3,11 @@
 package com.whaleal.icefrog.collections;
 
 
+import junit.framework.TestCase;
+import org.junit.Test;
+
 import java.util.Collections;
 import java.util.Map.Entry;
-
-import com.whaleal.icefrog.collections.AbstractMapEntry;
-import junit.framework.TestCase;
 
 /**
  * Tests for {@code AbstractMapEntry}.
@@ -16,6 +16,9 @@ import junit.framework.TestCase;
  */
 
 public class AbstractMapEntryTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final String NK = null;
   private static final Integer NV = null;
 

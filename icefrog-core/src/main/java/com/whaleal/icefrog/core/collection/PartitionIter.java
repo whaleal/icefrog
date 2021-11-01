@@ -19,47 +19,47 @@ import java.util.List;
  * @since 1.0.0
  */
 public class PartitionIter<T> implements Iterator<List<T>>, Iterable<List<T>>, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 被分批的迭代器
-	 */
-	protected final Iterator<T> iterator;
-	/**
-	 * 实际每批大小
-	 */
-	protected final int partitionSize;
+    /**
+     * 被分批的迭代器
+     */
+    protected final Iterator<T> iterator;
+    /**
+     * 实际每批大小
+     */
+    protected final int partitionSize;
 
-	/**
-	 * 创建分组对象
-	 *
-	 * @param iterator      迭代器
-	 * @param partitionSize 每批大小，最后一批不满一批算一批
-	 */
-	public PartitionIter(Iterator<T> iterator, int partitionSize) {
-		this.iterator = iterator;
-		this.partitionSize = partitionSize;
-	}
+    /**
+     * 创建分组对象
+     *
+     * @param iterator      迭代器
+     * @param partitionSize 每批大小，最后一批不满一批算一批
+     */
+    public PartitionIter( Iterator<T> iterator, int partitionSize ) {
+        this.iterator = iterator;
+        this.partitionSize = partitionSize;
+    }
 
-	@Override
-	public Iterator<List<T>> iterator() {
-		return this;
-	}
+    @Override
+    public Iterator<List<T>> iterator() {
+        return this;
+    }
 
-	@Override
-	public boolean hasNext() {
-		return this.iterator.hasNext();
-	}
+    @Override
+    public boolean hasNext() {
+        return this.iterator.hasNext();
+    }
 
-	@Override
-	public List<T> next() {
-		final List<T> list = new ArrayList<>(this.partitionSize);
-		for (int i = 0; i < this.partitionSize; i++) {
-			if (false == iterator.hasNext()) {
-				break;
-			}
-			list.add(iterator.next());
-		}
-		return list;
-	}
+    @Override
+    public List<T> next() {
+        final List<T> list = new ArrayList<>(this.partitionSize);
+        for (int i = 0; i < this.partitionSize; i++) {
+            if (false == iterator.hasNext()) {
+                break;
+            }
+            list.add(iterator.next());
+        }
+        return list;
+    }
 }

@@ -9,19 +9,20 @@ import java.sql.SQLException;
  * @author Looly
  * @author wh
  */
-public class StringHandler implements RsHandler<String>{
-	private static final long serialVersionUID = -5296733366845720383L;
+public class StringHandler implements RsHandler<String> {
+    private static final long serialVersionUID = -5296733366845720383L;
 
-	/**
-	 * 创建一个 NumberHandler对象
-	 * @return NumberHandler对象
-	 */
-	public static StringHandler create() {
-		return new StringHandler();
-	}
+    /**
+     * 创建一个 NumberHandler对象
+     *
+     * @return NumberHandler对象
+     */
+    public static StringHandler create() {
+        return new StringHandler();
+    }
 
-	@Override
-	public String handle(ResultSet rs) throws SQLException {
-		return rs.next() ? rs.getString(1) : null;
-	}
+    @Override
+    public String handle( ResultSet rs ) throws SQLException {
+        return rs.next() ? rs.getString(1) : null;
+    }
 }

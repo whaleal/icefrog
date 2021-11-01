@@ -10,11 +10,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 @FunctionalInterface
 public interface SheetReader<T> {
 
-	/**
-	 * 读取数据
-	 *
-	 * @param sheet {@link Sheet}
-	 * @return 读取结果
-	 */
-	T read(Sheet sheet);
+    /**
+     * 读取数据
+     *
+     * @param sheet {@link Sheet}
+     * @return 读取结果
+     */
+    T read( Sheet sheet );
 }
