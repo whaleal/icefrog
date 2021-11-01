@@ -2,17 +2,15 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
+import com.whaleal.icefrog.collections.Multisets.ImmutableEntry;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
-import com.whaleal.icefrog.collections.Multisets.ImmutableEntry;
+
 import javax.annotation.CheckForNull;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

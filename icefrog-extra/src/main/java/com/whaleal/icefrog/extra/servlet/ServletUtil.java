@@ -44,9 +44,8 @@ import java.util.Map;
 /**
  * Servlet相关工具类封装
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class ServletUtil {
 
@@ -91,7 +90,7 @@ public class ServletUtil {
 	 *
 	 * @param request {@link ServletRequest}
 	 * @return 获得请求体
-	 * @since 1.0.0
+	 *
 	 */
 	public static String getBody(ServletRequest request) {
 		try (final BufferedReader reader = request.getReader()) {
@@ -107,7 +106,7 @@ public class ServletUtil {
 	 *
 	 * @param request {@link ServletRequest}
 	 * @return 获得请求体byte[]
-	 * @since 1.0.0
+	 *
 	 */
 	public static byte[] getBodyBytes(ServletRequest request) {
 		try {
@@ -128,7 +127,7 @@ public class ServletUtil {
 	 * @param bean        Bean
 	 * @param copyOptions 注入时的设置
 	 * @return Bean
-	 * @since 1.0.0
+	 *
 	 */
 	public static <T> T fillBean(final ServletRequest request, T bean, CopyOptions copyOptions) {
 		final String beanName = StrUtil.lowerFirst(bean.getClass().getSimpleName());
@@ -229,7 +228,7 @@ public class ServletUtil {
 	 * @param request     请求对象{@link HttpServletRequest}
 	 * @param headerNames 自定义头，通常在Http服务器（例如Nginx）中配置
 	 * @return IP地址
-	 * @since 1.0.0
+	 *
 	 */
 	public static String getClientIPByHeader(HttpServletRequest request, String... headerNames) {
 		String ip;
@@ -250,7 +249,7 @@ public class ServletUtil {
 	 * @param request {@link ServletRequest}
 	 * @return MultipartFormData
 	 * @throws IORuntimeException IO异常
-	 * @since 1.0.0
+	 *
 	 */
 	public static MultipartFormData getMultipart(ServletRequest request) throws IORuntimeException {
 		return getMultipart(request, new UploadSetting());
@@ -265,7 +264,7 @@ public class ServletUtil {
 	 * @param uploadSetting 上传文件的设定，包括最大文件大小、保存在内存的边界大小、临时目录、扩展名限定等
 	 * @return MultiPart表单
 	 * @throws IORuntimeException IO异常
-	 * @since 1.0.0
+	 *
 	 */
 	public static MultipartFormData getMultipart(ServletRequest request, UploadSetting uploadSetting) throws IORuntimeException {
 		final MultipartFormData formData = new MultipartFormData(uploadSetting);
@@ -285,7 +284,7 @@ public class ServletUtil {
 	 *
 	 * @param request 请求对象{@link HttpServletRequest}
 	 * @return header值
-	 * @since 1.0.0
+	 *
 	 */
 	public static Map<String, String> getHeaderMap(HttpServletRequest request) {
 		final Map<String, String> headerMap = new HashMap<>();
@@ -340,7 +339,7 @@ public class ServletUtil {
 	 * @param name    头信息的KEY
 	 * @param charset 字符集
 	 * @return header值
-	 * @since 1.0.0
+	 *
 	 */
 	public static String getHeader(HttpServletRequest request, String name, Charset charset) {
 		final String header = request.getHeader(name);
@@ -535,7 +534,7 @@ public class ServletUtil {
 	 *
 	 * @param response 响应对象{@link HttpServletResponse}
 	 * @param file     写出的文件对象
-	 * @since 1.0.0
+	 *
 	 */
 	public static void write(HttpServletResponse response, File file) {
 		final String fileName = file.getName();
@@ -567,7 +566,7 @@ public class ServletUtil {
 	 *                    7、MIME_WORDX_TYPE = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 	 *                    8、MIME_STREAM_TYPE = "application/octet-stream;charset=utf-8"; #原始字节流
 	 * @param fileName    文件名
-	 * @since 1.0.0
+	 *
 	 */
 	public static void write(HttpServletResponse response, InputStream in, String contentType, String fileName) {
 		final String charset = ObjectUtil.defaultIfNull(response.getCharacterEncoding(), CharsetUtil.UTF_8);

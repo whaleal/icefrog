@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.comparator;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import java.io.Serializable;
@@ -17,53 +17,53 @@ import java.util.Comparator;
  */
 public class IndexedComparator<T> implements Comparator<T>, Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private final boolean atEndIfMiss;
-	private final T[] array;
+    private final boolean atEndIfMiss;
+    private final T[] array;
 
-	/**
-	 * 构造
-	 *
-	 * @param objs 参与排序的数组，数组的元素位置决定了对象的排序先后
-	 */
-	@SuppressWarnings("unchecked")
-	public IndexedComparator(T... objs) {
-		this(false, objs);
-	}
+    /**
+     * 构造
+     *
+     * @param objs 参与排序的数组，数组的元素位置决定了对象的排序先后
+     */
+    @SuppressWarnings("unchecked")
+    public IndexedComparator( T... objs ) {
+        this(false, objs);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param atEndIfMiss 如果不在列表中是否排在后边
-	 * @param objs        参与排序的数组，数组的元素位置决定了对象的排序先后
-	 */
-	@SuppressWarnings("unchecked")
-	public IndexedComparator(boolean atEndIfMiss, T... objs) {
-		Preconditions.notNull(objs, "'objs' array must not be null");
-		this.atEndIfMiss = atEndIfMiss;
-		this.array = objs;
-	}
+    /**
+     * 构造
+     *
+     * @param atEndIfMiss 如果不在列表中是否排在后边
+     * @param objs        参与排序的数组，数组的元素位置决定了对象的排序先后
+     */
+    @SuppressWarnings("unchecked")
+    public IndexedComparator( boolean atEndIfMiss, T... objs ) {
+        Precondition.notNull(objs, "'objs' array must not be null");
+        this.atEndIfMiss = atEndIfMiss;
+        this.array = objs;
+    }
 
-	@Override
-	public int compare(T o1, T o2) {
-		final int index1 = getOrder(o1);
-		final int index2 = getOrder(o2);
+    @Override
+    public int compare( T o1, T o2 ) {
+        final int index1 = getOrder(o1);
+        final int index2 = getOrder(o2);
 
-		return Integer.compare(index1, index2);
-	}
+        return Integer.compare(index1, index2);
+    }
 
-	/**
-	 * 查找对象类型所在列表的位置
-	 *
-	 * @param object 对象
-	 * @return 位置，未找到位置根据{@link #atEndIfMiss}取不同值，false返回-1，否则返回列表长度
-	 */
-	private int getOrder(T object) {
-		int order = ArrayUtil.indexOf(array, object);
-		if (order < 0) {
-			order = this.atEndIfMiss ? this.array.length : -1;
-		}
-		return order;
-	}
+    /**
+     * 查找对象类型所在列表的位置
+     *
+     * @param object 对象
+     * @return 位置，未找到位置根据{@link #atEndIfMiss}取不同值，false返回-1，否则返回列表长度
+     */
+    private int getOrder( T object ) {
+        int order = ArrayUtil.indexOf(array, object);
+        if (order < 0) {
+            order = this.atEndIfMiss ? this.array.length : -1;
+        }
+        return order;
+    }
 }

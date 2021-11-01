@@ -3,13 +3,13 @@ package com.whaleal.icefrog.extra.compress.extractor;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
-import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.lang.Precondition;
+import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.compress.CompressException;
-import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveException;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
 import java.io.File;
@@ -20,9 +20,8 @@ import java.nio.charset.Charset;
 /**
  * 数据解压器，即将归档打包的数据释放
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class StreamExtractor implements Extractor{
 
@@ -84,12 +83,12 @@ public class StreamExtractor implements Extractor{
 	 * 释放（解压）到指定目录，结束后自动关闭流，此方法只能调用一次
 	 *
 	 * @param targetDir 目标目录
-	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
+	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
 	 */
 	@Override
-	public void extract(File targetDir, Predicate<ArchiveEntry> predicate) {
+	public void extract(File targetDir, Filter<ArchiveEntry> filter) {
 		try {
-			extractInternal(targetDir, predicate);
+			extractInternal(targetDir, filter);
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		} finally {
@@ -101,15 +100,18 @@ public class StreamExtractor implements Extractor{
 	 * 释放（解压）到指定目录
 	 *
 	 * @param targetDir 目标目录
-	 * @param predicate    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Predicate#apply(Object)}为true时释放。
+	 * @param filter    解压文件过滤器，用于指定需要释放的文件，null表示不过滤。当{@link Filter#accept(Object)}为true时释放。
 	 * @throws IOException IO异常
 	 */
-	private void extractInternal(File targetDir, Predicate<ArchiveEntry> predicate) throws IOException {
-		Preconditions.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
+	private void extractInternal(File targetDir, Filter<ArchiveEntry> filter) throws IOException {
+		Precondition.isTrue(null != targetDir && ((false == targetDir.exists()) || targetDir.isDirectory()), "target must be dir.");
 		final ArchiveInputStream in = this.in;
 		ArchiveEntry entry;
 		File outItemFile;
 		while (null != (entry = in.getNextEntry())) {
+			if(null != filter && false == filter.accept(entry)){
+				continue;
+			}
 			if (false == in.canReadEntryData(entry)) {
 				// 无法读取的文件直接跳过
 				continue;

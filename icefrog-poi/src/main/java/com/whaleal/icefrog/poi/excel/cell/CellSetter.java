@@ -12,9 +12,10 @@ import org.apache.poi.ss.usermodel.Cell;
 @FunctionalInterface
 public interface CellSetter {
 
-	/**
-	 * 自定义单元格值设置，同时可以设置单元格样式、格式等信息
-	 * @param cell 单元格
-	 */
-	void setValue(Cell cell);
+    /**
+     * 自定义单元格值设置，同时可以设置单元格样式、格式等信息
+     *
+     * @param cell 单元格
+     */
+    void setValue( Cell cell );
 }

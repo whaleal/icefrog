@@ -24,86 +24,86 @@ import java.util.Map;
  */
 public class MapValueProvider implements ValueProvider<String> {
 
-	private final Map<?, ?> map;
-	private final boolean ignoreError;
+    private final Map<?, ?> map;
+    private final boolean ignoreError;
 
-	/**
-	 * 构造
-	 *
-	 * @param map        Map
-	 * @param ignoreCase 是否忽略key的大小写
-	 */
-	public MapValueProvider(Map<?, ?> map, boolean ignoreCase) {
-		this(map, ignoreCase, false);
-	}
+    /**
+     * 构造
+     *
+     * @param map        Map
+     * @param ignoreCase 是否忽略key的大小写
+     */
+    public MapValueProvider( Map<?, ?> map, boolean ignoreCase ) {
+        this(map, ignoreCase, false);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param map         Map
-	 * @param ignoreCase  是否忽略key的大小写
-	 * @param ignoreError 是否忽略错误
-	 * @since 1.0.0
-	 */
-	public MapValueProvider(Map<?, ?> map, boolean ignoreCase, boolean ignoreError) {
-		if (false == ignoreCase || map instanceof CaseInsensitiveMap) {
-			//不忽略大小写或者提供的Map本身为CaseInsensitiveMap则无需转换
-			this.map = map;
-		} else {
-			//转换为大小写不敏感的Map
-			this.map = new CaseInsensitiveMap<>(map);
-		}
-		this.ignoreError = ignoreError;
-	}
+    /**
+     * 构造
+     *
+     * @param map         Map
+     * @param ignoreCase  是否忽略key的大小写
+     * @param ignoreError 是否忽略错误
+     * @since 1.0.0
+     */
+    public MapValueProvider( Map<?, ?> map, boolean ignoreCase, boolean ignoreError ) {
+        if (false == ignoreCase || map instanceof CaseInsensitiveMap) {
+            //不忽略大小写或者提供的Map本身为CaseInsensitiveMap则无需转换
+            this.map = map;
+        } else {
+            //转换为大小写不敏感的Map
+            this.map = new CaseInsensitiveMap<>(map);
+        }
+        this.ignoreError = ignoreError;
+    }
 
-	@Override
-	public Object value(String key, Type valueType) {
-		final String key1 = getKey(key, valueType);
-		if (null == key1) {
-			return null;
-		}
+    @Override
+    public Object value( String key, Type valueType ) {
+        final String key1 = getKey(key, valueType);
+        if (null == key1) {
+            return null;
+        }
 
-		return Convert.convertWithCheck(valueType, map.get(key1), null, this.ignoreError);
-	}
+        return Convert.convertWithCheck(valueType, map.get(key1), null, this.ignoreError);
+    }
 
-	@Override
-	public boolean containsKey(String key) {
-		return null != getKey(key, null);
-	}
+    @Override
+    public boolean containsKey( String key ) {
+        return null != getKey(key, null);
+    }
 
-	/**
-	 * 获得map中可能包含的key,不包含返回null
-	 *
-	 * @param key       map中可能包含的key
-	 * @param valueType 值类型，用于判断是否为Boolean，可以为null
-	 * @return map中可能包含的key
-	 */
-	private String getKey(String key, Type valueType) {
-		if (map.containsKey(key)) {
-			return key;
-		}
+    /**
+     * 获得map中可能包含的key,不包含返回null
+     *
+     * @param key       map中可能包含的key
+     * @param valueType 值类型，用于判断是否为Boolean，可以为null
+     * @return map中可能包含的key
+     */
+    private String getKey( String key, Type valueType ) {
+        if (map.containsKey(key)) {
+            return key;
+        }
 
-		//检查下划线模式
-		String customKey = StrUtil.toUnderlineCase(key);
-		if (map.containsKey(customKey)) {
-			return customKey;
-		}
+        //检查下划线模式
+        String customKey = StrUtil.toUnderlineCase(key);
+        if (map.containsKey(customKey)) {
+            return customKey;
+        }
 
-		//检查boolean类型
-		if (null == valueType || Boolean.class == valueType || boolean.class == valueType) {
-			//boolean类型字段字段名支持两种方式
-			customKey = StrUtil.upperFirstAndAddPre(key, "is");
-			if (map.containsKey(customKey)) {
-				return customKey;
-			}
+        //检查boolean类型
+        if (null == valueType || Boolean.class == valueType || boolean.class == valueType) {
+            //boolean类型字段字段名支持两种方式
+            customKey = StrUtil.upperFirstAndAddPre(key, "is");
+            if (map.containsKey(customKey)) {
+                return customKey;
+            }
 
-			//检查下划线模式
-			customKey = StrUtil.toUnderlineCase(customKey);
-			if (map.containsKey(customKey)) {
-				return customKey;
-			}
-		}
-		return null;
-	}
+            //检查下划线模式
+            customKey = StrUtil.toUnderlineCase(customKey);
+            if (map.containsKey(customKey)) {
+                return customKey;
+            }
+        }
+        return null;
+    }
 
 }

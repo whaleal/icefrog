@@ -5,12 +5,13 @@ import org.junit.Test;
 
 public class CallerUtilTest {
 
-	@Test
-	public void getCallerMethodNameTest() {
-		final String callerMethodName = CallerUtil.getCallerMethodName(false);
-		Assert.assertEquals("getCallerMethodNameTest", callerMethodName);
+    @Test
+    public void getCallerMethodNameTest() {
 
-		final String fullCallerMethodName = CallerUtil.getCallerMethodName(true);
-		Assert.assertEquals("CallerUtilTest.getCallerMethodNameTest", fullCallerMethodName);
-	}
+        final String callerMethodName = CallerUtil.getCallerMethodName(false);
+        Assert.assertEquals("getCallerMethodNameTest", callerMethodName);
+
+        final String fullCallerMethodName = CallerUtil.getCallerMethodName(true);
+        Assert.assertEquals("com.whaleal.icefrog.core.lang.caller.CallerUtilTest.getCallerMethodNameTest", fullCallerMethodName);
+    }
 }

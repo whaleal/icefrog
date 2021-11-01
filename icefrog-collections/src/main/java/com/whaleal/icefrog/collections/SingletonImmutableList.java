@@ -3,12 +3,12 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.util.Collections;
 import java.util.Spliterator;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * Implementation of {@link ImmutableList} with exactly one element.
@@ -28,7 +28,7 @@ final class SingletonImmutableList<E> extends ImmutableList<E> {
 
   @Override
   public E get(int index) {
-    Preconditions.checkElementIndex(index, 1);
+    Precondition.checkElementIndex(index, 1);
     return element;
   }
 
@@ -49,7 +49,7 @@ final class SingletonImmutableList<E> extends ImmutableList<E> {
 
   @Override
   public ImmutableList<E> subList(int fromIndex, int toIndex) {
-    Preconditions.checkPositionIndexes(fromIndex, toIndex, 1);
+    Precondition.checkPositionIndexes(fromIndex, toIndex, 1);
     return (fromIndex == toIndex) ? ImmutableList.of() : this;
   }
 

@@ -5,6 +5,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +20,9 @@ import static com.whaleal.icefrog.collections.BoundType.OPEN;
  */
 
 public class GeneralRangeTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final Ordering<Integer> ORDERING = Ordering.natural().nullsFirst();
 
   private static final List<Integer> IN_ORDER_VALUES = Arrays.asList(null, 1, 2, 3, 4, 5);

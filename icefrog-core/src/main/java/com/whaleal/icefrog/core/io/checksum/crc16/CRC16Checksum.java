@@ -15,62 +15,64 @@ import java.util.zip.Checksum;
  * @since 1.0.0
  */
 public abstract class CRC16Checksum implements Checksum, Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * CRC16 Checksum 结果值
-	 */
-	protected int wCRCin;
+    /**
+     * CRC16 Checksum 结果值
+     */
+    protected int wCRCin;
 
-	public CRC16Checksum(){
-		reset();
-	}
+    public CRC16Checksum() {
+        reset();
+    }
 
-	@Override
-	public long getValue() {
-		return wCRCin;
-	}
+    @Override
+    public long getValue() {
+        return wCRCin;
+    }
 
-	/**
-	 * 获取16进制的CRC16值
-	 *
-	 * @return 16进制的CRC16值
-	 */
-	public String getHexValue(){
-		return getHexValue(false);
-	}
+    /**
+     * 获取16进制的CRC16值
+     *
+     * @return 16进制的CRC16值
+     */
+    public String getHexValue() {
+        return getHexValue(false);
+    }
 
-	/**
-	 * 获取16进制的CRC16值
-	 * @param isPadding 不足4位时，是否填充0以满足位数
-	 * @return 16进制的CRC16值，4位
-	 */
-	public String getHexValue(boolean isPadding){
-		String hex = HexUtil.toHex(getValue());
-		if(isPadding){
-			hex = StrUtil.padPre(hex, 4, '0');
-		}
+    /**
+     * 获取16进制的CRC16值
+     *
+     * @param isPadding 不足4位时，是否填充0以满足位数
+     * @return 16进制的CRC16值，4位
+     */
+    public String getHexValue( boolean isPadding ) {
+        String hex = HexUtil.toHex(getValue());
+        if (isPadding) {
+            hex = StrUtil.padPre(hex, 4, '0');
+        }
 
-		return hex;
-	}
+        return hex;
+    }
 
-	@Override
-	public void reset() {
-		wCRCin = 0x0000;
-	}
+    @Override
+    public void reset() {
+        wCRCin = 0x0000;
+    }
 
-	/**
-	 * 计算全部字节
-	 * @param b 字节
-	 */
-	public void update(byte[] b){
-		update(b, 0, b.length);
-	}
+    /**
+     * 计算全部字节
+     *
+     * @param b 字节
+     */
+    public void update( byte[] b ) {
+        update(b, 0, b.length);
+    }
 
-	@Override
-	public void update(byte[] b, int off, int len) {
-		for (int i = off; i < off + len; i++)
-			update(b[i]);
-	}
+    @Override
+    public void update( byte[] b, int off, int len ) {
+        for (int i = off; i < off + len; i++)
+            update(b[i]);
+    }
 
 }

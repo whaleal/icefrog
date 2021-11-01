@@ -7,9 +7,9 @@ import java.util.TimeZone;
 
 public class StringConvertTest {
 
-	@Test
-	public void timezoneToStrTest(){
-		final String s = Convert.toStr(TimeZone.getTimeZone("Asia/Shanghai"));
-		Assert.assertEquals("Asia/Shanghai", s);
-	}
+    @Test
+    public void timezoneToStrTest() {
+        final String s = Convert.toStr(TimeZone.getTimeZone("Asia/Shanghai"));
+        Assert.assertEquals("Asia/Shanghai", s);
+    }
 }

@@ -8,27 +8,27 @@ package com.whaleal.icefrog.core.io.checksum.crc16;
  * @author wh
  * @since 1.0.0
  */
-public class CRC16DNP extends CRC16Checksum{
-	private static final long serialVersionUID = 1L;
+public class CRC16DNP extends CRC16Checksum {
+    private static final long serialVersionUID = 1L;
 
-	private static final int WC_POLY = 0xA6BC;
+    private static final int WC_POLY = 0xA6BC;
 
-	@Override
-	public void update(byte[] b, int off, int len) {
-		super.update(b, off, len);
-		wCRCin ^= 0xffff;
-	}
+    @Override
+    public void update( byte[] b, int off, int len ) {
+        super.update(b, off, len);
+        wCRCin ^= 0xffff;
+    }
 
-	@Override
-	public void update(int b) {
-		wCRCin ^= (b & 0x00ff);
-		for (int j = 0; j < 8; j++) {
-			if ((wCRCin & 0x0001) != 0) {
-				wCRCin >>= 1;
-				wCRCin ^= WC_POLY;
-			} else {
-				wCRCin >>= 1;
-			}
-		}
-	}
+    @Override
+    public void update( int b ) {
+        wCRCin ^= (b & 0x00ff);
+        for (int j = 0; j < 8; j++) {
+            if ((wCRCin & 0x0001) != 0) {
+                wCRCin >>= 1;
+                wCRCin ^= WC_POLY;
+            } else {
+                wCRCin >>= 1;
+            }
+        }
+    }
 }

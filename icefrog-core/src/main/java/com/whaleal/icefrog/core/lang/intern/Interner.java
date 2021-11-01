@@ -12,11 +12,11 @@ package com.whaleal.icefrog.core.lang.intern;
  */
 public interface Interner<T> {
 
-	/**
-	 * 返回指定对象对应的规范化对象，sample对象可能有多个，但是这些对象如果都equals，则返回的是同一个对象
-	 *
-	 * @param sample 对象
-	 * @return 样例对象
-	 */
-	T intern(T sample);
+    /**
+     * 返回指定对象对应的规范化对象，sample对象可能有多个，但是这些对象如果都equals，则返回的是同一个对象
+     *
+     * @param sample 对象
+     * @return 样例对象
+     */
+    T intern( T sample );
 }

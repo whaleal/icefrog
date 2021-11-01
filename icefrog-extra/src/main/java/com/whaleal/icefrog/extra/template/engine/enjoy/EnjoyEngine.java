@@ -14,9 +14,8 @@ import java.io.File;
 /**
  * Enjoy库的引擎包装
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class EnjoyEngine implements TemplateEngine {
 
@@ -85,7 +84,7 @@ public class EnjoyEngine implements TemplateEngine {
 	 * @return {@link com.jfinal.template.Engine}
 	 */
 	private static com.jfinal.template.Engine createEngine(TemplateConfig config) {
-		final com.jfinal.template.Engine engine = com.jfinal.template.Engine.create("icefrog-Enjoy-Engine-" + IdUtil.fastSimpleUUID());
+		final com.jfinal.template.Engine engine = com.jfinal.template.Engine.create("Hutool-Enjoy-Engine-" + IdUtil.fastSimpleUUID());
 		engine.setEncoding(config.getCharsetStr());
 
 		switch (config.getResourceMode()) {

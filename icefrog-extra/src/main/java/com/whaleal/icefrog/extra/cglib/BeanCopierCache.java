@@ -10,8 +10,7 @@ import net.sf.cglib.core.Converter;
  * 缓存用于防止多次反射造成的性能问题
  *
  * @author Looly
- * @author wh
- * @since 1.0.0
+ *
  */
 public enum BeanCopierCache {
 	/**

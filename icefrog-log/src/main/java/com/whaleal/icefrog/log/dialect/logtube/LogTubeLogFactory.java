@@ -12,19 +12,19 @@ import com.whaleal.icefrog.log.LogFactory;
  */
 public class LogTubeLogFactory extends LogFactory {
 
-	public LogTubeLogFactory() {
-		super("LogTube");
-		checkLogExist(io.github.logtube.Logtube.class);
-	}
+    public LogTubeLogFactory() {
+        super("LogTube");
+        checkLogExist(io.github.logtube.Logtube.class);
+    }
 
-	@Override
-	public Log createLog(String name) {
-		return new LogTubeLog(name);
-	}
+    @Override
+    public Log createLog( String name ) {
+        return new LogTubeLog(name);
+    }
 
-	@Override
-	public Log createLog(Class<?> clazz) {
-		return new LogTubeLog(clazz);
-	}
+    @Override
+    public Log createLog( Class<?> clazz ) {
+        return new LogTubeLog(clazz);
+    }
 
 }

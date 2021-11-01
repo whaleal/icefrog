@@ -18,18 +18,17 @@ import java.util.List;
 /**
  * JSON转换器
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
-public class JSONConverter implements Converter<JSON> {
+public class JSONConverter implements Converter<com.whaleal.icefrog.json.JSON> {
 
 	static {
 		// 注册到转换中心
 		ConverterRegistry registry = ConverterRegistry.getInstance();
-		registry.putCustom(JSON.class, JSONConverter.class);
+		registry.putCustom(com.whaleal.icefrog.json.JSON.class, JSONConverter.class);
 		registry.putCustom(JSONObject.class, JSONConverter.class);
-		registry.putCustom(JSONArray.class, JSONConverter.class);
+		registry.putCustom(com.whaleal.icefrog.json.JSONArray.class, JSONConverter.class);
 	}
 
 	/**
@@ -39,7 +38,7 @@ public class JSONConverter implements Converter<JSON> {
 	 * @param arrayClass 数组元素类型
 	 * @return 数组对象
 	 */
-	protected static Object toArray(JSONArray jsonArray, Class<?> arrayClass) {
+	protected static Object toArray( com.whaleal.icefrog.json.JSONArray jsonArray, Class<?> arrayClass) {
 		return new ArrayConverter(arrayClass).convert(jsonArray, null);
 	}
 
@@ -51,14 +50,14 @@ public class JSONConverter implements Converter<JSON> {
 	 * @param elementType 对象元素类型
 	 * @return 对象列表
 	 */
-	protected static <T> List<T> toList(JSONArray jsonArray, Class<T> elementType) {
+	protected static <T> List<T> toList( com.whaleal.icefrog.json.JSONArray jsonArray, Class<T> elementType) {
 		return Convert.toList(elementType, jsonArray);
 	}
 
 	/**
 	 * JSON递归转换<br>
 	 * 首先尝试JDK类型转换，如果失败尝试JSON转Bean<br>
-	 * 如果遇到{@link JSONBeanParser}，则调用其{@link JSONBeanParser#parse(Object)}方法转换。
+	 * 如果遇到{@link com.whaleal.icefrog.json.JSONBeanParser}，则调用其{@link com.whaleal.icefrog.json.JSONBeanParser#parse(Object)}方法转换。
 	 *
 	 * @param <T> 转换后的对象类型
 	 * @param targetType 目标类型
@@ -69,16 +68,16 @@ public class JSONConverter implements Converter<JSON> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected static <T> T jsonConvert(Type targetType, Object value, boolean ignoreError) throws ConvertException {
-		if (JSONUtil.isNull(value)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(value)) {
 			return null;
 		}
 
 		// since 5.7.8，增加自定义Bean反序列化接口
 		if(targetType instanceof Class){
 			final Class<?> clazz = (Class<?>) targetType;
-			if (JSONBeanParser.class.isAssignableFrom(clazz)){
+			if (com.whaleal.icefrog.json.JSONBeanParser.class.isAssignableFrom(clazz)){
 				@SuppressWarnings("rawtypes")
-				JSONBeanParser target = (JSONBeanParser) ReflectUtil.newInstanceIfPossible(clazz);
+                com.whaleal.icefrog.json.JSONBeanParser target = (com.whaleal.icefrog.json.JSONBeanParser) ReflectUtil.newInstanceIfPossible(clazz);
 				if(null == target){
 					throw new ConvertException("Can not instance [{}]", targetType);
 				}
@@ -100,18 +99,18 @@ public class JSONConverter implements Converter<JSON> {
 	 * @param ignoreError 是否忽略转换错误
 	 * @return 目标类型的值
 	 * @throws ConvertException 转换失败
-	 * @since 1.0.0
+	 *
 	 */
 	protected static <T> T jsonToBean(Type targetType, Object value, boolean ignoreError) throws ConvertException {
-		if (JSONUtil.isNull(value)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(value)) {
 			return null;
 		}
 
-		if(value instanceof JSON){
+		if(value instanceof com.whaleal.icefrog.json.JSON){
 			final JSONDeserializer<?> deserializer = GlobalSerializeMapping.getDeserializer(targetType);
 			if(null != deserializer) {
 				//noinspection unchecked
-				return (T) deserializer.deserialize((JSON) value);
+				return (T) deserializer.deserialize((com.whaleal.icefrog.json.JSON) value);
 			}
 		}
 
@@ -131,7 +130,7 @@ public class JSONConverter implements Converter<JSON> {
 	}
 
 	@Override
-	public JSON convert(Object value, JSON defaultValue) throws IllegalArgumentException {
-		return JSONUtil.parse(value);
+	public com.whaleal.icefrog.json.JSON convert( Object value, com.whaleal.icefrog.json.JSON defaultValue) throws IllegalArgumentException {
+		return com.whaleal.icefrog.json.JSONUtil.parse(value);
 	}
 }

@@ -17,8 +17,7 @@ import java.io.IOException;
  * FreeMarker模板引擎封装<br>
  * 见：https://freemarker.apache.org/
  *
- * @author Looly 
- * @author wh
+ * @author looly
  */
 public class FreemarkerEngine implements TemplateEngine {
 

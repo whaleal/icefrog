@@ -7,11 +7,10 @@ import java.util.Map;
 
 /**
  * JfireEL引擎封装<br>
- * 见：https://github.com/eric_ds/jfireEL
+ * 见：https://gitee.com/eric_ds/jfireEL
  *
- * @since 1.0.0
- * @author Looly 
- * @author wh
+ *
+ * @author looly
  */
 public class JfireELEngine implements ExpressionEngine {
 

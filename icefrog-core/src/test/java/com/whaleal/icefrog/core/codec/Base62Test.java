@@ -11,15 +11,15 @@ import org.junit.Test;
  */
 public class Base62Test {
 
-	@Test
-	public void encodeAndDecodeTest() {
-		String a = "伦家是一个非常长的字符串66";
-		String encode = Base62.encode(a);
-		Assert.assertEquals("17vKU8W4JMG8dQF8lk9VNnkdMOeWn4rJMva6F0XsLrrT53iKBnqo", encode);
+    @Test
+    public void encodeAndDecodeTest() {
+        String a = "伦家是一个非常长的字符串66";
+        String encode = Base62.encode(a);
+        Assert.assertEquals("17vKU8W4JMG8dQF8lk9VNnkdMOeWn4rJMva6F0XsLrrT53iKBnqo", encode);
 
-		String decodeStr = Base62.decodeStr(encode);
-		Assert.assertEquals(a, decodeStr);
-	}
+        String decodeStr = Base62.decodeStr(encode);
+        Assert.assertEquals(a, decodeStr);
+    }
 
 
 }

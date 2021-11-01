@@ -12,32 +12,31 @@ import java.util.List;
  *
  * @author Looly
  * @author wh
- *
  */
 public class H2Test {
 
-	private static final String DS_GROUP_NAME = "h2";
+    private static final String DS_GROUP_NAME = "h2";
 
-	@BeforeClass
-	public static void init() throws SQLException {
-		Db db = Db.use(DS_GROUP_NAME);
-		db.execute("CREATE TABLE test(a INTEGER, b BIGINT)");
+    @BeforeClass
+    public static void init() throws SQLException {
+        Db db = Db.use(DS_GROUP_NAME);
+        db.execute("CREATE TABLE test(a INTEGER, b BIGINT)");
 
-		db.insert(Entity.create("test").set("a", 1).set("b", 11));
-		db.insert(Entity.create("test").set("a", 2).set("b", 21));
-		db.insert(Entity.create("test").set("a", 3).set("b", 31));
-		db.insert(Entity.create("test").set("a", 4).set("b", 41));
-	}
+        db.insert(Entity.create("test").set("a", 1).set("b", 11));
+        db.insert(Entity.create("test").set("a", 2).set("b", 21));
+        db.insert(Entity.create("test").set("a", 3).set("b", 31));
+        db.insert(Entity.create("test").set("a", 4).set("b", 41));
+    }
 
-	@Test
-	public void queryTest() throws SQLException {
-		List<Entity> query = Db.use(DS_GROUP_NAME).query("select * from test");
-		Assert.assertEquals(4, query.size());
-	}
+    @Test
+    public void queryTest() throws SQLException {
+        List<Entity> query = Db.use(DS_GROUP_NAME).query("select * from test");
+        Assert.assertEquals(4, query.size());
+    }
 
-	@Test
-	public void findTest() throws SQLException {
-		List<Entity> query = Db.use(DS_GROUP_NAME).find(Entity.create("test"));
-		Assert.assertEquals(4, query.size());
-	}
+    @Test
+    public void findTest() throws SQLException {
+        List<Entity> query = Db.use(DS_GROUP_NAME).find(Entity.create("test"));
+        Assert.assertEquals(4, query.size());
+    }
 }

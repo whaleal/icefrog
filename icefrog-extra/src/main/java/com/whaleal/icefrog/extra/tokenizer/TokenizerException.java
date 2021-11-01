@@ -7,7 +7,6 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * 分词异常
  *
  * @author Looly
- * @author wh
  */
 public class TokenizerException extends RuntimeException {
 	private static final long serialVersionUID = 8074865854534335463L;

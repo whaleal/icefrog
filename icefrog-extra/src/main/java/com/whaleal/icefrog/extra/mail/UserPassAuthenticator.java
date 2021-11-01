@@ -6,9 +6,8 @@ import javax.mail.PasswordAuthentication;
 /**
  * 用户名密码验证器
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class UserPassAuthenticator extends Authenticator {
 

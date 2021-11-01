@@ -2,15 +2,6 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
-
-
-
-
-
-
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -18,7 +9,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /** Collectors utilities for {@code common.collect.Table} internals. */

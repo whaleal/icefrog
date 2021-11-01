@@ -11,8 +11,7 @@ import java.lang.reflect.Type;
 /**
  * JSON接口
  *
- * @author Looly
- * @author wh
+ * @author looly   wh
  */
 public interface JSON extends Cloneable, Serializable {
 
@@ -35,7 +34,7 @@ public interface JSON extends Cloneable, Serializable {
 	 * @param expression 表达式
 	 * @return 对象
 	 * @see BeanPath#get(Object)
-	 * @since 1.0.0
+	 *
 	 */
 	Object getByPath(String expression);
 
@@ -85,7 +84,7 @@ public interface JSON extends Cloneable, Serializable {
 	 * @param resultType 返回值类型
 	 * @return 对象
 	 * @see BeanPath#get(Object)
-	 * @since 1.0.0
+	 *
 	 */
 	<T> T getByPath(String expression, Class<T> resultType);
 
@@ -93,10 +92,10 @@ public interface JSON extends Cloneable, Serializable {
 	 * 格式化打印JSON，缩进为4个空格
 	 *
 	 * @return 格式化后的JSON字符串
-	 * @throws JSONException 包含非法数抛出此异常
-	 * @since 1.0.0
+	 * @throws com.whaleal.icefrog.json.JSONException 包含非法数抛出此异常
+	 *
 	 */
-	default String toStringPretty() throws JSONException {
+	default String toStringPretty() throws com.whaleal.icefrog.json.JSONException {
 		return this.toJSONString(4);
 	}
 
@@ -105,9 +104,9 @@ public interface JSON extends Cloneable, Serializable {
 	 *
 	 * @param indentFactor 每层缩进空格数
 	 * @return JSON字符串
-	 * @throws JSONException 包含非法数抛出此异常
+	 * @throws com.whaleal.icefrog.json.JSONException 包含非法数抛出此异常
 	 */
-	default String toJSONString(int indentFactor) throws JSONException {
+	default String toJSONString(int indentFactor) throws com.whaleal.icefrog.json.JSONException {
 		final StringWriter sw = new StringWriter();
 		synchronized (sw.getBuffer()) {
 			return this.write(sw, indentFactor, 0).toString();
@@ -120,9 +119,9 @@ public interface JSON extends Cloneable, Serializable {
 	 *
 	 * @param writer Writer
 	 * @return Writer
-	 * @throws JSONException JSON相关异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON相关异常
 	 */
-	default Writer write(Writer writer) throws JSONException {
+	default Writer write(Writer writer) throws com.whaleal.icefrog.json.JSONException {
 		return this.write(writer, 0, 0);
 	}
 
@@ -134,9 +133,9 @@ public interface JSON extends Cloneable, Serializable {
 	 * @param indentFactor 缩进因子，定义每一级别增加的缩进量
 	 * @param indent       本级别缩进量
 	 * @return Writer
-	 * @throws JSONException JSON相关异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON相关异常
 	 */
-	Writer write(Writer writer, int indentFactor, int indent) throws JSONException;
+	Writer write(Writer writer, int indentFactor, int indent) throws com.whaleal.icefrog.json.JSONException;
 
 	/**
 	 * 转为实体类对象，转换异常将被抛出
@@ -155,7 +154,7 @@ public interface JSON extends Cloneable, Serializable {
 	 * @param <T>       Bean类型
 	 * @param reference {@link TypeReference}类型参考子类，可以获取其泛型参数中的Type类型
 	 * @return 实体类对象
-	 * @since 1.0.0
+	 *
 	 */
 	default <T> T toBean(TypeReference<T> reference) {
 		return toBean(reference.getType());
@@ -167,7 +166,7 @@ public interface JSON extends Cloneable, Serializable {
 	 * @param <T>  Bean类型
 	 * @param type {@link Type}
 	 * @return 实体类对象
-	 * @since 1.0.0
+	 *
 	 */
 	default <T> T toBean(Type type) {
 		return toBean(type, false);
@@ -180,7 +179,7 @@ public interface JSON extends Cloneable, Serializable {
 	 * @param type        {@link Type}
 	 * @param ignoreError 是否忽略转换错误
 	 * @return 实体类对象
-	 * @since 1.0.0
+	 *
 	 */
 	default <T> T toBean(Type type, boolean ignoreError) {
 		return JSONConverter.jsonConvert(type, this, ignoreError);

@@ -15,8 +15,7 @@ import java.io.File;
 /**
  * Wit(http://zqq90.github.io/webit-script/)模板引擎封装
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class WitEngine implements TemplateEngine {
 

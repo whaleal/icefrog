@@ -10,8 +10,7 @@ import com.whaleal.icefrog.log.StaticLog;
 /**
  * 简单分词引擎工厂，用于根据用户引入的分词引擎jar，自动创建对应的引擎
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class TokenizerFactory {
@@ -21,7 +20,7 @@ public class TokenizerFactory {
 	 * 获得的是单例的TokenizerEngine
 	 *
 	 * @return 单例的TokenizerEngine
-	 * @since 1.0.0
+	 *
 	 */
 	public static TokenizerEngine get(){
 		return Singleton.get(TokenizerEngine.class.getName(), TokenizerFactory::create);

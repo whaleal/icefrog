@@ -7,5 +7,5 @@ package com.whaleal.icefrog.core.collection;
  * @author wh
  * @see CollUtil
  */
-public class CollectionUtil extends CollUtil{
+public class CollectionUtil extends CollUtil {
 }

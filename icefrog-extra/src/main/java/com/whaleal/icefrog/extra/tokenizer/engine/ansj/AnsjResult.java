@@ -1,26 +1,24 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.ansj;
 
-import java.util.Iterator;
-
-import org.ansj.domain.Term;
-
 import com.whaleal.icefrog.extra.tokenizer.Result;
 import com.whaleal.icefrog.extra.tokenizer.Word;
+import org.ansj.domain.Term;
+
+import java.util.Iterator;
 
 /**
  * Ansj分词结果实现<br>
  * 项目地址：https://github.com/NLPchina/ansj_seg
  *
- * @author Looly
- * @author wh
- *
+ * @author looly
  */
-public class AnsjResult implements Result{
+public class AnsjResult implements Result {
 
 	private final Iterator<Term> result;
 
 	/**
 	 * 构造
+	 *
 	 * @param ansjResult 分词结果
 	 */
 	public AnsjResult(org.ansj.domain.Result ansjResult) {

@@ -6,7 +6,7 @@ import com.whaleal.icefrog.extra.compress.archiver.Archiver;
 import com.whaleal.icefrog.extra.compress.archiver.SevenZArchiver;
 import com.whaleal.icefrog.extra.compress.archiver.StreamArchiver;
 import com.whaleal.icefrog.extra.compress.extractor.Extractor;
-import com.whaleal.icefrog.extra.compress.extractor.SenvenZExtractor;
+import com.whaleal.icefrog.extra.compress.extractor.SevenZExtractor;
 import com.whaleal.icefrog.extra.compress.extractor.StreamExtractor;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.StreamingNotSupportedException;
@@ -22,11 +22,10 @@ import java.nio.charset.Charset;
 
 /**
  * 压缩工具类<br>
- * 基于icefrogs-compress的压缩解压封装
+ * 基于commons-compress的压缩解压封装
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class CompressUtil {
 
@@ -169,14 +168,14 @@ public class CompressUtil {
 	 */
 	public static Extractor createExtractor(Charset charset, String archiverName, File file) {
 		if (ArchiveStreamFactory.SEVEN_Z.equalsIgnoreCase(archiverName)) {
-			return new SenvenZExtractor(file);
+			return new SevenZExtractor(file);
 		}
 		try {
 			return new StreamExtractor(charset, archiverName, file);
 		} catch (CompressException e) {
 			final Throwable cause = e.getCause();
 			if (cause instanceof StreamingNotSupportedException && cause.getMessage().contains("7z")) {
-				return new SenvenZExtractor(file);
+				return new SevenZExtractor(file);
 			}
 			throw e;
 		}
@@ -219,14 +218,15 @@ public class CompressUtil {
 	 */
 	public static Extractor createExtractor(Charset charset, String archiverName, InputStream in) {
 		if (ArchiveStreamFactory.SEVEN_Z.equalsIgnoreCase(archiverName)) {
-			return new SenvenZExtractor(in);
+			return new SevenZExtractor(in);
 		}
+
 		try {
 			return new StreamExtractor(charset, archiverName, in);
 		} catch (CompressException e) {
 			final Throwable cause = e.getCause();
 			if (cause instanceof StreamingNotSupportedException && cause.getMessage().contains("7z")) {
-				return new SenvenZExtractor(in);
+				return new SevenZExtractor(in);
 			}
 			throw e;
 		}

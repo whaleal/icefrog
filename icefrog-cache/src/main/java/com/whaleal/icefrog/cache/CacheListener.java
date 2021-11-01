@@ -11,11 +11,11 @@ package com.whaleal.icefrog.cache;
  */
 public interface CacheListener<K, V> {
 
-	/**
-	 * 对象移除回调
-	 *
-	 * @param key          键
-	 * @param cachedObject 被缓存的对象
-	 */
-	void onRemove(K key, V cachedObject);
+    /**
+     * 对象移除回调
+     *
+     * @param key          键
+     * @param cachedObject 被缓存的对象
+     */
+    void onRemove( K key, V cachedObject );
 }

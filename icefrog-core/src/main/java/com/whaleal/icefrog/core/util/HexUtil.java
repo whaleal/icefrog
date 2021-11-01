@@ -10,12 +10,11 @@ import com.whaleal.icefrog.core.codec.Hex;
  * <p>
  * 参考：https://my.oschina.net/xinxingegeya/blog/287476
  *
+ * @author wh
  * @see com.whaleal.icefrog.core.codec.Hex
  * 内部调用使用Hex的相关操作
- *
- * @author wh
  */
-public class HexUtil  extends Hex{
+public class HexUtil extends Hex {
 
 
 }

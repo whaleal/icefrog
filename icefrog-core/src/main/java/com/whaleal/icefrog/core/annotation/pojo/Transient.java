@@ -24,13 +24,13 @@ import static java.lang.annotation.ElementType.*;
 /**
  * Marks a field to be transient for the mapping framework. Thus the property will not be persisted and not further
  * inspected by the mapping framework.
- *
+ * <p>
  * 标记一个字段的是 transient 修饰的。
  * 属性不会被持久化，也不会进一步由框架检查。
- * @author wh
  *
+ * @author wh
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { FIELD, METHOD, ANNOTATION_TYPE })
+@Target(value = {FIELD, METHOD, ANNOTATION_TYPE})
 public @interface Transient {
 }

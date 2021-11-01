@@ -7,8 +7,7 @@ import com.whaleal.icefrog.json.xml.JSONXMLSerializer;
 /**
  * 提供静态方法在XML和JSONObject之间转换
  *
- * @author Looly
- * @author wh
+ * @author JSON.org, looly
  * @see JSONXMLParser
  * @see JSONXMLSerializer
  */
@@ -96,7 +95,7 @@ public class XML {
 	 * @param keepStrings 如果为{@code true}，则值保持String类型，不转换为数字或boolean
 	 * @return A JSONObject 解析后的JSON对象，与传入的jo为同一对象
 	 * @throws JSONException 解析异常
-	 * @since 1.0.0
+	 *
 	 */
 	public static JSONObject toJSONObject(JSONObject jo, String xmlStr, boolean keepStrings) throws JSONException {
 		JSONXMLParser.parseJSONObject(jo, xmlStr, keepStrings);

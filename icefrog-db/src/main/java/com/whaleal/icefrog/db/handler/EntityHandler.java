@@ -11,43 +11,45 @@ import java.sql.SQLException;
  *
  * @author Looly
  * @author wh
- *
  */
-public class EntityHandler implements RsHandler<Entity>{
-	private static final long serialVersionUID = -8742432871908355992L;
+public class EntityHandler implements RsHandler<Entity> {
+    private static final long serialVersionUID = -8742432871908355992L;
 
-	/** 是否大小写不敏感 */
-	private final boolean caseInsensitive;
+    /**
+     * 是否大小写不敏感
+     */
+    private final boolean caseInsensitive;
 
-	/**
-	 * 创建一个 EntityHandler对象
-	 * @return EntityHandler对象
-	 */
-	public static EntityHandler create() {
-		return new EntityHandler();
-	}
+    /**
+     * 构造
+     */
+    public EntityHandler() {
+        this(false);
+    }
 
-	/**
-	 * 构造
-	 */
-	public EntityHandler() {
-		this(false);
-	}
+    /**
+     * 构造
+     *
+     * @param caseInsensitive 是否大小写不敏感
+     */
+    public EntityHandler( boolean caseInsensitive ) {
+        this.caseInsensitive = caseInsensitive;
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param caseInsensitive 是否大小写不敏感
-	 */
-	public EntityHandler(boolean caseInsensitive) {
-		this.caseInsensitive = caseInsensitive;
-	}
+    /**
+     * 创建一个 EntityHandler对象
+     *
+     * @return EntityHandler对象
+     */
+    public static EntityHandler create() {
+        return new EntityHandler();
+    }
 
-	@Override
-	public Entity handle(ResultSet rs) throws SQLException {
-		final ResultSetMetaData  meta = rs.getMetaData();
-		final int columnCount = meta.getColumnCount();
+    @Override
+    public Entity handle( ResultSet rs ) throws SQLException {
+        final ResultSetMetaData meta = rs.getMetaData();
+        final int columnCount = meta.getColumnCount();
 
-		return rs.next() ? HandleHelper.handleRow(columnCount, meta, rs, this.caseInsensitive) : null;
-	}
+        return rs.next() ? HandleHelper.handleRow(columnCount, meta, rs, this.caseInsensitive) : null;
+    }
 }

@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class FontUtilTest {
 
-	@Test
-	public void createFontTest() {
-		final Font font = FontUtil.createFont();
-		Assert.assertNotNull(font);
-	}
+    @Test
+    public void createFontTest() {
+        final Font font = FontUtil.createFont();
+        Assert.assertNotNull(font);
+    }
 }

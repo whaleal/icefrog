@@ -4,7 +4,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
-
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.InvalidObjectException;
@@ -18,7 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

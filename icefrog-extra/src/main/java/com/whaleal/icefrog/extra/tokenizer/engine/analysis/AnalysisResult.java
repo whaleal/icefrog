@@ -12,9 +12,8 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
 /**
  * Lucene-analysis分词抽象结果封装<br>
  * 项目地址：https://github.com/apache/lucene-solr/tree/master/lucene/analysis
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class AnalysisResult extends AbstractResult {
@@ -23,7 +22,7 @@ public class AnalysisResult extends AbstractResult {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param stream 分词结果
 	 */
 	public AnalysisResult(TokenStream stream) {

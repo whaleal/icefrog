@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static com.whaleal.icefrog.core.map.MapUtil.keyOrNull;
 import static java.util.Objects.requireNonNull;
 

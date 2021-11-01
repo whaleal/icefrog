@@ -13,11 +13,11 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * @since 1.0.0
  */
 public class AtomicIntegerArrayConverter extends AbstractConverter<AtomicIntegerArray> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected AtomicIntegerArray convertInternal(Object value) {
-		return new AtomicIntegerArray(Convert.convert(int[].class, value));
-	}
+    @Override
+    protected AtomicIntegerArray convertInternal( Object value ) {
+        return new AtomicIntegerArray(Convert.convert(int[].class, value));
+    }
 
 }

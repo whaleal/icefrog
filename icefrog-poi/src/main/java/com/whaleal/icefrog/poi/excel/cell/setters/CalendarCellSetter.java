@@ -14,19 +14,19 @@ import java.util.Calendar;
  */
 public class CalendarCellSetter implements CellSetter {
 
-	private final Calendar value;
+    private final Calendar value;
 
-	/**
-	 * 构造
-	 *
-	 * @param value 值
-	 */
-	CalendarCellSetter(Calendar value) {
-		this.value = value;
-	}
+    /**
+     * 构造
+     *
+     * @param value 值
+     */
+    CalendarCellSetter( Calendar value ) {
+        this.value = value;
+    }
 
-	@Override
-	public void setValue(Cell cell) {
-		cell.setCellValue(value);
-	}
+    @Override
+    public void setValue( Cell cell ) {
+        cell.setCellValue(value);
+    }
 }

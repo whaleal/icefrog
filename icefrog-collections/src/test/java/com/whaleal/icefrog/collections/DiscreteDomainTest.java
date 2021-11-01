@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.math.BigInteger;
 
@@ -15,7 +16,9 @@ import java.math.BigInteger;
  */
  // SerializableTester
 public class DiscreteDomainTest extends TestCase {
-
+  @Test
+  public void test(){
+  }
 
   public void testIntegersOffset() {
     assertEquals(1, DiscreteDomain.integers().offset(0, 1).intValue());

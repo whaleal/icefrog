@@ -5,9 +5,8 @@ import com.whaleal.icefrog.extra.template.engine.TemplateFactory;
 /**
  * 模板工具类
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class TemplateUtil {
 
@@ -16,7 +15,7 @@ public class TemplateUtil {
 	 * 推荐创建的引擎单例使用，此方法每次调用会返回新的引擎
 	 *
 	 * @return {@link TemplateEngine}
-	 * @since 1.0.0
+	 *
 	 */
 	public static TemplateEngine createEngine() {
 		return TemplateFactory.create();

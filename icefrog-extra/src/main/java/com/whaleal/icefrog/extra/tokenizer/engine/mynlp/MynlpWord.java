@@ -7,8 +7,7 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
 /**
  * mmseg分词中的一个单词包装
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class MynlpWord implements Word {
 	private static final long serialVersionUID = 1L;

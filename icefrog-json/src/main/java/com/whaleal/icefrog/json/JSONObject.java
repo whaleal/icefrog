@@ -6,6 +6,8 @@ import com.whaleal.icefrog.core.bean.copier.BeanCopier;
 import com.whaleal.icefrog.core.bean.copier.CopyOptions;
 import com.whaleal.icefrog.core.collection.CollectionUtil;
 import com.whaleal.icefrog.core.convert.Convert;
+import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Pair;
 import com.whaleal.icefrog.core.map.CaseInsensitiveLinkedMap;
 import com.whaleal.icefrog.core.map.CaseInsensitiveMap;
 import com.whaleal.icefrog.core.map.MapUtil;
@@ -18,14 +20,11 @@ import com.whaleal.icefrog.json.serialize.JSONObjectSerializer;
 import com.whaleal.icefrog.json.serialize.JSONSerializer;
 import com.whaleal.icefrog.json.serialize.JSONWriter;
 
+import java.io.StringWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 /**
  * JSON对象<br>
@@ -35,10 +34,9 @@ import java.util.Set;
  * json = new JSONObject().put(&quot;JSON&quot;, &quot;Hello, World!&quot;).toString();
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly   wh
  */
-public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object> {
+public class JSONObject implements com.whaleal.icefrog.json.JSON, com.whaleal.icefrog.json.JSONGetter<String>, Map<String, Object> {
 	private static final long serialVersionUID = -330220388580734346L;
 
 	/**
@@ -53,7 +51,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	/**
 	 * 配置项
 	 */
-	private final JSONConfig config;
+	private final com.whaleal.icefrog.json.JSONConfig config;
 
 	// -------------------------------------------------------------------------------------------------------------------- Constructor start
 
@@ -68,7 +66,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * 构造，初始容量为 {@link #DEFAULT_CAPACITY}
 	 *
 	 * @param isOrder 是否有序
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONObject(boolean isOrder) {
 		this(DEFAULT_CAPACITY, isOrder);
@@ -79,7 +77,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param capacity 初始大小
 	 * @param isOrder  是否有序
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONObject(int capacity, boolean isOrder) {
 		this(capacity, false, isOrder);
@@ -91,19 +89,19 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param capacity     初始大小
 	 * @param isIgnoreCase 是否忽略KEY大小写
 	 * @param isOrder      是否有序
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONObject(int capacity, boolean isIgnoreCase, boolean isOrder) {
-		this(capacity, JSONConfig.create().setIgnoreCase(isIgnoreCase).setOrder(isOrder));
+		this(capacity, com.whaleal.icefrog.json.JSONConfig.create().setIgnoreCase(isIgnoreCase).setOrder(isOrder));
 	}
 
 	/**
 	 * 构造
 	 *
 	 * @param config JSON配置项
-	 * @since 1.0.0
+	 *
 	 */
-	public JSONObject(JSONConfig config) {
+	public JSONObject( com.whaleal.icefrog.json.JSONConfig config) {
 		this(DEFAULT_CAPACITY, config);
 	}
 
@@ -112,11 +110,11 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param capacity 初始大小
 	 * @param config   JSON配置项，{@code null}则使用默认配置
-	 * @since 1.0.0
+	 *
 	 */
-	public JSONObject(int capacity, JSONConfig config) {
+	public JSONObject(int capacity, com.whaleal.icefrog.json.JSONConfig config) {
 		if (null == config) {
-			config = JSONConfig.create();
+			config = com.whaleal.icefrog.json.JSONConfig.create();
 		}
 		if (config.isIgnoreCase()) {
 			this.rawHashMap = config.isOrder() ? new CaseInsensitiveLinkedMap<>(capacity) : new CaseInsensitiveMap<>(capacity);
@@ -139,7 +137,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param source JavaBean或者Map对象或者String
 	 */
 	public JSONObject(Object source) {
-		this(source, InternalJSONUtil.defaultIgnoreNullValue(source));
+		this(source, com.whaleal.icefrog.json.InternalJSONUtil.defaultIgnoreNullValue(source));
 	}
 
 	/**
@@ -153,10 +151,10 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param source          JavaBean或者Map对象或者String
 	 * @param ignoreNullValue 是否忽略空值
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONObject(Object source, boolean ignoreNullValue) {
-		this(source, ignoreNullValue, InternalJSONUtil.isOrder(source));
+		this(source, ignoreNullValue, com.whaleal.icefrog.json.InternalJSONUtil.isOrder(source));
 	}
 
 	/**
@@ -171,10 +169,10 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param source          JavaBean或者Map对象或者String
 	 * @param ignoreNullValue 是否忽略空值，如果source为JSON字符串，不忽略空值
 	 * @param isOrder         是否有序
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONObject(Object source, boolean ignoreNullValue, boolean isOrder) {
-		this(source, JSONConfig.create().setOrder(isOrder)//
+		this(source, com.whaleal.icefrog.json.JSONConfig.create().setOrder(isOrder)//
 				.setIgnoreCase((source instanceof CaseInsensitiveMap))//
 				.setIgnoreNullValue(ignoreNullValue));
 	}
@@ -194,9 +192,9 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param source JavaBean或者Map对象或者String
 	 * @param config JSON配置文件，{@code null}则使用默认配置
-	 * @since 1.0.0
+	 *
 	 */
-	public JSONObject(Object source, JSONConfig config) {
+	public JSONObject(Object source, com.whaleal.icefrog.json.JSONConfig config) {
 		this(DEFAULT_CAPACITY, config);
 		init(source);
 	}
@@ -244,17 +242,17 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param source  以大括号 {} 包围的字符串，其中KEY和VALUE使用 : 分隔，每个键值对使用逗号分隔
 	 * @param isOrder 是否有序
-	 * @throws JSONException JSON字符串语法错误
-	 * @since 1.0.0
+	 * @throws com.whaleal.icefrog.json.JSONException JSON字符串语法错误
+	 *
 	 */
-	public JSONObject(CharSequence source, boolean isOrder) throws JSONException {
-		this(source, JSONConfig.create().setOrder(isOrder));
+	public JSONObject(CharSequence source, boolean isOrder) throws com.whaleal.icefrog.json.JSONException {
+		this(source, com.whaleal.icefrog.json.JSONConfig.create().setOrder(isOrder));
 	}
 
 	// -------------------------------------------------------------------------------------------------------------------- Constructor end
 
 	@Override
-	public JSONConfig getConfig() {
+	public com.whaleal.icefrog.json.JSONConfig getConfig() {
 		return this.config;
 	}
 
@@ -264,7 +262,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param format 格式，null表示使用时间戳
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONObject setDateFormat(String format) {
 		this.config.setDateFormat(format);
@@ -276,13 +274,13 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param names KEY列表
 	 * @return A JSONArray of values.
-	 * @throws JSONException If any of the values are non-finite numbers.
+	 * @throws com.whaleal.icefrog.json.JSONException If any of the values are non-finite numbers.
 	 */
-	public JSONArray toJSONArray(Collection<String> names) throws JSONException {
+	public com.whaleal.icefrog.json.JSONArray toJSONArray( Collection<String> names) throws com.whaleal.icefrog.json.JSONException {
 		if (CollectionUtil.isEmpty(names)) {
 			return null;
 		}
-		final JSONArray ja = new JSONArray(this.config);
+		final com.whaleal.icefrog.json.JSONArray ja = new com.whaleal.icefrog.json.JSONArray(this.config);
 		Object value;
 		for (String name : names) {
 			value = this.get(name);
@@ -331,7 +329,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 
 	@Override
 	public <T> T getByPath(String expression, Class<T> resultType) {
-		return JSONConverter.jsonConvert(resultType, getByPath(expression), true);
+		return com.whaleal.icefrog.json.JSONConverter.jsonConvert(resultType, getByPath(expression), true);
 	}
 
 	@Override
@@ -345,12 +343,12 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param key   键
 	 * @param value 值对象. 可以是以下类型: Boolean, Double, Integer, JSONArray, JSONObject, Long, String, or the JSONNull.NULL.
 	 * @return this.
-	 * @throws JSONException 值是无穷数字抛出此异常
+	 * @throws com.whaleal.icefrog.json.JSONException 值是无穷数字抛出此异常
 	 * @deprecated 此方法存在歧义，原Map接口返回的是之前的值，重写后返回this了，未来版本此方法会修改，请使用{@link #set(String, Object)}
 	 */
 	@Override
 	@Deprecated
-	public JSONObject put(String key, Object value) throws JSONException {
+	public JSONObject put(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
 		return set(key, value);
 	}
 
@@ -360,9 +358,9 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param key   键
 	 * @param value 值对象. 可以是以下类型: Boolean, Double, Integer, JSONArray, JSONObject, Long, String, or the JSONNull.NULL.
 	 * @return this.
-	 * @throws JSONException 值是无穷数字抛出此异常
+	 * @throws com.whaleal.icefrog.json.JSONException 值是无穷数字抛出此异常
 	 */
-	public JSONObject set(String key, Object value) throws JSONException {
+	public JSONObject set(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
 		if (null == key) {
 			return this;
 		}
@@ -373,7 +371,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 			this.remove(key);
 		} else {
 			InternalJSONUtil.testValidity(value);
-			this.rawHashMap.put(key, JSONUtil.wrap(value, this.config));
+			this.rawHashMap.put(key, com.whaleal.icefrog.json.JSONUtil.wrap(value, this.config));
 		}
 		return this;
 	}
@@ -384,9 +382,9 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param key   键
 	 * @param value 值对象，可以是以下类型: Boolean, Double, Integer, JSONArray, JSONObject, Long, String, or the JSONNull.NULL.
 	 * @return this.
-	 * @throws JSONException 值是无穷数字、键重复抛出异常
+	 * @throws com.whaleal.icefrog.json.JSONException 值是无穷数字、键重复抛出异常
 	 */
-	public JSONObject putOnce(String key, Object value) throws JSONException {
+	public JSONObject putOnce(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
 		if (key != null) {
 			if (rawHashMap.containsKey(key)) {
 				throw new JSONException("Duplicate key \"{}\"", key);
@@ -402,9 +400,9 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param key   键
 	 * @param value 值对象，可以是以下类型: Boolean, Double, Integer, JSONArray, JSONObject, Long, String, or the JSONNull.NULL.
 	 * @return this.
-	 * @throws JSONException 值是无穷数字
+	 * @throws com.whaleal.icefrog.json.JSONException 值是无穷数字
 	 */
-	public JSONObject putOpt(String key, Object value) throws JSONException {
+	public JSONObject putOpt(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
 		if (key != null && value != null) {
 			this.set(key, value);
 		}
@@ -425,17 +423,17 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param key   键
 	 * @param value 被积累的值
 	 * @return this.
-	 * @throws JSONException 如果给定键为{@code null}或者键对应的值存在且为非JSONArray
+	 * @throws com.whaleal.icefrog.json.JSONException 如果给定键为{@code null}或者键对应的值存在且为非JSONArray
 	 */
-	public JSONObject accumulate(String key, Object value) throws JSONException {
-		InternalJSONUtil.testValidity(value);
+	public JSONObject accumulate(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
+		com.whaleal.icefrog.json.InternalJSONUtil.testValidity(value);
 		Object object = this.getObj(key);
 		if (object == null) {
 			this.set(key, value);
-		} else if (object instanceof JSONArray) {
-			((JSONArray) object).set(value);
+		} else if (object instanceof com.whaleal.icefrog.json.JSONArray) {
+			((com.whaleal.icefrog.json.JSONArray) object).set(value);
 		} else {
-			this.set(key, JSONUtil.createArray(this.config).set(object).set(value));
+			this.set(key, com.whaleal.icefrog.json.JSONUtil.createArray(this.config).set(object).set(value));
 		}
 		return this;
 	}
@@ -446,17 +444,17 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * @param key   键
 	 * @param value 值
 	 * @return this.
-	 * @throws JSONException 如果给定键为{@code null}或者键对应的值存在且为非JSONArray
+	 * @throws com.whaleal.icefrog.json.JSONException 如果给定键为{@code null}或者键对应的值存在且为非JSONArray
 	 */
-	public JSONObject append(String key, Object value) throws JSONException {
-		InternalJSONUtil.testValidity(value);
+	public JSONObject append(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
+		com.whaleal.icefrog.json.InternalJSONUtil.testValidity(value);
 		Object object = this.getObj(key);
 		if (object == null) {
-			this.set(key, new JSONArray(this.config).set(value));
-		} else if (object instanceof JSONArray) {
-			this.set(key, ((JSONArray) object).set(value));
+			this.set(key, new com.whaleal.icefrog.json.JSONArray(this.config).set(value));
+		} else if (object instanceof com.whaleal.icefrog.json.JSONArray) {
+			this.set(key, ((com.whaleal.icefrog.json.JSONArray) object).set(value));
 		} else {
-			throw new JSONException("JSONObject [" + key + "] is not a JSONArray.");
+			throw new com.whaleal.icefrog.json.JSONException("JSONObject [" + key + "] is not a JSONArray.");
 		}
 		return this;
 	}
@@ -466,9 +464,9 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param key A key string.
 	 * @return this.
-	 * @throws JSONException 如果存在值非Integer, Long, Double, 或 Float.
+	 * @throws com.whaleal.icefrog.json.JSONException 如果存在值非Integer, Long, Double, 或 Float.
 	 */
-	public JSONObject increment(String key) throws JSONException {
+	public JSONObject increment(String key) throws com.whaleal.icefrog.json.JSONException {
 		Object value = this.getObj(key);
 		if (value == null) {
 			this.set(key, 1);
@@ -485,7 +483,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 		} else if (value instanceof Float) {
 			this.set(key, (Float) value + 1);
 		} else {
-			throw new JSONException("Unable to increment [" + JSONUtil.quote(key) + "].");
+			throw new com.whaleal.icefrog.json.JSONException("Unable to increment [" + com.whaleal.icefrog.json.JSONUtil.quote(key) + "].");
 		}
 		return this;
 	}
@@ -553,17 +551,54 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 		return this.toJSONString(0);
 	}
 
+	/**
+	 * 返回JSON字符串<br>
+	 * 支持过滤器，即选择哪些字段或值不写出
+	 *
+	 * @param indentFactor 每层缩进空格数
+	 * @param filter 键值对过滤器
+	 * @return JSON字符串
+	 *
+	 */
+	public String toJSONString(int indentFactor, Filter<Pair<String, Object>> filter){
+		final StringWriter sw = new StringWriter();
+		synchronized (sw.getBuffer()) {
+			return this.write(sw, indentFactor, 0, filter).toString();
+		}
+	}
+
 	@Override
-	public Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
+	public Writer write(Writer writer, int indentFactor, int indent) throws com.whaleal.icefrog.json.JSONException {
+		return write(writer, indentFactor, indent, null);
+	}
+
+	/**
+	 * 将JSON内容写入Writer<br>
+	 * 支持过滤器，即选择哪些字段或值不写出
+	 *
+	 * @param writer       writer
+	 * @param indentFactor 缩进因子，定义每一级别增加的缩进量
+	 * @param indent       本级别缩进量
+	 * @param filter       过滤器
+	 * @return Writer
+	 * @throws com.whaleal.icefrog.json.JSONException JSON相关异常
+	 *
+	 */
+	public Writer write(Writer writer, int indentFactor, int indent, Filter<Pair<String, Object>> filter) throws com.whaleal.icefrog.json.JSONException {
 		final JSONWriter jsonWriter = JSONWriter.of(writer, indentFactor, indent, config)
 				.beginObj();
-		this.forEach(jsonWriter::writeField);
+		this.forEach((key, value) -> {
+			if (null == filter || filter.accept(new Pair<>(key, value))) {
+				jsonWriter.writeField(key, value);
+			}
+		});
 		jsonWriter.end();
-
+		// 此处不关闭Writer，考虑writer后续还需要填内容
 		return writer;
 	}
 
 	// ------------------------------------------------------------------------------------------------- Private method start
+
 	/**
 	 * Bean对象转Map
 	 *
@@ -602,9 +637,9 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 			return;
 		}
 
-		if (ArrayUtil.isArray(source) || source instanceof JSONArray) {
+		if (ArrayUtil.isArray(source) || source instanceof com.whaleal.icefrog.json.JSONArray) {
 			// 不支持集合类型转换为JSONObject
-			throw new JSONException("Unsupported type [{}] to JSONObject!", source.getClass());
+			throw new com.whaleal.icefrog.json.JSONException("Unsupported type [{}] to JSONObject!", source.getClass());
 		}
 
 		if (source instanceof Map) {
@@ -613,14 +648,14 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 				this.set(Convert.toStr(e.getKey()), e.getValue());
 			}
 		} else if (source instanceof Map.Entry) {
-			final Map.Entry entry = (Map.Entry) source;
+			final Entry entry = (Entry) source;
 			this.set(Convert.toStr(entry.getKey()), entry.getValue());
 		} else if (source instanceof CharSequence) {
 			// 可能为JSON字符串
 			init((CharSequence) source);
-		} else if (source instanceof JSONTokener) {
+		} else if (source instanceof com.whaleal.icefrog.json.JSONTokener) {
 			// JSONTokener
-			init((JSONTokener) source);
+			init((com.whaleal.icefrog.json.JSONTokener) source);
 		} else if (source instanceof ResourceBundle) {
 			// JSONTokener
 			init((ResourceBundle) source);
@@ -629,7 +664,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 			this.populateMap(source);
 		} else {
 			// 不支持对象类型转换为JSONObject
-			throw new JSONException("Unsupported type [{}] to JSONObject!", source.getClass());
+			throw new com.whaleal.icefrog.json.JSONException("Unsupported type [{}] to JSONObject!", source.getClass());
 		}
 
 	}
@@ -638,14 +673,14 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 * 初始化
 	 *
 	 * @param bundle ResourceBundle
-	 * @since 1.0.0
+	 *
 	 */
 	private void init(ResourceBundle bundle) {
 		Enumeration<String> keys = bundle.getKeys();
 		while (keys.hasMoreElements()) {
 			String key = keys.nextElement();
 			if (key != null) {
-				InternalJSONUtil.propertyPut(this, key, bundle.getString(key));
+				com.whaleal.icefrog.json.InternalJSONUtil.propertyPut(this, key, bundle.getString(key));
 			}
 		}
 	}
@@ -669,7 +704,7 @@ public class JSONObject implements JSON, JSONGetter<String>, Map<String, Object>
 	 *
 	 * @param x JSONTokener
 	 */
-	private void init(JSONTokener x) {
+	private void init( com.whaleal.icefrog.json.JSONTokener x) {
 		char c;
 		String key;
 

@@ -11,8 +11,7 @@ import java.util.Iterator;
  * MYNLP 中文NLP工具包分词结果实现<br>
  * 项目地址：https://github.com/mayabot/mynlp/
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class MynlpResult implements Result {
@@ -41,10 +40,5 @@ public class MynlpResult implements Result {
 	@Override
 	public void remove() {
 		result.remove();
-	}
-
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
 	}
 }

@@ -6,9 +6,8 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
 
 /**
  * Ansj分词中的一个单词包装
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class AnsjWord implements Word {
@@ -18,7 +17,7 @@ public class AnsjWord implements Word {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param term {@link Term}
 	 */
 	public AnsjWord(Term term) {
@@ -29,7 +28,7 @@ public class AnsjWord implements Word {
 	public String getText() {
 		return term.getName();
 	}
-
+	
 	@Override
 	public int getStartOffset() {
 		return this.term.getOffe();

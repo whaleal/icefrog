@@ -3,6 +3,8 @@ package com.whaleal.icefrog.json;
 import com.whaleal.icefrog.core.bean.BeanPath;
 import com.whaleal.icefrog.core.collection.ArrayIter;
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.lang.Filter;
+import com.whaleal.icefrog.core.lang.Pair;
 import com.whaleal.icefrog.core.text.StrJoiner;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -12,13 +14,9 @@ import com.whaleal.icefrog.json.serialize.GlobalSerializeMapping;
 import com.whaleal.icefrog.json.serialize.JSONSerializer;
 import com.whaleal.icefrog.json.serialize.JSONWriter;
 
+import java.io.StringWriter;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.RandomAccess;
+import java.util.*;
 
 import static com.whaleal.icefrog.json.JSONConverter.jsonConvert;
 
@@ -31,10 +29,9 @@ import static com.whaleal.icefrog.json.JSONConverter.jsonConvert;
  * ["a", "b", "c", 12]
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly   wh
  */
-public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, RandomAccess {
+public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Integer>, List<Object>, RandomAccess {
 	private static final long serialVersionUID = 2664900568717612292L;
 
 	/**
@@ -66,7 +63,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 * 默认使用{@link ArrayList} 实现
 	 *
 	 * @param initialCapacity 初始大小
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONArray(int initialCapacity) {
 		this(initialCapacity, JSONConfig.create());
@@ -77,7 +74,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 * 默认使用{@link ArrayList} 实现
 	 *
 	 * @param config JSON配置项
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONArray(JSONConfig config) {
 		this(DEFAULT_CAPACITY, config);
@@ -89,7 +86,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 *
 	 * @param initialCapacity 初始大小
 	 * @param config          JSON配置项
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONArray(int initialCapacity, JSONConfig config) {
 		this.rawList = new ArrayList<>(initialCapacity);
@@ -121,12 +118,12 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	}
 
 	/**
-	 * 使用 {@link JSONTokener} 做为参数构造
+	 * 使用 {@link com.whaleal.icefrog.json.JSONTokener} 做为参数构造
 	 *
-	 * @param x A {@link JSONTokener}
+	 * @param x A {@link com.whaleal.icefrog.json.JSONTokener}
 	 * @throws JSONException If there is a syntax error.
 	 */
-	public JSONArray(JSONTokener x) throws JSONException {
+	public JSONArray( com.whaleal.icefrog.json.JSONTokener x) throws JSONException {
 		this();
 		init(x);
 	}
@@ -190,7 +187,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 * @param object     数组或集合或JSON数组字符串
 	 * @param jsonConfig JSON选项
 	 * @throws JSONException 非数组或集合
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONArray(Object object, JSONConfig jsonConfig) throws JSONException {
 		this(DEFAULT_CAPACITY, jsonConfig);
@@ -208,7 +205,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 *
 	 * @param format 格式，null表示使用时间戳
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONArray setDateFormat(String format) {
 		this.config.setDateFormat(format);
@@ -270,7 +267,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 *
 	 * @param value 值，可以是： Boolean, Double, Integer, JSONArray, JSONObject, Long, or String, or the JSONNull.NULL。
 	 * @return this.
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONArray set(Object value) {
 		this.add(value);
@@ -345,7 +342,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 * 当此JSON列表的每个元素都是一个JSONObject时，可以调用此方法返回一个Iterable，便于使用foreach语法遍历
 	 *
 	 * @return Iterable
-	 * @since 1.0.0
+	 *
 	 */
 	public Iterable<JSONObject> jsonIter() {
 		return new JSONObjectIter(iterator());
@@ -450,7 +447,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 */
 	@Override
 	public Object set(int index, Object element) {
-		if(index > size()){
+		if(index >= size()){
 			add(index, element);
 		}
 		return this.rawList.set(index, JSONUtil.wrap(element, this.config));
@@ -466,7 +463,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 			this.rawList.add(index, JSONUtil.wrap(element, this.config));
 		} else {
 			while (index != this.size()) {
-				this.add(JSONNull.NULL);
+				this.add(com.whaleal.icefrog.json.JSONNull.NULL);
 			}
 			this.set(element);
 		}
@@ -514,7 +511,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 * @param <T>         元素类型
 	 * @param elementType 元素类型
 	 * @return {@link ArrayList}
-	 * @since 1.0.0
+	 *
 	 */
 	public <T> List<T> toList(Class<T> elementType) {
 		return JSONConverter.toList(this, elementType);
@@ -530,11 +527,48 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 		return this.toJSONString(0);
 	}
 
+	/**
+	 * 返回JSON字符串<br>
+	 * 支持过滤器，即选择哪些字段或值不写出
+	 *
+	 * @param indentFactor 每层缩进空格数
+	 * @param filter 键值对过滤器
+	 * @return JSON字符串
+	 *
+	 */
+	public String toJSONString(int indentFactor, Filter<Pair<Integer, Object>> filter){
+		final StringWriter sw = new StringWriter();
+		synchronized (sw.getBuffer()) {
+			return this.write(sw, indentFactor, 0, filter).toString();
+		}
+	}
+
 	@Override
 	public Writer write(Writer writer, int indentFactor, int indent) throws JSONException {
+		return write(writer, indentFactor, indent, null);
+	}
+
+	/**
+	 * 将JSON内容写入Writer<br>
+	 * 支持过滤器，即选择哪些字段或值不写出
+	 *
+	 * @param writer       writer
+	 * @param indentFactor 缩进因子，定义每一级别增加的缩进量
+	 * @param indent       本级别缩进量
+	 * @param filter       过滤器
+	 * @return Writer
+	 * @throws JSONException JSON相关异常
+	 *
+	 */
+	public Writer write(Writer writer, int indentFactor, int indent, Filter<Pair<Integer, Object>> filter) throws JSONException {
 		final JSONWriter jsonWriter = JSONWriter.of(writer, indentFactor, indent, config)
 				.beginArray();
-		this.forEach(jsonWriter::writeValue);
+
+		CollUtil.forEach(this, (value, index)->{
+			if (null == filter || filter.accept(new Pair<>(index, value))) {
+				jsonWriter.writeValue(value);
+			}
+		});
 		jsonWriter.end();
 		// 此处不关闭Writer，考虑writer后续还需要填内容
 		return writer;
@@ -560,8 +594,8 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 		} else if (source instanceof CharSequence) {
 			// JSON字符串
 			init((CharSequence) source);
-		} else if (source instanceof JSONTokener) {
-			init((JSONTokener) source);
+		} else if (source instanceof com.whaleal.icefrog.json.JSONTokener) {
+			init((com.whaleal.icefrog.json.JSONTokener) source);
 		} else {
 			Iterator<?> iter;
 			if (ArrayUtil.isArray(source)) {// 数组
@@ -592,16 +626,16 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 	 */
 	private void init(CharSequence source) {
 		if (null != source) {
-			init(new JSONTokener(StrUtil.trim(source), this.config));
+			init(new com.whaleal.icefrog.json.JSONTokener(StrUtil.trim(source), this.config));
 		}
 	}
 
 	/**
 	 * 初始化
 	 *
-	 * @param x {@link JSONTokener}
+	 * @param x {@link com.whaleal.icefrog.json.JSONTokener}
 	 */
-	private void init(JSONTokener x) {
+	private void init( com.whaleal.icefrog.json.JSONTokener x) {
 		if (x.nextClean() != '[') {
 			throw x.syntaxError("A JSONArray text must start with '['");
 		}
@@ -610,7 +644,7 @@ public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, Rando
 			for (; ; ) {
 				if (x.nextClean() == ',') {
 					x.back();
-					this.rawList.add(JSONNull.NULL);
+					this.rawList.add(com.whaleal.icefrog.json.JSONNull.NULL);
 				} else {
 					x.back();
 					this.rawList.add(x.nextValue());

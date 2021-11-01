@@ -5,9 +5,8 @@ import java.io.Serializable;
 /**
  * JSON配置项
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
 public class JSONConfig implements Serializable {
 	private static final long serialVersionUID = 119730355204738278L;
@@ -156,7 +155,7 @@ public class JSONConfig implements Serializable {
 	 * 是否支持transient关键字修饰和@Transient注解，如果支持，被修饰的字段或方法对应的字段将被忽略。
 	 *
 	 * @return 是否支持
-	 * @since 1.0.0
+	 *
 	 */
 	public boolean isTransientSupport() {
 		return this.transientSupport;
@@ -167,7 +166,7 @@ public class JSONConfig implements Serializable {
 	 *
 	 * @param transientSupport 是否支持
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONConfig setTransientSupport(boolean transientSupport) {
 		this.transientSupport = transientSupport;
@@ -178,7 +177,7 @@ public class JSONConfig implements Serializable {
 	 * 是否去除末尾多余0，例如如果为true,5.0返回5
 	 *
 	 * @return 是否去除末尾多余0，例如如果为true,5.0返回5
-	 * @since 1.0.0
+	 *
 	 */
 	public boolean isStripTrailingZeros() {
 		return stripTrailingZeros;
@@ -189,7 +188,7 @@ public class JSONConfig implements Serializable {
 	 *
 	 * @param stripTrailingZeros 是否去除末尾多余0，例如如果为true,5.0返回5
 	 * @return this
-	 * @since 1.0.0
+	 *
 	 */
 	public JSONConfig setStripTrailingZeros(boolean stripTrailingZeros) {
 		this.stripTrailingZeros = stripTrailingZeros;

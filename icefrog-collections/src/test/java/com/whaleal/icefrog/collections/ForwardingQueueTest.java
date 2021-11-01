@@ -3,19 +3,11 @@
 package com.whaleal.icefrog.collections;
 
 
-
-
-
-
+import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Queue;
-
-import com.whaleal.icefrog.collections.ForwardingQueue;
-import com.whaleal.icefrog.collections.Lists;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests for {@code ForwardingQueue}.
@@ -24,6 +16,9 @@ import junit.framework.TestSuite;
  * 
  */
 public class ForwardingQueueTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
   static final class StandardImplForwardingQueue<T> extends ForwardingQueue<T> {
     private final Queue<T> backingQueue;

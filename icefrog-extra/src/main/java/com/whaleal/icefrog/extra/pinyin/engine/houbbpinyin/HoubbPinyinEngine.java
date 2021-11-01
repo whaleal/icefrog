@@ -21,8 +21,7 @@ import com.github.houbb.pinyin.util.PinyinHelper;
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class HoubbPinyinEngine implements PinyinEngine {
 

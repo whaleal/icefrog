@@ -14,11 +14,11 @@ package com.whaleal.icefrog.cron.task;
 @FunctionalInterface
 public interface Task {
 
-	/**
-	 * 执行作业
-	 * <p>
-	 * 作业的具体实现需考虑异常情况，默认情况下任务异常在监听中统一监听处理，如果不加入监听，异常会被忽略<br>
-	 * 因此最好自行捕获异常后处理
-	 */
-	void execute();
+    /**
+     * 执行作业
+     * <p>
+     * 作业的具体实现需考虑异常情况，默认情况下任务异常在监听中统一监听处理，如果不加入监听，异常会被忽略<br>
+     * 因此最好自行捕获异常后处理
+     */
+    void execute();
 }

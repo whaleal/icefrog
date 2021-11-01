@@ -2,11 +2,7 @@ package com.whaleal.icefrog.core.date.format;
 
 import com.whaleal.icefrog.core.date.DatePattern;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.ParseException;
-import java.text.ParsePosition;
+import java.text.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,397 +21,410 @@ import java.util.TimeZone;
  * {@link #getTimeInstance(int, TimeZone, Locale)}<br>
  * {@link #getDateTimeInstance(int, int, TimeZone, Locale)}
  * </p>
- *
+ * <p>
  * Thanks to Apache icefrogs Lang 3.5
+ *
  * @since 1.0.0
  */
 public class FastDateFormat extends Format implements DateParser, DatePrinter {
-	private static final long serialVersionUID = 8097890768636183236L;
+    /**
+     * FULL locale dependent date or time style.
+     */
+    public static final int FULL = DateFormat.FULL;
+    /**
+     * LONG locale dependent date or time style.
+     */
+    public static final int LONG = DateFormat.LONG;
+    /**
+     * MEDIUM locale dependent date or time style.
+     */
+    public static final int MEDIUM = DateFormat.MEDIUM;
+    /**
+     * SHORT locale dependent date or time style.
+     */
+    public static final int SHORT = DateFormat.SHORT;
+    private static final long serialVersionUID = 8097890768636183236L;
+    private static final FormatCache<FastDateFormat> CACHE = new FormatCache<FastDateFormat>() {
+        @Override
+        protected FastDateFormat createInstance( final String pattern, final TimeZone timeZone, final Locale locale ) {
+            return new FastDateFormat(pattern, timeZone, locale);
+        }
+    };
 
-	/** FULL locale dependent date or time style. */
-	public static final int FULL = DateFormat.FULL;
-	/** LONG locale dependent date or time style. */
-	public static final int LONG = DateFormat.LONG;
-	/** MEDIUM locale dependent date or time style. */
-	public static final int MEDIUM = DateFormat.MEDIUM;
-	/** SHORT locale dependent date or time style. */
-	public static final int SHORT = DateFormat.SHORT;
+    private final FastDatePrinter printer;
+    private final FastDateParser parser;
 
-	private static final FormatCache<FastDateFormat> CACHE = new FormatCache<FastDateFormat>(){
-		@Override
-		protected FastDateFormat createInstance(final String pattern, final TimeZone timeZone, final Locale locale) {
-			return new FastDateFormat(pattern, timeZone, locale);
-		}
-	};
+    // -----------------------------------------------------------------------
 
-	private final FastDatePrinter printer;
-	private final FastDateParser parser;
+    /**
+     * 构造
+     *
+     * @param pattern  使用{@link java.text.SimpleDateFormat} 相同的日期格式
+     * @param timeZone 非空时区 {@link TimeZone}
+     * @param locale   {@link Locale} 日期地理位置
+     * @throws NullPointerException if pattern, timeZone, or locale is null.
+     */
+    protected FastDateFormat( final String pattern, final TimeZone timeZone, final Locale locale ) {
+        this(pattern, timeZone, locale, null);
+    }
 
-	// -----------------------------------------------------------------------
-	/**
-	 * 获得 FastDateFormat实例，使用默认格式和地区
-	 *
-	 * @return FastDateFormat
-	 */
-	public static FastDateFormat getInstance() {
-		return CACHE.getInstance();
-	}
+    /**
+     * 构造
+     *
+     * @param pattern      使用{@link java.text.SimpleDateFormat} 相同的日期格式
+     * @param timeZone     非空时区 {@link TimeZone}
+     * @param locale       {@link Locale} 日期地理位置
+     * @param centuryStart The start of the 100 year period to use as the "default century" for 2 digit year parsing. If centuryStart is null, defaults to now - 80 years
+     * @throws NullPointerException if pattern, timeZone, or locale is null.
+     */
+    protected FastDateFormat( final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart ) {
+        printer = new FastDatePrinter(pattern, timeZone, locale);
+        parser = new FastDateParser(pattern, timeZone, locale, centuryStart);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例，使用默认地区<br>
-	 * 支持缓存
-	 *
-	 * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
-	 * @return FastDateFormat
-	 * @throws IllegalArgumentException 日期格式问题
-	 */
-	public static FastDateFormat getInstance(final String pattern) {
-		return CACHE.getInstance(pattern, null, null);
-	}
+    /**
+     * 获得 FastDateFormat实例，使用默认格式和地区
+     *
+     * @return FastDateFormat
+     */
+    public static FastDateFormat getInstance() {
+        return CACHE.getInstance();
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
-	 * @param timeZone 时区{@link TimeZone}
-	 * @return FastDateFormat
-	 * @throws IllegalArgumentException 日期格式问题
-	 */
-	public static FastDateFormat getInstance(final String pattern, final TimeZone timeZone) {
-		return CACHE.getInstance(pattern, timeZone, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例，使用默认地区<br>
+     * 支持缓存
+     *
+     * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
+     * @return FastDateFormat
+     * @throws IllegalArgumentException 日期格式问题
+     */
+    public static FastDateFormat getInstance( final String pattern ) {
+        return CACHE.getInstance(pattern, null, null);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return FastDateFormat
-	 * @throws IllegalArgumentException 日期格式问题
-	 */
-	public static FastDateFormat getInstance(final String pattern, final Locale locale) {
-		return CACHE.getInstance(pattern, null, locale);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param pattern  使用{@link java.text.SimpleDateFormat} 相同的日期格式
+     * @param timeZone 时区{@link TimeZone}
+     * @return FastDateFormat
+     * @throws IllegalArgumentException 日期格式问题
+     */
+    public static FastDateFormat getInstance( final String pattern, final TimeZone timeZone ) {
+        return CACHE.getInstance(pattern, timeZone, null);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
-	 * @param timeZone 时区{@link TimeZone}
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return FastDateFormat
-	 * @throws IllegalArgumentException 日期格式问题
-	 */
-	public static FastDateFormat getInstance(final String pattern, final TimeZone timeZone, final Locale locale) {
-		return CACHE.getInstance(pattern, timeZone, locale);
-	}
+    // -----------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style date style: FULL, LONG, MEDIUM, or SHORT
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateInstance(final int style) {
-		return CACHE.getDateInstance(style, null, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
+     * @param locale  {@link Locale} 日期地理位置
+     * @return FastDateFormat
+     * @throws IllegalArgumentException 日期格式问题
+     */
+    public static FastDateFormat getInstance( final String pattern, final Locale locale ) {
+        return CACHE.getInstance(pattern, null, locale);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateInstance(final int style, final Locale locale) {
-		return CACHE.getDateInstance(style, null, locale);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param pattern  使用{@link java.text.SimpleDateFormat} 相同的日期格式
+     * @param timeZone 时区{@link TimeZone}
+     * @param locale   {@link Locale} 日期地理位置
+     * @return FastDateFormat
+     * @throws IllegalArgumentException 日期格式问题
+     */
+    public static FastDateFormat getInstance( final String pattern, final TimeZone timeZone, final Locale locale ) {
+        return CACHE.getInstance(pattern, timeZone, locale);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeZone 时区{@link TimeZone}
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateInstance(final int style, final TimeZone timeZone) {
-		return CACHE.getDateInstance(style, timeZone, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style date style: FULL, LONG, MEDIUM, or SHORT
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateInstance( final int style ) {
+        return CACHE.getDateInstance(style, null, null);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeZone 时区{@link TimeZone}
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateInstance(final int style, final TimeZone timeZone, final Locale locale) {
-		return CACHE.getDateInstance(style, timeZone, locale);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style  date style: FULL, LONG, MEDIUM, or SHORT
+     * @param locale {@link Locale} 日期地理位置
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateInstance( final int style, final Locale locale ) {
+        return CACHE.getDateInstance(style, null, locale);
+    }
 
-	// -----------------------------------------------------------------------
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style time style: FULL, LONG, MEDIUM, or SHORT
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getTimeInstance(final int style) {
-		return CACHE.getTimeInstance(style, null, null);
-	}
+    // -----------------------------------------------------------------------
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style time style: FULL, LONG, MEDIUM, or SHORT
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getTimeInstance(final int style, final Locale locale) {
-		return CACHE.getTimeInstance(style, null, locale);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style    date style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeZone 时区{@link TimeZone}
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateInstance( final int style, final TimeZone timeZone ) {
+        return CACHE.getDateInstance(style, timeZone, null);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style time style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeZone optional time zone, overrides time zone of formatted time
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getTimeInstance(final int style, final TimeZone timeZone) {
-		return CACHE.getTimeInstance(style, timeZone, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style    date style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeZone 时区{@link TimeZone}
+     * @param locale   {@link Locale} 日期地理位置
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateInstance( final int style, final TimeZone timeZone, final Locale locale ) {
+        return CACHE.getDateInstance(style, timeZone, locale);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param style time style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeZone optional time zone, overrides time zone of formatted time
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getTimeInstance(final int style, final TimeZone timeZone, final Locale locale) {
-		return CACHE.getTimeInstance(style, timeZone, locale);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style time style: FULL, LONG, MEDIUM, or SHORT
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getTimeInstance( final int style ) {
+        return CACHE.getTimeInstance(style, null, null);
+    }
 
-	// -----------------------------------------------------------------------
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateTimeInstance(final int dateStyle, final int timeStyle) {
-		return CACHE.getDateTimeInstance(dateStyle, timeStyle, null, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style  time style: FULL, LONG, MEDIUM, or SHORT
+     * @param locale {@link Locale} 日期地理位置
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getTimeInstance( final int style, final Locale locale ) {
+        return CACHE.getTimeInstance(style, null, locale);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateTimeInstance(final int dateStyle, final int timeStyle, final Locale locale) {
-		return CACHE.getDateTimeInstance(dateStyle, timeStyle, null, locale);
-	}
+    // -----------------------------------------------------------------------
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeZone 时区{@link TimeZone}
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateTimeInstance(final int dateStyle, final int timeStyle, final TimeZone timeZone) {
-		return getDateTimeInstance(dateStyle, timeStyle, timeZone, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style    time style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeZone optional time zone, overrides time zone of formatted time
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getTimeInstance( final int style, final TimeZone timeZone ) {
+        return CACHE.getTimeInstance(style, timeZone, null);
+    }
 
-	/**
-	 * 获得 FastDateFormat 实例<br>
-	 * 支持缓存
-	 *
-	 * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
-	 * @param timeZone 时区{@link TimeZone}
-	 * @param locale {@link Locale} 日期地理位置
-	 * @return 本地化 FastDateFormat
-	 */
-	public static FastDateFormat getDateTimeInstance(final int dateStyle, final int timeStyle, final TimeZone timeZone, final Locale locale) {
-		return CACHE.getDateTimeInstance(dateStyle, timeStyle, timeZone, locale);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param style    time style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeZone optional time zone, overrides time zone of formatted time
+     * @param locale   {@link Locale} 日期地理位置
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getTimeInstance( final int style, final TimeZone timeZone, final Locale locale ) {
+        return CACHE.getTimeInstance(style, timeZone, locale);
+    }
 
-	// ----------------------------------------------------------------------- Constructor start
-	/**
-	 * 构造
-	 *
-	 * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
-	 * @param timeZone 非空时区 {@link TimeZone}
-	 * @param locale {@link Locale} 日期地理位置
-	 * @throws NullPointerException if pattern, timeZone, or locale is null.
-	 */
-	protected FastDateFormat(final String pattern, final TimeZone timeZone, final Locale locale) {
-		this(pattern, timeZone, locale, null);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateTimeInstance( final int dateStyle, final int timeStyle ) {
+        return CACHE.getDateTimeInstance(dateStyle, timeStyle, null, null);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param pattern 使用{@link java.text.SimpleDateFormat} 相同的日期格式
-	 * @param timeZone 非空时区 {@link TimeZone}
-	 * @param locale {@link Locale} 日期地理位置
-	 * @param centuryStart The start of the 100 year period to use as the "default century" for 2 digit year parsing. If centuryStart is null, defaults to now - 80 years
-	 * @throws NullPointerException if pattern, timeZone, or locale is null.
-	 */
-	protected FastDateFormat(final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart) {
-		printer = new FastDatePrinter(pattern, timeZone, locale);
-		parser = new FastDateParser(pattern, timeZone, locale, centuryStart);
-	}
-	// ----------------------------------------------------------------------- Constructor end
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
+     * @param locale    {@link Locale} 日期地理位置
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateTimeInstance( final int dateStyle, final int timeStyle, final Locale locale ) {
+        return CACHE.getDateTimeInstance(dateStyle, timeStyle, null, locale);
+    }
 
-	// ----------------------------------------------------------------------- Format methods
-	@Override
-	public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) {
-		return toAppendTo.append(printer.format(obj));
-	}
+    // ----------------------------------------------------------------------- Constructor start
 
-	@Override
-	public String format(final long millis) {
-		return printer.format(millis);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeZone  时区{@link TimeZone}
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateTimeInstance( final int dateStyle, final int timeStyle, final TimeZone timeZone ) {
+        return getDateTimeInstance(dateStyle, timeStyle, timeZone, null);
+    }
 
-	@Override
-	public String format(final Date date) {
-		return printer.format(date);
-	}
+    /**
+     * 获得 FastDateFormat 实例<br>
+     * 支持缓存
+     *
+     * @param dateStyle date style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeStyle time style: FULL, LONG, MEDIUM, or SHORT
+     * @param timeZone  时区{@link TimeZone}
+     * @param locale    {@link Locale} 日期地理位置
+     * @return 本地化 FastDateFormat
+     */
+    public static FastDateFormat getDateTimeInstance( final int dateStyle, final int timeStyle, final TimeZone timeZone, final Locale locale ) {
+        return CACHE.getDateTimeInstance(dateStyle, timeStyle, timeZone, locale);
+    }
+    // ----------------------------------------------------------------------- Constructor end
 
-	@Override
-	public String format(final Calendar calendar) {
-		return printer.format(calendar);
-	}
+    // ----------------------------------------------------------------------- Format methods
+    @Override
+    public StringBuffer format( final Object obj, final StringBuffer toAppendTo, final FieldPosition pos ) {
+        return toAppendTo.append(printer.format(obj));
+    }
 
-	@Override
-	public <B extends Appendable> B format(final long millis, final B buf) {
-		return printer.format(millis, buf);
-	}
+    @Override
+    public String format( final long millis ) {
+        return printer.format(millis);
+    }
 
-	@Override
-	public <B extends Appendable> B format(final Date date, final B buf) {
-		return printer.format(date, buf);
-	}
+    @Override
+    public String format( final Date date ) {
+        return printer.format(date);
+    }
 
-	@Override
-	public <B extends Appendable> B format(final Calendar calendar, final B buf) {
-		return printer.format(calendar, buf);
-	}
+    @Override
+    public String format( final Calendar calendar ) {
+        return printer.format(calendar);
+    }
 
-	// ----------------------------------------------------------------------- Parsing
-	@Override
-	public Date parse(final String source) throws ParseException {
-		return parser.parse(source);
-	}
+    @Override
+    public <B extends Appendable> B format( final long millis, final B buf ) {
+        return printer.format(millis, buf);
+    }
 
-	@Override
-	public Date parse(final String source, final ParsePosition pos) {
-		return parser.parse(source, pos);
-	}
+    @Override
+    public <B extends Appendable> B format( final Date date, final B buf ) {
+        return printer.format(date, buf);
+    }
 
-	@Override
-	public boolean parse(final String source, final ParsePosition pos, final Calendar calendar) {
-		return parser.parse(source, pos, calendar);
-	}
+    @Override
+    public <B extends Appendable> B format( final Calendar calendar, final B buf ) {
+        return printer.format(calendar, buf);
+    }
 
-	@Override
-	public Object parseObject(final String source, final ParsePosition pos) {
-		return parser.parseObject(source, pos);
-	}
+    // ----------------------------------------------------------------------- Parsing
+    @Override
+    public Date parse( final String source ) throws ParseException {
+        return parser.parse(source);
+    }
 
-	// ----------------------------------------------------------------------- Accessors
-	@Override
-	public String getPattern() {
-		return printer.getPattern();
-	}
+    @Override
+    public Date parse( final String source, final ParsePosition pos ) {
+        return parser.parse(source, pos);
+    }
 
-	@Override
-	public TimeZone getTimeZone() {
-		return printer.getTimeZone();
-	}
+    @Override
+    public boolean parse( final String source, final ParsePosition pos, final Calendar calendar ) {
+        return parser.parse(source, pos, calendar);
+    }
 
-	@Override
-	public Locale getLocale() {
-		return printer.getLocale();
-	}
+    @Override
+    public Object parseObject( final String source, final ParsePosition pos ) {
+        return parser.parseObject(source, pos);
+    }
 
-	/**
-	 *估算生成的日期字符串长度<br>
-	 * 实际生成的字符串长度小于或等于此值
-	 *
-	 * @return 日期字符串长度
-	 */
-	public int getMaxLengthEstimate() {
-		return printer.getMaxLengthEstimate();
-	}
+    // ----------------------------------------------------------------------- Accessors
+    @Override
+    public String getPattern() {
+        return printer.getPattern();
+    }
 
-	// convert DateTimeFormatter
-	// -----------------------------------------------------------------------
+    @Override
+    public TimeZone getTimeZone() {
+        return printer.getTimeZone();
+    }
 
-	/**
-	 * 便捷获取 DateTimeFormatter
-	 * 由于 {@link DatePattern} 很大一部分的格式没有提供 {@link DateTimeFormatter},因此这里提供快捷获取方式
-	 * @return DateTimeFormatter
-	 * @author Looly
- * @author wh
-	 * @since 1.0.0
-	 */
-	public DateTimeFormatter getDateTimeFormatter() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(this.getPattern());
-		if (this.getLocale() != null) {
-			formatter = formatter.withLocale(this.getLocale());
-		}
-		if (this.getTimeZone() != null) {
-			formatter = formatter.withZone(this.getTimeZone().toZoneId());
-		}
-		return formatter;
-	}
+    @Override
+    public Locale getLocale() {
+        return printer.getLocale();
+    }
 
-	// Basics
-	// -----------------------------------------------------------------------
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj instanceof FastDateFormat == false) {
-			return false;
-		}
-		final FastDateFormat other = (FastDateFormat) obj;
-		// no need to check parser, as it has same invariants as printer
-		return printer.equals(other.printer);
-	}
+    /**
+     * 估算生成的日期字符串长度<br>
+     * 实际生成的字符串长度小于或等于此值
+     *
+     * @return 日期字符串长度
+     */
+    public int getMaxLengthEstimate() {
+        return printer.getMaxLengthEstimate();
+    }
 
-	@Override
-	public int hashCode() {
-		return printer.hashCode();
-	}
+    // convert DateTimeFormatter
+    // -----------------------------------------------------------------------
 
-	@Override
-	public String toString() {
-		return "FastDateFormat[" + printer.getPattern() + "," + printer.getLocale() + "," + printer.getTimeZone().getID() + "]";
-	}
+    /**
+     * 便捷获取 DateTimeFormatter
+     * 由于 {@link DatePattern} 很大一部分的格式没有提供 {@link DateTimeFormatter},因此这里提供快捷获取方式
+     *
+     * @return DateTimeFormatter
+     * @author Looly
+     * @author wh
+     * @since 1.0.0
+     */
+    public DateTimeFormatter getDateTimeFormatter() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(this.getPattern());
+        if (this.getLocale() != null) {
+            formatter = formatter.withLocale(this.getLocale());
+        }
+        if (this.getTimeZone() != null) {
+            formatter = formatter.withZone(this.getTimeZone().toZoneId());
+        }
+        return formatter;
+    }
+
+    // Basics
+    // -----------------------------------------------------------------------
+    @Override
+    public boolean equals( final Object obj ) {
+        if (obj instanceof FastDateFormat == false) {
+            return false;
+        }
+        final FastDateFormat other = (FastDateFormat) obj;
+        // no need to check parser, as it has same invariants as printer
+        return printer.equals(other.printer);
+    }
+
+    @Override
+    public int hashCode() {
+        return printer.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "FastDateFormat[" + printer.getPattern() + "," + printer.getLocale() + "," + printer.getTimeZone().getID() + "]";
+    }
 }

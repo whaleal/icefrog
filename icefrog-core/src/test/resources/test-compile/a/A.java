@@ -15,7 +15,8 @@ public class A {
             t.addHeader("类名", "类加载器");
             System.out.println("初始化 " + getClass() + " 的调用链为: ");
             while (caller != null) {
-                t.addBody(caller.toString(), caller.getClassLoader().toString());
+                System.out.println("caller 的 ClassLoader() 值为" +caller.getClassLoader());
+                t.addBody(caller.toString(), caller.getClassLoader()==null ?"null" :caller.getClassLoader().toString());
                 caller = CallerUtil.getCaller(++i);
             }
             t.print();

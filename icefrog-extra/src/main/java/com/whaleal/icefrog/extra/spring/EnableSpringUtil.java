@@ -10,8 +10,7 @@ import java.lang.annotation.Target;
 /**
  * 启用SpringUtil, 即注入SpringUtil到容器中
  *
- * @author Looly
- * @author wh
+ * @author sidian
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

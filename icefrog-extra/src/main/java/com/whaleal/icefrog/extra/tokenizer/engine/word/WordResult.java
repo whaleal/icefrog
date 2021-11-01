@@ -10,8 +10,7 @@ import java.util.List;
  * Word分词结果实现<br>
  * 项目地址：https://github.com/ysc/word
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class WordResult implements Result{
@@ -41,10 +40,4 @@ public class WordResult implements Result{
 	public void remove() {
 		this.wordIter.remove();
 	}
-
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
-
 }

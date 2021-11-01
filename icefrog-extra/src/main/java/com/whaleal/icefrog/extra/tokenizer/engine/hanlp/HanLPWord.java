@@ -6,19 +6,18 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
 
 /**
  * HanLP分词中的一个单词包装
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class HanLPWord implements Word {
 	private static final long serialVersionUID = 1L;
-
+	
 	private final Term term;
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param term {@link Term}
 	 */
 	public HanLPWord(Term term) {
@@ -29,12 +28,12 @@ public class HanLPWord implements Word {
 	public String getText() {
 		return term.word;
 	}
-
+	
 	@Override
 	public int getStartOffset() {
 		return this.term.offset;
 	}
-
+	
 	@Override
 	public int getEndOffset() {
 		return getStartOffset() + this.term.length();

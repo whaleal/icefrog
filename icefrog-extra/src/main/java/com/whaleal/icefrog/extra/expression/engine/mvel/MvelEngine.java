@@ -9,9 +9,8 @@ import java.util.Map;
  * MVEL (MVFLEX Expression Language)引擎封装<br>
  * 见：https://github.com/mvel/mvel
  *
- * @since 1.0.0
- * @author Looly
- * @author wh
+ *
+ * @author looly
  */
 public class MvelEngine implements ExpressionEngine {
 

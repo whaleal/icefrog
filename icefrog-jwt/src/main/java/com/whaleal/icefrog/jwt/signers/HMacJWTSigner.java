@@ -16,55 +16,55 @@ import java.security.Key;
  */
 public class HMacJWTSigner implements JWTSigner {
 
-	private Charset charset = CharsetUtil.CHARSET_UTF_8;
-	private final HMac hMac;
+    private final HMac hMac;
+    private Charset charset = CharsetUtil.CHARSET_UTF_8;
 
-	/**
-	 * 构造
-	 *
-	 * @param algorithm HMAC签名算法
-	 * @param key       密钥
-	 */
-	public HMacJWTSigner(String algorithm, byte[] key) {
-		this.hMac = new HMac(algorithm, key);
-	}
+    /**
+     * 构造
+     *
+     * @param algorithm HMAC签名算法
+     * @param key       密钥
+     */
+    public HMacJWTSigner( String algorithm, byte[] key ) {
+        this.hMac = new HMac(algorithm, key);
+    }
 
-	/**
-	 * 构造
-	 *
-	 * @param algorithm HMAC签名算法
-	 * @param key       密钥
-	 */
-	public HMacJWTSigner(String algorithm, Key key) {
-		this.hMac = new HMac(algorithm, key);
-	}
+    /**
+     * 构造
+     *
+     * @param algorithm HMAC签名算法
+     * @param key       密钥
+     */
+    public HMacJWTSigner( String algorithm, Key key ) {
+        this.hMac = new HMac(algorithm, key);
+    }
 
-	/**
-	 * 设置编码
-	 *
-	 * @param charset 编码
-	 * @return 编码
-	 */
-	public HMacJWTSigner setCharset(Charset charset) {
-		this.charset = charset;
-		return this;
-	}
+    /**
+     * 设置编码
+     *
+     * @param charset 编码
+     * @return 编码
+     */
+    public HMacJWTSigner setCharset( Charset charset ) {
+        this.charset = charset;
+        return this;
+    }
 
-	@Override
-	public String sign(String headerBase64, String payloadBase64) {
-		return hMac.digestBase64(StrUtil.format("{}.{}", headerBase64, payloadBase64), charset, true);
-	}
+    @Override
+    public String sign( String headerBase64, String payloadBase64 ) {
+        return hMac.digestBase64(StrUtil.format("{}.{}", headerBase64, payloadBase64), charset, true);
+    }
 
-	@Override
-	public boolean verify(String headerBase64, String payloadBase64, String signBase64) {
-		final String sign = sign(headerBase64, payloadBase64);
-		return hMac.verify(
-				StrUtil.bytes(sign, charset),
-				StrUtil.bytes(signBase64, charset));
-	}
+    @Override
+    public boolean verify( String headerBase64, String payloadBase64, String signBase64 ) {
+        final String sign = sign(headerBase64, payloadBase64);
+        return hMac.verify(
+                StrUtil.bytes(sign, charset),
+                StrUtil.bytes(signBase64, charset));
+    }
 
-	@Override
-	public String getAlgorithm() {
-		return this.hMac.getAlgorithm();
-	}
+    @Override
+    public String getAlgorithm() {
+        return this.hMac.getAlgorithm();
+    }
 }

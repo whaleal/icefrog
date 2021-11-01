@@ -10,7 +10,7 @@ public class RMButil {
      * @param val 待转换的 double数字
      * @return String 大写数字
      */
-    public static String numToRMBStr(double val) {
+    public static String numToRMBStr( double val ) {
         String SignStr = "";
         String TailStr = "";
         if (val < 0.0D) {
@@ -48,7 +48,7 @@ public class RMButil {
      * @param digitStr 需要进行转换的数字
      * @return 转换后的大写
      */
-    public static String digitToString(String digitStr) {
+    public static String digitToString( String digitStr ) {
         String[] digit = {"零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"};
         String[] weight = {"", "", "拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"};
         StringBuilder retDigit = new StringBuilder();
@@ -91,7 +91,7 @@ public class RMButil {
         return retDigit.toString();
     }
 
-    private static String PositiveIntegerToHanStr(String NumStr) {
+    private static String PositiveIntegerToHanStr( String NumStr ) {
         String RMBStr = "";
         boolean lastzero = false;
         boolean hasvalue = false;
@@ -130,7 +130,7 @@ public class RMButil {
         return RMBStr;
     }
 
-    public static void main(String[] args) {
+    public static void main( String[] args ) {
         System.out.println("1.数字转换为人民币大写：" + numToRMBStr(818));
         System.out.println("2.字符串转换为人民币大写：" + digitToString("123456789012.45"));
 

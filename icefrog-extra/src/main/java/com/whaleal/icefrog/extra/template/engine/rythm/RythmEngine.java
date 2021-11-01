@@ -9,9 +9,8 @@ import com.whaleal.icefrog.extra.template.TemplateEngine;
 /**
  * Rythm模板引擎<br>
  * 文档：http://rythmengine.org/doc/index
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class RythmEngine implements TemplateEngine {
@@ -26,7 +25,7 @@ public class RythmEngine implements TemplateEngine {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param config 模板配置
 	 */
 	public RythmEngine(TemplateConfig config) {
@@ -35,7 +34,7 @@ public class RythmEngine implements TemplateEngine {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param engine {@link org.rythmengine.RythmEngine}
 	 */
 	public RythmEngine(org.rythmengine.RythmEngine engine) {
@@ -70,7 +69,7 @@ public class RythmEngine implements TemplateEngine {
 
 	/**
 	 * 创建引擎
-	 *
+	 * 
 	 * @param config 模板配置
 	 * @return {@link org.rythmengine.RythmEngine}
 	 */
@@ -78,7 +77,7 @@ public class RythmEngine implements TemplateEngine {
 		if (null == config) {
 			config = new TemplateConfig();
 		}
-
+		
 		final Properties props = new Properties();
 		final String path = config.getPath();
 		if (null != path) {

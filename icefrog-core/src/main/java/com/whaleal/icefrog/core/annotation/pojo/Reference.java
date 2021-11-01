@@ -24,20 +24,18 @@ import static java.lang.annotation.ElementType.*;
 
 /**
  * Meta-annotation to be used to annotate annotations that mark references to other objects.
- *
+ * <p>
  * 标记一个属性 是有另外一个对象生成的,
  * 在框架层对该字段的生成有一些帮助
- *
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { FIELD, METHOD, ANNOTATION_TYPE })
+@Target(value = {FIELD, METHOD, ANNOTATION_TYPE})
 public @interface Reference {
 
-	/**
-	 * Explicitly define the target type of the reference. Used in case the annotated property is not the target type but
-	 * rather an identifier and/or if that identifier type is not uniquely identifying the target entity.
-	 *
-	 */
-	Class<?> value() default Class.class;
+    /**
+     * Explicitly define the target type of the reference. Used in case the annotated property is not the target type but
+     * rather an identifier and/or if that identifier type is not uniquely identifying the target entity.
+     */
+    Class<?> value() default Class.class;
 
 }

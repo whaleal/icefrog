@@ -3,7 +3,7 @@ package com.whaleal.icefrog.extra.compress.archiver;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.compress.CompressException;
 import org.apache.commons.compress.archivers.ArchiveException;
@@ -28,8 +28,7 @@ import java.nio.charset.Charset;
  *     <li>{@link ArchiveStreamFactory#ZIP}</li>
  * </ul>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class StreamArchiver implements Archiver {
 
@@ -98,14 +97,14 @@ public class StreamArchiver implements Archiver {
 	 *
 	 * @param file   文件或目录
 	 * @param path   文件或目录的初始路径，null表示位于根路径
-	 * @param predicate 文件过滤器，指定哪些文件或目录可以加入，当{@link Predicate#apply(Object)}为true时加入。
+	 * @param filter 文件过滤器，指定哪些文件或目录可以加入，当{@link Filter#accept(Object)}为true时加入。
 	 * @return this
 	 * @throws IORuntimeException IO异常
 	 */
 	@Override
-	public StreamArchiver add(File file, String path, Predicate<File> predicate) throws IORuntimeException {
+	public StreamArchiver add(File file, String path, Filter<File> filter) throws IORuntimeException {
 		try {
-			addInternal(file, path, predicate);
+			addInternal(file, path, filter);
 		} catch (IOException e) {
 			throw new IORuntimeException(e);
 		}
@@ -142,10 +141,10 @@ public class StreamArchiver implements Archiver {
 	 *
 	 * @param file   文件或目录
 	 * @param path   文件或目录的初始路径，null表示位于根路径
-	 * @param predicate 文件过滤器，指定哪些文件或目录可以加入，当{@link Predicate#apply(Object)}为true时加入。
+	 * @param filter 文件过滤器，指定哪些文件或目录可以加入，当{@link Filter#accept(Object)}为true时加入。
 	 */
-	private void addInternal(File file, String path, Predicate<File> predicate) throws IOException {
-		if (null != predicate && false == predicate.apply(file)) {
+	private void addInternal(File file, String path, Filter<File> filter) throws IOException {
+		if (null != filter && false == filter.accept(file)) {
 			return;
 		}
 		final ArchiveOutputStream out = this.out;
@@ -157,7 +156,7 @@ public class StreamArchiver implements Archiver {
 			// 目录遍历写入
 			final File[] files = file.listFiles();
 			for (File childFile : files) {
-				addInternal(childFile, entryName, predicate);
+				addInternal(childFile, entryName, filter);
 			}
 		} else {
 			if (file.isFile()) {

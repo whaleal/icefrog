@@ -3,8 +3,7 @@ package com.whaleal.icefrog.json;
 /**
  * XML分析器，继承自JSONTokener，提供XML的语法分析
  *
- * @author Looly
- * @author wh
+ * @author JSON.org
  */
 public class XMLTokener extends JSONTokener {
 

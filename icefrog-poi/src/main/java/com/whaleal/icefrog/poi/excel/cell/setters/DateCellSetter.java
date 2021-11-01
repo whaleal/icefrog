@@ -14,19 +14,19 @@ import java.util.Date;
  */
 public class DateCellSetter implements CellSetter {
 
-	private final Date value;
+    private final Date value;
 
-	/**
-	 * 构造
-	 *
-	 * @param value 值
-	 */
-	DateCellSetter(Date value) {
-		this.value = value;
-	}
+    /**
+     * 构造
+     *
+     * @param value 值
+     */
+    DateCellSetter( Date value ) {
+        this.value = value;
+    }
 
-	@Override
-	public void setValue(Cell cell) {
-		cell.setCellValue(value);
-	}
+    @Override
+    public void setValue( Cell cell ) {
+        cell.setCellValue(value);
+    }
 }

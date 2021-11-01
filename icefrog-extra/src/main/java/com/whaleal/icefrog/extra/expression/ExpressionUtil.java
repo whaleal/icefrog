@@ -7,9 +7,8 @@ import java.util.Map;
 /**
  * 表达式引擎工具类
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class ExpressionUtil {
 

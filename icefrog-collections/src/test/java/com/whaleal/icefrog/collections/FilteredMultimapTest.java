@@ -3,11 +3,12 @@
 package com.whaleal.icefrog.collections;
 
 
-import java.util.Arrays;
-import java.util.Map.Entry;
-
 import com.whaleal.icefrog.core.lang.Predicate;
 import junit.framework.TestCase;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Map.Entry;
 
 /**
  * Unit tests for {@link Multimaps} filtering methods.
@@ -16,6 +17,9 @@ import junit.framework.TestCase;
  */
  // nottested
 public class FilteredMultimapTest extends TestCase {
+    @Test
+    public void test(){
+    }
 
   private static final Predicate<Entry<String, Integer>> ENTRY_PREDICATE =
       new Predicate<Entry<String, Integer>>() {
@@ -23,7 +27,7 @@ public class FilteredMultimapTest extends TestCase {
         public boolean apply(Entry<String, Integer> entry) {
           return !"badkey".equals(entry.getKey()) && !((Integer) 55556).equals(entry.getValue());
         }
-      };
+  };
 
   protected Multimap<String, Integer> create() {
     Multimap<String, Integer> unfiltered = HashMultimap.create();

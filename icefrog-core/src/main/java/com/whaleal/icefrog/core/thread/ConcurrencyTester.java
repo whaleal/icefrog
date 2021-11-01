@@ -14,65 +14,66 @@ import com.whaleal.icefrog.core.date.TimeInterval;
  * });
  * </pre>
  *
- * @author Looly 
+ * @author Looly
  * @author wh
  */
 public class ConcurrencyTester {
-	private final SyncFinisher sf;
-	private final TimeInterval timeInterval;
-	private long interval;
+    private final SyncFinisher sf;
+    private final TimeInterval timeInterval;
+    private long interval;
 
-	/**
-	 * 构造
-	 * @param threadSize 线程数
-	 */
-	public ConcurrencyTester(int threadSize) {
-		this.sf = new SyncFinisher(threadSize);
-		this.timeInterval = new TimeInterval();
-	}
+    /**
+     * 构造
+     *
+     * @param threadSize 线程数
+     */
+    public ConcurrencyTester( int threadSize ) {
+        this.sf = new SyncFinisher(threadSize);
+        this.timeInterval = new TimeInterval();
+    }
 
-	/**
-	 * 执行测试
-	 *
-	 * @param runnable 要测试的内容
-	 * @return this
-	 */
-	public ConcurrencyTester test(Runnable runnable) {
-		this.sf.clearWorker();
+    /**
+     * 执行测试
+     *
+     * @param runnable 要测试的内容
+     * @return this
+     */
+    public ConcurrencyTester test( Runnable runnable ) {
+        this.sf.clearWorker();
 
-		timeInterval.start();
-		this.sf//
-				.addRepeatWorker(runnable)//
-				.setBeginAtSameTime(true)// 同时开始
-				.start();
+        timeInterval.start();
+        this.sf//
+                .addRepeatWorker(runnable)//
+                .setBeginAtSameTime(true)// 同时开始
+                .start();
 
-		this.interval = timeInterval.interval();
-		return this;
-	}
+        this.interval = timeInterval.interval();
+        return this;
+    }
 
-	/**
-	 * 重置测试器，重置包括：
-	 *
-	 * <ul>
-	 *     <li>清空worker</li>
-	 *     <li>重置计时器</li>
-	 * </ul>
-	 *
-	 * @return this
-	 * @since 1.0.0
-	 */
-	public ConcurrencyTester reset(){
-		this.sf.clearWorker();
-		this.timeInterval.restart();
-		return this;
-	}
+    /**
+     * 重置测试器，重置包括：
+     *
+     * <ul>
+     *     <li>清空worker</li>
+     *     <li>重置计时器</li>
+     * </ul>
+     *
+     * @return this
+     * @since 1.0.0
+     */
+    public ConcurrencyTester reset() {
+        this.sf.clearWorker();
+        this.timeInterval.restart();
+        return this;
+    }
 
-	/**
-	 * 获取执行时间
-	 *
-	 * @return 执行时间，单位毫秒
-	 */
-	public long getInterval() {
-		return this.interval;
-	}
+    /**
+     * 获取执行时间
+     *
+     * @return 执行时间，单位毫秒
+     */
+    public long getInterval() {
+        return this.interval;
+    }
 }

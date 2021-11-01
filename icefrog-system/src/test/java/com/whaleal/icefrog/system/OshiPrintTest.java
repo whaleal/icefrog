@@ -8,8 +8,8 @@ import org.junit.Test;
 @Ignore
 public class OshiPrintTest {
 
-	@Test
-	public void printCpuInfo(){
-		Console.log(OshiUtil.getCpuInfo());
-	}
+    @Test
+    public void printCpuInfo() {
+        Console.log(OshiUtil.getCpuInfo());
+    }
 }

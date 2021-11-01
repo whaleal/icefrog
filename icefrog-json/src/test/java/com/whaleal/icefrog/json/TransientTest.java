@@ -6,20 +6,20 @@ import org.junit.Test;
 
 public class TransientTest {
 
-	@Data
-	static class Bill{
-		private transient String id;
-		private String bizNo;
-	}
+    @Test
+    public void beanWithTransientTest() {
+        Bill detailBill = new Bill();
+        detailBill.setId("3243");
+        detailBill.setBizNo("bizNo");
 
-	@Test
-	public void beanWithTransientTest(){
-		Bill detailBill = new Bill();
-		detailBill.setId("3243");
-		detailBill.setBizNo("bizNo");
+        final JSONObject jsonObject = new JSONObject(detailBill,
+                JSONConfig.create().setTransientSupport(false));
+        Assert.assertEquals("{\"bizNo\":\"bizNo\"}", jsonObject.toString());
+    }
 
-		final JSONObject jsonObject = new JSONObject(detailBill,
-				JSONConfig.create().setTransientSupport(false));
-		Assert.assertEquals("{\"bizNo\":\"bizNo\"}", jsonObject.toString());
-	}
+    @Data
+    static class Bill {
+        private transient String id;
+        private String bizNo;
+    }
 }

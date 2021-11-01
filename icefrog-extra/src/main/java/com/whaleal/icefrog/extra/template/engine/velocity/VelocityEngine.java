@@ -10,8 +10,7 @@ import org.apache.velocity.app.Velocity;
  * Velocity模板引擎<br>
  * 见：http://velocity.apache.org/
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class VelocityEngine implements TemplateEngine {
 
@@ -68,7 +67,7 @@ public class VelocityEngine implements TemplateEngine {
 	 * 获取原始的引擎对象
 	 *
 	 * @return 原始引擎对象
-	 * @since 1.0.0
+	 *
 	 */
 	public org.apache.velocity.app.VelocityEngine getRawEngine() {
 		return this.engine;

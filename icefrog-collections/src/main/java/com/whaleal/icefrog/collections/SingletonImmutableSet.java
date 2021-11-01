@@ -3,7 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import javax.annotation.CheckForNull;
 
@@ -26,7 +26,7 @@ final class SingletonImmutableSet<E> extends ImmutableSet<E> {
   final transient E element;
 
   SingletonImmutableSet(E element) {
-    this.element = Preconditions.checkNotNull(element);
+    this.element = Precondition.checkNotNull(element);
   }
 
   @Override

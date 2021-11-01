@@ -14,10 +14,9 @@ import java.io.StringReader;
 
 /**
  * Jcseg分词引擎实现<br>
- * 项目地址：https://github.com/lionsoul/jcseg
- *
- * @author Looly
- * @author wh
+ * 项目地址：https://gitee.com/lionsoul/jcseg
+ * 
+ * @author looly
  *
  */
 public class JcsegEngine implements TokenizerEngine {
@@ -39,7 +38,7 @@ public class JcsegEngine implements TokenizerEngine {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param segment {@link ISegment}
 	 */
 	public JcsegEngine(ISegment segment) {

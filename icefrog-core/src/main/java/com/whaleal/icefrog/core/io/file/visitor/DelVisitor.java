@@ -16,30 +16,30 @@ import java.nio.file.attribute.BasicFileAttributes;
  */
 public class DelVisitor extends SimpleFileVisitor<Path> {
 
-	public static final DelVisitor INSTANCE = new DelVisitor();
+    public static final DelVisitor INSTANCE = new DelVisitor();
 
-	@Override
-	public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-		Files.delete(file);
-		return FileVisitResult.CONTINUE;
-	}
+    @Override
+    public FileVisitResult visitFile( Path file, BasicFileAttributes attrs ) throws IOException {
+        Files.delete(file);
+        return FileVisitResult.CONTINUE;
+    }
 
-	/**
-	 * 访问目录结束后删除目录，当执行此方法时，子文件或目录都已访问（删除）完毕<br>
-	 * 理论上当执行到此方法时，目录下已经被清空了
-	 *
-	 * @param dir 目录
-	 * @param e   异常
-	 * @return {@link FileVisitResult}
-	 * @throws IOException IO异常
-	 */
-	@Override
-	public FileVisitResult postVisitDirectory(Path dir, IOException e) throws IOException {
-		if (e == null) {
-			Files.delete(dir);
-			return FileVisitResult.CONTINUE;
-		} else {
-			throw e;
-		}
-	}
+    /**
+     * 访问目录结束后删除目录，当执行此方法时，子文件或目录都已访问（删除）完毕<br>
+     * 理论上当执行到此方法时，目录下已经被清空了
+     *
+     * @param dir 目录
+     * @param e   异常
+     * @return {@link FileVisitResult}
+     * @throws IOException IO异常
+     */
+    @Override
+    public FileVisitResult postVisitDirectory( Path dir, IOException e ) throws IOException {
+        if (e == null) {
+            Files.delete(dir);
+            return FileVisitResult.CONTINUE;
+        } else {
+            throw e;
+        }
+    }
 }

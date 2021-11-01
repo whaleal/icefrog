@@ -8,20 +8,19 @@ import com.whaleal.icefrog.cron.CronException;
  *
  * @author Looly
  * @author wh
- *
  */
 public class DayOfMonthValueParser extends SimpleValueParser {
 
-	public DayOfMonthValueParser() {
-		super(1, 31);
-	}
+    public DayOfMonthValueParser() {
+        super(1, 31);
+    }
 
-	@Override
-	public int parse(String value) throws CronException {
-		if ("L".equalsIgnoreCase(value) || "32".equals(value)) {// 每月最后一天
-			return 32;
-		} else {
-			return super.parse(value);
-		}
-	}
+    @Override
+    public int parse( String value ) throws CronException {
+        if ("L".equalsIgnoreCase(value) || "32".equals(value)) {// 每月最后一天
+            return 32;
+        } else {
+            return super.parse(value);
+        }
+    }
 }

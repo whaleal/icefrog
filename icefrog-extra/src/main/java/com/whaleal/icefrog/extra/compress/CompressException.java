@@ -7,7 +7,6 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * 压缩解压异常语言异常
  *
  * @author Looly
- * @author wh
  */
 public class CompressException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

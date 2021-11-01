@@ -3,9 +3,8 @@ package com.whaleal.icefrog.json;
 /**
  * 实现此接口的类可以通过实现{@code parse(value)}方法来将JSON中的值解析为此对象的值
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly   wh
+ *
  */
 public interface JSONBeanParser<T> {
 

@@ -22,8 +22,7 @@ import com.github.promeg.pinyinhelper.Pinyin;
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class TinyPinyinEngine implements PinyinEngine {
 

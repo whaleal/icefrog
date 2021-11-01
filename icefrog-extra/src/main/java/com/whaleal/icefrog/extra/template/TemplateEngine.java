@@ -3,8 +3,7 @@ package com.whaleal.icefrog.extra.template;
 /**
  * 引擎接口，通过实现此接口从而使用对应的模板引擎
  *
- * @author Looly 
- * @author wh
+ * @author looly
  */
 public interface TemplateEngine {
 

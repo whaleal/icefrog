@@ -1,19 +1,17 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.hanlp;
 
-import java.util.Iterator;
-import java.util.List;
-
-import com.hankcs.hanlp.seg.common.Term;
-
 import com.whaleal.icefrog.extra.tokenizer.Result;
 import com.whaleal.icefrog.extra.tokenizer.Word;
+import com.hankcs.hanlp.seg.common.Term;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * HanLP分词结果实现<br>
  * 项目地址：https://github.com/hankcs/HanLP
  *
- * @author Looly
- * @author wh
+ * @author looly
  *
  */
 public class HanLPResult implements Result {
@@ -38,11 +36,4 @@ public class HanLPResult implements Result {
 	public void remove() {
 		result.remove();
 	}
-
-	@Override
-	public Iterator<Word> iterator() {
-		return this;
-	}
-
-
 }

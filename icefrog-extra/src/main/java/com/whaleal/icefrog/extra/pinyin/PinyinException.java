@@ -6,8 +6,7 @@ import com.whaleal.icefrog.core.util.StrUtil;
 /**
  * 模板异常
  *
- * @author Looly
- * @author wh
+ * @author xiaoleilu
  */
 public class PinyinException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

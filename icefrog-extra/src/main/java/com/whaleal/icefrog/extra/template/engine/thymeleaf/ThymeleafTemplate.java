@@ -19,9 +19,8 @@ import java.util.Map;
 /**
  * Thymeleaf模板实现
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class ThymeleafTemplate extends AbstractTemplate implements Serializable {
 	private static final long serialVersionUID = 781284916568562509L;

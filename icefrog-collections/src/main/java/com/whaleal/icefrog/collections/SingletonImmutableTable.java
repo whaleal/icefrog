@@ -4,7 +4,7 @@ package com.whaleal.icefrog.collections;
 
 import java.util.Map;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * An implementation of {@link ImmutableTable} that holds a single cell.

@@ -6,9 +6,8 @@ import com.whaleal.icefrog.extra.tokenizer.Word;
 
 /**
  * Jieba分词中的一个单词包装
- *
- * @author Looly
- * @author wh
+ * 
+ * @author looly
  *
  */
 public class JiebaWord implements Word {
@@ -18,7 +17,7 @@ public class JiebaWord implements Word {
 
 	/**
 	 * 构造
-	 *
+	 * 
 	 * @param segToken {@link SegToken}
 	 */
 	public JiebaWord(SegToken segToken) {
@@ -27,14 +26,14 @@ public class JiebaWord implements Word {
 
 	@Override
 	public String getText() {
-		return segToken.word.toString();
+		return segToken.word;
 	}
-
+	
 	@Override
 	public int getStartOffset() {
 		return segToken.startOffset;
 	}
-
+	
 	@Override
 	public int getEndOffset() {
 		return segToken.endOffset;

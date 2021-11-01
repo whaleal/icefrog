@@ -1,8 +1,8 @@
 package com.whaleal.icefrog.socket.aio;
 
-import java.nio.ByteBuffer;
-
 import com.whaleal.icefrog.log.StaticLog;
+
+import java.nio.ByteBuffer;
 
 /**
  * 简易IO信息处理类<br>
@@ -10,16 +10,15 @@ import com.whaleal.icefrog.log.StaticLog;
  *
  * @author Looly
  * @author wh
- *
  */
 public abstract class SimpleIoAction implements IoAction<ByteBuffer> {
 
-	@Override
-	public void accept(AioSession session) {
-	}
+    @Override
+    public void accept( AioSession session ) {
+    }
 
-	@Override
-	public void failed(Throwable exc, AioSession session) {
-		StaticLog.error(exc);
-	}
+    @Override
+    public void failed( Throwable exc, AioSession session ) {
+        StaticLog.error(exc);
+    }
 }

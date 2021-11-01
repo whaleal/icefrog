@@ -1,8 +1,8 @@
 package com.whaleal.icefrog.core.convert.impl;
 
-import java.util.Currency;
-
 import com.whaleal.icefrog.core.convert.AbstractConverter;
+
+import java.util.Currency;
 
 /**
  * 货币{@link Currency} 转换器
@@ -12,11 +12,11 @@ import com.whaleal.icefrog.core.convert.AbstractConverter;
  * @since 1.0.0
  */
 public class CurrencyConverter extends AbstractConverter<Currency> {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected Currency convertInternal(Object value) {
-		return Currency.getInstance(convertToStr(value));
-	}
+    @Override
+    protected Currency convertInternal( Object value ) {
+        return Currency.getInstance(convertToStr(value));
+    }
 
 }

@@ -9,8 +9,8 @@ import java.util.Comparator;
 import java.util.function.ObjIntConsumer;
 
 import static com.whaleal.icefrog.collections.BoundType.CLOSED;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndexes;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndexes;
 
 /**
  * An immutable sorted multiset with one or more distinct elements.

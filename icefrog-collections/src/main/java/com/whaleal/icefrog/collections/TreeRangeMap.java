@@ -2,18 +2,18 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.map.MapUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.util.ArrayUtil.firstNonNull;
 import static com.whaleal.icefrog.core.util.PredicateUtil.*;
 import static java.util.Objects.requireNonNull;

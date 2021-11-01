@@ -18,23 +18,23 @@ import java.util.Map;
  * @author wh
  * @since 1.0.0
  */
-public class JWTPayload extends Claims implements RegisteredPayload<JWTPayload>{
-	private static final long serialVersionUID = 1L;
+public class JWTPayload extends Claims implements RegisteredPayload<JWTPayload> {
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 增加自定义JWT认证载荷信息
-	 *
-	 * @param payloadClaims 载荷信息
-	 * @return this
-	 */
-	public JWTPayload addPayloads(Map<String, ?> payloadClaims) {
-		putAll(payloadClaims);
-		return this;
-	}
+    /**
+     * 增加自定义JWT认证载荷信息
+     *
+     * @param payloadClaims 载荷信息
+     * @return this
+     */
+    public JWTPayload addPayloads( Map<String, ?> payloadClaims ) {
+        putAll(payloadClaims);
+        return this;
+    }
 
-	@Override
-	public JWTPayload setPayload(String name, Object value) {
-		setClaim(name, value);
-		return this;
-	}
+    @Override
+    public JWTPayload setPayload( String name, Object value ) {
+        setClaim(name, value);
+        return this;
+    }
 }

@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
  */
 public class DiagnosticUtil {
 
-	/**
-	 * 获取{@link DiagnosticCollector}收集到的诊断信息，以文本返回
-	 *
-	 * @param collector {@link DiagnosticCollector}
-	 * @return 诊断消息
-	 */
-	public static String getMessages(DiagnosticCollector<?> collector) {
-		final List<?> diagnostics = collector.getDiagnostics();
-		return diagnostics.stream().map(String::valueOf)
-				.collect(Collectors.joining(System.lineSeparator()));
-	}
+    /**
+     * 获取{@link DiagnosticCollector}收集到的诊断信息，以文本返回
+     *
+     * @param collector {@link DiagnosticCollector}
+     * @return 诊断消息
+     */
+    public static String getMessages( DiagnosticCollector<?> collector ) {
+        final List<?> diagnostics = collector.getDiagnostics();
+        return diagnostics.stream().map(String::valueOf)
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
 }

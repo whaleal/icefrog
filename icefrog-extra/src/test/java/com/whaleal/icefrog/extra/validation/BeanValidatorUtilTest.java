@@ -13,42 +13,42 @@ import javax.validation.constraints.NotBlank;
  */
 public class BeanValidatorUtilTest {
 
-	public static class TestClass {
+    @Test
+    public void beanValidatorTest() {
+        BeanValidationResult result = ValidationUtil.warpValidate(new TestClass());
+        Assert.assertFalse(result.isSuccess());
+        Assert.assertEquals(2, result.getErrorMessages().size());
+    }
 
-		@NotBlank(message = "姓名不能为空")
-		private String name;
+    @Test
+    public void propertyValidatorTest() {
+        BeanValidationResult result = ValidationUtil.warpValidateProperty(new TestClass(), "name");
+        Assert.assertFalse(result.isSuccess());
+        Assert.assertEquals(1, result.getErrorMessages().size());
+    }
 
-		@NotBlank(message = "地址不能为空")
-		private String address;
+    public static class TestClass {
 
-		public String getName() {
-			return name;
-		}
+        @NotBlank(message = "姓名不能为空")
+        private String name;
 
-		public void setName(String name) {
-			this.name = name;
-		}
+        @NotBlank(message = "地址不能为空")
+        private String address;
 
-		public String getAddress() {
-			return address;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public void setAddress(String address) {
-			this.address = address;
-		}
-	}
+        public void setName( String name ) {
+            this.name = name;
+        }
 
-	@Test
-	public void beanValidatorTest() {
-		BeanValidationResult result = ValidationUtil.warpValidate(new TestClass());
-		Assert.assertFalse(result.isSuccess());
-		Assert.assertEquals(2, result.getErrorMessages().size());
-	}
+        public String getAddress() {
+            return address;
+        }
 
-	@Test
-	public void propertyValidatorTest() {
-		BeanValidationResult result = ValidationUtil.warpValidateProperty(new TestClass(), "name");
-		Assert.assertFalse(result.isSuccess());
-		Assert.assertEquals(1, result.getErrorMessages().size());
-	}
+        public void setAddress( String address ) {
+            this.address = address;
+        }
+    }
 }

@@ -2,9 +2,9 @@
 
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
-import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
 import javax.annotation.CheckForNull;
@@ -17,7 +17,7 @@ import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior.NEXT
 import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior.NEXT_LOWER;
 import static com.whaleal.icefrog.collections.SortedLists.KeyPresentBehavior;
 import static com.whaleal.icefrog.collections.SortedLists.KeyPresentBehavior.ANY_PRESENT;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
 
 /**

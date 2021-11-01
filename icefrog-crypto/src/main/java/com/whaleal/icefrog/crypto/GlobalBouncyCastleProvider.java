@@ -9,36 +9,36 @@ import java.security.Provider;
  * @author wh
  */
 public enum GlobalBouncyCastleProvider {
-	INSTANCE;
+    INSTANCE;
 
-	private Provider provider;
-	private static boolean useBouncyCastle = true;
+    private static boolean useBouncyCastle = true;
+    private Provider provider;
 
-	GlobalBouncyCastleProvider() {
-		try {
-			this.provider = ProviderFactory.createBouncyCastleProvider();
-		} catch (NoClassDefFoundError e) {
-			// ignore
-		}
-	}
+    GlobalBouncyCastleProvider() {
+        try {
+            this.provider = ProviderFactory.createBouncyCastleProvider();
+        } catch (NoClassDefFoundError e) {
+            // ignore
+        }
+    }
 
-	/**
-	 * 获取{@link Provider}
-	 *
-	 * @return {@link Provider}
-	 */
-	public Provider getProvider() {
-		return useBouncyCastle ? this.provider : null;
-	}
+    /**
+     * 设置是否使用Bouncy Castle库<br>
+     * 如果设置为false，表示强制关闭Bouncy Castle而使用JDK
+     *
+     * @param isUseBouncyCastle 是否使用BouncyCastle库
+     * @since 1.0.0
+     */
+    public static void setUseBouncyCastle( boolean isUseBouncyCastle ) {
+        useBouncyCastle = isUseBouncyCastle;
+    }
 
-	/**
-	 * 设置是否使用Bouncy Castle库<br>
-	 * 如果设置为false，表示强制关闭Bouncy Castle而使用JDK
-	 *
-	 * @param isUseBouncyCastle 是否使用BouncyCastle库
-	 * @since 1.0.0
-	 */
-	public static void setUseBouncyCastle(boolean isUseBouncyCastle) {
-		useBouncyCastle = isUseBouncyCastle;
-	}
+    /**
+     * 获取{@link Provider}
+     *
+     * @return {@link Provider}
+     */
+    public Provider getProvider() {
+        return useBouncyCastle ? this.provider : null;
+    }
 }

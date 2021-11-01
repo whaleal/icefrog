@@ -9,7 +9,7 @@ import javax.annotation.CheckForNull;
 import java.util.Collection;
 import java.util.Map;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * An implementation of ImmutableMultiset backed by a JDK Map and a list of entries. Used to protect

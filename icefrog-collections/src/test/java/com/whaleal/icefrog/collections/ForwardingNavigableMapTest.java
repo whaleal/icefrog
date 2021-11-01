@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -14,6 +15,9 @@ import java.util.*;
  * 
  */
 public class ForwardingNavigableMapTest extends TestCase {
+  @Test
+  public void test(){
+  }
   static class StandardImplForwardingNavigableMap<K, V> extends ForwardingNavigableMap<K, V> {
     private final NavigableMap<K, V> backingMap;
 

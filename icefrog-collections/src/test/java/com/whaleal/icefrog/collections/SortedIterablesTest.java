@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.SortedSet;
 
@@ -14,6 +15,9 @@ import java.util.SortedSet;
  */
 
 public class SortedIterablesTest extends TestCase {
+  @Test
+  public void test(){
+  }
   public void testSameComparator() {
     assertTrue(SortedIterables.hasSameComparator(Ordering.natural(), Sets.newTreeSet()));
     // Before JDK6 (including under GWT), the TreeMap keySet is a plain Set.

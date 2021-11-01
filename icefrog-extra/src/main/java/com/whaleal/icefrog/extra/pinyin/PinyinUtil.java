@@ -6,8 +6,7 @@ import com.whaleal.icefrog.extra.pinyin.engine.PinyinFactory;
 /**
  * 拼音工具类，封装了TinyPinyin、JPinyin、Pinyin4j，通过SPI自动识别。
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class PinyinUtil {
 

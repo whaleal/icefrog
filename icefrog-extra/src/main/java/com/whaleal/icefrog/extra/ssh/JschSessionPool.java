@@ -11,8 +11,7 @@ import java.util.Map.Entry;
 /**
  * Jsch会话池
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public enum JschSessionPool {
 	INSTANCE;
@@ -88,7 +87,7 @@ public enum JschSessionPool {
 	 * 移除指定Session
 	 *
 	 * @param session Session会话
-	 * @since 1.0.0
+	 *
 	 */
 	public void remove(Session session) {
 		if (null != session) {

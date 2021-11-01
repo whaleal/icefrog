@@ -9,37 +9,37 @@ package com.whaleal.icefrog.core.lang.hash;
  */
 public class Number128 {
 
-	private long lowValue;
-	private long highValue;
+    private long lowValue;
+    private long highValue;
 
-	/**
-	 * 构造
-	 *
-	 * @param lowValue  低位
-	 * @param highValue 高位
-	 */
-	public Number128(long lowValue, long highValue) {
-		this.lowValue = lowValue;
-		this.highValue = highValue;
-	}
+    /**
+     * 构造
+     *
+     * @param lowValue  低位
+     * @param highValue 高位
+     */
+    public Number128( long lowValue, long highValue ) {
+        this.lowValue = lowValue;
+        this.highValue = highValue;
+    }
 
-	public long getLowValue() {
-		return lowValue;
-	}
+    public long getLowValue() {
+        return lowValue;
+    }
 
-	public long getHighValue() {
-		return highValue;
-	}
+    public void setLowValue( long lowValue ) {
+        this.lowValue = lowValue;
+    }
 
-	public void setLowValue(long lowValue) {
-		this.lowValue = lowValue;
-	}
+    public long getHighValue() {
+        return highValue;
+    }
 
-	public void setHighValue(long hiValue) {
-		this.highValue = hiValue;
-	}
+    public void setHighValue( long hiValue ) {
+        this.highValue = hiValue;
+    }
 
-	public long[] getLongArray() {
-		return new long[]{lowValue, highValue};
-	}
+    public long[] getLongArray() {
+        return new long[]{lowValue, highValue};
+    }
 }

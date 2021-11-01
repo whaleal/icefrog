@@ -29,307 +29,307 @@ import java.util.Set;
  */
 public class XmlUtilTest {
 
-	@Test
-	public void parseTest() {
-		String result = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
-				+ "<returnsms>"//
-				+ "<returnstatus>Success</returnstatus>"//
-				+ "<message>ok</message>"//
-				+ "<remainpoint>1490</remainpoint>"//
-				+ "<taskID>885</taskID>"//
-				+ "<successCounts>1</successCounts>"//
-				+ "</returnsms>";
-		Document docResult = XmlUtil.parseXml(result);
-		String elementText = XmlUtil.elementText(docResult.getDocumentElement(), "returnstatus");
-		Assert.assertEquals("Success", elementText);
-	}
+    @Test
+    public void parseTest() {
+        String result = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
+                + "<returnsms>"//
+                + "<returnstatus>Success</returnstatus>"//
+                + "<message>ok</message>"//
+                + "<remainpoint>1490</remainpoint>"//
+                + "<taskID>885</taskID>"//
+                + "<successCounts>1</successCounts>"//
+                + "</returnsms>";
+        Document docResult = XmlUtil.parseXml(result);
+        String elementText = XmlUtil.elementText(docResult.getDocumentElement(), "returnstatus");
+        Assert.assertEquals("Success", elementText);
+    }
 
-	@Test
-	@Ignore
-	public void writeTest() {
-		String result = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
-				+ "<returnsms>"//
-				+ "<returnstatus>Success（成功）</returnstatus>"//
-				+ "<message>ok</message>"//
-				+ "<remainpoint>1490</remainpoint>"//
-				+ "<taskID>885</taskID>"//
-				+ "<successCounts>1</successCounts>"//
-				+ "</returnsms>";
-		Document docResult = XmlUtil.parseXml(result);
-		XmlUtil.toFile(docResult, "e:/aaa.xml", "utf-8");
-	}
+    @Test
+    @Ignore
+    public void writeTest() {
+        String result = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
+                + "<returnsms>"//
+                + "<returnstatus>Success（成功）</returnstatus>"//
+                + "<message>ok</message>"//
+                + "<remainpoint>1490</remainpoint>"//
+                + "<taskID>885</taskID>"//
+                + "<successCounts>1</successCounts>"//
+                + "</returnsms>";
+        Document docResult = XmlUtil.parseXml(result);
+        XmlUtil.toFile(docResult, "e:/aaa.xml", "utf-8");
+    }
 
-	@Test
-	public void xpathTest() {
-		String result = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
-				+ "<returnsms>"//
-				+ "<returnstatus>Success（成功）</returnstatus>"//
-				+ "<message>ok</message>"//
-				+ "<remainpoint>1490</remainpoint>"//
-				+ "<taskID>885</taskID>"//
-				+ "<successCounts>1</successCounts>"//
-				+ "</returnsms>";
-		Document docResult = XmlUtil.parseXml(result);
-		Object value = XmlUtil.getByXPath("//returnsms/message", docResult, XPathConstants.STRING);
-		Assert.assertEquals("ok", value);
-	}
+    @Test
+    public void xpathTest() {
+        String result = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
+                + "<returnsms>"//
+                + "<returnstatus>Success（成功）</returnstatus>"//
+                + "<message>ok</message>"//
+                + "<remainpoint>1490</remainpoint>"//
+                + "<taskID>885</taskID>"//
+                + "<successCounts>1</successCounts>"//
+                + "</returnsms>";
+        Document docResult = XmlUtil.parseXml(result);
+        Object value = XmlUtil.getByXPath("//returnsms/message", docResult, XPathConstants.STRING);
+        Assert.assertEquals("ok", value);
+    }
 
-	@Test
-	public void xpathTest2() {
-		String result = ResourceUtil.readUtf8Str("test.xml");
-		Document docResult = XmlUtil.parseXml(result);
-		Object value = XmlUtil.getByXPath("//returnsms/message", docResult, XPathConstants.STRING);
-		Assert.assertEquals("ok", value);
-	}
+    @Test
+    public void xpathTest2() {
+        String result = ResourceUtil.readUtf8Str("test.xml");
+        Document docResult = XmlUtil.parseXml(result);
+        Object value = XmlUtil.getByXPath("//returnsms/message", docResult, XPathConstants.STRING);
+        Assert.assertEquals("ok", value);
+    }
 
-	@Test
-	public void xmlToMapTest() {
-		String xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
-				+ "<returnsms>"//
-				+ "<returnstatus>Success</returnstatus>"//
-				+ "<message>ok</message>"//
-				+ "<remainpoint>1490</remainpoint>"//
-				+ "<taskID>885</taskID>"//
-				+ "<successCounts>1</successCounts>"//
-				+ "<newNode><sub>subText</sub></newNode>"//
-				+ "</returnsms>";
-		Map<String, Object> map = XmlUtil.xmlToMap(xml);
+    @Test
+    public void xmlToMapTest() {
+        String xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>"//
+                + "<returnsms>"//
+                + "<returnstatus>Success</returnstatus>"//
+                + "<message>ok</message>"//
+                + "<remainpoint>1490</remainpoint>"//
+                + "<taskID>885</taskID>"//
+                + "<successCounts>1</successCounts>"//
+                + "<newNode><sub>subText</sub></newNode>"//
+                + "</returnsms>";
+        Map<String, Object> map = XmlUtil.xmlToMap(xml);
 
-		Assert.assertEquals(6, map.size());
-		Assert.assertEquals("Success", map.get("returnstatus"));
-		Assert.assertEquals("ok", map.get("message"));
-		Assert.assertEquals("1490", map.get("remainpoint"));
-		Assert.assertEquals("885", map.get("taskID"));
-		Assert.assertEquals("1", map.get("successCounts"));
-		Assert.assertEquals("subText", ((Map<?, ?>) map.get("newNode")).get("sub"));
-	}
+        Assert.assertEquals(6, map.size());
+        Assert.assertEquals("Success", map.get("returnstatus"));
+        Assert.assertEquals("ok", map.get("message"));
+        Assert.assertEquals("1490", map.get("remainpoint"));
+        Assert.assertEquals("885", map.get("taskID"));
+        Assert.assertEquals("1", map.get("successCounts"));
+        Assert.assertEquals("subText", ((Map<?, ?>) map.get("newNode")).get("sub"));
+    }
 
-	@Test
-	public void xmlToMapTest2() {
-		String xml = "<root><name>张三</name><name>李四</name></root>";
-		Map<String, Object> map = XmlUtil.xmlToMap(xml);
+    @Test
+    public void xmlToMapTest2() {
+        String xml = "<root><name>张三</name><name>李四</name></root>";
+        Map<String, Object> map = XmlUtil.xmlToMap(xml);
 
-		Assert.assertEquals(1, map.size());
-		Assert.assertEquals(CollUtil.newArrayList("张三", "李四"), map.get("name"));
-	}
+        Assert.assertEquals(1, map.size());
+        Assert.assertEquals(CollUtil.newArrayList("张三", "李四"), map.get("name"));
+    }
 
-	@Test
-	public void mapToXmlTest() {
-		Map<String, Object> map = MapBuilder.create(new LinkedHashMap<String, Object>())//
-				.put("name", "张三")//
-				.put("age", 12)//
-				.put("game", MapUtil.builder(new LinkedHashMap<String, Object>()).put("昵称", "Looly").put("level", 14).build())//
-				.build();
-		Document doc = XmlUtil.mapToXml(map, "user");
-		// Console.log(XmlUtil.toStr(doc, false));
-		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"//
-						+ "<user>"//
-						+ "<name>张三</name>"//
-						+ "<age>12</age>"//
-						+ "<game>"//
-						+ "<昵称>Looly</昵称>"//
-						+ "<level>14</level>"//
-						+ "</game>"//
-						+ "</user>", //
-				XmlUtil.toStr(doc, false));
-	}
+    @Test
+    public void mapToXmlTest() {
+        Map<String, Object> map = MapBuilder.create(new LinkedHashMap<String, Object>())//
+                .put("name", "张三")//
+                .put("age", 12)//
+                .put("game", MapUtil.builder(new LinkedHashMap<String, Object>()).put("昵称", "Looly").put("level", 14).build())//
+                .build();
+        Document doc = XmlUtil.mapToXml(map, "user");
+        // Console.log(XmlUtil.toStr(doc, false));
+        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"//
+                        + "<user>"//
+                        + "<name>张三</name>"//
+                        + "<age>12</age>"//
+                        + "<game>"//
+                        + "<昵称>Looly</昵称>"//
+                        + "<level>14</level>"//
+                        + "</game>"//
+                        + "</user>", //
+                XmlUtil.toStr(doc, false));
+    }
 
-	@Test
-	public void mapToXmlTest2() {
-		// 测试List
-		Map<String, Object> map = MapBuilder.create(new LinkedHashMap<String, Object>())
-				.put("Town", CollUtil.newArrayList("town1", "town2"))
-				.build();
+    @Test
+    public void mapToXmlTest2() {
+        // 测试List
+        Map<String, Object> map = MapBuilder.create(new LinkedHashMap<String, Object>())
+                .put("Town", CollUtil.newArrayList("town1", "town2"))
+                .build();
 
-		Document doc = XmlUtil.mapToXml(map, "City");
-		Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
-						"<City>" +
-						"<Town>town1</Town>" +
-						"<Town>town2</Town>" +
-						"</City>",
-				XmlUtil.toStr(doc));
-	}
+        Document doc = XmlUtil.mapToXml(map, "City");
+        Assert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" +
+                        "<City>" +
+                        "<Town>town1</Town>" +
+                        "<Town>town2</Town>" +
+                        "</City>",
+                XmlUtil.toStr(doc));
+    }
 
-	@Test
-	public void readTest() {
-		Document doc = XmlUtil.readXML("test.xml");
-		Assert.assertNotNull(doc);
-	}
+    @Test
+    public void readTest() {
+        Document doc = XmlUtil.readXML("test.xml");
+        Assert.assertNotNull(doc);
+    }
 
-	@Test
-	public void readBySaxTest(){
-		final Set<String> eles = CollUtil.newHashSet(
-				"returnsms", "returnstatus", "message", "remainpoint", "taskID", "successCounts");
-		XmlUtil.readBySax(ResourceUtil.getStream("test.xml"), new DefaultHandler(){
-			@Override
-			public void startElement(String uri, String localName, String qName, Attributes attributes) {
-				Assert.assertTrue(eles.contains(localName));
-			}
-		});
-	}
+    @Test
+    public void readBySaxTest() {
+        final Set<String> eles = CollUtil.newHashSet(
+                "returnsms", "returnstatus", "message", "remainpoint", "taskID", "successCounts");
+        XmlUtil.readBySax(ResourceUtil.getStream("test.xml"), new DefaultHandler() {
+            @Override
+            public void startElement( String uri, String localName, String qName, Attributes attributes ) {
+                Assert.assertTrue(eles.contains(localName));
+            }
+        });
+    }
 
-	@Test
-	public void mapToXmlTestWithOmitXmlDeclaration() {
+    @Test
+    public void mapToXmlTestWithOmitXmlDeclaration() {
 
-		Map<String, Object> map = MapBuilder.create(new LinkedHashMap<String, Object>())
-				.put("name", "ddatsh")
-				.build();
-		String xml = XmlUtil.mapToXmlStr(map, true);
-		Assert.assertEquals("<xml><name>ddatsh</name></xml>", xml);
-	}
+        Map<String, Object> map = MapBuilder.create(new LinkedHashMap<String, Object>())
+                .put("name", "ddatsh")
+                .build();
+        String xml = XmlUtil.mapToXmlStr(map, true);
+        Assert.assertEquals("<xml><name>ddatsh</name></xml>", xml);
+    }
 
-	@Test
-	public void getByPathTest() {
-		String xmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-				"<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
-				"  <soap:Body>\n" +
-				"    <ns2:testResponse xmlns:ns2=\"http://ws.xxx.com/\">\n" +
-				"      <return>2020/04/15 21:01:21</return>\n" +
-				"    </ns2:testResponse>\n" +
-				"  </soap:Body>\n" +
-				"</soap:Envelope>\n";
+    @Test
+    public void getByPathTest() {
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                "  <soap:Body>\n" +
+                "    <ns2:testResponse xmlns:ns2=\"http://ws.xxx.com/\">\n" +
+                "      <return>2020/04/15 21:01:21</return>\n" +
+                "    </ns2:testResponse>\n" +
+                "  </soap:Body>\n" +
+                "</soap:Envelope>\n";
 
-		Document document = XmlUtil.readXML(xmlStr);
-		Object value = XmlUtil.getByXPath(
-				"//soap:Envelope/soap:Body/ns2:testResponse/return",
-				document, XPathConstants.STRING);//
-		Assert.assertEquals("2020/04/15 21:01:21", value);
-	}
+        Document document = XmlUtil.readXML(xmlStr);
+        Object value = XmlUtil.getByXPath(
+                "//soap:Envelope/soap:Body/ns2:testResponse/return",
+                document, XPathConstants.STRING);//
+        Assert.assertEquals("2020/04/15 21:01:21", value);
+    }
 
-	@Test
-	public void beanToXmlIgnoreNullTest() {
-		@Data
-		class TestBean {
-			private String ReqCode;
-			private String AccountName;
-			private String Operator;
-			private String ProjectCode;
-			private String BankCode;
-		}
+    @Test
+    public void beanToXmlIgnoreNullTest() {
+        @Data
+        class TestBean {
+            private String ReqCode;
+            private String AccountName;
+            private String Operator;
+            private String ProjectCode;
+            private String BankCode;
+        }
 
-		final TestBean testBean = new TestBean();
-		testBean.setReqCode("1111");
-		testBean.setAccountName("账户名称");
-		testBean.setOperator("cz");
-		testBean.setProjectCode(null);
-		testBean.setBankCode("00001");
+        final TestBean testBean = new TestBean();
+        testBean.setReqCode("1111");
+        testBean.setAccountName("账户名称");
+        testBean.setOperator("cz");
+        testBean.setProjectCode(null);
+        testBean.setBankCode("00001");
 
-		// 不忽略空字段情况下保留自闭标签
-		Document doc = XmlUtil.beanToXml(testBean, null, false);
-		Assert.assertNotNull(XmlUtil.getElement(doc.getDocumentElement(), "ProjectCode"));
+        // 不忽略空字段情况下保留自闭标签
+        Document doc = XmlUtil.beanToXml(testBean, null, false);
+        Assert.assertNotNull(XmlUtil.getElement(doc.getDocumentElement(), "ProjectCode"));
 
-		// 忽略空字段情况下无自闭标签
-		doc = XmlUtil.beanToXml(testBean, null, true);
-		Assert.assertNull(XmlUtil.getElement(doc.getDocumentElement(), "ProjectCode"));
-	}
+        // 忽略空字段情况下无自闭标签
+        doc = XmlUtil.beanToXml(testBean, null, true);
+        Assert.assertNull(XmlUtil.getElement(doc.getDocumentElement(), "ProjectCode"));
+    }
 
-	@Test
-	public void xmlToBeanTest() {
-		@Data
-		class TestBean {
-			private String ReqCode;
-			private String AccountName;
-			private String Operator;
-			private String ProjectCode;
-			private String BankCode;
-		}
+    @Test
+    public void xmlToBeanTest() {
+        @Data
+        class TestBean {
+            private String ReqCode;
+            private String AccountName;
+            private String Operator;
+            private String ProjectCode;
+            private String BankCode;
+        }
 
-		final TestBean testBean = new TestBean();
-		testBean.setReqCode("1111");
-		testBean.setAccountName("账户名称");
-		testBean.setOperator("cz");
-		testBean.setProjectCode("123");
-		testBean.setBankCode("00001");
+        final TestBean testBean = new TestBean();
+        testBean.setReqCode("1111");
+        testBean.setAccountName("账户名称");
+        testBean.setOperator("cz");
+        testBean.setProjectCode("123");
+        testBean.setBankCode("00001");
 
-		final Document doc = XmlUtil.beanToXml(testBean);
-		Assert.assertEquals(TestBean.class.getSimpleName(), doc.getDocumentElement().getTagName());
+        final Document doc = XmlUtil.beanToXml(testBean);
+        Assert.assertEquals(TestBean.class.getSimpleName(), doc.getDocumentElement().getTagName());
 
-		final TestBean testBean2 = XmlUtil.xmlToBean(doc, TestBean.class);
-		Assert.assertEquals(testBean.getReqCode(), testBean2.getReqCode());
-		Assert.assertEquals(testBean.getAccountName(), testBean2.getAccountName());
-		Assert.assertEquals(testBean.getOperator(), testBean2.getOperator());
-		Assert.assertEquals(testBean.getProjectCode(), testBean2.getProjectCode());
-		Assert.assertEquals(testBean.getBankCode(), testBean2.getBankCode());
-	}
+        final TestBean testBean2 = XmlUtil.xmlToBean(doc, TestBean.class);
+        Assert.assertEquals(testBean.getReqCode(), testBean2.getReqCode());
+        Assert.assertEquals(testBean.getAccountName(), testBean2.getAccountName());
+        Assert.assertEquals(testBean.getOperator(), testBean2.getOperator());
+        Assert.assertEquals(testBean.getProjectCode(), testBean2.getProjectCode());
+        Assert.assertEquals(testBean.getBankCode(), testBean2.getBankCode());
+    }
 
-	@Test
-	public void xmlToBeanTest2(){
-		@Data
-		class SmsRes {
-			private String code;
-		}
+    @Test
+    public void xmlToBeanTest2() {
+        @Data
+        class SmsRes {
+            private String code;
+        }
 
-		//issue#1663@Github
-		String xmlStr = "<?xml version=\"1.0\" encoding=\"gbk\" ?><response><code>02</code></response>";
+        //issue#1663@Github
+        String xmlStr = "<?xml version=\"1.0\" encoding=\"gbk\" ?><response><code>02</code></response>";
 
-		Document doc = XmlUtil.parseXml(xmlStr);
+        Document doc = XmlUtil.parseXml(xmlStr);
 
-		// 标准方式
-		Map<String, Object> map = XmlUtil.xmlToMap(doc.getFirstChild());
-		SmsRes res = new SmsRes();
-		BeanUtil.fillBeanWithMap(map, res, true);
+        // 标准方式
+        Map<String, Object> map = XmlUtil.xmlToMap(doc.getFirstChild());
+        SmsRes res = new SmsRes();
+        BeanUtil.fillBeanWithMap(map, res, true);
 
-		// toBean方式
-		SmsRes res1 = XmlUtil.xmlToBean(doc.getFirstChild(), SmsRes.class);
+        // toBean方式
+        SmsRes res1 = XmlUtil.xmlToBean(doc.getFirstChild(), SmsRes.class);
 
-		Assert.assertEquals(res.toString(), res1.toString());
-	}
+        Assert.assertEquals(res.toString(), res1.toString());
+    }
 
-	@Test
-	public void cleanCommentTest() {
-		final String xmlContent = "<info><title>icefrog</title><!-- 这是注释 --><lang>java</lang></info>";
-		final String ret = XmlUtil.cleanComment(xmlContent);
-		Assert.assertEquals("<info><title>icefrog</title><lang>java</lang></info>", ret);
-	}
+    @Test
+    public void cleanCommentTest() {
+        final String xmlContent = "<info><title>icefrog</title><!-- 这是注释 --><lang>java</lang></info>";
+        final String ret = XmlUtil.cleanComment(xmlContent);
+        Assert.assertEquals("<info><title>icefrog</title><lang>java</lang></info>", ret);
+    }
 
-	@Test
-	@Ignore
-	public void formatTest(){
-		// https://github.com/whaleal/icefrog/pull/1234
-		Document xml = XmlUtil.createXml("NODES");
-		xml.setXmlStandalone(true);
+    @Test
+    @Ignore
+    public void formatTest() {
+        // https://github.com/whaleal/icefrog/pull/1234
+        Document xml = XmlUtil.createXml("NODES");
+        xml.setXmlStandalone(true);
 
-		NodeList parentNode = xml.getElementsByTagName("NODES");
+        NodeList parentNode = xml.getElementsByTagName("NODES");
 
-		Element parent1Node = xml.createElement("NODE");
+        Element parent1Node = xml.createElement("NODE");
 
-		Element node1 = xml.createElement("NODENAME");
-		node1.setTextContent("走位");
-		Element node2 = xml.createElement("STEP");
-		node2.setTextContent("1");
-		Element node3 = xml.createElement("STATE");
-		node3.setTextContent("2");
-		Element node4 = xml.createElement("TIMELIMIT");
-		node4.setTextContent("");
-		Element node5 = xml.createElement("STARTTIME");
+        Element node1 = xml.createElement("NODENAME");
+        node1.setTextContent("走位");
+        Element node2 = xml.createElement("STEP");
+        node2.setTextContent("1");
+        Element node3 = xml.createElement("STATE");
+        node3.setTextContent("2");
+        Element node4 = xml.createElement("TIMELIMIT");
+        node4.setTextContent("");
+        Element node5 = xml.createElement("STARTTIME");
 
-		parent1Node.appendChild(node1);
-		parent1Node.appendChild(node2);
-		parent1Node.appendChild(node3);
-		parent1Node.appendChild(node4);
-		parent1Node.appendChild(node5);
+        parent1Node.appendChild(node1);
+        parent1Node.appendChild(node2);
+        parent1Node.appendChild(node3);
+        parent1Node.appendChild(node4);
+        parent1Node.appendChild(node5);
 
-		parentNode.item(0).appendChild(parent1Node);
+        parentNode.item(0).appendChild(parent1Node);
 
-		String format = XmlUtil.toStr(xml,"GBK",true);
-		Console.log(format);
-	}
+        String format = XmlUtil.toStr(xml, "GBK", true);
+        Console.log(format);
+    }
 
-	@Test
-	public void escapeTest(){
-		String a = "<>";
-		final String escape = XmlUtil.escape(a);
-		Console.log(escape);
-	}
+    @Test
+    public void escapeTest() {
+        String a = "<>";
+        final String escape = XmlUtil.escape(a);
+        Console.log(escape);
+    }
 
-	@Test
-	public void getParamTest(){
-		String xml = "<Config name=\"aaaa\">\n" +
-				"    <url>222222</url>\n" +
-				"</Config>";
+    @Test
+    public void getParamTest() {
+        String xml = "<Config name=\"aaaa\">\n" +
+                "    <url>222222</url>\n" +
+                "</Config>";
 
-		final Document doc = XmlUtil.parseXml(xml);
-		final String name = doc.getDocumentElement().getAttribute("name");
-		Assert.assertEquals("aaaa", name);
-	}
+        final Document doc = XmlUtil.parseXml(xml);
+        final String name = doc.getDocumentElement().getAttribute("name");
+        Assert.assertEquals("aaaa", name);
+    }
 }

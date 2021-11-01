@@ -16,20 +16,20 @@ import java.sql.SQLException;
  * @since 1.0.0
  */
 public class PhoenixDialect extends AnsiSqlDialect {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public PhoenixDialect() {
+    public PhoenixDialect() {
 //		wrapper = new Wrapper('"');
-	}
+    }
 
-	@Override
-	public PreparedStatement psForUpdate(Connection conn, Entity entity, Query query) throws SQLException {
-		// Phoenix的插入、更新语句是统一的，统一使用upsert into关键字
-		return super.psForInsert(conn, entity);
-	}
+    @Override
+    public PreparedStatement psForUpdate( Connection conn, Entity entity, Query query ) throws SQLException {
+        // Phoenix的插入、更新语句是统一的，统一使用upsert into关键字
+        return super.psForInsert(conn, entity);
+    }
 
-	@Override
-	public String dialectName() {
-		return DialectName.PHOENIX.name();
-	}
+    @Override
+    public String dialectName() {
+        return DialectName.PHOENIX.name();
+    }
 }

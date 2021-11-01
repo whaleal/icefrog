@@ -13,9 +13,8 @@ import java.util.Set;
  * <p>
  * emoji-java文档以及别名列表见：https://github.com/vdurmont/emoji-java
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class EmojiUtil {
 
@@ -34,7 +33,7 @@ public class EmojiUtil {
 	 *
 	 * @param str 被测试的字符串
 	 * @return 是否包含Emoji表情的Unicode符
-	 * @since 1.0.0
+	 *
 	 */
 	public static boolean containsEmoji(String str) {
 		return EmojiManager.containsEmoji(str);
@@ -161,5 +160,4 @@ public class EmojiUtil {
 	public static List<String> extractEmojis(String str) {
 		return EmojiParser.extractEmojis(str);
 	}
-
 }

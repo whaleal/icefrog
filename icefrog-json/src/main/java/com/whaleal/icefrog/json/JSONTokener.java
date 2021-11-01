@@ -2,18 +2,12 @@ package com.whaleal.icefrog.json;
 
 import com.whaleal.icefrog.core.util.StrUtil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 
 /**
  * JSON解析器，用于将JSON字符串解析为JSONObject或者JSONArray
  *
- * @author Looly
- * @author wh
+ * @author from JSON.org
  */
 public class JSONTokener {
 

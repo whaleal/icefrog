@@ -10,9 +10,8 @@ import java.util.Map;
  * Aviator引擎封装<br>
  * 见：https://github.com/killme2008/aviatorscript
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class AviatorEngine implements ExpressionEngine {
 

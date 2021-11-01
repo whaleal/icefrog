@@ -3,24 +3,15 @@
 package com.whaleal.icefrog.collections;
 
 
-
 import com.whaleal.icefrog.core.map.BiMap;
+import org.junit.Test;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkState;
+import static com.whaleal.icefrog.core.lang.Precondition.checkState;
 
 /**
  * Helper classes for various benchmarks.
@@ -28,6 +19,9 @@ import static com.whaleal.icefrog.core.lang.Preconditions.checkState;
  * @author Christopher Swenson
  */
 final class BenchmarkHelpers {
+  @Test
+  public void test(){
+  }
   /** So far, this is the best way to test various implementations of {@link Set} subclasses. */
   public interface CollectionsImplEnum {
     <E extends Comparable<E>> Collection<E> create(Collection<E> contents);

@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -17,6 +18,9 @@ import static java.util.Arrays.asList;
  */
 
 public abstract class AbstractImmutableSetTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
   protected abstract <E extends Comparable<? super E>> Set<E> of();
 

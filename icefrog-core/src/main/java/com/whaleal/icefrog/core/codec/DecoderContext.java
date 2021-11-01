@@ -17,86 +17,86 @@
 package com.whaleal.icefrog.core.codec;
 
 
-import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 /**
  * The context for decoding values to your type.
  *
  * @see Decoder
- * @since 3.0
+ *
  */
 public final class DecoderContext {
-	private static final DecoderContext DEFAULT_CONTEXT = DecoderContext.builder().build();
-	private final boolean checkedDiscriminator;
+    private static final DecoderContext DEFAULT_CONTEXT = DecoderContext.builder().build();
+    private final boolean checkedDiscriminator;
 
-	private DecoderContext(final Builder builder) {
-		this.checkedDiscriminator = builder.hasCheckedDiscriminator();
-	}
+    private DecoderContext( final Builder builder ) {
+        this.checkedDiscriminator = builder.hasCheckedDiscriminator();
+    }
 
-	/**
-	 * Create a builder.
-	 *
-	 * @return the builder
-	 */
-	public static Builder builder() {
-		return new Builder();
-	}
+    /**
+     * Create a builder.
+     *
+     * @return the builder
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
 
-	/**
-	 * @return true if the discriminator has been checked
-	 */
-	public boolean hasCheckedDiscriminator() {
-		return checkedDiscriminator;
-	}
+    /**
+     * @return true if the discriminator has been checked
+     */
+    public boolean hasCheckedDiscriminator() {
+        return checkedDiscriminator;
+    }
 
-	/**
-	 * Creates a child context and then deserializes using the reader.
-	 *
-	 * @param decoder the decoder to decode with
-	 * @param reader  the reader to decode to
-	 * @param <T>     the type of the decoder
-	 * @return the decoded value
-	 */
-	public <T> T decodeWithChildContext(final Decoder<T> decoder, final Reader reader) {
-		notNull(decoder);
-		return decoder.decode(reader, DEFAULT_CONTEXT);
-	}
+    /**
+     * Creates a child context and then deserializes using the reader.
+     *
+     * @param decoder the decoder to decode with
+     * @param reader  the reader to decode to
+     * @param <T>     the type of the decoder
+     * @return the decoded value
+     */
+    public <T> T decodeWithChildContext( final Decoder<T> decoder, final Reader reader ) {
+        notNull(decoder);
+        return decoder.decode(reader, DEFAULT_CONTEXT);
+    }
 
-	/**
-	 * A builder for {@code DecoderContext} instances.
-	 */
-	public static final class Builder implements com.whaleal.icefrog.core.builder.Builder<DecoderContext> {
-		private boolean checkedDiscriminator;
+    /**
+     * A builder for {@code DecoderContext} instances.
+     */
+    public static final class Builder implements com.whaleal.icefrog.core.builder.Builder<DecoderContext> {
+        private boolean checkedDiscriminator;
 
-		private Builder() {
-		}
+        private Builder() {
+        }
 
-		/**
-		 * @return true if the discriminator has been checked
-		 */
-		public boolean hasCheckedDiscriminator() {
-			return checkedDiscriminator;
-		}
+        /**
+         * @return true if the discriminator has been checked
+         */
+        public boolean hasCheckedDiscriminator() {
+            return checkedDiscriminator;
+        }
 
-		/**
-		 * Sets the checkedDiscriminator
-		 *
-		 * @param checkedDiscriminator the checkedDiscriminator
-		 * @return this
-		 */
-		public Builder checkedDiscriminator(final boolean checkedDiscriminator) {
-			this.checkedDiscriminator = checkedDiscriminator;
-			return this;
-		}
+        /**
+         * Sets the checkedDiscriminator
+         *
+         * @param checkedDiscriminator the checkedDiscriminator
+         * @return this
+         */
+        public Builder checkedDiscriminator( final boolean checkedDiscriminator ) {
+            this.checkedDiscriminator = checkedDiscriminator;
+            return this;
+        }
 
-		/**
-		 * Build an instance of {@code DecoderContext}.
-		 *
-		 * @return the decoder context
-		 */
-		@Override
-		public DecoderContext build() {
-			return new DecoderContext(this);
-		}
-	}
+        /**
+         * Build an instance of {@code DecoderContext}.
+         *
+         * @return the decoder context
+         */
+        @Override
+        public DecoderContext build() {
+            return new DecoderContext(this);
+        }
+    }
 }

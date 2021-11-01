@@ -11,8 +11,7 @@ import com.whaleal.icefrog.extra.pinyin.PinyinException;
 /**
  * 简单拼音引擎工厂，用于根据用户引入的拼音库jar，自动创建对应的拼音引擎对象
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class PinyinFactory {
 
