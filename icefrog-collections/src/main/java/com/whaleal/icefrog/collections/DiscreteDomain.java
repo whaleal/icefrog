@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.NoSuchElementException;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNonnegative;
 
 /**
  * A descriptor for a <i>discrete</i> {@code Comparable} domain such as all {@link Integer}

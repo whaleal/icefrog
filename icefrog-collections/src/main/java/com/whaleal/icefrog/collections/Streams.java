@@ -1,25 +1,16 @@
 package   com.whaleal.icefrog.collections ;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static java.util.Objects.requireNonNull;
-
-import java.util.*;
-import java.util.Spliterators.AbstractSpliterator;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.DoubleConsumer;
-import java.util.function.IntConsumer;
-import java.util.function.LongConsumer;
-import java.util.stream.BaseStream;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
-import java.util.stream.LongStream;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-import javax.annotation.CheckForNull;
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
+
+import javax.annotation.CheckForNull;
+import java.util.*;
+import java.util.Spliterators.AbstractSpliterator;
+import java.util.function.*;
+import java.util.stream.*;
+
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 
 @Deprecated
@@ -328,7 +319,7 @@ public final class Streams {
      * This method behaves equivalently to {@linkplain #zip zipping} the stream elements into
      * temporary pair objects and then using {@link Stream#forEach} on that stream.
      *
-     * @since 22.0
+     *
      */
    
     public static <A extends Object, B extends Object> void forEachPair(
@@ -687,7 +678,7 @@ public final class Streams {
      * <p>This interface is only intended for use by callers of {@link #mapWithIndex(Stream,
      * FunctionWithIndex)}.
      *
-     * @since 21.0
+     *
      */
    
     public interface FunctionWithIndex<T extends Object, R extends Object> {
@@ -743,7 +734,7 @@ public final class Streams {
      * <p>This interface is only intended for use by callers of {@link #mapWithIndex(IntStream,
      * IntFunctionWithIndex)}.
      *
-     * @since 21.0
+     *
      */
    
     public interface IntFunctionWithIndex<R extends Object> {
@@ -758,7 +749,7 @@ public final class Streams {
      * <p>This interface is only intended for use by callers of {@link #mapWithIndex(LongStream,
      * LongFunctionWithIndex)}.
      *
-     * @since 21.0
+     *
      */
    
     public interface LongFunctionWithIndex<R extends Object> {
@@ -773,7 +764,7 @@ public final class Streams {
      * <p>This interface is only intended for use by callers of {@link #mapWithIndex(DoubleStream,
      * DoubleFunctionWithIndex)}.
      *
-     * @since 21.0
+     *
      */
    
     public interface DoubleFunctionWithIndex<R extends Object> {

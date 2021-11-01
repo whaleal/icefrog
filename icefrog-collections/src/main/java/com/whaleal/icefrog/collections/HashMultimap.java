@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -42,7 +42,7 @@ public final class HashMultimap<K extends Object, V extends Object>
 
     private HashMultimap( int expectedKeys, int expectedValuesPerKey ) {
         super(Platform.newHashMap(expectedKeys));
-        Preconditions.checkArgument(expectedValuesPerKey >= 0);
+        Precondition.checkArgument(expectedValuesPerKey >= 0);
         this.expectedValuesPerKey = expectedValuesPerKey;
     }
 

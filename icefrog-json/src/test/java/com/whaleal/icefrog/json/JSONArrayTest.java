@@ -21,7 +21,7 @@ import java.util.*;
 /**
  * JSONArray单元测试
  *
- * @author Looly
+ * @author looly   wh
  * @author wh
  */
 public class JSONArrayTest {
@@ -80,11 +80,12 @@ public class JSONArrayTest {
         System.out.println(strings);
         System.out.println(values);
 
+
         Assert.assertFalse(jsonArray.getJSONObject(1).containsKey("result"));
 
-        // 不忽略null，则null的键值对被保留
-        //jsonArray = new JSONArray(jsonStr, false);
-        //Assert.assertTrue(jsonArray.getJSONObject(1).containsKey("result"));
+        //不忽略null，则null的键值对被保留
+        jsonArray = new JSONArray(jsonStr, false);
+        Assert.assertTrue(jsonArray.getJSONObject(1).containsKey("result"));
     }
 
     @Test

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.ObjIntConsumer;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
 
 

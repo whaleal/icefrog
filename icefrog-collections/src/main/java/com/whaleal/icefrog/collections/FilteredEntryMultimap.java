@@ -12,8 +12,8 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNonnegative;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.util.PredicateUtil.in;
 import static com.whaleal.icefrog.core.util.PredicateUtil.not;
 

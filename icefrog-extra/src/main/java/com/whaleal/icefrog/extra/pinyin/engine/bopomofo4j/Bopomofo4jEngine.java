@@ -1,15 +1,15 @@
 package com.whaleal.icefrog.extra.pinyin.engine.bopomofo4j;
 
-import com.rnkrsoft.bopomofo4j.Bopomofo4j;
-import com.rnkrsoft.bopomofo4j.ToneType;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
+import com.rnkrsoft.bopomofo4j.Bopomofo4j;
+import com.rnkrsoft.bopomofo4j.ToneType;
 
 /**
  * 封装了Bopomofo4j的引擎。
  *
  * <p>
- * Bopomofo4j封装，项目：https://github.com/rnkrsoft/Bopomofo4j。
+ * Bopomofo4j封装，项目：https://gitee.com/rnkrsoft/Bopomofo4j。
  * </p>
  *
  * <p>
@@ -22,23 +22,22 @@ import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class Bopomofo4jEngine implements PinyinEngine {
 
-    public Bopomofo4jEngine() {
-        Bopomofo4j.local();
-    }
+	public Bopomofo4jEngine(){
+		Bopomofo4j.local();
+	}
 
-    @Override
-    public String getPinyin( char c ) {
-        return Bopomofo4j.pinyin(String.valueOf(c), ToneType.WITHOUT_TONE, false, false, StrUtil.EMPTY);
-    }
+	@Override
+	public String getPinyin(char c) {
+		return Bopomofo4j.pinyin(String.valueOf(c), ToneType.WITHOUT_TONE, false, false, StrUtil.EMPTY);
+	}
 
-    @Override
-    public String getPinyin( String str, String separator ) {
-        return Bopomofo4j.pinyin(str, ToneType.WITHOUT_TONE, false, false, separator);
-    }
+	@Override
+	public String getPinyin(String str, String separator) {
+		return Bopomofo4j.pinyin(str, ToneType.WITHOUT_TONE, false, false, separator);
+	}
 }

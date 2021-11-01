@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.stream;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 
 import java.io.File;
@@ -27,7 +27,7 @@ public class StreamUtil {
 
     @SafeVarargs
     public static <T> Stream<T> of( T... array ) {
-        Preconditions.notNull(array, "Array must be not null!");
+        Precondition.notNull(array, "Array must be not null!");
         return Stream.of(array);
     }
 
@@ -51,7 +51,7 @@ public class StreamUtil {
      * @return {@link Stream}
      */
     public static <T> Stream<T> of( Iterable<T> iterable, boolean parallel ) {
-        Preconditions.notNull(iterable, "Iterable must be not null!");
+        Precondition.notNull(iterable, "Iterable must be not null!");
         return StreamSupport.stream(
                 Spliterators.spliterator(CollUtil.toCollection(iterable), 0),
                 parallel);
@@ -85,7 +85,7 @@ public class StreamUtil {
      * @return {@link Stream}
      */
     public static Stream<String> of( File file, Charset charset ) {
-        Preconditions.notNull(file, "File must be not null!");
+        Precondition.notNull(file, "File must be not null!");
         return of(file.toPath(), charset);
     }
 

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 /**
  * Utility methods for {@link String} parsing.

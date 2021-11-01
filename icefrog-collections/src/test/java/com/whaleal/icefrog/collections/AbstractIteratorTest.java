@@ -5,6 +5,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -17,6 +18,9 @@ import java.util.NoSuchElementException;
 @SuppressWarnings("serial") // No serialization is used in this test
 
 public class AbstractIteratorTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
   public void testDefaultBehaviorOfNextAndHasNext() {
 

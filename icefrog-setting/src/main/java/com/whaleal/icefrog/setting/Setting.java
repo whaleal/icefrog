@@ -8,7 +8,7 @@ import com.whaleal.icefrog.core.io.resource.*;
 import com.whaleal.icefrog.core.io.watch.SimpleWatcher;
 import com.whaleal.icefrog.core.io.watch.WatchMonitor;
 import com.whaleal.icefrog.core.io.watch.WatchUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -101,7 +101,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      * @param isUseVariable 是否使用变量
      */
     public Setting( String path, Charset charset, boolean isUseVariable ) {
-        Preconditions.notBlank(path, "Blank setting path !");
+        Precondition.notBlank(path, "Blank setting path !");
         this.init(ResourceUtil.getResourceObj(path), charset, isUseVariable);
     }
 
@@ -113,7 +113,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      * @param isUseVariable 是否使用变量
      */
     public Setting( File configFile, Charset charset, boolean isUseVariable ) {
-        Preconditions.notNull(configFile, "Null setting file define!");
+        Precondition.notNull(configFile, "Null setting file define!");
         this.init(new FileResource(configFile), charset, isUseVariable);
     }
 
@@ -126,7 +126,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      * @param isUseVariable 是否使用变量
      */
     public Setting( String path, Class<?> clazz, Charset charset, boolean isUseVariable ) {
-        Preconditions.notBlank(path, "Blank setting path !");
+        Precondition.notBlank(path, "Blank setting path !");
         this.init(new ClassPathResource(path, clazz), charset, isUseVariable);
     }
 
@@ -138,7 +138,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      * @param isUseVariable 是否使用变量
      */
     public Setting( URL url, Charset charset, boolean isUseVariable ) {
-        Preconditions.notNull(url, "Null setting url define!");
+        Precondition.notNull(url, "Null setting url define!");
         this.init(new UrlResource(url), charset, isUseVariable);
     }
 
@@ -174,7 +174,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      * @return 成功初始化与否
      */
     public boolean init( Resource resource, Charset charset, boolean isUseVariable ) {
-        Preconditions.notNull(resource, "Setting resource must be not null!");
+        Precondition.notNull(resource, "Setting resource must be not null!");
         this.resource = resource;
         this.charset = charset;
         this.isUseVariable = isUseVariable;
@@ -211,7 +211,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      */
     public void autoLoad( boolean autoReload, Consumer<Boolean> callback ) {
         if (autoReload) {
-            Preconditions.notNull(this.resource, "Setting resource must be not null !");
+            Precondition.notNull(this.resource, "Setting resource must be not null !");
             if (null != this.watchMonitor) {
                 // 先关闭之前的监听
                 this.watchMonitor.close();
@@ -363,7 +363,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
      */
     public void store() {
         final URL resourceUrl = getSettingUrl();
-        Preconditions.notNull(resourceUrl, "Setting path must be not null !");
+        Precondition.notNull(resourceUrl, "Setting path must be not null !");
         store(FileUtil.file(resourceUrl));
     }
 

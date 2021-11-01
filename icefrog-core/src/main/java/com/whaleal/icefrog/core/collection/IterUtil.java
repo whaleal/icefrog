@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.collection;
 import com.whaleal.icefrog.core.exceptions.UtilException;
 import com.whaleal.icefrog.core.lang.Editor;
 import com.whaleal.icefrog.core.lang.Matcher;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.map.MapUtil;
@@ -16,8 +16,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * {@link Iterable} 和 {@link Iterator} 相关工具类
@@ -604,7 +604,7 @@ public class IterUtil {
      * @since 1.0.0
      */
     public static <T> T firstMatch( Iterator<T> iterator, Matcher<T> matcher ) {
-        Preconditions.notNull(matcher, "Matcher must be not null !");
+        Precondition.notNull(matcher, "Matcher must be not null !");
         if (null != iterator) {
             while (iterator.hasNext()) {
                 final T next = iterator.next();
@@ -994,7 +994,7 @@ public class IterUtil {
      * @param removeFrom the iterator to (potentially) remove elements from
      * @param predicate  a predicate that determines whether an element should be removed
      * @return {@code true} if any elements were removed from the iterator
-     * @since 2.0
+     *
      */
 
     public static <T extends Object> boolean removeIf(
@@ -1266,7 +1266,7 @@ public class IterUtil {
      * <p><b>Warning:</b> avoid using a {@code predicate} that matches {@code null}. If {@code null}
      * is matched in {@code iterator}, a NullPointerException will be thrown.
      *
-     * @since 11.0
+     *
      */
     public static <T> Optional<T> tryFind( Iterator<T> iterator, Predicate predicate ) {
         checkNotNull(iterator);
@@ -1292,7 +1292,7 @@ public class IterUtil {
      * return {@code false}. Otherwise, the iterator will be set to the element which satisfies the
      * {@code predicate}.
      *
-     * @since 2.0
+     *
      */
     public static <T extends Object> int indexOf(
             Iterator<T> iterator, Predicate predicate ) {
@@ -1392,7 +1392,7 @@ public class IterUtil {
      *
      * @param defaultValue the default value to return if the iterator is empty
      * @return the last element of {@code iterator}
-     * @since 3.0
+     *
      */
 
     public static <T extends Object> T getLast(
@@ -1405,7 +1405,7 @@ public class IterUtil {
      * hasNext()} returns {@code false}, whichever comes first.
      *
      * @return the number of elements the iterator was advanced
-     * @since 13.0 (since 3.0 as {@code Iterators.skip})
+     *
      */
 
     public static int advance( Iterator<?> iterator, int numberToAdvance ) {
@@ -1427,7 +1427,7 @@ public class IterUtil {
      * @param iterator  the iterator to limit
      * @param limitSize the maximum number of elements in the returned iterator
      * @throws IllegalArgumentException if {@code limitSize} is negative
-     * @since 3.0
+     *
      */
     public static <T extends Object> Iterator<T> limit(
             final Iterator<T> iterator, final int limitSize ) {

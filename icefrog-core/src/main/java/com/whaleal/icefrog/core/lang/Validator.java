@@ -1095,9 +1095,9 @@ public class Validator {
      * @since 1.0.0
      */
     public static boolean isBetween( Number value, Number min, Number max ) {
-        Preconditions.notNull(value);
-        Preconditions.notNull(min);
-        Preconditions.notNull(max);
+        Precondition.notNull(value);
+        Precondition.notNull(min);
+        Precondition.notNull(max);
         final double doubleValue = value.doubleValue();
         return (doubleValue >= min.doubleValue()) && (doubleValue <= max.doubleValue());
     }

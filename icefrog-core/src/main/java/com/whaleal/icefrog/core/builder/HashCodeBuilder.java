@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.builder;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import java.lang.reflect.AccessibleObject;
@@ -157,8 +157,8 @@ public class HashCodeBuilder implements Builder<Integer> {
      * @throws IllegalArgumentException if the number is even
      */
     public HashCodeBuilder( final int initialOddNumber, final int multiplierOddNumber ) {
-        Preconditions.isTrue(initialOddNumber % 2 != 0, "HashCodeBuilder requires an odd initial value");
-        Preconditions.isTrue(multiplierOddNumber % 2 != 0, "HashCodeBuilder requires an odd multiplier");
+        Precondition.isTrue(initialOddNumber % 2 != 0, "HashCodeBuilder requires an odd initial value");
+        Precondition.isTrue(multiplierOddNumber % 2 != 0, "HashCodeBuilder requires an odd multiplier");
         iConstant = multiplierOddNumber;
         iTotal = initialOddNumber;
     }

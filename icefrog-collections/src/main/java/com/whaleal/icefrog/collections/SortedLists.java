@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.RandomAccess;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

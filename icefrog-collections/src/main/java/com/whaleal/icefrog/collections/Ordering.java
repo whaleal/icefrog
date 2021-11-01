@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNonnegative;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

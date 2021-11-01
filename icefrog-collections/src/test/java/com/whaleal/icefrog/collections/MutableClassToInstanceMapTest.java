@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Unit test of {@link MutableClassToInstanceMap}.
@@ -11,6 +12,10 @@ import junit.framework.TestCase;
  *
  */
 public class MutableClassToInstanceMapTest extends TestCase {
+
+  @Test
+  public void test(){
+  }
 
 
   private ClassToInstanceMap<Number> map;

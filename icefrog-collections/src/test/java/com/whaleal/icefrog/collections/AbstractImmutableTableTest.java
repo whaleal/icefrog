@@ -6,6 +6,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests {@link ImmutableTable}
@@ -14,6 +15,9 @@ import junit.framework.TestCase;
  */
 
 public abstract class AbstractImmutableTableTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
   abstract Iterable<ImmutableTable<Character, Integer, String>> getTestInstances();
 

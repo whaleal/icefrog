@@ -16,7 +16,7 @@
 
 package com.whaleal.icefrog.core.comparator;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.util.Comparator;
 
@@ -52,7 +52,7 @@ public class InstanceComparator<T> implements Comparator<T> {
      * @param instanceOrder 用于比较排序的对象类型数组，排序按照数组位置排序
      */
     public InstanceComparator( boolean atEndIfMiss, Class<?>... instanceOrder ) {
-        Preconditions.notNull(instanceOrder, "'instanceOrder' array must not be null");
+        Precondition.notNull(instanceOrder, "'instanceOrder' array must not be null");
         this.atEndIfMiss = atEndIfMiss;
         this.instanceOrder = instanceOrder;
     }

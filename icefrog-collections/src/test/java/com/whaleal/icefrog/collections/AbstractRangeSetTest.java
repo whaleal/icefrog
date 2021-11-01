@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +17,9 @@ import java.util.NoSuchElementException;
  */
  // TreeRangeSet
 public abstract class AbstractRangeSetTest extends TestCase {
+  @Test
+  public void test(){
+  }
   public static void testInvariants(RangeSet<?> rangeSet) {
     testInvariantsInternal(rangeSet);
     testInvariantsInternal(rangeSet.complement());

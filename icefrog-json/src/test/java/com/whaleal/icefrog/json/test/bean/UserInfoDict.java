@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * 用户信息
  *
- * @author Looly
+ * @author looly   wh
  * @author wh
  */
 public class UserInfoDict implements Serializable {

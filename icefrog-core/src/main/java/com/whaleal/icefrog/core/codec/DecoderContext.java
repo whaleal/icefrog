@@ -17,13 +17,13 @@
 package com.whaleal.icefrog.core.codec;
 
 
-import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 /**
  * The context for decoding values to your type.
  *
  * @see Decoder
- * @since 3.0
+ *
  */
 public final class DecoderContext {
     private static final DecoderContext DEFAULT_CONTEXT = DecoderContext.builder().build();

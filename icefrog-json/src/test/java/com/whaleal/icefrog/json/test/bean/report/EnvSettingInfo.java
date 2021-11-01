@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * 测试环境信息
  *
- * @author Looly
+ * @author looly   wh
  * @author wh
  * @version 20181012
  */

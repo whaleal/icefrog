@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.util;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 import java.lang.reflect.Field;
@@ -25,7 +25,7 @@ public class EnumUtil {
      * @return 是否为Enum类
      */
     public static boolean isEnum( Class<?> clazz ) {
-        Preconditions.notNull(clazz);
+        Precondition.notNull(clazz);
         return clazz.isEnum();
     }
 
@@ -36,7 +36,7 @@ public class EnumUtil {
      * @return 是否为Enum类
      */
     public static boolean isEnum( Object obj ) {
-        Preconditions.notNull(obj);
+        Precondition.notNull(obj);
         return obj.getClass().isEnum();
     }
 

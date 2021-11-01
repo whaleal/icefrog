@@ -3,7 +3,7 @@ package com.whaleal.icefrog.crypto.asymmetric;
 import com.whaleal.icefrog.core.codec.BCD;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.crypto.SecureUtil;
@@ -106,7 +106,7 @@ public interface AsymmetricDecryptor {
      * @since 1.0.0
      */
     default byte[] decryptFromBcd( String data, KeyType keyType, Charset charset ) {
-        Preconditions.notNull(data, "Bcd string must be not null!");
+        Precondition.notNull(data, "Bcd string must be not null!");
         final byte[] dataBytes = BCD.ascToBcd(StrUtil.bytes(data, charset));
         return decrypt(dataBytes, keyType);
     }

@@ -107,8 +107,8 @@ import static com.whaleal.icefrog.core.util.StrUtil.lenientFormat;
  * @author Looly
  * @author wh
  */
-public class Preconditions {
-    private Preconditions() {
+public class Precondition {
+    private Precondition() {
     }
 
     /**

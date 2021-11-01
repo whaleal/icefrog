@@ -9,8 +9,8 @@ import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Queue;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * A non-blocking queue which automatically evicts elements from the head of the queue when

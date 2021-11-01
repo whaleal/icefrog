@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.codec;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 /**
  * BCD码（Binary-Coded Decimal‎）亦称二进码十进数或二-十进制代码<br>
@@ -63,7 +63,7 @@ public class BCD {
      * @return BCD
      */
     public static byte[] ascToBcd( byte[] ascii ) {
-        Preconditions.notNull(ascii, "Ascii must be not null!");
+        Precondition.notNull(ascii, "Ascii must be not null!");
         return ascToBcd(ascii, ascii.length);
     }
 
@@ -75,7 +75,7 @@ public class BCD {
      * @return BCD
      */
     public static byte[] ascToBcd( byte[] ascii, int ascLength ) {
-        Preconditions.notNull(ascii, "Ascii must be not null!");
+        Precondition.notNull(ascii, "Ascii must be not null!");
         byte[] bcd = new byte[ascLength / 2];
         int j = 0;
         for (int i = 0; i < (ascLength + 1) / 2; i++) {
@@ -92,7 +92,7 @@ public class BCD {
      * @return ASCII字符串
      */
     public static String bcdToStr( byte[] bytes ) {
-        Preconditions.notNull(bytes, "Bcd bytes must be not null!");
+        Precondition.notNull(bytes, "Bcd bytes must be not null!");
         char[] temp = new char[bytes.length * 2];
         char val;
 

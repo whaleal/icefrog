@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.EnumSet;
@@ -17,7 +18,9 @@ import static java.util.Arrays.asList;
  */
 
 public class EnumMultisetTest extends TestCase {
-
+  @Test
+  public void test(){
+  }
 
 
   private enum Color {

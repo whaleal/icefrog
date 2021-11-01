@@ -20,7 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 
 import static com.whaleal.icefrog.collections.NullnessCasts.uncheckedCastNullableTToT;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static com.whaleal.icefrog.core.util.PredicateUtil.compose;
 import static java.util.Objects.requireNonNull;
 

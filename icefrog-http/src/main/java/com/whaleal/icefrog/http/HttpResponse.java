@@ -2,7 +2,7 @@ package com.whaleal.icefrog.http;
 
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.io.*;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.ReUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -291,7 +291,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
      * @since 1.0.0
      */
     public long writeBody( OutputStream out, boolean isCloseOut, StreamProgress streamProgress ) {
-        Preconditions.notNull(out, "[out] must be not null!");
+        Precondition.notNull(out, "[out] must be not null!");
         final long contentLength = contentLength();
         try {
             return copyBody(bodyStream(), out, contentLength, streamProgress);
@@ -314,7 +314,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
      * @since 1.0.0
      */
     public long writeBody( File targetFileOrDir, StreamProgress streamProgress ) {
-        Preconditions.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
+        Precondition.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
 
         final File outFile = completeFileNameFromHeader(targetFileOrDir);
         return writeBody(FileUtil.getOutputStream(outFile), true, streamProgress);
@@ -334,7 +334,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
      * @since 1.0.0
      */
     public long writeBody( File targetFileOrDir, String tempFileSuffix, StreamProgress streamProgress ) {
-        Preconditions.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
+        Precondition.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
 
         File outFile = completeFileNameFromHeader(targetFileOrDir);
 
@@ -376,7 +376,7 @@ public class HttpResponse extends HttpBase<HttpResponse> implements Closeable {
      * @since 1.0.0
      */
     public File writeBodyForFile( File targetFileOrDir, StreamProgress streamProgress ) {
-        Preconditions.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
+        Precondition.notNull(targetFileOrDir, "[targetFileOrDir] must be not null!");
 
         final File outFile = completeFileNameFromHeader(targetFileOrDir);
         writeBody(FileUtil.getOutputStream(outFile), true, streamProgress);

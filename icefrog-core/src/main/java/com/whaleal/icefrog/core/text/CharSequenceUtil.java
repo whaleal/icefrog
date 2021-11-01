@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.comparator.VersionComparator;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.lang.Matcher;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.util.*;
 
@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.function.Predicate;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * {@link CharSequence} 相关工具类封装
@@ -3815,7 +3815,7 @@ public class CharSequenceUtil {
      * @since 1.0.0
      */
     public static String maxLength( CharSequence string, int length ) {
-        Preconditions.isTrue(length > 0);
+        Precondition.isTrue(length > 0);
         if (null == string) {
             return null;
         }

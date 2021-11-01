@@ -6,6 +6,7 @@ package com.whaleal.icefrog.collections;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Unit test for {@link ComparisonChain}.
@@ -14,6 +15,9 @@ import junit.framework.TestCase;
  */
 
 public class ComparisonChainTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final DontCompareMe DONT_COMPARE_ME = new DontCompareMe();
 
   private static class DontCompareMe implements Comparable<DontCompareMe> {

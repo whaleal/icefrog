@@ -2,7 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -14,7 +14,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /** Collectors utilities for {@code common.collect} internals. */
@@ -341,7 +341,7 @@ final class CollectCollectors {
     return Collectors.collectingAndThen(
         flatteningToMultimap(
             input -> checkNotNull(keyFunction.apply(input)),
-            input -> valuesFunction.apply(input).peek(Preconditions::checkNotNull),
+            input -> valuesFunction.apply(input).peek(Precondition::checkNotNull),
             MultimapBuilder.linkedHashKeys().arrayListValues()::<K, V>build),
         ImmutableListMultimap::copyOf);
   }
@@ -368,7 +368,7 @@ final class CollectCollectors {
     return Collectors.collectingAndThen(
         flatteningToMultimap(
             input -> checkNotNull(keyFunction.apply(input)),
-            input -> valuesFunction.apply(input).peek(Preconditions::checkNotNull),
+            input -> valuesFunction.apply(input).peek(Precondition::checkNotNull),
             MultimapBuilder.linkedHashKeys().linkedHashSetValues()::<K, V>build),
         ImmutableSetMultimap::copyOf);
   }

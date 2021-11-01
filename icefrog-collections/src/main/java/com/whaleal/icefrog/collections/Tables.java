@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collector;
 
 import static com.whaleal.icefrog.collections.Table.Cell;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.text.csv;
 
 import com.whaleal.icefrog.core.bean.BeanUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.util.*;
 
@@ -28,7 +28,7 @@ public final class CsvRow implements List<String> {
      * @param fields             数据列表
      */
     public CsvRow( long originalLineNumber, Map<String, Integer> headerMap, List<String> fields ) {
-        Preconditions.notNull(fields, "fields must be not null!");
+        Precondition.notNull(fields, "fields must be not null!");
         this.originalLineNumber = originalLineNumber;
         this.headerMap = headerMap;
         this.fields = fields;
@@ -51,7 +51,7 @@ public final class CsvRow implements List<String> {
      * @throws IllegalStateException CSV文件无标题行抛出此异常
      */
     public String getByName( String name ) {
-        Preconditions.notNull(this.headerMap, "No header available!");
+        Precondition.notNull(this.headerMap, "No header available!");
 
         final Integer col = headerMap.get(name);
         if (col != null) {

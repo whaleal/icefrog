@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.io.file;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
@@ -386,7 +386,7 @@ public class FileWriter extends FileWrapper {
      * @throws IORuntimeException IO异常
      */
     private void checkFile() throws IORuntimeException {
-        Preconditions.notNull(file, "File to write content is null !");
+        Precondition.notNull(file, "File to write content is null !");
         if (this.file.exists() && false == file.isFile()) {
             throw new IORuntimeException("File [{}] is not a file !", this.file.getAbsoluteFile());
         }

@@ -12,8 +12,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.BiFunction;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.util.ArrayUtil.firstNonNull;
 import static com.whaleal.icefrog.core.util.PredicateUtil.*;
 import static java.util.Objects.requireNonNull;

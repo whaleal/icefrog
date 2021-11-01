@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static com.whaleal.icefrog.core.util.NumberUtil.factorial;
 import static java.util.Objects.requireNonNull;
 

@@ -9,8 +9,8 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndex;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndex;
 import static com.whaleal.icefrog.core.map.MapUtil.keyPredicateOnEntries;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;

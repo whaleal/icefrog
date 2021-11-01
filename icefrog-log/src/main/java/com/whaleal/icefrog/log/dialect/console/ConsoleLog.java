@@ -3,7 +3,7 @@ package com.whaleal.icefrog.log.dialect.console;
 import com.whaleal.icefrog.core.date.DateUtil;
 import com.whaleal.icefrog.core.lang.Console;
 import com.whaleal.icefrog.core.lang.Dict;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.log.AbstractLog;
 import com.whaleal.icefrog.log.level.Level;
@@ -49,7 +49,7 @@ public class ConsoleLog extends AbstractLog {
      * @since 1.0.0
      */
     public static void setLevel( Level customLevel ) {
-        Preconditions.notNull(customLevel);
+        Precondition.notNull(customLevel);
         currentLevel = customLevel;
     }
 

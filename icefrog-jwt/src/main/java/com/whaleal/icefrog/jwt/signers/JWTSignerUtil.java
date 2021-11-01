@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.jwt.signers;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.security.Key;
 import java.security.KeyPair;
@@ -129,7 +129,7 @@ public class JWTSignerUtil {
      * @return 签名器
      */
     public static JWTSigner createSigner( String algorithmId, byte[] key ) {
-        Preconditions.notNull(key, "Signer key must be not null!");
+        Precondition.notNull(key, "Signer key must be not null!");
 
         if (null == algorithmId || NoneJWTSigner.ID_NONE.equals(algorithmId)) {
             return none();
@@ -145,7 +145,7 @@ public class JWTSignerUtil {
      * @return 签名器
      */
     public static JWTSigner createSigner( String algorithmId, KeyPair keyPair ) {
-        Preconditions.notNull(keyPair, "Signer key pair must be not null!");
+        Precondition.notNull(keyPair, "Signer key pair must be not null!");
 
         if (null == algorithmId || NoneJWTSigner.ID_NONE.equals(algorithmId)) {
             return none();
@@ -161,7 +161,7 @@ public class JWTSignerUtil {
      * @return 签名器
      */
     public static JWTSigner createSigner( String algorithmId, Key key ) {
-        Preconditions.notNull(key, "Signer key must be not null!");
+        Precondition.notNull(key, "Signer key must be not null!");
 
         if (null == algorithmId || NoneJWTSigner.ID_NONE.equals(algorithmId)) {
             return NoneJWTSigner.NONE;

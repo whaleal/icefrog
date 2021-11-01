@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.resource.Resource;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -165,8 +165,8 @@ public class Img implements Serializable {
      * @since 1.0.0
      */
     private static Rectangle calcRotatedSize( int width, int height, int degree ) {
-        Preconditions.checkBetween(width, 0, Integer.MAX_VALUE);
-        Preconditions.checkBetween(height, 0, Integer.MAX_VALUE);
+        Precondition.checkBetween(width, 0, Integer.MAX_VALUE);
+        Precondition.checkBetween(height, 0, Integer.MAX_VALUE);
 
         while (degree < 0) {
             // 负数角度转换为正数角度
@@ -176,7 +176,7 @@ public class Img implements Serializable {
             degree -= 360;
         }
 
-        Preconditions.checkBetween(degree, 0, 360);
+        Precondition.checkBetween(degree, 0, 360);
         if (degree >= 90) {
             if (degree / 90 % 2 == 1) {
                 int temp = height;
@@ -660,11 +660,11 @@ public class Img implements Serializable {
      * @throws IORuntimeException IO异常
      */
     public boolean write( ImageOutputStream targetImageStream ) throws IORuntimeException {
-        Preconditions.notBlank(this.targetImageType, "Target image type is blank !");
-        Preconditions.notNull(targetImageStream, "Target output stream is null !");
+        Precondition.notBlank(this.targetImageType, "Target image type is blank !");
+        Precondition.notNull(targetImageStream, "Target output stream is null !");
 
         final Image targetImage = (null == this.targetImage) ? this.srcImage : this.targetImage;
-        Preconditions.notNull(targetImage, "Target image is null !");
+        Precondition.notNull(targetImage, "Target image is null !");
 
         return ImgUtil.write(targetImage, this.targetImageType, targetImageStream, this.quality);
     }

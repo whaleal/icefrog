@@ -2,7 +2,7 @@ package com.whaleal.icefrog.http;
 
 import com.whaleal.icefrog.core.io.FastByteArrayOutputStream;
 import com.whaleal.icefrog.core.io.StreamProgress;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -77,7 +77,7 @@ public class HttpDownloader {
      * @return 文件大小
      */
     public static long download( String url, OutputStream out, boolean isCloseOut, StreamProgress streamProgress ) {
-        Preconditions.notNull(out, "[out] is null !");
+        Precondition.notNull(out, "[out] is null !");
 
         return requestDownload(url, -1).writeBody(out, isCloseOut, streamProgress);
     }
@@ -91,7 +91,7 @@ public class HttpDownloader {
      * @since 1.0.0
      */
     private static HttpResponse requestDownload( String url, int timeout ) {
-        Preconditions.notBlank(url, "[url] is blank !");
+        Precondition.notBlank(url, "[url] is blank !");
 
         final HttpResponse response = HttpUtil.createGet(url, true)
                 .timeout(timeout)

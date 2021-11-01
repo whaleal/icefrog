@@ -3,7 +3,7 @@ package com.whaleal.icefrog.extra.compress.archiver;
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.lang.Filter;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.extra.compress.CompressException;
 import org.apache.commons.compress.archivers.ArchiveException;
@@ -28,143 +28,142 @@ import java.nio.charset.Charset;
  *     <li>{@link ArchiveStreamFactory#ZIP}</li>
  * </ul>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class StreamArchiver implements Archiver {
 
-    private final ArchiveOutputStream out;
+	/**
+	 * 创建归档器
+	 *
+	 * @param charset      编码
+	 * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
+	 * @param file         归档输出的文件
+	 * @return StreamArchiver
+	 */
+	public static StreamArchiver create(Charset charset, String archiverName, File file) {
+		return new StreamArchiver(charset, archiverName, file);
+	}
 
-    /**
-     * 构造
-     *
-     * @param charset      编码
-     * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
-     * @param file         归档输出的文件
-     */
-    public StreamArchiver( Charset charset, String archiverName, File file ) {
-        this(charset, archiverName, FileUtil.getOutputStream(file));
-    }
+	/**
+	 * 创建归档器
+	 *
+	 * @param charset      编码
+	 * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
+	 * @param out          归档输出的流
+	 * @return StreamArchiver
+	 */
+	public static StreamArchiver create(Charset charset, String archiverName, OutputStream out) {
+		return new StreamArchiver(charset, archiverName, out);
+	}
 
-    /**
-     * 构造
-     *
-     * @param charset      编码
-     * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
-     * @param targetStream 归档输出的流
-     */
-    public StreamArchiver( Charset charset, String archiverName, OutputStream targetStream ) {
-        final ArchiveStreamFactory factory = new ArchiveStreamFactory(charset.name());
-        try {
-            this.out = factory.createArchiveOutputStream(archiverName, targetStream);
-        } catch (ArchiveException e) {
-            throw new CompressException(e);
-        }
+	private final ArchiveOutputStream out;
 
-        //特殊设置
-        if (this.out instanceof TarArchiveOutputStream) {
-            ((TarArchiveOutputStream) out).setLongFileMode(TarArchiveOutputStream.LONGFILE_GNU);
-        } else if (this.out instanceof ArArchiveOutputStream) {
-            ((ArArchiveOutputStream) out).setLongFileMode(ArArchiveOutputStream.LONGFILE_BSD);
-        }
-    }
+	/**
+	 * 构造
+	 *
+	 * @param charset      编码
+	 * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
+	 * @param file         归档输出的文件
+	 */
+	public StreamArchiver(Charset charset, String archiverName, File file) {
+		this(charset, archiverName, FileUtil.getOutputStream(file));
+	}
 
-    /**
-     * 创建归档器
-     *
-     * @param charset      编码
-     * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
-     * @param file         归档输出的文件
-     * @return StreamArchiver
-     */
-    public static StreamArchiver create( Charset charset, String archiverName, File file ) {
-        return new StreamArchiver(charset, archiverName, file);
-    }
+	/**
+	 * 构造
+	 *
+	 * @param charset      编码
+	 * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
+	 * @param targetStream 归档输出的流
+	 */
+	public StreamArchiver(Charset charset, String archiverName, OutputStream targetStream) {
+		final ArchiveStreamFactory factory = new ArchiveStreamFactory(charset.name());
+		try {
+			this.out = factory.createArchiveOutputStream(archiverName, targetStream);
+		} catch (ArchiveException e) {
+			throw new CompressException(e);
+		}
 
-    /**
-     * 创建归档器
-     *
-     * @param charset      编码
-     * @param archiverName 归档类型名称，见{@link ArchiveStreamFactory}
-     * @param out          归档输出的流
-     * @return StreamArchiver
-     */
-    public static StreamArchiver create( Charset charset, String archiverName, OutputStream out ) {
-        return new StreamArchiver(charset, archiverName, out);
-    }
+		//特殊设置
+		if(this.out instanceof TarArchiveOutputStream){
+			((TarArchiveOutputStream)out).setLongFileMode(TarArchiveOutputStream.LONGFILE_GNU);
+		} else if(this.out instanceof ArArchiveOutputStream){
+			((ArArchiveOutputStream)out).setLongFileMode(ArArchiveOutputStream.LONGFILE_BSD);
+		}
+	}
 
-    /**
-     * 将文件或目录加入归档包，目录采取递归读取方式按照层级加入
-     *
-     * @param file      文件或目录
-     * @param path      文件或目录的初始路径，null表示位于根路径
-     * @param predicate 文件过滤器，指定哪些文件或目录可以加入，当{@link Predicate#apply(Object)}为true时加入。
-     * @return this
-     * @throws IORuntimeException IO异常
-     */
-    @Override
-    public StreamArchiver add( File file, String path, Predicate<File> predicate ) throws IORuntimeException {
-        try {
-            addInternal(file, path, predicate);
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
-        return this;
-    }
+	/**
+	 * 将文件或目录加入归档包，目录采取递归读取方式按照层级加入
+	 *
+	 * @param file   文件或目录
+	 * @param path   文件或目录的初始路径，null表示位于根路径
+	 * @param filter 文件过滤器，指定哪些文件或目录可以加入，当{@link Filter#accept(Object)}为true时加入。
+	 * @return this
+	 * @throws IORuntimeException IO异常
+	 */
+	@Override
+	public StreamArchiver add(File file, String path, Filter<File> filter) throws IORuntimeException {
+		try {
+			addInternal(file, path, filter);
+		} catch (IOException e) {
+			throw new IORuntimeException(e);
+		}
+		return this;
+	}
 
-    /**
-     * 结束已经增加的文件归档，此方法不会关闭归档流，可以继续添加文件
-     *
-     * @return this
-     */
-    @Override
-    public StreamArchiver finish() {
-        try {
-            this.out.finish();
-        } catch (IOException e) {
-            throw new IORuntimeException(e);
-        }
-        return this;
-    }
+	/**
+	 * 结束已经增加的文件归档，此方法不会关闭归档流，可以继续添加文件
+	 *
+	 * @return this
+	 */
+	@Override
+	public StreamArchiver finish() {
+		try {
+			this.out.finish();
+		} catch (IOException e) {
+			throw new IORuntimeException(e);
+		}
+		return this;
+	}
 
-    @Override
-    public void close() {
-        try {
-            finish();
-        } catch (Exception ignore) {
-            //ignore
-        }
-        IoUtil.close(this.out);
-    }
+	@Override
+	public void close() {
+		try {
+			finish();
+		} catch (Exception ignore) {
+			//ignore
+		}
+		IoUtil.close(this.out);
+	}
 
-    /**
-     * 将文件或目录加入归档包，目录采取递归读取方式按照层级加入
-     *
-     * @param file      文件或目录
-     * @param path      文件或目录的初始路径，null表示位于根路径
-     * @param predicate 文件过滤器，指定哪些文件或目录可以加入，当{@link Predicate#apply(Object)}为true时加入。
-     */
-    private void addInternal( File file, String path, Predicate<File> predicate ) throws IOException {
-        if (null != predicate && false == predicate.apply(file)) {
-            return;
-        }
-        final ArchiveOutputStream out = this.out;
+	/**
+	 * 将文件或目录加入归档包，目录采取递归读取方式按照层级加入
+	 *
+	 * @param file   文件或目录
+	 * @param path   文件或目录的初始路径，null表示位于根路径
+	 * @param filter 文件过滤器，指定哪些文件或目录可以加入，当{@link Filter#accept(Object)}为true时加入。
+	 */
+	private void addInternal(File file, String path, Filter<File> filter) throws IOException {
+		if (null != filter && false == filter.accept(file)) {
+			return;
+		}
+		final ArchiveOutputStream out = this.out;
 
-        final String entryName = StrUtil.addSuffixIfNot(StrUtil.nullToEmpty(path), StrUtil.SLASH) + file.getName();
-        out.putArchiveEntry(out.createArchiveEntry(file, entryName));
+		final String entryName = StrUtil.addSuffixIfNot(StrUtil.nullToEmpty(path), StrUtil.SLASH) + file.getName();
+		out.putArchiveEntry(out.createArchiveEntry(file, entryName));
 
-        if (file.isDirectory()) {
-            // 目录遍历写入
-            final File[] files = file.listFiles();
-            for (File childFile : files) {
-                addInternal(childFile, entryName, predicate);
-            }
-        } else {
-            if (file.isFile()) {
-                // 文件直接写入
-                FileUtil.writeToStream(file, out);
-            }
-            out.closeArchiveEntry();
-        }
-    }
+		if (file.isDirectory()) {
+			// 目录遍历写入
+			final File[] files = file.listFiles();
+			for (File childFile : files) {
+				addInternal(childFile, entryName, filter);
+			}
+		} else {
+			if (file.isFile()) {
+				// 文件直接写入
+				FileUtil.writeToStream(file, out);
+			}
+			out.closeArchiveEntry();
+		}
+	}
 }

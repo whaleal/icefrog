@@ -21,8 +21,8 @@ import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.math.MathUtil.checkedMultiply;
 import static com.whaleal.icefrog.core.math.MathUtil.log2;
 

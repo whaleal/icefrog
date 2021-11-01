@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.lang.reflect;
 
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
@@ -136,8 +136,8 @@ public class MethodHandleUtil {
      * @return 结果
      */
     public static <T> T invokeSpecial( Object obj, String methodName, Object... args ) {
-        Preconditions.notNull(obj, "Object to get method must be not null!");
-        Preconditions.notBlank(methodName, "Method name must be not blank!");
+        Precondition.notNull(obj, "Object to get method must be not null!");
+        Precondition.notBlank(methodName, "Method name must be not blank!");
 
         final Method method = ReflectUtil.getMethodOfObj(obj, methodName, args);
         if (null == method) {
@@ -210,7 +210,7 @@ public class MethodHandleUtil {
      */
     @SuppressWarnings("unchecked")
     public static <T> T invoke( boolean isSpecial, Object obj, Method method, Object... args ) {
-        Preconditions.notNull(method, "Method must be not null!");
+        Precondition.notNull(method, "Method must be not null!");
         final Class<?> declaringClass = method.getDeclaringClass();
         final MethodHandles.Lookup lookup = lookup(declaringClass);
         try {

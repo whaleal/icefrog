@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 
 import static com.whaleal.icefrog.collections.RegularImmutableMap.makeImmutable;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static java.util.Objects.requireNonNull;
 
 

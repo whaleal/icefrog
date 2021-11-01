@@ -5,7 +5,7 @@ import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.resource.ResourceUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.net.URLDecoder;
 import com.whaleal.icefrog.core.net.URLEncoder;
 import com.whaleal.icefrog.core.net.url.UrlQuery;
@@ -108,7 +108,7 @@ public class URLUtil {
      * @since 1.0.0
      */
     public static URL url( String url, URLStreamHandler handler ) {
-        Preconditions.notNull(url, "URL must not be null");
+        Precondition.notNull(url, "URL must not be null");
 
         // 兼容Spring的ClassPath路径
         if (url.startsWith(CLASSPATH_URL_PREFIX)) {
@@ -160,7 +160,7 @@ public class URLUtil {
      * @since 1.0.0
      */
     public static URL toUrlForHttp( String urlStr, URLStreamHandler handler ) {
-        Preconditions.notBlank(urlStr, "Url is blank !");
+        Precondition.notBlank(urlStr, "Url is blank !");
         // 编码空白符，防止空格引起的请求异常
         urlStr = encodeBlank(urlStr);
         try {
@@ -227,7 +227,7 @@ public class URLUtil {
      * @throws UtilException MalformedURLException
      */
     public static URL getURL( File file ) {
-        Preconditions.notNull(file, "File is null !");
+        Precondition.notNull(file, "File is null !");
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
@@ -644,7 +644,7 @@ public class URLUtil {
      * @since 1.0.0
      */
     public static InputStream getStream( URL url ) {
-        Preconditions.notNull(url);
+        Precondition.notNull(url);
         try {
             return url.openStream();
         } catch (IOException e) {

@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.collection;
 
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -66,7 +66,7 @@ public class LineIter implements Iterator<String>, Iterable<String>, Closeable, 
      * @throws IllegalArgumentException reader为null抛出此异常
      */
     public LineIter( Reader reader ) throws IllegalArgumentException {
-        Preconditions.notNull(reader, "Reader must not be null");
+        Precondition.notNull(reader, "Reader must not be null");
         this.bufferedReader = IoUtil.getReader(reader);
     }
 

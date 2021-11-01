@@ -5,6 +5,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -21,6 +22,9 @@ import static com.whaleal.icefrog.core.util.ObjectUtil.equal;
  */
 
 public class MinMaxPriorityQueueTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final Ordering<Integer> SOME_COMPARATOR = Ordering.natural().reverse();
 
 

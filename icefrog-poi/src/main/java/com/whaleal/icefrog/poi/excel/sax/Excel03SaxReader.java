@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.poi.excel.sax;
 
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.poi.excel.sax.handler.RowHandler;
@@ -355,7 +355,7 @@ public class Excel03SaxReader implements HSSFListener, ExcelSaxReader<Excel03Sax
      * @since 1.0.0
      */
     private int getSheetIndex( String idOrRidOrSheetName ) {
-        Preconditions.notBlank(idOrRidOrSheetName, "id or rid or sheetName must be not blank!");
+        Precondition.notBlank(idOrRidOrSheetName, "id or rid or sheetName must be not blank!");
 
         // rid直接处理
         if (StrUtil.startWithIgnoreCase(idOrRidOrSheetName, RID_PREFIX)) {

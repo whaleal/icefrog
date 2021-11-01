@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.db;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -187,7 +187,7 @@ public class DialectRunner implements Serializable {
      */
     public <T> T find( Connection conn, Query query, RsHandler<T> rsh ) throws SQLException {
         checkConn(conn);
-        Preconditions.notNull(query, "[query] is null !");
+        Precondition.notNull(query, "[query] is null !");
         return SqlExecutor.queryAndClosePs(dialect.psForFind(conn, query), rsh);
     }
 
@@ -321,7 +321,7 @@ public class DialectRunner implements Serializable {
 
     //---------------------------------------------------------------------------- Private method start
     private void checkConn( Connection conn ) {
-        Preconditions.notNull(conn, "Connection object must be not null!");
+        Precondition.notNull(conn, "Connection object must be not null!");
     }
     //---------------------------------------------------------------------------- Private method start
 }

@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.crypto.asymmetric;
 
 import com.whaleal.icefrog.core.codec.Base64;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.crypto.CryptoException;
 import com.whaleal.icefrog.crypto.KeyUtil;
 
@@ -169,7 +169,7 @@ public class BaseAsymmetric<T extends BaseAsymmetric<T>> implements Serializable
      * @since 1.0.0
      */
     public T setKey( Key key ) {
-        Preconditions.notNull(key, "key must be not null !");
+        Precondition.notNull(key, "key must be not null !");
 
         if (key instanceof PublicKey) {
             return setPublicKey((PublicKey) key);

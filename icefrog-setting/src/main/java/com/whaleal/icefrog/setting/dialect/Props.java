@@ -11,7 +11,7 @@ import com.whaleal.icefrog.core.io.resource.*;
 import com.whaleal.icefrog.core.io.watch.SimpleWatcher;
 import com.whaleal.icefrog.core.io.watch.WatchMonitor;
 import com.whaleal.icefrog.core.io.watch.WatchUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.ReflectUtil;
@@ -89,7 +89,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      * @param charset 字符集
      */
     public Props( String path, Charset charset ) {
-        Preconditions.notBlank(path, "Blank properties file path !");
+        Precondition.notBlank(path, "Blank properties file path !");
         if (null != charset) {
             this.charset = charset;
         }
@@ -124,7 +124,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      * @param charset        字符集
      */
     public Props( File propertiesFile, Charset charset ) {
-        Preconditions.notNull(propertiesFile, "Null properties file!");
+        Precondition.notNull(propertiesFile, "Null properties file!");
         this.charset = charset;
         this.load(new FileResource(propertiesFile));
     }
@@ -158,7 +158,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      * @param charset 字符集
      */
     public Props( String path, Class<?> clazz, Charset charset ) {
-        Preconditions.notBlank(path, "Blank properties file path !");
+        Precondition.notBlank(path, "Blank properties file path !");
         if (null != charset) {
             this.charset = charset;
         }
@@ -191,7 +191,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      * @param charset       字符集
      */
     public Props( URL propertiesUrl, Charset charset ) {
-        Preconditions.notNull(propertiesUrl, "Null properties URL !");
+        Precondition.notNull(propertiesUrl, "Null properties URL !");
         if (null != charset) {
             this.charset = charset;
         }
@@ -269,7 +269,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      * @param resource {@link Resource}
      */
     public void load( Resource resource ) {
-        Preconditions.notNull(resource, "Props resource must be not null!");
+        Precondition.notNull(resource, "Props resource must be not null!");
         this.resource = resource;
 
         try (final BufferedReader reader = resource.getReader(charset)) {
@@ -293,7 +293,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      */
     public void autoLoad( boolean autoReload ) {
         if (autoReload) {
-            Preconditions.notNull(this.resource, "Properties resource must be not null!");
+            Precondition.notNull(this.resource, "Properties resource must be not null!");
             if (null != this.watchMonitor) {
                 // 先关闭之前的监听
                 this.watchMonitor.close();

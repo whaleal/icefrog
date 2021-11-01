@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @author Looly
+ * @author looly   wh
  * @author wh
  */
 public class ExamInfoDict implements Serializable {

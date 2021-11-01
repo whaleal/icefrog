@@ -7,7 +7,7 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.Consumer;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * An immutable sorted set with one or more elements. TODO(jlevy): Consider separate class for a

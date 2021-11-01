@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.*;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Collections.emptyMap;
 
 

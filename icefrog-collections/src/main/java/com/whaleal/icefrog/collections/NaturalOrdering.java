@@ -5,7 +5,7 @@ package com.whaleal.icefrog.collections;
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /** An ordering that uses the natural order of the values. */

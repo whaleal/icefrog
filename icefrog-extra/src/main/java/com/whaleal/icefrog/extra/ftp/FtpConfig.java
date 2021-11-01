@@ -6,171 +6,175 @@ import java.nio.charset.Charset;
 /**
  * FTP配置项，提供FTP各种参数信息
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class FtpConfig implements Serializable {
-    private static final long serialVersionUID = 1L;
-    /**
-     * 主机
-     */
-    private String host;
-    /**
-     * 端口
-     */
-    private int port;
-    /**
-     * 用户名
-     */
-    private String user;
-    /**
-     * 密码
-     */
-    private String password;
-    /**
-     * 编码
-     */
-    private Charset charset;
-    /**
-     * 连接超时时长，单位毫秒
-     */
-    private long connectionTimeout;
-    /**
-     * Socket连接超时时长，单位毫秒
-     */
-    private long soTimeout;
-    /**
-     * 设置服务器语言
-     */
-    private String serverLanguageCode;
-    /**
-     * 设置服务器系统关键词
-     */
-    private String systemKey;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 构造
-     */
-    public FtpConfig() {
-    }
+	public static FtpConfig create() {
+		return new FtpConfig();
+	}
 
-    /**
-     * 构造
-     *
-     * @param host     主机
-     * @param port     端口
-     * @param user     用户名
-     * @param password 密码
-     * @param charset  编码
-     */
-    public FtpConfig( String host, int port, String user, String password, Charset charset ) {
-        this(host, port, user, password, charset, null, null);
-    }
+	/**
+	 * 主机
+	 */
+	private String host;
+	/**
+	 * 端口
+	 */
+	private int port;
+	/**
+	 * 用户名
+	 */
+	private String user;
+	/**
+	 * 密码
+	 */
+	private String password;
+	/**
+	 * 编码
+	 */
+	private Charset charset;
 
-    /**
-     * 构造
-     *
-     * @param host               主机
-     * @param port               端口
-     * @param user               用户名
-     * @param password           密码
-     * @param charset            编码
-     * @param serverLanguageCode 服务器语言
-     * @param systemKey          系统关键字
-     * @since 1.0.0
-     */
-    public FtpConfig( String host, int port, String user, String password, Charset charset, String serverLanguageCode, String systemKey ) {
-        this.host = host;
-        this.port = port;
-        this.user = user;
-        this.password = password;
-        this.charset = charset;
-        this.serverLanguageCode = serverLanguageCode;
-        this.systemKey = systemKey;
-    }
+	/**
+	 * 连接超时时长，单位毫秒
+	 */
+	private long connectionTimeout;
 
-    public static FtpConfig create() {
-        return new FtpConfig();
-    }
+	/**
+	 * Socket连接超时时长，单位毫秒
+	 */
+	private long soTimeout;
 
-    public String getHost() {
-        return host;
-    }
+	/**
+	 * 设置服务器语言
+	 */
+	private String serverLanguageCode;
 
-    public FtpConfig setHost( String host ) {
-        this.host = host;
-        return this;
-    }
+	/**
+	 * 设置服务器系统关键词
+	 */
+	private String systemKey;
 
-    public int getPort() {
-        return port;
-    }
+	/**
+	 * 构造
+	 */
+	public FtpConfig() {
+	}
 
-    public FtpConfig setPort( int port ) {
-        this.port = port;
-        return this;
-    }
+	/**
+	 * 构造
+	 *
+	 * @param host               主机
+	 * @param port               端口
+	 * @param user               用户名
+	 * @param password           密码
+	 * @param charset            编码
+	 */
+	public FtpConfig(String host, int port, String user, String password, Charset charset) {
+		this(host, port, user, password, charset, null, null);
+	}
 
-    public String getUser() {
-        return user;
-    }
+	/**
+	 * 构造
+	 *
+	 * @param host               主机
+	 * @param port               端口
+	 * @param user               用户名
+	 * @param password           密码
+	 * @param charset            编码
+	 * @param serverLanguageCode 服务器语言
+	 * @param systemKey          系统关键字
+	 *
+	 */
+	public FtpConfig(String host, int port, String user, String password, Charset charset, String serverLanguageCode, String systemKey) {
+		this.host = host;
+		this.port = port;
+		this.user = user;
+		this.password = password;
+		this.charset = charset;
+		this.serverLanguageCode = serverLanguageCode;
+		this.systemKey = systemKey;
+	}
 
-    public FtpConfig setUser( String user ) {
-        this.user = user;
-        return this;
-    }
+	public String getHost() {
+		return host;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public FtpConfig setHost(String host) {
+		this.host = host;
+		return this;
+	}
 
-    public FtpConfig setPassword( String password ) {
-        this.password = password;
-        return this;
-    }
+	public int getPort() {
+		return port;
+	}
 
-    public Charset getCharset() {
-        return charset;
-    }
+	public FtpConfig setPort(int port) {
+		this.port = port;
+		return this;
+	}
 
-    public FtpConfig setCharset( Charset charset ) {
-        this.charset = charset;
-        return this;
-    }
+	public String getUser() {
+		return user;
+	}
 
-    public long getConnectionTimeout() {
-        return connectionTimeout;
-    }
+	public FtpConfig setUser(String user) {
+		this.user = user;
+		return this;
+	}
 
-    public FtpConfig setConnectionTimeout( long connectionTimeout ) {
-        this.connectionTimeout = connectionTimeout;
-        return this;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public long getSoTimeout() {
-        return soTimeout;
-    }
+	public FtpConfig setPassword(String password) {
+		this.password = password;
+		return this;
+	}
 
-    public FtpConfig setSoTimeout( long soTimeout ) {
-        this.soTimeout = soTimeout;
-        return this;
-    }
+	public Charset getCharset() {
+		return charset;
+	}
 
-    public String getServerLanguageCode() {
-        return serverLanguageCode;
-    }
+	public FtpConfig setCharset(Charset charset) {
+		this.charset = charset;
+		return this;
+	}
 
-    public FtpConfig setServerLanguageCode( String serverLanguageCode ) {
-        this.serverLanguageCode = serverLanguageCode;
-        return this;
-    }
+	public long getConnectionTimeout() {
+		return connectionTimeout;
+	}
 
-    public String getSystemKey() {
-        return systemKey;
-    }
+	public FtpConfig setConnectionTimeout(long connectionTimeout) {
+		this.connectionTimeout = connectionTimeout;
+		return this;
+	}
 
-    public FtpConfig setSystemKey( String systemKey ) {
-        this.systemKey = systemKey;
-        return this;
-    }
+	public long getSoTimeout() {
+		return soTimeout;
+	}
+
+	public FtpConfig setSoTimeout(long soTimeout) {
+		this.soTimeout = soTimeout;
+		return this;
+	}
+
+	public String getServerLanguageCode() {
+		return serverLanguageCode;
+	}
+
+	public FtpConfig setServerLanguageCode(String serverLanguageCode) {
+		this.serverLanguageCode = serverLanguageCode;
+		return this;
+	}
+
+	public String getSystemKey() {
+		return systemKey;
+	}
+
+	public FtpConfig setSystemKey(String systemKey) {
+		this.systemKey = systemKey;
+		return this;
+	}
 }

@@ -10,7 +10,7 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static com.whaleal.icefrog.core.util.PredicateUtil.instanceOf;
 import static java.util.Objects.requireNonNull;
 
@@ -27,7 +27,7 @@ import static java.util.Objects.requireNonNull;
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#iterables"> {@code
  * Iterators}</a>.
  *
- * @since 2.0
+ *
  */
 
 @Deprecated
@@ -164,7 +164,7 @@ public final class Iterators {
      * @param removeFrom the iterator to (potentially) remove elements from
      * @param predicate  a predicate that determines whether an element should be removed
      * @return {@code true} if any elements were removed from the iterator
-     * @since 2.0
+     *
      */
 
     public static <T extends Object> boolean removeIf(
@@ -721,7 +721,7 @@ public final class Iterators {
      * <p><b>Warning:</b> avoid using a {@code predicate} that matches {@code null}. If {@code null}
      * is matched in {@code iterator}, a NullPointerException will be thrown.
      *
-     * @since 11.0
+     *
      */
     public static <T> Optional<T> tryFind( Iterator<T> iterator, Predicate<? super T> predicate ) {
         checkNotNull(iterator);
@@ -747,7 +747,7 @@ public final class Iterators {
      * return {@code false}. Otherwise, the iterator will be set to the element which satisfies the
      * {@code predicate}.
      *
-     * @since 2.0
+     *
      */
     public static <T extends Object> int indexOf(
             Iterator<T> iterator, Predicate<? super T> predicate ) {
@@ -815,7 +815,7 @@ public final class Iterators {
      * @return the element at the specified position in {@code iterator} or {@code defaultValue} if
      * {@code iterator} produces fewer than {@code position + 1} elements.
      * @throws IndexOutOfBoundsException if {@code position} is negative
-     * @since 4.0
+     *
      */
 
     public static <T extends Object> T get(
@@ -867,7 +867,7 @@ public final class Iterators {
      *
      * @param defaultValue the default value to return if the iterator is empty
      * @return the last element of {@code iterator}
-     * @since 3.0
+     *
      */
 
     public static <T extends Object> T getLast(
@@ -880,7 +880,7 @@ public final class Iterators {
      * hasNext()} returns {@code false}, whichever comes first.
      *
      * @return the number of elements the iterator was advanced
-     * @since 13.0 (since 3.0 as {@code Iterators.skip})
+     *
      */
 
     public static int advance( Iterator<?> iterator, int numberToAdvance ) {
@@ -902,7 +902,7 @@ public final class Iterators {
      * @param iterator  the iterator to limit
      * @param limitSize the maximum number of elements in the returned iterator
      * @throws IllegalArgumentException if {@code limitSize} is negative
-     * @since 3.0
+     *
      */
     public static <T extends Object> Iterator<T> limit(
             Iterator<T> iterator, int limitSize ) {
@@ -942,7 +942,7 @@ public final class Iterators {
      *
      * @param iterator the iterator to remove and return elements from
      * @return an iterator that removes and returns elements from the supplied iterator
-     * @since 2.0
+     *
      */
     public static <T extends Object> Iterator<T> consumingIterator( Iterator<T> iterator ) {
         checkNotNull(iterator);
@@ -1177,7 +1177,7 @@ public final class Iterators {
      * <p>For any equivalent elements across all {@code iterators}, it is undefined which element is
      * returned first.
      *
-     * @since 11.0
+     *
      */
 
     public static <T extends Object> UnmodifiableIterator<T> mergeSorted(

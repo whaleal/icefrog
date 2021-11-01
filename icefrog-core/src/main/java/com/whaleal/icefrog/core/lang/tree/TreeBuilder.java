@@ -2,7 +2,7 @@ package com.whaleal.icefrog.core.lang.tree;
 
 import com.whaleal.icefrog.core.builder.Builder;
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.tree.parser.NodeParser;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -68,7 +68,7 @@ public class TreeBuilder<E> implements Builder<Tree<E>> {
     public TreeBuilder<E> append( Map<E, Tree<E>> map ) {
         checkBuilt();
 
-        Preconditions.isFalse(isBuild, "Current tree has been built.");
+        Precondition.isFalse(isBuild, "Current tree has been built.");
         this.idTreeMap.putAll(map);
         return this;
     }
@@ -228,6 +228,6 @@ public class TreeBuilder<E> implements Builder<Tree<E>> {
      * 检查是否已经构建
      */
     private void checkBuilt() {
-        Preconditions.isFalse(isBuild, "Current tree has been built.");
+        Precondition.isFalse(isBuild, "Current tree has been built.");
     }
 }

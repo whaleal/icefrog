@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.SortedSet;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * A range (or "interval") defines the <i>boundaries</i> around a contiguous span of values of some

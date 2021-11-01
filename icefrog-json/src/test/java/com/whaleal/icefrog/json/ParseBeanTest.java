@@ -10,7 +10,7 @@ import java.util.List;
  * 测试Bean中嵌套List等对象时是否完整转换<br>
  * 同时测试私有class是否可以有效实例化
  *
- * @author Looly
+ * @author looly   wh
  * @author wh
  */
 public class ParseBeanTest {

@@ -5,6 +5,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Tests for {@link RegularImmutableAsList}.
@@ -13,6 +14,9 @@ import junit.framework.TestCase;
  */
 
 public class RegularImmutableAsListTest extends TestCase {
+  @Test
+  public void test(){
+  }
   /**
    * RegularImmutableAsList should assume its input is null-free without checking, because it only
    * gets invoked from other immutable collections.

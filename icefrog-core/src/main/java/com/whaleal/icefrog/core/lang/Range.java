@@ -87,7 +87,7 @@ public class Range<T> implements Iterable<T>, Iterator<T>, Serializable {
      * @param isIncludeEnd   是否包含最后一个元素
      */
     public Range( T start, T end, Stepper<T> stepper, boolean isIncludeStart, boolean isIncludeEnd ) {
-        Preconditions.notNull(start, "First element must be not null!");
+        Precondition.notNull(start, "First element must be not null!");
         this.start = start;
         this.end = end;
         this.stepper = stepper;

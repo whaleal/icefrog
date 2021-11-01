@@ -7,6 +7,7 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.PredicateUtil;
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -16,6 +17,9 @@ import java.util.*;
  * 
  */
 public class FilteredCollectionsTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final Predicate<Integer> EVEN =
       new Predicate<Integer>() {
         @Override

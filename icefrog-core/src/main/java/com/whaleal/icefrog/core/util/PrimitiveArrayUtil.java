@@ -7,7 +7,7 @@ import java.util.Random;
 /**
  * 原始类型数组工具类
  *
- * @author Looly
+ * 
  * @author wh
  * @since 1.0.0
  */
@@ -2626,8 +2626,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static int[] shuffle( int[] array ) {
@@ -2640,8 +2640,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static int[] shuffle( int[] array, Random random ) {
@@ -2661,8 +2661,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static long[] shuffle( long[] array ) {
@@ -2675,8 +2675,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static long[] shuffle( long[] array, Random random ) {
@@ -2696,8 +2696,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static double[] shuffle( double[] array ) {
@@ -2710,8 +2710,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static double[] shuffle( double[] array, Random random ) {
@@ -2731,8 +2731,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static float[] shuffle( float[] array ) {
@@ -2745,8 +2745,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static float[] shuffle( float[] array, Random random ) {
@@ -2766,8 +2766,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean[] shuffle( boolean[] array ) {
@@ -2780,8 +2780,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean[] shuffle( boolean[] array, Random random ) {
@@ -2801,8 +2801,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static byte[] shuffle( byte[] array ) {
@@ -2815,8 +2815,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static byte[] shuffle( byte[] array, Random random ) {
@@ -2836,8 +2836,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static char[] shuffle( char[] array ) {
@@ -2850,8 +2850,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static char[] shuffle( char[] array, Random random ) {
@@ -2871,8 +2871,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组，会变更
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static short[] shuffle( short[] array ) {
@@ -2885,8 +2885,8 @@ public class PrimitiveArrayUtil {
      * @param array  数组，会变更
      * @param random 随机数生成器
      * @return 打乱后的数组
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static short[] shuffle( short[] array, Random random ) {
@@ -3060,8 +3060,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( byte[] array ) {
@@ -3073,8 +3073,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( byte[] array ) {
@@ -3096,8 +3096,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( byte[] array ) {
@@ -3119,8 +3119,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( short[] array ) {
@@ -3132,8 +3132,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( short[] array ) {
@@ -3155,8 +3155,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( short[] array ) {
@@ -3178,8 +3178,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( char[] array ) {
@@ -3191,8 +3191,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( char[] array ) {
@@ -3214,8 +3214,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( char[] array ) {
@@ -3237,8 +3237,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( int[] array ) {
@@ -3250,8 +3250,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( int[] array ) {
@@ -3273,8 +3273,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( int[] array ) {
@@ -3296,8 +3296,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( long[] array ) {
@@ -3309,8 +3309,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( long[] array ) {
@@ -3332,8 +3332,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( long[] array ) {
@@ -3355,8 +3355,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( double[] array ) {
@@ -3368,8 +3368,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( double[] array ) {
@@ -3391,8 +3391,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( double[] array ) {
@@ -3414,8 +3414,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSorted( float[] array ) {
@@ -3427,8 +3427,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否升序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedASC( float[] array ) {
@@ -3450,8 +3450,8 @@ public class PrimitiveArrayUtil {
      *
      * @param array 数组
      * @return 数组是否降序
-     * @author Looly
-     * @author wh
+     * 
+     * 
      * @since 1.0.0
      */
     public static boolean isSortedDESC( float[] array ) {

@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.collection;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.util.Iterator;
 import java.util.function.Function;
@@ -26,8 +26,8 @@ public class TransIter<F, T> implements Iterator<T> {
      * @param func            转换函数
      */
     public TransIter( Iterator<? extends F> backingIterator, Function<? super F, ? extends T> func ) {
-        this.backingIterator = Preconditions.notNull(backingIterator);
-        this.func = Preconditions.notNull(func);
+        this.backingIterator = Precondition.notNull(backingIterator);
+        this.func = Precondition.notNull(func);
     }
 
     @Override

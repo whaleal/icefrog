@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.crypto.test;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.crypto.BCUtil;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
@@ -17,7 +17,7 @@ public class BCUtilTest {
         String y = "F7E938B02EED7280277493B8556E5B01CB436E018A562DFDC53342BF41FDF728";
 
         final ECPublicKeyParameters keyParameters = BCUtil.toSm2Params(x, y);
-        Preconditions.notNull(keyParameters);
+        Precondition.notNull(keyParameters);
     }
 
     @Test
@@ -25,6 +25,6 @@ public class BCUtilTest {
         String privateKeyHex = "5F6CA5BB044C40ED2355F0372BF72A5B3AE6943712F9FDB7C1FFBAECC06F3829";
 
         final ECPrivateKeyParameters keyParameters = BCUtil.toSm2Params(privateKeyHex);
-        Preconditions.notNull(keyParameters);
+        Precondition.notNull(keyParameters);
     }
 }

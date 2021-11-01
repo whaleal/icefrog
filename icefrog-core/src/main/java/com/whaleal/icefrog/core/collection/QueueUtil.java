@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.collection;
 
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.util.ArrayDeque;
 import java.util.Collection;
@@ -272,7 +272,7 @@ public final class QueueUtil {
             long timeout,
             TimeUnit unit )
             throws InterruptedException {
-        Preconditions.checkNotNull(buffer);
+        Precondition.checkNotNull(buffer);
         /*
          * This code performs one System.nanoTime() more than necessary, and in return, the time to
          * execute Queue#drainTo is not added *on top* of waiting for the timeout (which could make
@@ -343,7 +343,7 @@ public final class QueueUtil {
             int numElements,
             long timeout,
             TimeUnit unit ) {
-        Preconditions.checkNotNull(buffer);
+        Precondition.checkNotNull(buffer);
         long deadline = System.nanoTime() + unit.toNanos(timeout);
         int added = 0;
         boolean interrupted = false;

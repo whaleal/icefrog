@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.comparator;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import java.io.Serializable;
@@ -40,7 +40,7 @@ public class IndexedComparator<T> implements Comparator<T>, Serializable {
      */
     @SuppressWarnings("unchecked")
     public IndexedComparator( boolean atEndIfMiss, T... objs ) {
-        Preconditions.notNull(objs, "'objs' array must not be null");
+        Precondition.notNull(objs, "'objs' array must not be null");
         this.atEndIfMiss = atEndIfMiss;
         this.array = objs;
     }

@@ -68,9 +68,18 @@ public class ObjectUtilTest {
 
         Assert.assertFalse(isNull1);
         Assert.assertFalse(equals);
-
-
+        
     }
+
+   /* @Test
+    public void isNullTest2(){
+        String nullStr = "null";
+        boolean isNullStr = ObjectUtil.isNull(nullStr);
+        System.out.println(isNullStr);
+
+        Assert.assertTrue(isNullStr);
+
+    }*/
 
     static class Obj extends CloneSupport<Obj> {
         public String doSomeThing() {

@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.Collection;
 import java.util.Queue;
@@ -15,6 +16,9 @@ import java.util.Queue;
  * 
  */
 public class ForwardingQueueTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
   static final class StandardImplForwardingQueue<T> extends ForwardingQueue<T> {
     private final Queue<T> backingQueue;

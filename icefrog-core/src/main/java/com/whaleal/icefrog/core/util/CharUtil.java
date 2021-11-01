@@ -9,10 +9,9 @@ import com.whaleal.icefrog.core.text.CharPool;
  *
  * @author Looly
  * @author wh
- * @since 1.0.0
+ * 
  */
 public class CharUtil implements CharPool {
-
     /**
      * 是否为ASCII字符，ASCII字符位于0~127之间
      *
@@ -28,7 +27,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符处
      * @return true表示为ASCII字符，ASCII字符位于0~127之间
      */
-    public static boolean isAscii( char ch ) {
+    public static boolean isAscii(char ch) {
         return ch < 128;
     }
 
@@ -47,7 +46,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符处
      * @return true表示为ASCII可见字符，可见字符位于32~126之间
      */
-    public static boolean isAsciiPrintable( char ch ) {
+    public static boolean isAsciiPrintable(char ch) {
         return ch >= 32 && ch < 127;
     }
 
@@ -66,7 +65,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符
      * @return true表示为控制符，控制符位于0~31和127
      */
-    public static boolean isAsciiControl( final char ch ) {
+    public static boolean isAsciiControl(final char ch) {
         return ch < 32 || ch == 127;
     }
 
@@ -86,7 +85,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符
      * @return true表示为字母（包括大写字母和小写字母）字母包括A~Z和a~z
      */
-    public static boolean isLetter( char ch ) {
+    public static boolean isLetter(char ch) {
         return isLetterUpper(ch) || isLetterLower(ch);
     }
 
@@ -107,7 +106,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符
      * @return true表示为大写字母，大写字母包括A~Z
      */
-    public static boolean isLetterUpper( final char ch ) {
+    public static boolean isLetterUpper(final char ch) {
         return ch >= 'A' && ch <= 'Z';
     }
 
@@ -128,7 +127,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符
      * @return true表示为小写字母，小写字母指a~z
      */
-    public static boolean isLetterLower( final char ch ) {
+    public static boolean isLetterLower(final char ch) {
         return ch >= 'a' && ch <= 'z';
     }
 
@@ -149,7 +148,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符
      * @return true表示为数字字符，数字字符指0~9
      */
-    public static boolean isNumber( char ch ) {
+    public static boolean isNumber(char ch) {
         return ch >= '0' && ch <= '9';
     }
 
@@ -163,9 +162,9 @@ public class CharUtil implements CharPool {
      *
      * @param c 字符
      * @return 是否为16进制规范的字符
-     * @since 1.0.0
+     * 
      */
-    public static boolean isHexChar( char c ) {
+    public static boolean isHexChar(char c) {
         return isNumber(c) || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F');
     }
 
@@ -184,7 +183,7 @@ public class CharUtil implements CharPool {
      * @param ch 被检查的字符
      * @return true表示为字母或数字，包括A~Z、a~z、0~9
      */
-    public static boolean isLetterOrNumber( final char ch ) {
+    public static boolean isLetterOrNumber(final char ch) {
         return isLetter(ch) || isNumber(ch);
     }
 
@@ -196,7 +195,7 @@ public class CharUtil implements CharPool {
      * @return 字符串
      * @see ASCIIStrCache#toString(char)
      */
-    public static String toString( char c ) {
+    public static String toString(char c) {
         return ASCIIStrCache.toString(c);
     }
 
@@ -211,7 +210,7 @@ public class CharUtil implements CharPool {
      * @param clazz 被检查的类
      * @return true表示为字符类
      */
-    public static boolean isCharClass( Class<?> clazz ) {
+    public static boolean isCharClass(Class<?> clazz) {
         return clazz == Character.class || clazz == char.class;
     }
 
@@ -226,7 +225,7 @@ public class CharUtil implements CharPool {
      * @param value 被检查的对象
      * @return true表示为字符类
      */
-    public static boolean isChar( Object value ) {
+    public static boolean isChar(Object value) {
         //noinspection ConstantConditions
         return value instanceof Character || value.getClass() == char.class;
     }
@@ -239,9 +238,9 @@ public class CharUtil implements CharPool {
      * @return 是否空白符
      * @see Character#isWhitespace(int)
      * @see Character#isSpaceChar(int)
-     * @since 1.0.0
+     * 
      */
-    public static boolean isBlankChar( char c ) {
+    public static boolean isBlankChar(char c) {
         return isBlankChar((int) c);
     }
 
@@ -253,9 +252,9 @@ public class CharUtil implements CharPool {
      * @return 是否空白符
      * @see Character#isWhitespace(int)
      * @see Character#isSpaceChar(int)
-     * @since 1.0.0
+     * 
      */
-    public static boolean isBlankChar( int c ) {
+    public static boolean isBlankChar(int c) {
         return Character.isWhitespace(c)
                 || Character.isSpaceChar(c)
                 || c == '\ufeff'
@@ -268,9 +267,9 @@ public class CharUtil implements CharPool {
      *
      * @param c 字符
      * @return 是否为emoji
-     * @since 1.0.0
+     * 
      */
-    public static boolean isEmoji( char c ) {
+    public static boolean isEmoji(char c) {
         //noinspection ConstantConditions
         return false == ((c == 0x0) || //
                 (c == 0x9) || //
@@ -287,23 +286,23 @@ public class CharUtil implements CharPool {
      *
      * @param c 字符
      * @return 是否为Windows或者Linux（Unix）文件分隔符
-     * @since 1.0.0
+     * 
      */
-    public static boolean isFileSeparator( char c ) {
+    public static boolean isFileSeparator(char c) {
         return SLASH == c || BACKSLASH == c;
     }
 
     /**
      * 比较两个字符是否相同
      *
-     * @param c1         字符1
-     * @param c2         字符2
-     * @param ignoreCase 是否忽略大小写
+     * @param c1              字符1
+     * @param c2              字符2
+     * @param caseInsensitive 是否忽略大小写
      * @return 是否相同
-     * @since 1.0.0
+     * 
      */
-    public static boolean equals( char c1, char c2, boolean ignoreCase ) {
-        if (ignoreCase) {
+    public static boolean equals(char c1, char c2, boolean caseInsensitive) {
+        if (caseInsensitive) {
             return Character.toLowerCase(c1) == Character.toLowerCase(c2);
         }
         return c1 == c2;
@@ -314,9 +313,9 @@ public class CharUtil implements CharPool {
      *
      * @param c 字符
      * @return 字符类型
-     * @since 1.0.0
+     * 
      */
-    public static int getType( int c ) {
+    public static int getType(int c) {
         return Character.getType(c);
     }
 
@@ -325,9 +324,9 @@ public class CharUtil implements CharPool {
      *
      * @param b 字符
      * @return 16进制字符
-     * @since 1.0.0
+     * 
      */
-    public static int digit16( int b ) {
+    public static int digit16(int b) {
         return Character.digit(b, 16);
     }
 
@@ -345,9 +344,9 @@ public class CharUtil implements CharPool {
      * @return 转换后的字符
      * @see <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters#Unicode_symbols">Unicode_symbols</a>
      * @see <a href="https://en.wikipedia.org/wiki/Enclosed_Alphanumerics">Alphanumerics</a>
-     * @since 1.0.0
+     * 
      */
-    public static char toCloseChar( char c ) {
+    public static char toCloseChar(char c) {
         int result = c;
         if (c >= '1' && c <= '9') {
             result = '①' + c - '1';
@@ -370,15 +369,14 @@ public class CharUtil implements CharPool {
      *
      * @param number 被转换的数字
      * @return 转换后的字符
-     * @author Looly
-     * @author wh
+     *
      * @see <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters#Unicode_symbols">维基百科wikipedia-Unicode_symbols</a>
      * @see <a href="https://zh.wikipedia.org/wiki/Unicode%E5%AD%97%E7%AC%A6%E5%88%97%E8%A1%A8">维基百科wikipedia-Unicode字符列表</a>
      * @see <a href="https://coolsymbol.com/">coolsymbol</a>
      * @see <a href="https://baike.baidu.com/item/%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6/112715?fr=aladdin">百度百科 特殊字符</a>
-     * @since 1.0.0
+     * 
      */
-    public static char toCloseByNumber( int number ) {
+    public static char toCloseByNumber(int number) {
         if (number > 20) {
             throw new IllegalArgumentException("Number must be [1-20]");
         }

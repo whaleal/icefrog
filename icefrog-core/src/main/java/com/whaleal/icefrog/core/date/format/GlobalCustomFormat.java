@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.date.format;
 
 import com.whaleal.icefrog.core.date.DateUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
@@ -44,8 +44,8 @@ public class GlobalCustomFormat {
      * @param func   格式化函数
      */
     public static void putFormatter( String format, Function<Date, String> func ) {
-        Preconditions.notNull(format, "Format must be not null !");
-        Preconditions.notNull(func, "Function must be not null !");
+        Precondition.notNull(format, "Format must be not null !");
+        Precondition.notNull(func, "Function must be not null !");
         formatterMap.put(format, func);
     }
 
@@ -56,8 +56,8 @@ public class GlobalCustomFormat {
      * @param func   解析函数
      */
     public static void putParser( String format, Function<CharSequence, Date> func ) {
-        Preconditions.notNull(format, "Format must be not null !");
-        Preconditions.notNull(func, "Function must be not null !");
+        Precondition.notNull(format, "Format must be not null !");
+        Precondition.notNull(func, "Function must be not null !");
         parserMap.put(format, func);
     }
 

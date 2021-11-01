@@ -176,7 +176,7 @@ public class Console {
      * @since 1.0.0
      */
     public static void printProgress( char showChar, int totalLen, double rate ) {
-        Preconditions.isTrue(rate >= 0 && rate <= 1, "Rate must between 0 and 1 (both include)");
+        Precondition.isTrue(rate >= 0 && rate <= 1, "Rate must between 0 and 1 (both include)");
         printProgress(showChar, (int) (totalLen * rate));
     }
 

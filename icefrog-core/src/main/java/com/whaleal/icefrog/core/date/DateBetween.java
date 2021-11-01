@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.date;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -45,8 +45,8 @@ public class DateBetween implements Serializable {
      * @since 1.0.0
      */
     public DateBetween( Date begin, Date end, boolean isAbs ) {
-        Preconditions.notNull(begin, "Begin date is null !");
-        Preconditions.notNull(end, "End date is null !");
+        Precondition.notNull(begin, "Begin date is null !");
+        Precondition.notNull(end, "End date is null !");
 
         if (isAbs && begin.after(end)) {
             // 间隔只为正数的情况下，如果开始日期晚于结束日期，置换之

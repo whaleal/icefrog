@@ -3,7 +3,7 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.IterUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 
 /**
@@ -177,7 +177,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         if (occurrences == 0) {
             return count(element);
         }
-        Preconditions.checkPositive(occurrences, "occurrences");
+        Precondition.checkPositive(occurrences, "occurrences");
 
         while (true) {
             AtomicInteger existingCounter = MapUtil.safeGet(countMap, element);
@@ -242,7 +242,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         if (occurrences == 0) {
             return count(element);
         }
-        Preconditions.checkPositive(occurrences, "occurrences");
+        Precondition.checkPositive(occurrences, "occurrences");
 
         AtomicInteger existingCounter = MapUtil.safeGet(countMap, element);
         if (existingCounter == null) {
@@ -283,7 +283,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         if (occurrences == 0) {
             return true;
         }
-        Preconditions.checkPositive(occurrences, "occurrences");
+        Precondition.checkPositive(occurrences, "occurrences");
 
         AtomicInteger existingCounter = MapUtil.safeGet(countMap, element);
         if (existingCounter == null) {

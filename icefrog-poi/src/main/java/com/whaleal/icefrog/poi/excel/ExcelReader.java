@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.poi.excel;
 
 import com.whaleal.icefrog.core.io.FileUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.poi.excel.cell.CellEditor;
 import com.whaleal.icefrog.poi.excel.cell.CellHandler;
 import com.whaleal.icefrog.poi.excel.cell.CellUtil;
@@ -371,7 +371,7 @@ public class ExcelReader extends ExcelBase<ExcelReader> {
      */
     public <T> T read( SheetReader<T> sheetReader ) {
         checkNotClosed();
-        return Preconditions.notNull(sheetReader).read(this.sheet);
+        return Precondition.notNull(sheetReader).read(this.sheet);
     }
 
     /**
@@ -446,7 +446,7 @@ public class ExcelReader extends ExcelBase<ExcelReader> {
      * 检查是否未关闭状态
      */
     private void checkNotClosed() {
-        Preconditions.isFalse(this.isClosed, "ExcelReader has been closed!");
+        Precondition.isFalse(this.isClosed, "ExcelReader has been closed!");
     }
     // ------------------------------------------------------------------------------------------------------- Private methods end
 }

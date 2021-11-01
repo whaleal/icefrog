@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.function.Function;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 
 /**

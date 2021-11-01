@@ -5,7 +5,7 @@ import javax.annotation.CheckForNull;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkState;
+import static com.whaleal.icefrog.core.lang.Precondition.checkState;
 
 /**
  * This class provides a skeletal implementation of the {@code Iterator} interface, to make this
@@ -97,7 +97,7 @@ public abstract class AbstractIterator<T extends Object> implements Iterator<T> 
     /**
      * 判断是否还有下一个元素
      *
-     * @return
+     * @return  返回 是否有
      */
     // TODO(kak): Should we remove this? Some people are using it to prefetch?
     @Override

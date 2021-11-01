@@ -18,7 +18,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.ObjIntConsumer;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static com.whaleal.icefrog.core.util.ArrayUtil.firstNonNull;
 import static java.util.Objects.requireNonNull;
 

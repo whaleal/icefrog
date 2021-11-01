@@ -2,7 +2,7 @@ package com.whaleal.icefrog.crypto;
 
 import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.RandomUtil;
@@ -140,7 +140,7 @@ public class KeyUtil {
      * @return {@link SecretKey}
      */
     public static SecretKey generateKey( String algorithm, byte[] key ) {
-        Preconditions.notBlank(algorithm, "Algorithm is blank!");
+        Precondition.notBlank(algorithm, "Algorithm is blank!");
         SecretKey secretKey;
         if (algorithm.startsWith("PBE")) {
             // PBE密钥
@@ -607,7 +607,7 @@ public class KeyUtil {
      * @since 1.0.0
      */
     public static String getMainAlgorithm( String algorithm ) {
-        Preconditions.notBlank(algorithm, "Algorithm must be not blank!");
+        Precondition.notBlank(algorithm, "Algorithm must be not blank!");
         final int slashIndex = algorithm.indexOf(CharUtil.SLASH);
         if (slashIndex > 0) {
             return algorithm.substring(0, slashIndex);
@@ -623,7 +623,7 @@ public class KeyUtil {
      * @return 算法
      */
     public static String getAlgorithmAfterWith( String algorithm ) {
-        Preconditions.notNull(algorithm, "algorithm must be not null !");
+        Precondition.notNull(algorithm, "algorithm must be not null !");
 
         if (StrUtil.startWithIgnoreCase(algorithm, "ECIESWith")) {
             return "EC";

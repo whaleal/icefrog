@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.io.copy;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.IoUtil;
 import com.whaleal.icefrog.core.io.StreamProgress;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,8 +57,8 @@ public class StreamCopier extends IoCopier<InputStream, OutputStream> {
 
     @Override
     public long copy( InputStream source, OutputStream target ) {
-        Preconditions.notNull(source, "InputStream must be not null!");
-        Preconditions.notNull(target, "OutputStream must be not null!");
+        Precondition.notNull(source, "InputStream must be not null!");
+        Precondition.notNull(target, "OutputStream must be not null!");
 
         final StreamProgress progress = this.progress;
         if (null != progress) {

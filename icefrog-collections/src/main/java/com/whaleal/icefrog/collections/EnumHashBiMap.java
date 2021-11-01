@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 import java.util.EnumMap;
 import java.util.Map;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

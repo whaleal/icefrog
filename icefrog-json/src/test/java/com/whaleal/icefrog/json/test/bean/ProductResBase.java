@@ -3,7 +3,7 @@ package com.whaleal.icefrog.json.test.bean;
 import java.io.Serializable;
 
 /**
- * @author Looly
+ * @author looly   wh
  * @author wh
  * @version 创建时间：2017年9月11日 上午9:33:01 类说明
  */

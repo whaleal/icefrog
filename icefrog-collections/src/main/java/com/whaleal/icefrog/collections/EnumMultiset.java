@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.ObjIntConsumer;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 /**
  * Multiset implementation specialized for enum elements, supporting all single-element operations

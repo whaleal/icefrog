@@ -10,7 +10,7 @@ import javax.annotation.CheckForNull;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

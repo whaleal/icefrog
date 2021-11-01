@@ -7,7 +7,7 @@ import com.whaleal.icefrog.core.io.file.FileWriter;
 import com.whaleal.icefrog.core.io.file.FileReader.ReaderHandler;
 import com.whaleal.icefrog.core.io.resource.ResourceUtil;
 import com.whaleal.icefrog.core.io.unit.DataSizeUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.*;
 
@@ -25,8 +25,8 @@ import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
 import static com.whaleal.icefrog.core.io.IoUtil.close;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * 文件工具类
@@ -328,7 +328,7 @@ public class FileUtil extends PathUtil {
      * @since 1.0.0
      */
     public static File file( File directory, String... names ) {
-        Preconditions.notNull(directory, "directory must not be null");
+        Precondition.notNull(directory, "directory must not be null");
         if (ArrayUtil.isEmpty(names)) {
             return directory;
         }
@@ -871,8 +871,8 @@ public class FileUtil extends PathUtil {
      * @throws IORuntimeException IO异常
      */
     public static File copyFile( String src, String dest, StandardCopyOption... options ) throws IORuntimeException {
-        Preconditions.notBlank(src, "Source File path is blank !");
-        Preconditions.notBlank(dest, "Destination File path is blank !");
+        Precondition.notBlank(src, "Source File path is blank !");
+        Precondition.notBlank(dest, "Destination File path is blank !");
         return copyFile(Paths.get(src), Paths.get(dest), options).toFile();
     }
 
@@ -887,11 +887,11 @@ public class FileUtil extends PathUtil {
      */
     public static File copyFile( File src, File dest, StandardCopyOption... options ) throws IORuntimeException {
         // check
-        Preconditions.notNull(src, "Source File is null !");
+        Precondition.notNull(src, "Source File is null !");
         if (false == src.exists()) {
             throw new IORuntimeException("File not exist: " + src);
         }
-        Preconditions.notNull(dest, "Destination File or directiory is null !");
+        Precondition.notNull(dest, "Destination File or directiory is null !");
         if (equals(src, dest)) {
             throw new IORuntimeException("Files '{}' and '{}' are equal", src, dest);
         }
@@ -983,8 +983,8 @@ public class FileUtil extends PathUtil {
      * @see PathUtil#move(Path, Path, boolean)
      */
     public static void move( File src, File target, boolean isOverride ) throws IORuntimeException {
-        Preconditions.notNull(src, "Src file must be not null!");
-        Preconditions.notNull(target, "target file must be not null!");
+        Precondition.notNull(src, "Src file must be not null!");
+        Precondition.notNull(target, "target file must be not null!");
         move(src.toPath(), target.toPath(), isOverride);
     }
 
@@ -999,8 +999,8 @@ public class FileUtil extends PathUtil {
      * @since 1.0.0
      */
     public static void moveContent( File src, File target, boolean isOverride ) throws IORuntimeException {
-        Preconditions.notNull(src, "Src file must be not null!");
-        Preconditions.notNull(target, "target file must be not null!");
+        Precondition.notNull(src, "Src file must be not null!");
+        Precondition.notNull(target, "target file must be not null!");
         moveContent(src.toPath(), target.toPath(), isOverride);
     }
 
@@ -1210,8 +1210,8 @@ public class FileUtil extends PathUtil {
      * @throws IORuntimeException IO异常
      */
     public static boolean equals( File file1, File file2 ) throws IORuntimeException {
-        Preconditions.notNull(file1);
-        Preconditions.notNull(file2);
+        Precondition.notNull(file1);
+        Precondition.notNull(file2);
         if (false == file1.exists() || false == file2.exists()) {
             // 两个文件都不存在判断其路径是否相同， 对于一个存在一个不存在的情况，一定不相同
             return false == file1.exists()//
@@ -3159,7 +3159,7 @@ public class FileUtil extends PathUtil {
      * @since 1.0.0
      */
     public static Checksum checksum( File file, Checksum checksum ) throws IORuntimeException {
-        Preconditions.notNull(file, "File is null !");
+        Precondition.notNull(file, "File is null !");
         if (file.isDirectory()) {
             throw new IllegalArgumentException("Checksums can't be computed on directories");
         }
@@ -3314,8 +3314,8 @@ public class FileUtil extends PathUtil {
      * @since 1.0.0
      */
     public static boolean isSub( File parent, File sub ) {
-        Preconditions.notNull(parent);
-        Preconditions.notNull(sub);
+        Precondition.notNull(parent);
+        Precondition.notNull(sub);
         return isSub(parent.toPath(), sub.toPath());
     }
 
@@ -3514,7 +3514,7 @@ public class FileUtil extends PathUtil {
      * @param file file
      * @throws IOException if an I/O error occurs, or if any necessary but nonexistent parent
      *                     directories of the specified file could not be created.
-     * @since 4.0
+     *
      */
 
     public static void createParentDirs( File file ) throws IOException {

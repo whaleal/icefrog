@@ -14,8 +14,8 @@ import java.util.function.Consumer;
 import java.util.stream.Collector;
 
 import static com.whaleal.icefrog.collections.ObjectArrays.checkElementsNotNull;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

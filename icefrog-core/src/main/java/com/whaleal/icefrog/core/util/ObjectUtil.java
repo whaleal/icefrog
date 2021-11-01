@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.comparator.CompareUtil;
 import com.whaleal.icefrog.core.convert.Convert;
 import com.whaleal.icefrog.core.exceptions.UtilException;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 
 import java.lang.reflect.Array;
@@ -212,14 +212,18 @@ public class ObjectUtil {
      * 2. equals(null)
      * </pre>
      * 当使用 equals  是 必然返回 false;
+     * 需要两遍校验 ，因为在 json  中
+     * 存在 str != null 但是 str.equals(null) when using org.json
+     *
+     * @see Objects#equals(Object, Object)
+     * {@code Objects.equals(obj ,null);}
      *
      * @param obj 对象
      * @return 是否为null
      */
     public static boolean isNull( Object obj ) {
         //noinspection ConstantConditions
-        //return null == obj || obj.equals(null);
-        return null == obj;
+        return null == obj || obj.equals(null);
     }
 
     /**
@@ -725,7 +729,7 @@ public class ObjectUtil {
                 return null;
             }
             Object result = optional.get();
-            Preconditions.isTrue(!(result instanceof Optional), "Multi-level Optional usage not supported");
+            Precondition.isTrue(!(result instanceof Optional), "Multi-level Optional usage not supported");
             return result;
         }
         return obj;

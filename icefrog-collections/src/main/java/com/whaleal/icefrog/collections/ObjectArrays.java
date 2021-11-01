@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkPositionIndexes;
+import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndexes;
 
 
 /**

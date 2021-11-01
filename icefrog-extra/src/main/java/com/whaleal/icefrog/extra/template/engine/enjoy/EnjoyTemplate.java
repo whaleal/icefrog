@@ -10,42 +10,41 @@ import java.util.Map;
 /**
  * Engoy模板实现
  *
- * @author Looly
- * @author wh
- * @since 1.0.0
+ * @author looly
+ *
  */
 public class EnjoyTemplate extends AbstractTemplate implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final com.jfinal.template.Template rawTemplate;
+	private final com.jfinal.template.Template rawTemplate;
 
-    /**
-     * 构造
-     *
-     * @param EnjoyTemplate Enjoy的模板对象 {@link com.jfinal.template.Template}
-     */
-    public EnjoyTemplate( com.jfinal.template.Template EnjoyTemplate ) {
-        this.rawTemplate = EnjoyTemplate;
-    }
+	/**
+	 * 包装Enjoy模板
+	 *
+	 * @param EnjoyTemplate Enjoy的模板对象 {@link com.jfinal.template.Template}
+	 * @return {@link EnjoyTemplate}
+	 */
+	public static EnjoyTemplate wrap(com.jfinal.template.Template EnjoyTemplate) {
+		return (null == EnjoyTemplate) ? null : new EnjoyTemplate(EnjoyTemplate);
+	}
 
-    /**
-     * 包装Enjoy模板
-     *
-     * @param EnjoyTemplate Enjoy的模板对象 {@link com.jfinal.template.Template}
-     * @return {@link EnjoyTemplate}
-     */
-    public static EnjoyTemplate wrap( com.jfinal.template.Template EnjoyTemplate ) {
-        return (null == EnjoyTemplate) ? null : new EnjoyTemplate(EnjoyTemplate);
-    }
+	/**
+	 * 构造
+	 *
+	 * @param EnjoyTemplate Enjoy的模板对象 {@link com.jfinal.template.Template}
+	 */
+	public EnjoyTemplate(com.jfinal.template.Template EnjoyTemplate) {
+		this.rawTemplate = EnjoyTemplate;
+	}
 
-    @Override
-    public void render( Map<?, ?> bindingMap, Writer writer ) {
-        rawTemplate.render(bindingMap, writer);
-    }
+	@Override
+	public void render(Map<?, ?> bindingMap, Writer writer) {
+		rawTemplate.render(bindingMap, writer);
+	}
 
-    @Override
-    public void render( Map<?, ?> bindingMap, OutputStream out ) {
-        rawTemplate.render(bindingMap, out);
-    }
+	@Override
+	public void render(Map<?, ?> bindingMap, OutputStream out) {
+		rawTemplate.render(bindingMap, out);
+	}
 
 }

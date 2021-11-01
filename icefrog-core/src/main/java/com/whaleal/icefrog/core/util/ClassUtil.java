@@ -7,7 +7,7 @@ import com.whaleal.icefrog.core.io.FileUtil;
 import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.resource.ResourceUtil;
 import com.whaleal.icefrog.core.lang.ClassScanner;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.Singleton;
 
@@ -890,7 +890,7 @@ public class ClassUtil {
      * @return 是否为public
      */
     public static boolean isPublic( Method method ) {
-        Preconditions.notNull(method, "Method to provided is null.");
+        Precondition.notNull(method, "Method to provided is null.");
         return Modifier.isPublic(method.getModifiers());
     }
 
@@ -921,7 +921,7 @@ public class ClassUtil {
      * @return 是否为静态方法
      */
     public static boolean isStatic( Method method ) {
-        Preconditions.notNull(method, "Method to provided is null.");
+        Precondition.notNull(method, "Method to provided is null.");
         return Modifier.isStatic(method.getModifiers());
     }
 

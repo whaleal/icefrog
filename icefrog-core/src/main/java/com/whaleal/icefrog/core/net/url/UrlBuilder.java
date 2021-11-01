@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.net.url;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 import com.whaleal.icefrog.core.util.URLUtil;
@@ -126,7 +126,7 @@ public final class UrlBuilder implements Serializable {
      * @return UrlBuilder
      */
     public static UrlBuilder ofHttp( String httpUrl, Charset charset ) {
-        Preconditions.notBlank(httpUrl, "Http url must be not blank!");
+        Precondition.notBlank(httpUrl, "Http url must be not blank!");
 
         final int sepIndex = httpUrl.indexOf("://");
         if (sepIndex < 0) {
@@ -153,7 +153,7 @@ public final class UrlBuilder implements Serializable {
      * @return UrlBuilder
      */
     public static UrlBuilder of( String url, Charset charset ) {
-        Preconditions.notBlank(url, "Url must be not blank!");
+        Precondition.notBlank(url, "Url must be not blank!");
         return of(URLUtil.url(url.trim()), charset);
     }
 

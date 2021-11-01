@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,6 +20,9 @@ import java.util.SortedSet;
  */
 
 public class MultimapBuilderTest extends TestCase {
+  @Test
+  public void test(){
+  }
 
    // doesn't build without explicit type parameters on build() methods
   public void testGenerics() {

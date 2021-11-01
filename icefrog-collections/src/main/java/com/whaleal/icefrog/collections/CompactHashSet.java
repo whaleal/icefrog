@@ -2,7 +2,7 @@
 
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
@@ -12,8 +12,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 import static com.whaleal.icefrog.collections.CompactHashing.UNSET;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkRemove;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkRemove;
 import static java.util.Objects.requireNonNull;
 
 
@@ -185,7 +185,7 @@ class CompactHashSet<E extends Object> extends AbstractSet<E> implements Seriali
 
   /** Pseudoconstructor for serialization support. */
   void init(int expectedSize) {
-    Preconditions.checkArgument(expectedSize >= 0, "Expected size must be >= 0");
+    Precondition.checkArgument(expectedSize >= 0, "Expected size must be >= 0");
 
     // Save expectedSize for use in allocArrays()
     this.metadata = NumberUtil.constrainToRange(expectedSize, 1, CompactHashing.MAX_SIZE);
@@ -200,7 +200,7 @@ class CompactHashSet<E extends Object> extends AbstractSet<E> implements Seriali
   /** Handle lazy allocation of arrays. */
 
   int allocArrays() {
-    Preconditions.checkState(needsAllocArrays(), "Arrays already allocated");
+    Precondition.checkState(needsAllocArrays(), "Arrays already allocated");
 
     int expectedSize = metadata;
     int buckets = CompactHashing.tableSize(expectedSize);

@@ -33,7 +33,7 @@ public final class Singleton {
      * @return 单例对象
      */
     public static <T> T get( Class<T> clazz, Object... params ) {
-        Preconditions.notNull(clazz, "Class must be not null !");
+        Precondition.notNull(clazz, "Class must be not null !");
         final String key = buildKey(clazz.getName(), params);
         return get(key, () -> ReflectUtil.newInstance(clazz, params));
     }
@@ -64,7 +64,7 @@ public final class Singleton {
      * @return 单例对象
      */
     public static <T> T get( String className, Object... params ) {
-        Preconditions.notBlank(className, "Class name must be not blank !");
+        Precondition.notBlank(className, "Class name must be not blank !");
         final Class<T> clazz = ClassUtil.loadClass(className);
         return get(clazz, params);
     }
@@ -76,7 +76,7 @@ public final class Singleton {
      * @since 1.0.0
      */
     public static void put( Object obj ) {
-        Preconditions.notNull(obj, "Bean object must be not null !");
+        Precondition.notNull(obj, "Bean object must be not null !");
         put(obj.getClass().getName(), obj);
     }
 

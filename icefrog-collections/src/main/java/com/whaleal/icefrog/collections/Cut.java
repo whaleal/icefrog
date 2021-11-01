@@ -6,7 +6,7 @@ import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.NoSuchElementException;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * Implementation detail for the internal structure of {@link Range} instances. Represents a unique

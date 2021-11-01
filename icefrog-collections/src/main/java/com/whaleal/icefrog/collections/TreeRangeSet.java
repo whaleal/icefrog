@@ -10,14 +10,14 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * An implementation of {@link RangeSet} backed by a {@link TreeMap}.
  *
  * 
- * @since 14.0
+ * .0
  */
 
 // uses NavigableMap
@@ -46,7 +46,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
    * element will be contained in this {@code RangeSet} if and only if it is contained in at least
    * one {@code Range} in {@code ranges}.
    *
-   * @since 21.0
+   *
    */
   public static <C extends Comparable<?>> TreeRangeSet<C> create(Iterable<Range<C>> ranges) {
     TreeRangeSet<C> result = create();

@@ -15,7 +15,6 @@
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 package com.whaleal.icefrog.extra.pinyin.engine.houbbpinyin;

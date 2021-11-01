@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.*;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNonnegative;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNonnegative;
 
 
 /**

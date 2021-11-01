@@ -1,7 +1,7 @@
 /**
- * 基于Apache icefrogs Net封装的FTP工具
+ * 基于Apache Commons Net封装的FTP工具
+ * 
+ * @author looly
  *
- * @author Looly
- * @author wh
  */
 package com.whaleal.icefrog.extra.ftp;

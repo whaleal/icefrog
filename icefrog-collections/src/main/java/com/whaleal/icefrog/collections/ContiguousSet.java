@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static java.util.Objects.requireNonNull;
 
 /**

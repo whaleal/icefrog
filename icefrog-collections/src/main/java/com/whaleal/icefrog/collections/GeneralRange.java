@@ -8,8 +8,8 @@ import java.util.Comparator;
 
 import static com.whaleal.icefrog.collections.BoundType.CLOSED;
 import static com.whaleal.icefrog.collections.BoundType.OPEN;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**

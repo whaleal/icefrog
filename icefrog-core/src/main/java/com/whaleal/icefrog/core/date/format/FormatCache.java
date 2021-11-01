@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.date.format;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.Tuple;
 
 import java.text.DateFormat;
@@ -86,7 +86,7 @@ abstract class FormatCache<F extends Format> {
      * @throws IllegalArgumentException pattern 无效或{@code null}
      */
     public F getInstance( final String pattern, TimeZone timeZone, Locale locale ) {
-        Preconditions.notBlank(pattern, "pattern must not be blank");
+        Precondition.notBlank(pattern, "pattern must not be blank");
         if (timeZone == null) {
             timeZone = TimeZone.getDefault();
         }

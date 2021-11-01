@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.net.url;
 
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.net.URLDecoder;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -43,7 +43,7 @@ public class UrlPath {
      * @return 修正后的路径
      */
     private static String fixPath( CharSequence path ) {
-        Preconditions.notNull(path, "Path segment must be not null!");
+        Precondition.notNull(path, "Path segment must be not null!");
         if ("/".contentEquals(path)) {
             return StrUtil.EMPTY;
         }

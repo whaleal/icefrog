@@ -2,6 +2,7 @@
 package com.whaleal.icefrog.collections;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,9 @@ import java.util.function.Supplier;
  */
 
 public abstract class AbstractHashFloodingTest<T> extends TestCase {
+  @Test
+  public void test(){
+  }
   private final List<Construction<T>> constructions;
   private final IntToDoubleFunction constructionAsymptotics;
   private final List<QueryOp<T>> queries;

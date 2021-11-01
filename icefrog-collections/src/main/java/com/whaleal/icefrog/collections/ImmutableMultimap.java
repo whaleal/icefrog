@@ -13,8 +13,8 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkEntryNotNull;
-import static com.whaleal.icefrog.core.lang.Preconditions.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkEntryNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static java.util.Objects.requireNonNull;
 
 

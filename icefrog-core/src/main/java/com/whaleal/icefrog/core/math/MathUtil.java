@@ -3,7 +3,7 @@ package com.whaleal.icefrog.core.math;
 import java.math.RoundingMode;
 import java.util.List;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.checkPositive;
+import static com.whaleal.icefrog.core.lang.Precondition.checkPositive;
 import static com.whaleal.icefrog.core.util.NumberUtil.isPowerOfTwo;
 
 /**

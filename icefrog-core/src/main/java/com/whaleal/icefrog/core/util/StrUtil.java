@@ -2,11 +2,9 @@ package com.whaleal.icefrog.core.util;
 
 
 import com.whaleal.icefrog.core.collection.CollectionUtil;
-import com.whaleal.icefrog.core.io.IoUtil;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.text.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +13,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 
 /**
@@ -510,7 +508,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * this method is made for; it instead generates a best-effort string with all supplied argument
      * values present. This method is also useful in environments such as GWT where {@code
      * String.format} is not available. As an example, method implementations of the {@link
-     * Preconditions} class use this formatter, for both of the reasons just discussed.
+     * Precondition} class use this formatter, for both of the reasons just discussed.
      *
      * <p><b>Warning:</b> Only the exact two-character placeholder sequence {@code "%s"} is
      * recognized.
@@ -1466,53 +1464,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
         return cleanPath(path1).equals(cleanPath(path2));
     }
 
-    /**
-     * Decode the given encoded URI component value. Based on the following rules:
-     * <ul>
-     * <li>Alphanumeric characters {@code "a"} through {@code "z"}, {@code "A"} through {@code "Z"},
-     * and {@code "0"} through {@code "9"} stay the same.</li>
-     * <li>Special characters {@code "-"}, {@code "_"}, {@code "."}, and {@code "*"} stay the same.</li>
-     * <li>A sequence "{@code %<i>xy</i>}" is interpreted as a hexadecimal representation of the character.</li>
-     * </ul>
-     *
-     * @param source  the encoded String
-     * @param charset the character set
-     * @return the decoded value
-     * @throws IllegalArgumentException when the given source contains invalid encoded sequences
-     * @see java.net.URLDecoder#decode(String, String)
-     */
-    public static String uriDecode( String source, Charset charset ) {
-        int length = source.length();
-        if (length == 0) {
-            return source;
-        }
-        notNull(charset, "Charset must not be null");
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream(length);
-        boolean changed = false;
-        for (int i = 0; i < length; i++) {
-            int ch = source.charAt(i);
-            if (ch == '%') {
-                if (i + 2 < length) {
-                    char hex1 = source.charAt(i + 1);
-                    char hex2 = source.charAt(i + 2);
-                    int u = Character.digit(hex1, 16);
-                    int l = Character.digit(hex2, 16);
-                    if (u == -1 || l == -1) {
-                        throw new IllegalArgumentException("Invalid encoded sequence \"" + source.substring(i) + "\"");
-                    }
-                    baos.write((char) ((u << 4) + l));
-                    i += 2;
-                    changed = true;
-                } else {
-                    throw new IllegalArgumentException("Invalid encoded sequence \"" + source.substring(i) + "\"");
-                }
-            } else {
-                baos.write(ch);
-            }
-        }
-        return (changed ? IoUtil.copyToString(baos, charset) : source);
-    }
 
     /**
      * Parse the given {@code String} value into a {@link Locale}, accepting

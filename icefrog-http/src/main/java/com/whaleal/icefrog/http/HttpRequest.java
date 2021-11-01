@@ -8,7 +8,7 @@ import com.whaleal.icefrog.core.io.resource.BytesResource;
 import com.whaleal.icefrog.core.io.resource.FileResource;
 import com.whaleal.icefrog.core.io.resource.MultiFileResource;
 import com.whaleal.icefrog.core.io.resource.Resource;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.net.SSLUtil;
 import com.whaleal.icefrog.core.net.url.UrlBuilder;
@@ -878,7 +878,7 @@ public class HttpRequest extends HttpBase<HttpRequest> {
      * @see #setSSLSocketFactory(SSLSocketFactory)
      */
     public HttpRequest setSSLProtocol( String protocol ) {
-        Preconditions.notBlank(protocol, "protocol must be not blank!");
+        Precondition.notBlank(protocol, "protocol must be not blank!");
         setSSLSocketFactory(SSLUtil.createSSLContext(protocol).getSocketFactory());
         return this;
     }

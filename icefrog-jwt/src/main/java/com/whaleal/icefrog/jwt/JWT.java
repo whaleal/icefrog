@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.codec.Base64;
 import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.date.DateUtil;
 import com.whaleal.icefrog.core.exceptions.ValidateException;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
@@ -321,7 +321,7 @@ public class JWT implements RegisteredPayload<JWT> {
      * @return JWT字符串
      */
     public String sign( JWTSigner signer ) {
-        Preconditions.notNull(signer, () -> new JWTException("No Signer provided!"));
+        Precondition.notNull(signer, () -> new JWTException("No Signer provided!"));
 
         // 检查头信息中是否有算法信息
         final String claim = (String) this.header.getClaim(JWTHeader.ALGORITHM);

@@ -15,8 +15,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.whaleal.icefrog.core.lang.Preconditions.isTrueArgument;
-import static com.whaleal.icefrog.core.lang.Preconditions.notNull;
+import static com.whaleal.icefrog.core.lang.Precondition.isTrueArgument;
+import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
 /**
  * MongoDB ID生成策略实现<br>

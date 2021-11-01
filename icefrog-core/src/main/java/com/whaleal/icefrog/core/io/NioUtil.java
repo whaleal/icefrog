@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.io;
 
 import com.whaleal.icefrog.core.io.copy.ChannelCopier;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.CharsetUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
 
@@ -84,8 +84,8 @@ public class NioUtil {
      * @since 1.0.0
      */
     public static long copy( FileChannel inChannel, FileChannel outChannel ) throws IORuntimeException {
-        Preconditions.notNull(inChannel, "In channel is null!");
-        Preconditions.notNull(outChannel, "Out channel is null!");
+        Precondition.notNull(inChannel, "In channel is null!");
+        Precondition.notNull(outChannel, "Out channel is null!");
 
         try {
             return inChannel.transferTo(0, inChannel.size(), outChannel);

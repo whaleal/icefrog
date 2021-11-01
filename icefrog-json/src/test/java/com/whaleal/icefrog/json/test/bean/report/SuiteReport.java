@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 测试套件报告
  *
- * @author Looly
+ * @author looly   wh
  * @author wh
  * @version 20181012
  */

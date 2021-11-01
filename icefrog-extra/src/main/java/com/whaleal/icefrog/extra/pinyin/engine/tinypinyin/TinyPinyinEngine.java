@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.extra.pinyin.engine.tinypinyin;
 
-import com.github.promeg.pinyinhelper.Pinyin;
 import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
+import com.github.promeg.pinyinhelper.Pinyin;
 
 /**
  * 封装了TinyPinyin的引擎。
@@ -22,38 +22,36 @@ import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
  * &lt;/dependency&gt;
  * </pre>
  *
- * @author Looly
- * @author wh
+ * @author looly
  */
 public class TinyPinyinEngine implements PinyinEngine {
 
-    /**
-     * 构造
-     */
-    public TinyPinyinEngine() {
-        this(null);
-    }
+	/**
+	 * 构造
+	 */
+	public TinyPinyinEngine(){
+		this(null);
+	}
 
-    /**
-     * 构造
-     *
-     * @param config 配置
-     */
-    public TinyPinyinEngine( Pinyin.Config config ) {
-        Pinyin.init(config);
-    }
+	/**
+	 * 构造
+	 * @param config 配置
+	 */
+	public TinyPinyinEngine(Pinyin.Config config){
+		Pinyin.init(config);
+	}
 
-    @Override
-    public String getPinyin( char c ) {
-        if (false == Pinyin.isChinese(c)) {
-            return String.valueOf(c);
-        }
-        return Pinyin.toPinyin(c).toLowerCase();
-    }
+	@Override
+	public String getPinyin(char c) {
+		if(false == Pinyin.isChinese(c)){
+			return String.valueOf(c);
+		}
+		return Pinyin.toPinyin(c).toLowerCase();
+	}
 
-    @Override
-    public String getPinyin( String str, String separator ) {
-        return Pinyin.toPinyin(str, separator).toLowerCase();
-    }
+	@Override
+	public String getPinyin(String str, String separator) {
+		return Pinyin.toPinyin(str, separator).toLowerCase();
+	}
 
 }

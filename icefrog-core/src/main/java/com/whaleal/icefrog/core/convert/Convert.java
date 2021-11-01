@@ -4,7 +4,7 @@ import com.whaleal.icefrog.core.codec.DecoderException;
 import com.whaleal.icefrog.core.convert.impl.CollectionConverter;
 import com.whaleal.icefrog.core.convert.impl.EnumConverter;
 import com.whaleal.icefrog.core.convert.impl.MapConverter;
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.TypeReference;
 import com.whaleal.icefrog.core.text.UnicodeUtil;
 import com.whaleal.icefrog.core.util.*;
@@ -925,8 +925,8 @@ public class Convert {
      * @return 目标单位的时长
      */
     public static long convertTime( long sourceDuration, TimeUnit sourceUnit, TimeUnit destUnit ) {
-        Preconditions.notNull(sourceUnit, "sourceUnit is null !");
-        Preconditions.notNull(destUnit, "destUnit is null !");
+        Precondition.notNull(sourceUnit, "sourceUnit is null !");
+        Precondition.notNull(destUnit, "destUnit is null !");
         return destUnit.convert(sourceDuration, sourceUnit);
     }
 

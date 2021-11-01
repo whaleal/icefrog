@@ -17,7 +17,7 @@ import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior.NEXT
 import static com.whaleal.icefrog.collections.SortedLists.KeyAbsentBehavior.NEXT_LOWER;
 import static com.whaleal.icefrog.collections.SortedLists.KeyPresentBehavior;
 import static com.whaleal.icefrog.collections.SortedLists.KeyPresentBehavior.ANY_PRESENT;
-import static com.whaleal.icefrog.core.lang.Preconditions.*;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
 
 /**

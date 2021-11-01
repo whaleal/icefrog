@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +15,9 @@ import java.util.Set;
  */
 
 public class SetOperationsTest extends TestCase {
+  @Test
+  public void test(){
+  }
    // suite
 
 

@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ import java.util.List;
  */
 
 public class SortedListsTest extends TestCase {
+  @Test
+  public void test(){
+  }
   private static final ImmutableList<Integer> LIST_WITH_DUPS =
       ImmutableList.of(1, 1, 2, 4, 4, 4, 8);
 

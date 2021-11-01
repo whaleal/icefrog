@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.core.collection;
 
-import com.whaleal.icefrog.core.lang.Preconditions;
+import com.whaleal.icefrog.core.lang.Precondition;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class AvgPartition<T> extends Partition<T> {
      */
     public AvgPartition( List<T> list, int limit ) {
         super(list, list.size() / (limit <= 0 ? 1 : limit));
-        Preconditions.isTrue(limit > 0, "Partition limit must be > 0");
+        Precondition.isTrue(limit > 0, "Partition limit must be > 0");
         this.limit = limit;
         this.remainder = list.size() % limit;
     }
