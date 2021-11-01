@@ -23,7 +23,6 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  * The context for decoding values to your type.
  *
  * @see Decoder
- *
  */
 public final class DecoderContext {
     private static final DecoderContext DEFAULT_CONTEXT = DecoderContext.builder().build();

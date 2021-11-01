@@ -97,6 +97,7 @@ public class HttpRequest extends HttpBase<HttpRequest> {
      * SSLSocketFactory，用于HTTPS安全连接
      */
     private SSLSocketFactory ssf;
+
     /**
      * 构造，URL编码默认使用UTF-8
      *
@@ -105,6 +106,7 @@ public class HttpRequest extends HttpBase<HttpRequest> {
     public HttpRequest( String url ) {
         this(UrlBuilder.ofHttp(url));
     }
+
     /**
      * 构造
      *

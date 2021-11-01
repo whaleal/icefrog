@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 
@@ -11,57 +9,55 @@ import java.util.function.Consumer;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
-
 abstract class IndexedImmutableSet<E> extends ImmutableSet.CachingAsList<E> {
-  abstract E get(int index);
+    abstract E get( int index );
 
-  @Override
-  public UnmodifiableIterator<E> iterator() {
-    return asList().iterator();
-  }
-
-  @Override
-  public Spliterator<E> spliterator() {
-    return SpliteratorUtil.indexed(size(), SPLITERATOR_CHARACTERISTICS, this::get);
-  }
-
-  @Override
-  public void forEach(Consumer<? super E> consumer) {
-    checkNotNull(consumer);
-    int n = size();
-    for (int i = 0; i < n; i++) {
-      consumer.accept(get(i));
+    @Override
+    public UnmodifiableIterator<E> iterator() {
+        return asList().iterator();
     }
-  }
 
-  @Override
+    @Override
+    public Spliterator<E> spliterator() {
+        return SpliteratorUtil.indexed(size(), SPLITERATOR_CHARACTERISTICS, this::get);
+    }
 
-  int copyIntoArray(Object[] dst, int offset) {
-    return asList().copyIntoArray(dst, offset);
-  }
+    @Override
+    public void forEach( Consumer<? super E> consumer ) {
+        checkNotNull(consumer);
+        int n = size();
+        for (int i = 0; i < n; i++) {
+            consumer.accept(get(i));
+        }
+    }
 
-  @Override
-  ImmutableList<E> createAsList() {
-    return new ImmutableAsList<E>() {
-      @Override
-      public E get(int index) {
-        return IndexedImmutableSet.this.get(index);
-      }
+    @Override
+    int copyIntoArray( Object[] dst, int offset ) {
+        return asList().copyIntoArray(dst, offset);
+    }
 
-      @Override
-      boolean isPartialView() {
-        return IndexedImmutableSet.this.isPartialView();
-      }
+    @Override
+    ImmutableList<E> createAsList() {
+        return new ImmutableAsList<E>() {
+            @Override
+            public E get( int index ) {
+                return IndexedImmutableSet.this.get(index);
+            }
 
-      @Override
-      public int size() {
-        return IndexedImmutableSet.this.size();
-      }
+            @Override
+            boolean isPartialView() {
+                return IndexedImmutableSet.this.isPartialView();
+            }
 
-      @Override
-      ImmutableCollection<E> delegateCollection() {
-        return IndexedImmutableSet.this;
-      }
-    };
-  }
+            @Override
+            public int size() {
+                return IndexedImmutableSet.this.size();
+            }
+
+            @Override
+            ImmutableCollection<E> delegateCollection() {
+                return IndexedImmutableSet.this;
+            }
+        };
+    }
 }

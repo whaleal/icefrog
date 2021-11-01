@@ -3720,7 +3720,6 @@ public class CollUtil {
      *                                  {@link Integer#MAX_VALUE}
      * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
      *                                  a provided list is null
-     *
      */
     public static <B> Collection<List<B>> cartesianProduct( List<? extends Collection<B>> lists ) {
 
@@ -3753,8 +3752,6 @@ public class CollUtil {
      * 此函数接口与JDK8中Consumer不同是多提供了index参数，用于标记遍历对象是第几个。
      *
      * @param <T> 处理参数类型
-     *
-     *
      */
     @FunctionalInterface
     public interface Consumer<T> extends Serializable {

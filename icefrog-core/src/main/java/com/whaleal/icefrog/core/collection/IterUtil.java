@@ -994,7 +994,6 @@ public class IterUtil {
      * @param removeFrom the iterator to (potentially) remove elements from
      * @param predicate  a predicate that determines whether an element should be removed
      * @return {@code true} if any elements were removed from the iterator
-     *
      */
 
     public static <T extends Object> boolean removeIf(
@@ -1265,8 +1264,6 @@ public class IterUtil {
      *
      * <p><b>Warning:</b> avoid using a {@code predicate} that matches {@code null}. If {@code null}
      * is matched in {@code iterator}, a NullPointerException will be thrown.
-     *
-     *
      */
     public static <T> Optional<T> tryFind( Iterator<T> iterator, Predicate predicate ) {
         checkNotNull(iterator);
@@ -1291,8 +1288,6 @@ public class IterUtil {
      * <p>If -1 is returned, the iterator will be left exhausted: its {@code hasNext()} method will
      * return {@code false}. Otherwise, the iterator will be set to the element which satisfies the
      * {@code predicate}.
-     *
-     *
      */
     public static <T extends Object> int indexOf(
             Iterator<T> iterator, Predicate predicate ) {
@@ -1392,7 +1387,6 @@ public class IterUtil {
      *
      * @param defaultValue the default value to return if the iterator is empty
      * @return the last element of {@code iterator}
-     *
      */
 
     public static <T extends Object> T getLast(
@@ -1405,7 +1399,6 @@ public class IterUtil {
      * hasNext()} returns {@code false}, whichever comes first.
      *
      * @return the number of elements the iterator was advanced
-     *
      */
 
     public static int advance( Iterator<?> iterator, int numberToAdvance ) {
@@ -1427,7 +1420,6 @@ public class IterUtil {
      * @param iterator  the iterator to limit
      * @param limitSize the maximum number of elements in the returned iterator
      * @throws IllegalArgumentException if {@code limitSize} is negative
-     *
      */
     public static <T extends Object> Iterator<T> limit(
             final Iterator<T> iterator, final int limitSize ) {

@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import java.util.Iterator;
@@ -16,35 +14,35 @@ import java.util.Iterator;
  * methods were introduced</a>. For newer methods, like {@code forEachRemaining}, it inherits their
  * default implementations. When those implementations invoke methods, they invoke methods on the
  * {@code ForwardingIterator}.
- *
- *
- * 
  */
 
 
 public abstract class ForwardingIterator<T extends Object> extends ForwardingObject
-    implements Iterator<T> {
+        implements Iterator<T> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingIterator() {}
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingIterator() {
+    }
 
-  @Override
-  protected abstract Iterator<T> delegate();
+    @Override
+    protected abstract Iterator<T> delegate();
 
-  @Override
-  public boolean hasNext() {
-    return delegate().hasNext();
-  }
+    @Override
+    public boolean hasNext() {
+        return delegate().hasNext();
+    }
 
-  
-  @Override
-  @ParametricNullness
-  public T next() {
-    return delegate().next();
-  }
 
-  @Override
-  public void remove() {
-    delegate().remove();
-  }
+    @Override
+    @ParametricNullness
+    public T next() {
+        return delegate().next();
+    }
+
+    @Override
+    public void remove() {
+        delegate().remove();
+    }
 }

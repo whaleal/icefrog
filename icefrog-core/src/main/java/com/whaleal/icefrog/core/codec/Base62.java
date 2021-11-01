@@ -23,6 +23,7 @@ public class Base62 {
      * 内部变量 使用的是 Base62Codec
      */
     private static final Base62Codec CODEC = Base62Codec.createGmp();
+
     private Base62() {
     }
 

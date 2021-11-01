@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import javax.annotation.CheckForNull;
@@ -24,95 +22,88 @@ import java.util.Queue;
  *
  * <p>The {@code standard} methods are not guaranteed to be thread-safe, even when all of the
  * methods that they depend on are thread-safe.
- *
- *
- *
- * 
  */
 
 
 public abstract class ForwardingQueue<E extends Object> extends ForwardingCollection<E>
-    implements Queue<E> {
+        implements Queue<E> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingQueue() {}
-
-  @Override
-  protected abstract Queue<E> delegate();
-
-   // TODO(cpovirk): Consider removing this?
-  @Override
-  public boolean offer(@ParametricNullness E o) {
-    return delegate().offer(o);
-  }
-
-   // TODO(cpovirk): Consider removing this?
-  @Override
-  @CheckForNull
-  public E poll() {
-    return delegate().poll();
-  }
-
-  
-  @Override
-  @ParametricNullness
-  public E remove() {
-    return delegate().remove();
-  }
-
-  @Override
-  @CheckForNull
-  public E peek() {
-    return delegate().peek();
-  }
-
-  @Override
-  @ParametricNullness
-  public E element() {
-    return delegate().element();
-  }
-
-  /**
-   * A sensible definition of {@link #offer} in terms of {@link #add}. If you override {@link #add},
-   * you may wish to override {@link #offer} to forward to this implementation.
-   *
-   * 
-   */
-  protected boolean standardOffer(@ParametricNullness E e) {
-    try {
-      return add(e);
-    } catch (IllegalStateException caught) {
-      return false;
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingQueue() {
     }
-  }
 
-  /**
-   * A sensible definition of {@link #peek} in terms of {@link #element}. If you override {@link
-   * #element}, you may wish to override {@link #peek} to forward to this implementation.
-   *
-   * 
-   */
-  @CheckForNull
-  protected E standardPeek() {
-    try {
-      return element();
-    } catch (NoSuchElementException caught) {
-      return null;
-    }
-  }
+    @Override
+    protected abstract Queue<E> delegate();
 
-  /**
-   * A sensible definition of {@link #poll} in terms of {@link #remove}. If you override {@link
-   * #remove}, you may wish to override {@link #poll} to forward to this implementation.
-   *
-   * 
-   */
-  @CheckForNull
-  protected E standardPoll() {
-    try {
-      return remove();
-    } catch (NoSuchElementException caught) {
-      return null;
+    // TODO(cpovirk): Consider removing this?
+    @Override
+    public boolean offer( @ParametricNullness E o ) {
+        return delegate().offer(o);
     }
-  }
+
+    // TODO(cpovirk): Consider removing this?
+    @Override
+    @CheckForNull
+    public E poll() {
+        return delegate().poll();
+    }
+
+
+    @Override
+    @ParametricNullness
+    public E remove() {
+        return delegate().remove();
+    }
+
+    @Override
+    @CheckForNull
+    public E peek() {
+        return delegate().peek();
+    }
+
+    @Override
+    @ParametricNullness
+    public E element() {
+        return delegate().element();
+    }
+
+    /**
+     * A sensible definition of {@link #offer} in terms of {@link #add}. If you override {@link #add},
+     * you may wish to override {@link #offer} to forward to this implementation.
+     */
+    protected boolean standardOffer( @ParametricNullness E e ) {
+        try {
+            return add(e);
+        } catch (IllegalStateException caught) {
+            return false;
+        }
+    }
+
+    /**
+     * A sensible definition of {@link #peek} in terms of {@link #element}. If you override {@link
+     * #element}, you may wish to override {@link #peek} to forward to this implementation.
+     */
+    @CheckForNull
+    protected E standardPeek() {
+        try {
+            return element();
+        } catch (NoSuchElementException caught) {
+            return null;
+        }
+    }
+
+    /**
+     * A sensible definition of {@link #poll} in terms of {@link #remove}. If you override {@link
+     * #remove}, you may wish to override {@link #poll} to forward to this implementation.
+     */
+    @CheckForNull
+    protected E standardPoll() {
+        try {
+            return remove();
+        } catch (NoSuchElementException caught) {
+            return null;
+        }
+    }
 }

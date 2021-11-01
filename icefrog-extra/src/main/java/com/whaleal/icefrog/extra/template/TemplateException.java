@@ -9,29 +9,29 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * @author xiaoleilu
  */
 public class TemplateException extends RuntimeException {
-	private static final long serialVersionUID = 8247610319171014183L;
+    private static final long serialVersionUID = 8247610319171014183L;
 
-	public TemplateException(Throwable e) {
-		super(ExceptionUtil.getMessage(e), e);
-	}
+    public TemplateException( Throwable e ) {
+        super(ExceptionUtil.getMessage(e), e);
+    }
 
-	public TemplateException(String message) {
-		super(message);
-	}
+    public TemplateException( String message ) {
+        super(message);
+    }
 
-	public TemplateException(String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params));
-	}
+    public TemplateException( String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params));
+    }
 
-	public TemplateException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+    public TemplateException( String message, Throwable throwable ) {
+        super(message, throwable);
+    }
 
-	public TemplateException(String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, throwable, enableSuppression, writableStackTrace);
-	}
+    public TemplateException( String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace ) {
+        super(message, throwable, enableSuppression, writableStackTrace);
+    }
 
-	public TemplateException(Throwable throwable, String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params), throwable);
-	}
+    public TemplateException( Throwable throwable, String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params), throwable);
+    }
 }

@@ -51,7 +51,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
     private final transient ConcurrentMap<E, AtomicInteger> countMap;
 
-    ConcurrentHashMultiset(ConcurrentMap<E, AtomicInteger> countMap) {
+    ConcurrentHashMultiset( ConcurrentMap<E, AtomicInteger> countMap ) {
         checkArgument(countMap.isEmpty(), "the backing map (%s) must be empty", countMap);
         this.countMap = countMap;
     }
@@ -75,7 +75,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      *
      * @param elements the elements that the multiset should contain
      */
-    public static <E> ConcurrentHashMultiset<E> create(Iterable<? extends E> elements) {
+    public static <E> ConcurrentHashMultiset<E> create( Iterable<? extends E> elements ) {
         ConcurrentHashMultiset<E> multiset = ConcurrentHashMultiset.create();
         IterUtil.addAll(multiset, elements);
         return multiset;
@@ -95,7 +95,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * @throws IllegalArgumentException if {@code countMap} is not empty
      */
 
-    public static <E> ConcurrentHashMultiset<E> create(ConcurrentMap<E, AtomicInteger> countMap) {
+    public static <E> ConcurrentHashMultiset<E> create( ConcurrentMap<E, AtomicInteger> countMap ) {
         return new ConcurrentHashMultiset<>(countMap);
     }
 
@@ -108,7 +108,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * @return the nonnegative number of occurrences of the element
      */
     @Override
-    public int count(@CheckForNull Object element) {
+    public int count( @CheckForNull Object element ) {
         AtomicInteger existingCounter = MapUtil.safeGet(countMap, element);
         return (existingCounter == null) ? 0 : existingCounter.get();
     }
@@ -125,7 +125,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
         for (AtomicInteger value : countMap.values()) {
             sum += value.get();
         }
-        return (int) NumberUtil.saturatedCast(sum,Integer.class);
+        return (int) NumberUtil.saturatedCast(sum, Integer.class);
     }
 
     /*
@@ -140,7 +140,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
     @Override
     @SuppressWarnings("nullness") // b/192354773 in our checker affects toArray declarations
-    public <T extends Object> T[] toArray(T[] array) {
+    public <T extends Object> T[] toArray( T[] array ) {
         return snapshot().toArray(array);
     }
 
@@ -149,7 +149,8 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * either of these would recurse back to us again!
      */
     private List<E> snapshot() {
-        List<E> list = CollUtil.newArrayList();;
+        List<E> list = CollUtil.newArrayList();
+        ;
         for (Entry<E> entry : entrySet()) {
             E element = entry.getElement();
             for (int i = entry.getCount(); i > 0; i--) {
@@ -172,7 +173,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
 
     @Override
-    public int add(E element, int occurrences) {
+    public int add( E element, int occurrences ) {
         checkNotNull(element);
         if (occurrences == 0) {
             return count(element);
@@ -238,7 +239,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * testRemove_nullAllowed.
      */
     @Override
-    public int remove(@CheckForNull Object element, int occurrences) {
+    public int remove( @CheckForNull Object element, int occurrences ) {
         if (occurrences == 0) {
             return count(element);
         }
@@ -279,7 +280,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      * @throws IllegalArgumentException if {@code occurrences} is negative
      */
 
-    public boolean removeExactly(@CheckForNull Object element, int occurrences) {
+    public boolean removeExactly( @CheckForNull Object element, int occurrences ) {
         if (occurrences == 0) {
             return true;
         }
@@ -315,7 +316,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
 
     @Override
-    public int setCount(E element, int count) {
+    public int setCount( E element, int count ) {
         checkNotNull(element);
         checkNonnegative(count, "count");
         while (true) {
@@ -371,7 +372,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
 
     @Override
-    public boolean setCount(E element, int expectedOldCount, int newCount) {
+    public boolean setCount( E element, int expectedOldCount, int newCount ) {
         checkNotNull(element);
         checkNonnegative(expectedOldCount, "oldCount");
         checkNonnegative(newCount, "newCount");
@@ -425,22 +426,22 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
             }
 
             @Override
-            public boolean contains(@CheckForNull Object object) {
+            public boolean contains( @CheckForNull Object object ) {
                 return object != null && Collections2.safeContains(delegate, object);
             }
 
             @Override
-            public boolean containsAll(Collection<?> collection) {
+            public boolean containsAll( Collection<?> collection ) {
                 return standardContainsAll(collection);
             }
 
             @Override
-            public boolean remove(@CheckForNull Object object) {
+            public boolean remove( @CheckForNull Object object ) {
                 return object != null && Collections2.safeRemove(delegate, object);
             }
 
             @Override
-            public boolean removeAll(Collection<?> c) {
+            public boolean removeAll( Collection<?> c ) {
                 return standardRemoveAll(c);
             }
         };
@@ -532,12 +533,12 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
     /**
      * @serialData the ConcurrentMap of elements and their counts.
      */
-    private void writeObject(ObjectOutputStream stream) throws IOException {
+    private void writeObject( ObjectOutputStream stream ) throws IOException {
         stream.defaultWriteObject();
         stream.writeObject(countMap);
     }
 
-    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+    private void readObject( ObjectInputStream stream ) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         @SuppressWarnings("unchecked") // reading data stored by writeObject
         ConcurrentMap<E, Integer> deserializedCountMap =
@@ -570,12 +571,13 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
         @Override
         @SuppressWarnings("nullness") // b/192354773 in our checker affects toArray declarations
-        public <T extends Object> T[] toArray(T[] array) {
+        public <T extends Object> T[] toArray( T[] array ) {
             return snapshot().toArray(array);
         }
 
         private List<Entry<E>> snapshot() {
-            List<Entry<E>> list = CollUtil.newArrayList();;
+            List<Entry<E>> list = CollUtil.newArrayList();
+            ;
             // Not IterUtil.addAll(list, this), because that'll forward right back here.
             Iterators.addAll(list, iterator());
             return list;

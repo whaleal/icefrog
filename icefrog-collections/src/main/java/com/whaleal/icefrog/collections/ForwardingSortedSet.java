@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import javax.annotation.CheckForNull;
@@ -33,114 +31,107 @@ import static com.whaleal.icefrog.collections.ForwardingSortedMap.unsafeCompare;
  *
  * <p>The {@code standard} methods and the collection views they return are not guaranteed to be
  * thread-safe, even when all of the methods that they depend on are thread-safe.
- *
- *
- * 
- * 
  */
 
 
 public abstract class ForwardingSortedSet<E extends Object> extends ForwardingSet<E>
-    implements SortedSet<E> {
+        implements SortedSet<E> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingSortedSet() {}
-
-  @Override
-  protected abstract SortedSet<E> delegate();
-
-  @Override
-  @CheckForNull
-  public Comparator<? super E> comparator() {
-    return delegate().comparator();
-  }
-
-  @Override
-  @ParametricNullness
-  public E first() {
-    return delegate().first();
-  }
-
-  @Override
-  public SortedSet<E> headSet(@ParametricNullness E toElement) {
-    return delegate().headSet(toElement);
-  }
-
-  @Override
-  @ParametricNullness
-  public E last() {
-    return delegate().last();
-  }
-
-  @Override
-  public SortedSet<E> subSet(@ParametricNullness E fromElement, @ParametricNullness E toElement) {
-    return delegate().subSet(fromElement, toElement);
-  }
-
-  @Override
-  public SortedSet<E> tailSet(@ParametricNullness E fromElement) {
-    return delegate().tailSet(fromElement);
-  }
-
-  /**
-   * A sensible definition of {@link #contains} in terms of the {@code first()} method of {@link
-   * #tailSet}. If you override {@link #tailSet}, you may wish to override {@link #contains} to
-   * forward to this implementation.
-   *
-   * 
-   */
-  @Override
-
-  protected boolean standardContains(@CheckForNull Object object) {
-    try {
-      // any ClassCastExceptions and NullPointerExceptions are caught
-      @SuppressWarnings({"unchecked", "nullness"})
-      SortedSet<Object> self = (SortedSet<Object>) this;
-      Object ceiling = self.tailSet(object).first();
-      return unsafeCompare(comparator(), ceiling, object) == 0;
-    } catch (ClassCastException | NoSuchElementException | NullPointerException e) {
-      return false;
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingSortedSet() {
     }
-  }
 
-  /**
-   * A sensible definition of {@link #remove} in terms of the {@code iterator()} method of {@link
-   * #tailSet}. If you override {@link #tailSet}, you may wish to override {@link #remove} to
-   * forward to this implementation.
-   *
-   * 
-   */
-  @Override
+    @Override
+    protected abstract SortedSet<E> delegate();
 
-  protected boolean standardRemove(@CheckForNull Object object) {
-    try {
-      // any ClassCastExceptions and NullPointerExceptions are caught
-      @SuppressWarnings({"unchecked", "nullness"})
-      SortedSet<Object> self = (SortedSet<Object>) this;
-      Iterator<?> iterator = self.tailSet(object).iterator();
-      if (iterator.hasNext()) {
-        Object ceiling = iterator.next();
-        if (unsafeCompare(comparator(), ceiling, object) == 0) {
-          iterator.remove();
-          return true;
+    @Override
+    @CheckForNull
+    public Comparator<? super E> comparator() {
+        return delegate().comparator();
+    }
+
+    @Override
+    @ParametricNullness
+    public E first() {
+        return delegate().first();
+    }
+
+    @Override
+    public SortedSet<E> headSet( @ParametricNullness E toElement ) {
+        return delegate().headSet(toElement);
+    }
+
+    @Override
+    @ParametricNullness
+    public E last() {
+        return delegate().last();
+    }
+
+    @Override
+    public SortedSet<E> subSet( @ParametricNullness E fromElement, @ParametricNullness E toElement ) {
+        return delegate().subSet(fromElement, toElement);
+    }
+
+    @Override
+    public SortedSet<E> tailSet( @ParametricNullness E fromElement ) {
+        return delegate().tailSet(fromElement);
+    }
+
+    /**
+     * A sensible definition of {@link #contains} in terms of the {@code first()} method of {@link
+     * #tailSet}. If you override {@link #tailSet}, you may wish to override {@link #contains} to
+     * forward to this implementation.
+     */
+    @Override
+
+    protected boolean standardContains( @CheckForNull Object object ) {
+        try {
+            // any ClassCastExceptions and NullPointerExceptions are caught
+            @SuppressWarnings({"unchecked", "nullness"})
+            SortedSet<Object> self = (SortedSet<Object>) this;
+            Object ceiling = self.tailSet(object).first();
+            return unsafeCompare(comparator(), ceiling, object) == 0;
+        } catch (ClassCastException | NoSuchElementException | NullPointerException e) {
+            return false;
         }
-      }
-    } catch (ClassCastException | NullPointerException e) {
-      return false;
     }
-    return false;
-  }
 
-  /**
-   * A sensible default implementation of {@link #subSet(Object, Object)} in terms of {@link
-   * #headSet(Object)} and {@link #tailSet(Object)}. In some situations, you may wish to override
-   * {@link #subSet(Object, Object)} to forward to this implementation.
-   *
-   * 
-   */
+    /**
+     * A sensible definition of {@link #remove} in terms of the {@code iterator()} method of {@link
+     * #tailSet}. If you override {@link #tailSet}, you may wish to override {@link #remove} to
+     * forward to this implementation.
+     */
+    @Override
 
-  protected SortedSet<E> standardSubSet(
-      @ParametricNullness E fromElement, @ParametricNullness E toElement) {
-    return tailSet(fromElement).headSet(toElement);
-  }
+    protected boolean standardRemove( @CheckForNull Object object ) {
+        try {
+            // any ClassCastExceptions and NullPointerExceptions are caught
+            @SuppressWarnings({"unchecked", "nullness"})
+            SortedSet<Object> self = (SortedSet<Object>) this;
+            Iterator<?> iterator = self.tailSet(object).iterator();
+            if (iterator.hasNext()) {
+                Object ceiling = iterator.next();
+                if (unsafeCompare(comparator(), ceiling, object) == 0) {
+                    iterator.remove();
+                    return true;
+                }
+            }
+        } catch (ClassCastException | NullPointerException e) {
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * A sensible default implementation of {@link #subSet(Object, Object)} in terms of {@link
+     * #headSet(Object)} and {@link #tailSet(Object)}. In some situations, you may wish to override
+     * {@link #subSet(Object, Object)} to forward to this implementation.
+     */
+
+    protected SortedSet<E> standardSubSet(
+            @ParametricNullness E fromElement, @ParametricNullness E toElement ) {
+        return tailSet(fromElement).headSet(toElement);
+    }
 }

@@ -13,32 +13,31 @@ import java.io.IOException;
  * 项目地址：https://github.com/yozhao/IKAnalyzer
  *
  * @author looly
- *
  */
 public class IKAnalyzerResult extends AbstractResult {
 
-	private final IKSegmenter seg;
+    private final IKSegmenter seg;
 
-	/**
-	 * 构造
-	 *
-	 * @param seg 分词结果
-	 */
-	public IKAnalyzerResult(IKSegmenter seg) {
-		this.seg = seg;
-	}
+    /**
+     * 构造
+     *
+     * @param seg 分词结果
+     */
+    public IKAnalyzerResult( IKSegmenter seg ) {
+        this.seg = seg;
+    }
 
-	@Override
-	protected Word nextWord() {
-		Lexeme next;
-		try {
-			next = this.seg.next();
-		} catch (IOException e) {
-			throw new TokenizerException(e);
-		}
-		if (null == next) {
-			return null;
-		}
-		return new IKAnalyzerWord(next);
-	}
+    @Override
+    protected Word nextWord() {
+        Lexeme next;
+        try {
+            next = this.seg.next();
+        } catch (IOException e) {
+            throw new TokenizerException(e);
+        }
+        if (null == next) {
+            return null;
+        }
+        return new IKAnalyzerWord(next);
+    }
 }

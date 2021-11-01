@@ -29,6 +29,7 @@ public class SingletonTest {
         private static volatile TestBean testSingleton;
         private String name;
         private String age;
+
         public TestBean() {
             if (null != testSingleton) {
                 throw new UtilException("单例测试中，对象被创建了两次！");

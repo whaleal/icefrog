@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import javax.annotation.CheckForNull;
@@ -22,119 +20,121 @@ import java.util.Iterator;
  * invoke methods, they invoke methods on the {@code ForwardingDeque}.
  *
  * @author Kurt Alfred Kluever
- * 
  */
 
 
 public abstract class ForwardingDeque<E extends Object> extends ForwardingQueue<E>
-    implements Deque<E> {
+        implements Deque<E> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingDeque() {}
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingDeque() {
+    }
 
-  @Override
-  protected abstract Deque<E> delegate();
+    @Override
+    protected abstract Deque<E> delegate();
 
-  @Override
-  public void addFirst(@ParametricNullness E e) {
-    delegate().addFirst(e);
-  }
+    @Override
+    public void addFirst( @ParametricNullness E e ) {
+        delegate().addFirst(e);
+    }
 
-  @Override
-  public void addLast(@ParametricNullness E e) {
-    delegate().addLast(e);
-  }
+    @Override
+    public void addLast( @ParametricNullness E e ) {
+        delegate().addLast(e);
+    }
 
-  @Override
-  public Iterator<E> descendingIterator() {
-    return delegate().descendingIterator();
-  }
+    @Override
+    public Iterator<E> descendingIterator() {
+        return delegate().descendingIterator();
+    }
 
-  @Override
-  @ParametricNullness
-  public E getFirst() {
-    return delegate().getFirst();
-  }
+    @Override
+    @ParametricNullness
+    public E getFirst() {
+        return delegate().getFirst();
+    }
 
-  @Override
-  @ParametricNullness
-  public E getLast() {
-    return delegate().getLast();
-  }
+    @Override
+    @ParametricNullness
+    public E getLast() {
+        return delegate().getLast();
+    }
 
-   // TODO(cpovirk): Consider removing this?
-  @Override
-  public boolean offerFirst(@ParametricNullness E e) {
-    return delegate().offerFirst(e);
-  }
+    // TODO(cpovirk): Consider removing this?
+    @Override
+    public boolean offerFirst( @ParametricNullness E e ) {
+        return delegate().offerFirst(e);
+    }
 
-   // TODO(cpovirk): Consider removing this?
-  @Override
-  public boolean offerLast(@ParametricNullness E e) {
-    return delegate().offerLast(e);
-  }
+    // TODO(cpovirk): Consider removing this?
+    @Override
+    public boolean offerLast( @ParametricNullness E e ) {
+        return delegate().offerLast(e);
+    }
 
-  @Override
-  @CheckForNull
-  public E peekFirst() {
-    return delegate().peekFirst();
-  }
+    @Override
+    @CheckForNull
+    public E peekFirst() {
+        return delegate().peekFirst();
+    }
 
-  @Override
-  @CheckForNull
-  public E peekLast() {
-    return delegate().peekLast();
-  }
+    @Override
+    @CheckForNull
+    public E peekLast() {
+        return delegate().peekLast();
+    }
 
-   // TODO(cpovirk): Consider removing this?
-  @Override
-  @CheckForNull
-  public E pollFirst() {
-    return delegate().pollFirst();
-  }
+    // TODO(cpovirk): Consider removing this?
+    @Override
+    @CheckForNull
+    public E pollFirst() {
+        return delegate().pollFirst();
+    }
 
-   // TODO(cpovirk): Consider removing this?
-  @Override
-  @CheckForNull
-  public E pollLast() {
-    return delegate().pollLast();
-  }
-
-
-  @Override
-  @ParametricNullness
-  public E pop() {
-    return delegate().pop();
-  }
-
-  @Override
-  public void push(@ParametricNullness E e) {
-    delegate().push(e);
-  }
+    // TODO(cpovirk): Consider removing this?
+    @Override
+    @CheckForNull
+    public E pollLast() {
+        return delegate().pollLast();
+    }
 
 
-  @Override
-  @ParametricNullness
-  public E removeFirst() {
-    return delegate().removeFirst();
-  }
+    @Override
+    @ParametricNullness
+    public E pop() {
+        return delegate().pop();
+    }
+
+    @Override
+    public void push( @ParametricNullness E e ) {
+        delegate().push(e);
+    }
 
 
-  @Override
-  @ParametricNullness
-  public E removeLast() {
-    return delegate().removeLast();
-  }
+    @Override
+    @ParametricNullness
+    public E removeFirst() {
+        return delegate().removeFirst();
+    }
 
 
-  @Override
-  public boolean removeFirstOccurrence(@CheckForNull Object o) {
-    return delegate().removeFirstOccurrence(o);
-  }
+    @Override
+    @ParametricNullness
+    public E removeLast() {
+        return delegate().removeLast();
+    }
 
 
-  @Override
-  public boolean removeLastOccurrence(@CheckForNull Object o) {
-    return delegate().removeLastOccurrence(o);
-  }
+    @Override
+    public boolean removeFirstOccurrence( @CheckForNull Object o ) {
+        return delegate().removeFirstOccurrence(o);
+    }
+
+
+    @Override
+    public boolean removeLastOccurrence( @CheckForNull Object o ) {
+        return delegate().removeLastOccurrence(o);
+    }
 }

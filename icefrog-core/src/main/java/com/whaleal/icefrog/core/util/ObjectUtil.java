@@ -215,11 +215,10 @@ public class ObjectUtil {
      * 需要两遍校验 ，因为在 json  中
      * 存在 str != null 但是 str.equals(null) when using org.json
      *
-     * @see Objects#equals(Object, Object)
-     * {@code Objects.equals(obj ,null);}
-     *
      * @param obj 对象
      * @return 是否为null
+     * @see Objects#equals(Object, Object)
+     * {@code Objects.equals(obj ,null);}
      */
     public static boolean isNull( Object obj ) {
         //noinspection ConstantConditions

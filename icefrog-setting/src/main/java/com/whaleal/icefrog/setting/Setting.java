@@ -65,6 +65,7 @@ public class Setting extends AbsSetting implements Map<String, String> {
     protected Resource resource;
     private SettingLoader settingLoader;
     private WatchMonitor watchMonitor;
+
     /**
      * 空构造
      */

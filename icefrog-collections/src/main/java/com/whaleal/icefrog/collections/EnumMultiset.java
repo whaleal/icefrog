@@ -34,6 +34,7 @@ public final class EnumMultiset<E extends Enum<E>> extends AbstractMultiset<E>
     private transient int[] counts;
     private transient int distinctElements;
     private transient long size;
+
     /**
      * Creates an empty {@code EnumMultiset}.
      */

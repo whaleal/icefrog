@@ -30,19 +30,19 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 final class ConsumingQueueIterator<T extends Object> extends AbstractIterator<T> {
-  private final Queue<T> queue;
+    private final Queue<T> queue;
 
-  ConsumingQueueIterator(Queue<T> queue) {
-    this.queue = checkNotNull(queue);
-  }
-
-  @Override
-  @CheckForNull
-  public T computeNext() {
-    // TODO(b/192579700): Use a ternary once it no longer confuses our nullness checker.
-    if (queue.isEmpty()) {
-      return endOfData();
+    ConsumingQueueIterator( Queue<T> queue ) {
+        this.queue = checkNotNull(queue);
     }
-    return queue.remove();
-  }
+
+    @Override
+    @CheckForNull
+    public T computeNext() {
+        // TODO(b/192579700): Use a ternary once it no longer confuses our nullness checker.
+        if (queue.isEmpty()) {
+            return endOfData();
+        }
+        return queue.remove();
+    }
 }

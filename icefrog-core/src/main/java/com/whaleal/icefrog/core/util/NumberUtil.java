@@ -1627,7 +1627,7 @@ public class NumberUtil {
      * @return 结果
      */
     public static long factorial( int n ) {
-        return  factorial((long) n);
+        return factorial((long) n);
     }
 
     /**
@@ -3127,7 +3127,6 @@ public class NumberUtil {
                 return (int) result;
         }
     }
-
 
 
     /**

@@ -1,9 +1,9 @@
 package com.whaleal.icefrog.extra.tokenizer.engine.mynlp;
 
-import com.whaleal.icefrog.extra.tokenizer.Result;
-import com.whaleal.icefrog.extra.tokenizer.Word;
 import com.mayabot.nlp.segment.Sentence;
 import com.mayabot.nlp.segment.WordTerm;
+import com.whaleal.icefrog.extra.tokenizer.Result;
+import com.whaleal.icefrog.extra.tokenizer.Word;
 
 import java.util.Iterator;
 
@@ -12,33 +12,32 @@ import java.util.Iterator;
  * 项目地址：https://github.com/mayabot/mynlp/
  *
  * @author looly
- *
  */
 public class MynlpResult implements Result {
 
-	private final Iterator<WordTerm> result;
+    private final Iterator<WordTerm> result;
 
-	/**
-	 * 构造
-	 *
-	 * @param sentence 分词结果（中文句子）
-	 */
-	public MynlpResult(Sentence sentence) {
-		this.result = sentence.iterator();
-	}
+    /**
+     * 构造
+     *
+     * @param sentence 分词结果（中文句子）
+     */
+    public MynlpResult( Sentence sentence ) {
+        this.result = sentence.iterator();
+    }
 
-	@Override
-	public boolean hasNext() {
-		return result.hasNext();
-	}
+    @Override
+    public boolean hasNext() {
+        return result.hasNext();
+    }
 
-	@Override
-	public Word next() {
-		return new MynlpWord(result.next());
-	}
+    @Override
+    public Word next() {
+        return new MynlpWord(result.next());
+    }
 
-	@Override
-	public void remove() {
-		result.remove();
-	}
+    @Override
+    public void remove() {
+        result.remove();
+    }
 }

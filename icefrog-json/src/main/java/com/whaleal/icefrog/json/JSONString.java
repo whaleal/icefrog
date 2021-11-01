@@ -5,14 +5,13 @@ package com.whaleal.icefrog.json;
  * 实现此接口的类可以通过实现{@code toJSONString()}方法来改变转JSON字符串的方式。
  *
  * @author looly   wh
- *
  */
 public interface JSONString {
 
-	/**
-	 * 自定义转JSON字符串的方法
-	 *
-	 * @return JSON字符串
-	 */
-	String toJSONString();
+    /**
+     * 自定义转JSON字符串的方法
+     *
+     * @return JSON字符串
+     */
+    String toJSONString();
 }

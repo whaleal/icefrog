@@ -88,8 +88,8 @@ public class NeuQuant {
     protected static final int ALPHARADBIAS = (1 << ALPHARADBSHIFT);
     protected int alphadec; /* biased by 10 bits */
 
-	/* Types and Global Variables
-	-------------------------- */
+    /* Types and Global Variables
+    -------------------------- */
     protected byte[] thepicture; /* the input image itself */
     protected int lengthcount; /* lengthcount = H*W*3 */
 
