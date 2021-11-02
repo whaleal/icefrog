@@ -389,17 +389,30 @@ public class CollUtil {
      * @param collection 集合
      * @param value      需要查找的值
      * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
-     * @throws ClassCastException   if the type of the specified element
-     *                              is incompatible with this collection
-     *                              (<a href="#optional-restrictions">optional</a>)
-     * @throws NullPointerException if the specified element is null and this
-     *                              collection does not permit null elements
-     *                              (<a href="#optional-restrictions">optional</a>)
+     * @throws ClassCastException 如果类型不一致会抛出转换异常
+     * @throws NullPointerException 当指定的元素 值为 null ,或集合类不支持null 时抛出该异常
+     * @see Collection#contains(Object)
      * @see CollUtil#safeContains(Collection, Object)
      * @since 1.0.0
      */
     public static boolean contains( Collection<?> collection, Object value ) {
         return isNotEmpty(collection) && collection.contains(value);
+    }
+
+
+    /**
+     * 判断指定集合是否包含指定值，如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+     * @param collection 集合
+     * @param value  需要查找的值
+     * @return 果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+     */
+    public static boolean safeContains(Collection<?> collection, Object value) {
+
+        try {
+            return contains(collection ,value);
+        } catch (ClassCastException | NullPointerException e) {
+            return false;
+        }
     }
 
     /**
@@ -3605,25 +3618,7 @@ public class CollUtil {
             return false;
         }
     }
-
-    /**
-     * Delegates to {@link Collection#contains}. Returns {@code false} if the {@code contains} method
-     * throws a {@code ClassCastException} or {@code NullPointerException}.
-     * 安全的判断包含 contains ，在 collection 接口中调用  contains  方法的过程中 会抛出 两个异常
-     * {@code ClassCastException } 和 {@code NullPointerException} 详见jdk
-     *
-     * @param collection collection
-     * @param object     object
-     * @return return
-     */
-    public static boolean safeContains( Collection<?> collection, @CheckForNull Object object ) {
-        checkNotNull(collection);
-        try {
-            return collection.contains(object);
-        } catch (ClassCastException | NullPointerException e) {
-            return false;
-        }
-    }
+    
 
     /**
      * An implementation of {@link Collection#toString()}.
