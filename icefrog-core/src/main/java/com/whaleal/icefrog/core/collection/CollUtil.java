@@ -2962,8 +2962,6 @@ public class CollUtil {
      * @param <K>   键
      * @param <V>   值
      */
-
-
     @SuppressWarnings("unchecked")
     public static <K, V> void mergePropertiesIntoMap( Properties props, Map<K, V> map ) {
         if (props != null) {
@@ -3120,7 +3118,6 @@ public class CollUtil {
      * @return the common element type, or {@code null} if no clear
      * common type has been found (or the collection was empty)
      */
-
     public static Class<?> findCommonElementType( Collection<?> collection ) {
         if (isEmpty(collection)) {
             return null;
@@ -3492,10 +3489,22 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个 LinkedHashSet
+     * @param <T> 泛型参数
+     * @return 返回一个新的 LinkedHashSet
+     */
     public static <T> LinkedHashSet<T> createLinkedHashSet() {
         return new LinkedHashSet();
     }
 
+    /**
+     * 创建一个 LinkedHashSet
+     * @param args 参数列表
+     * @param <T> 泛型
+     * @param <V> 泛型
+     * @return  新的LinkedHashSet
+     */
     public static <T, V extends T> LinkedHashSet<T> createLinkedHashSet( V... args ) {
         if ((args == null) || (args.length == 0)) {
             return new LinkedHashSet();
@@ -3507,6 +3516,12 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个 LinkedHashSet
+     * @param c 参数列表
+     * @param <T> 泛型
+     * @return  新的LinkedHashSet
+     */
     public static <T> LinkedHashSet<T> createLinkedHashSet( Iterable<? extends T> c ) {
         LinkedHashSet<T> set;
         if ((c instanceof Collection)) {
@@ -3518,22 +3533,47 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet() {
         return new TreeSet();
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T, V extends T> TreeSet<T> createTreeSet( V... args ) {
         return createTreeSet(null, args);
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet( Iterable<? extends T> c ) {
         return createTreeSet(null, c);
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet( Comparator<? super T> comparator ) {
         return new TreeSet(comparator);
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T, V extends T> TreeSet<T> createTreeSet( Comparator<? super T> comparator, V... args ) {
         TreeSet<T> set = new TreeSet(comparator);
         if (args != null) {
@@ -3544,13 +3584,17 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet( Comparator<? super T> comparator, Iterable<? extends T> c ) {
         TreeSet<T> set = new TreeSet(comparator);
-
         iterableToCollection(c, set);
-
         return set;
     }
+
 
     private static <T> void iterableToCollection( Iterable<? extends T> c, Collection<T> list ) {
         for (T element : c) {
@@ -3603,29 +3647,50 @@ public class CollUtil {
     }
 
     /**
-     * Delegates to {@link Collection#remove}. Returns {@code false} if the {@code remove} method
-     * throws a {@code ClassCastException} or {@code NullPointerException}.
+     * 集合类的委托执行 {@link Collection#remove}
+     * 有异常时 返回为false ;
+     * 否则 返回 remove  的结果
+     * @see Collection#remove(Object)
      *
+     * @see CollUtil#remove(Collection, Object)
      * @param collection collection
      * @param object     object
-     * @return return
+     * @return 是否删除
+     *
      */
     public static boolean safeRemove( Collection<?> collection, @CheckForNull Object object ) {
         checkNotNull(collection);
         try {
-            return collection.remove(object);
+            return remove(collection ,object);
         } catch (ClassCastException | NullPointerException e) {
             return false;
         }
     }
-    
 
     /**
-     * An implementation of {@link Collection#toString()}.
+     * 集合类的委托执行 {@link Collection#remove}
+     * 有异常时 返回为false ;
+     * 否则 返回 remove  的结果
+     * @see Collection#remove(Object)
+     *
+     * @param collection collection
+     * @param object     object
+     * @return 是否删除
+     * @throws NullPointerException   当对象为null 时强转类型可能会抛出该错误
+     * @throws ClassCastException  类型转换错误
+     *
+     */
+    public static boolean remove( Collection<?> collection, @CheckForNull Object object ) {
+        checkNotNull(collection);
+        return collection.remove(object);
+    }
+
+    /**
+     * 集合类toString方法的一个实现 {@link Collection#toString()}.
      * 将集合类相关转为 String
      *
      * @param collection collection
-     * @return return return
+     * @return 返回字符串
      */
     public static String toString( final Collection<?> collection ) {
         StringBuilder sb = StrUtil.builder((int) Math.min(collection.size() * 8L, 1 << (Integer.SIZE - 2)));
@@ -3646,19 +3711,27 @@ public class CollUtil {
         return sb.append(']').toString();
     }
 
-    /**
-     * An implementation of {@link List#hashCode()}.
-     */
-    public static int hashCode( List<?> list ) {
-        // TODO(lowasser): worth optimizing for RandomAccess?
-        int hashCode = 1;
-        for (Object o : list) {
-            hashCode = 31 * hashCode + (o == null ? 0 : o.hashCode());
 
-            hashCode = ~~hashCode;
+    /**
+     * 
+     * 集合类相关的 hashCode 实现{@link Collection#hashCode()}.
+     * @see ObjectUtil#hashCode(Object...) 
+     * @param list  非空集合
+     * @return hashcode值
+     *
+     */
+    public static int hashCode( Collection<?> list ) {
+        if(list ==null){
+            return  0;
+        }
+        int result = 1;
+        for (Object o : list) {
+            result = 31 * result + (o == null ? 0 : o.hashCode());
+
+            result = ~~result;
             // needed to deal with GWT integer overflow
         }
-        return hashCode;
+        return result;
     }
 
     /**
@@ -3715,7 +3788,10 @@ public class CollUtil {
      *                                  {@link Integer#MAX_VALUE}
      * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
      *                                  a provided list is null
+     *
+     * 笛卡尔积
      */
+    @Deprecated
     public static <B> Collection<List<B>> cartesianProduct( List<? extends Collection<B>> lists ) {
 
         notNull(lists);
@@ -3740,7 +3816,6 @@ public class CollUtil {
         return result;
 
     }
-
 
     /**
      * 针对一个参数做相应的操作<br>
@@ -3780,7 +3855,6 @@ public class CollUtil {
      *
      * @param <E>
      */
-
     private static class EnumerationIterator<E> implements Iterator<E> {
 
         private final Enumeration<E> enumeration;
