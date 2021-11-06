@@ -704,6 +704,7 @@ public class ObjectUtil {
      * Determine whether the given array is empty:
      * i.e. {@code null} or of zero length.
      *
+     * 该方法应当调整至  ArrayUtil 中
      * @param array the array to check
      * @return boolean
      * @see #isEmpty(Object)
@@ -1255,8 +1256,7 @@ public class ObjectUtil {
             return nullSafeToString((short[]) obj);
         }
         String str = obj.toString();
-        //return (str != null ? str : EMPTY_STRING);
-        return str;
+        return (str != null ? str : EMPTY_STRING);
     }
 
     /**
