@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.whaleal.icefrog.core.collection.ListUtil.of;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
@@ -3735,14 +3736,16 @@ public class CollUtil {
     }
 
     /**
-     * Returns every possible list that can be formed by choosing one element from each of the given
-     * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
-     * product</a>" of the lists. For example:
+     * 笛卡尔积
+     * 两个集合X和Y的笛卡尔积（Cartesian product），又称直积，表示为X × Y，第一个对象是X的成员而第二个对象是Y的所有可能有序对的其中一个成员 [1]  。
+     * 返回可以通过从每个给定的元素中选择一个元素来形成的每个可能的列表
+     * 按顺序列出； “n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">笛卡尔
+     * product</a>" 的列表。例如：
      *
      * <pre>{@code
-     * CollUtil.cartesianProduct(List.of(
+     * CollUtil.cartesianProduct(
      *     List.of(1, 2),
-     *     List.of("A", "B", "C")))
+     *     List.of("A", "B", "C"))
      * }</pre>
      *
      * <p>returns a list containing six lists in the following order:
@@ -3755,66 +3758,83 @@ public class CollUtil {
      *   <li>{@code List.of(2, "B")}
      *   <li>{@code List.of(2, "C")}
      * </ul>
+     * 请注意，如果任何输入列表为空，则笛卡尔积也将为空。如果没有列表
+     * 提供（一个空列表），生成的笛卡尔积只有一个元素，一个空的
+     * 列表（违反直觉，但在数学上是一致的）。
+     * 性能说明：虽然大小为 {@code m, n, p} 的列表的笛卡尔积是一个
+     * 大小为 {@code m x n x p} 的列表，其实际内存消耗要小得多。当构造笛卡尔乘积的时候，只是复制输入列表。仅作为结果列表。
+     * 迭代的是创建的单个列表，迭代后不会保留这些列表。
      *
-     * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
-     * products that you would get from nesting for loops:
-     *
-     * <pre>{@code
-     * for (B b0 : lists.get(0)) {
-     *   for (B b1 : lists.get(1)) {
-     *     ...
-     *     List<B> tuple = List.of(b0, b1, ...);
-     *     // operate on tuple
-     *   }
-     * }
-     * }</pre>
-     *
-     * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
-     * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
-     * list (counter-intuitive, but mathematically consistent).
-     *
-     * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
-     * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
-     * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
-     * is iterated are the individual lists created, and these are not retained after iteration.
-     * <p>
-     * 笛卡尔
-     *
-     * @param lists the lists to choose elements from, in the order that the elements chosen from
-     *              those lists should appear in the resulting lists
-     * @param <B>   any common base class shared by all axes (often just {@link Object})
-     * @return the Cartesian product, as an immutable list containing immutable lists
+     * @param coll1  集合1
+     * @param coll2  集合2
+     * @param <T>  any common base class shared by all axes (often just {@link Object})
+     * @return  笛卡尔积，作为包含不可变列表的不可变列表
      * @throws IllegalArgumentException if the size of the cartesian product would be greater than
      *                                  {@link Integer#MAX_VALUE}
      * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
      *                                  a provided list is null
      *
-     * 笛卡尔积
      */
-    @Deprecated
-    public static <B> Collection<List<B>> cartesianProduct( List<? extends Collection<B>> lists ) {
-
-        notNull(lists);
-        if (lists.isEmpty()) {
-            return list(false);
-        }
-        Collection<List<B>> result = null;
-        if (lists.get(0) instanceof Set) {
-
-            result = newHashSet();
-        } else {
-            result = list(false);
+    public static <T> List<List<T>> cartesianProduct(Collection<T> coll1, Collection<T> coll2 ) {
+        
+        // 判断非空  当有一个为空时则该笛卡尔积为空的笛卡尔积
+        if (isEmpty(coll1)||isEmpty(coll2)) {
+            return newArrayList();
         }
 
-        for (Collection<B> listinner : lists) {
-            List<B> copy = list(false, listinner);
-            if (copy.isEmpty()) {
-                return of();
+        List<List<T>> collect = coll1.stream().flatMap(s1 -> coll2.stream().map(s2 -> CollUtil.newArrayList(s1, s2)))
+                .collect(Collectors.toList());
+
+        return collect ;
+
+    }
+
+    /**
+     *
+     * @param coll1  集合1
+     * @param coll2  集合2
+     * @param <T>  any common base class shared by all axes (often just {@link Object})
+     * @return  笛卡尔积，作为包含不可变列表的不可变列表
+     * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+     *                                  {@link Integer#MAX_VALUE}
+     * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
+     *                                  a provided list is null
+     *
+     */
+    public static <T> List<List<T>> cartesianProduct(Collection<T> coll1, Collection<T> coll2, Collection<T>... otherColls ) {
+        List<List<T>> header = cartesianProduct(coll1, coll2);
+        if(header.isEmpty()){
+            return newArrayList();
+        }
+
+        for(Collection<T> coll :otherColls){
+
+            if(isEmpty(coll)){
+                return newArrayList();
             }
-            result.add(copy);
+            header = header.stream().flatMap(l1-> coll.stream().map( s2-> {List<T> l2 = CollUtil.newArrayList(l1);l2.add(s2);return l2;})).collect(Collectors.toList());
         }
-        return result;
 
+        return header;
+
+    }
+
+    /**
+     * @param coll1  集合1
+     * @param coll2  集合2
+     * @param <T>  any common base class shared by all axes (often just {@link Object})
+     * @return  笛卡尔积，作为包含不可变列表的不可变列表
+     * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+     *                                  {@link Integer#MAX_VALUE}
+     * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
+     *                                  a provided list is null
+     *
+     */
+    public static <T> Set<List<T>> cartesianProductDistinct( Collection<T> coll1, Collection<T> coll2, Collection<T>... otherColls) {
+
+        List<List<T>> lists = cartesianProduct(coll1, coll2, otherColls);
+
+        return CollUtil.newHashSet(true,lists);
     }
 
     /**
