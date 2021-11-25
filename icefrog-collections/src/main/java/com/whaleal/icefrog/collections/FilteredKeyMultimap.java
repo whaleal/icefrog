@@ -78,7 +78,7 @@ class FilteredKeyMultimap<K extends Object, V extends Object>
 
     @Override
     Set<K> createKeySet() {
-        return Sets.filter(unfiltered.keySet(), keyPredicate);
+        return SetUtil.filter(unfiltered.keySet(), keyPredicate);
     }
 
     @Override

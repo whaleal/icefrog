@@ -1051,7 +1051,7 @@ final class Synchronized {
                 return true;
             }
             synchronized (mutex) {
-                return Sets.equalsImpl(delegate(), o);
+                return SetUtil.equalsImpl(delegate(), o);
             }
         }
 

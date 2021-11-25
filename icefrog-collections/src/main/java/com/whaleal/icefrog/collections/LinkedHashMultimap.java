@@ -428,7 +428,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
         }
     }
 
-    final class ValueSet extends Sets.ImprovedAbstractSet<V> implements ValueSetLink<K, V> {
+    final class ValueSet extends SetUtil.ImprovedAbstractSet<V> implements ValueSetLink<K, V> {
         /*
          * We currently use a fixed load factor of 1.0, a bit higher than normal to reduce memory
          * consumption.

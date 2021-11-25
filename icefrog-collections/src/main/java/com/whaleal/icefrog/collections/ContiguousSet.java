@@ -194,7 +194,7 @@ public abstract class ContiguousSet<C extends Comparable> extends ImmutableSorte
     /**
      * Returns the set of values that are contained in both this set and the other.
      *
-     * <p>This method should always be used instead of {@link Sets#intersection} for {@link
+     * <p>This method should always be used instead of {@link SetUtil#intersection} for {@link
      * ContiguousSet} instances.
      */
     public abstract ContiguousSet<C> intersection( ContiguousSet<C> other );

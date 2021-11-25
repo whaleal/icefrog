@@ -91,7 +91,7 @@ public class EnumMultisetTest extends TestCase {
     ms.add(Color.YELLOW, 1);
     ms.add(Color.RED, 2);
 
-    Set<Object> uniqueEntries = Sets.newIdentityHashSet();
+    Set<Object> uniqueEntries = SetUtil.newIdentityHashSet();
     uniqueEntries.addAll(ms.entrySet());
     assertEquals(3, uniqueEntries.size());
   }

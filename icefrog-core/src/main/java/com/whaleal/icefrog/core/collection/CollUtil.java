@@ -2118,14 +2118,12 @@ public class CollUtil {
      * @since 1.0.0
      */
     public static <T> T get( Collection<T> collection, int index ) {
-        if (null == collection) {
-            return null;
+
+        if(isEmpty(collection)) {
+            return null ;
         }
 
         final int size = collection.size();
-        if (0 == size) {
-            return null;
-        }
 
         if (index < 0) {
             index += size;
@@ -2136,6 +2134,7 @@ public class CollUtil {
             return null;
         }
 
+        // 如果是List 相关实现
         if (collection instanceof List) {
             final List<T> list = ((List<T>) collection);
             return list.get(index);
@@ -2221,6 +2220,13 @@ public class CollUtil {
      * @since 1.0.0
      */
     public static <T> T getLast( Collection<T> collection ) {
+        if (isEmpty(collection)) {
+            return null;
+        }
+        if (collection instanceof SortedSet) {
+
+            return ((SortedSet<T>) collection).last();
+        }
         return get(collection, -1);
     }
 
@@ -3148,7 +3154,7 @@ public class CollUtil {
      * @see LinkedHashSet
      */
 
-    public static <T> T firstElement( Set<T> set ) {
+    public static <T> T getFirst( Set<T> set ) {
         if (isEmpty(set)) {
             return null;
         }
@@ -3171,54 +3177,14 @@ public class CollUtil {
      * @param <T>  返回的list  泛型参数
      * @return the first element, or {@code null} if none
      */
-    public static <T> T firstElement( List<T> list ) {
+    public static <T> T getFirst( List<T> list ) {
         if (isEmpty(list)) {
             return null;
         }
         return list.get(0);
     }
 
-    /**
-     * Retrieve the last element of the given Set, using {@link SortedSet#last()}
-     * or otherwise iterating over all elements (assuming a linked set).
-     *
-     * @param set the Set to check (may be {@code null} or empty)
-     * @param <T> 传入的set 的泛型参数
-     * @return the last element, or {@code null} if none
-     * @see SortedSet
-     * @see LinkedHashMap#keySet()
-     * @see LinkedHashSet
-     */
-    public static <T> T lastElement( Set<T> set ) {
-        if (isEmpty(set)) {
-            return null;
-        }
-        if (set instanceof SortedSet) {
-            return ((SortedSet<T>) set).last();
-        }
 
-        // Full iteration necessary...
-        Iterator<T> it = set.iterator();
-        T last = null;
-        while (it.hasNext()) {
-            last = it.next();
-        }
-        return last;
-    }
-
-    /**
-     * Retrieve the last element of the given List, accessing the highest index.
-     *
-     * @param list the List to check (may be {@code null} or empty)
-     * @param <T>  传入的List 泛型参数
-     * @return the last element, or {@code null} if none
-     */
-    public static <T> T lastElement( List<T> list ) {
-        if (isEmpty(list)) {
-            return null;
-        }
-        return list.get(list.size() - 1);
-    }
 
     /**
      * Marshal the elements from the given enumeration into an array of the given type.
@@ -3610,7 +3576,8 @@ public class CollUtil {
         return toNoNullStringArray(collection.toArray());
     }
 
-    static String[] toNoNullStringArray( Object[] array ) {
+
+    public static String[] toNoNullStringArray( Object[] array ) {
         ArrayList list = new ArrayList(array.length);
         for (int i = 0; i < array.length; i++) {
             Object e = array[i];

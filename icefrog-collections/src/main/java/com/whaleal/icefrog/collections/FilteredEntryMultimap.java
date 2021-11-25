@@ -34,7 +34,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
     static <E extends Object> Collection<E> filterCollection(
             Collection<E> collection, Predicate<? super E> predicate ) {
         if (collection instanceof Set) {
-            return Sets.filter((Set<E>) collection, predicate);
+            return SetUtil.filter((Set<E>) collection, predicate);
         } else {
             return Collections2.filter(collection, predicate);
         }
@@ -194,7 +194,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
             if (result.isEmpty()) {
                 return null;
             } else if (unfiltered instanceof SetMultimap) {
-                return Collections.unmodifiableSet(Sets.newLinkedHashSet(result));
+                return Collections.unmodifiableSet(SetUtil.newLinkedHashSet(result));
             } else {
                 return Collections.unmodifiableList(result);
             }

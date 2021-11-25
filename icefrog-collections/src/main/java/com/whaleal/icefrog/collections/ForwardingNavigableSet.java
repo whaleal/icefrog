@@ -230,7 +230,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      * forward to this implementation or a subclass thereof.
      */
 
-    protected class StandardDescendingSet extends Sets.DescendingSet<E> {
+    protected class StandardDescendingSet extends SetUtil.DescendingSet<E> {
         /**
          * Constructor for use by subclasses.
          */

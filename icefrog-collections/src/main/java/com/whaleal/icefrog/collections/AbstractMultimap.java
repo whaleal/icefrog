@@ -196,12 +196,12 @@ abstract class AbstractMultimap<K extends Object, V extends Object>
     class EntrySet extends Entries implements Set<Entry<K, V>> {
         @Override
         public int hashCode() {
-            return Sets.hashCodeImpl(this);
+            return SetUtil.hashCodeImpl(this);
         }
 
         @Override
         public boolean equals( @CheckForNull Object obj ) {
-            return Sets.equalsImpl(this, obj);
+            return SetUtil.equalsImpl(this, obj);
         }
     }
 

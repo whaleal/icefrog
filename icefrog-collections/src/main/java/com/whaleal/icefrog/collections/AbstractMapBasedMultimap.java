@@ -733,7 +733,7 @@ abstract class AbstractMapBasedMultimap<K extends Object, V extends Object>
             // Guava issue 1013: AbstractSet and most JDK set implementations are
             // susceptible to quadratic removeAll performance on lists;
             // use a slightly smarter implementation here
-            boolean changed = Sets.removeAllImpl((Set<V>) delegate, c);
+            boolean changed = SetUtil.removeAllImpl((Set<V>) delegate, c);
             if (changed) {
                 int newSize = delegate.size();
                 totalSize += (newSize - oldSize);

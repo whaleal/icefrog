@@ -386,7 +386,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
     @Override
     Set<K> createKeySet() {
 
-        class KeySetImpl extends Sets.ImprovedAbstractSet<K> {
+        class KeySetImpl extends SetUtil.ImprovedAbstractSet<K> {
             @Override
             public int size() {
                 return keyToKeyList.size();
@@ -719,7 +719,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
      * An {@code Iterator} over distinct keys in key head order.
      */
     private class DistinctKeyIterator implements Iterator<K> {
-        final Set<K> seenKeys = Sets.newHashSetWithExpectedSize(keySet().size());
+        final Set<K> seenKeys = SetUtil.newHashSetWithExpectedSize(keySet().size());
         @CheckForNull
         Node<K, V> next = head;
         @CheckForNull

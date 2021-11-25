@@ -207,7 +207,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * forward to this implementation.
      */
     protected int standardHashCode() {
-        return Sets.hashCodeImpl(entrySet());
+        return SetUtil.hashCodeImpl(entrySet());
     }
 
     /**

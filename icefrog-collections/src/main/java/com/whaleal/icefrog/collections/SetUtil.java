@@ -27,8 +27,8 @@ import static com.whaleal.icefrog.core.lang.Precondition.*;
  */
 
 @Deprecated
-public final class Sets {
-    private Sets() {
+public final class SetUtil {
+    private SetUtil() {
     }
 
     /**
@@ -1504,7 +1504,7 @@ public final class Sets {
 
         @Override
         public NavigableSet<E> descendingSet() {
-            return Sets.filter(unfiltered().descendingSet(), predicate);
+            return SetUtil.filter(unfiltered().descendingSet(), predicate);
         }
 
         @Override

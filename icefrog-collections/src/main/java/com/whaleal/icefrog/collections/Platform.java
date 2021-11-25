@@ -45,7 +45,7 @@ final class Platform {
      * Returns the platform preferred implementation of a set based on a hash table.
      */
     static <E extends Object> Set<E> newHashSetWithExpectedSize( int expectedSize ) {
-        return Sets.newHashSetWithExpectedSize(expectedSize);
+        return SetUtil.newHashSetWithExpectedSize(expectedSize);
     }
 
     /**
@@ -60,7 +60,7 @@ final class Platform {
      * table.
      */
     static <E extends Object> Set<E> newLinkedHashSetWithExpectedSize( int expectedSize ) {
-        return Sets.newLinkedHashSetWithExpectedSize(expectedSize);
+        return SetUtil.newLinkedHashSetWithExpectedSize(expectedSize);
     }
 
     /**
@@ -77,7 +77,7 @@ final class Platform {
      * for insertions.
      */
     static <E extends Object> Set<E> preservesInsertionOrderOnAddsSet() {
-        return Sets.newLinkedHashSet();
+        return SetUtil.newLinkedHashSet();
     }
 
     /**

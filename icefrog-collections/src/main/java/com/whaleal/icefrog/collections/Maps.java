@@ -27,7 +27,7 @@ import static java.util.Objects.requireNonNull;
 
 /**
  * Static utility methods pertaining to {@link Map} instances (including instances of {@link
- * SortedMap}, {@link BiMap}, etc.). Also see this class's counterparts {@link Lists}, {@link Sets}
+ * SortedMap}, {@link BiMap}, etc.). Also see this class's counterparts {@link Lists}, {@link SetUtil}
  * and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
@@ -2608,12 +2608,12 @@ public final class Maps {
 
         @Override
         public boolean equals( @CheckForNull Object object ) {
-            return Sets.equalsImpl(this, object);
+            return SetUtil.equalsImpl(this, object);
         }
 
         @Override
         public int hashCode() {
-            return Sets.hashCodeImpl(this);
+            return SetUtil.hashCodeImpl(this);
         }
     }
 
@@ -3123,12 +3123,12 @@ public final class Maps {
 
         @Override
         protected Set<Entry<K, V>> createEntrySet() {
-            return Sets.filter(unfiltered.entrySet(), predicate);
+            return SetUtil.filter(unfiltered.entrySet(), predicate);
         }
 
         @Override
         Set<K> createKeySet() {
-            return Sets.filter(unfiltered.keySet(), keyPredicate);
+            return SetUtil.filter(unfiltered.keySet(), keyPredicate);
         }
 
         // The cast is called only when the key is in the unfiltered map, implying
@@ -3150,7 +3150,7 @@ public final class Maps {
 
         FilteredEntryMap( Map<K, V> unfiltered, Predicate<? super Entry<K, V>> entryPredicate ) {
             super(unfiltered, entryPredicate);
-            filteredEntrySet = Sets.filter(unfiltered.entrySet(), predicate);
+            filteredEntrySet = SetUtil.filter(unfiltered.entrySet(), predicate);
         }
 
         static <K extends Object, V extends Object> boolean removeAllKeys(
@@ -3613,12 +3613,12 @@ public final class Maps {
 
         @Override
         public NavigableSet<K> navigableKeySet() {
-            return Sets.unmodifiableNavigableSet(delegate.navigableKeySet());
+            return SetUtil.unmodifiableNavigableSet(delegate.navigableKeySet());
         }
 
         @Override
         public NavigableSet<K> descendingKeySet() {
-            return Sets.unmodifiableNavigableSet(delegate.descendingKeySet());
+            return SetUtil.unmodifiableNavigableSet(delegate.descendingKeySet());
         }
 
         @Override
@@ -3754,7 +3754,7 @@ public final class Maps {
     }
 
     static class KeySet<K extends Object, V extends Object>
-            extends Sets.ImprovedAbstractSet<K> {
+            extends SetUtil.ImprovedAbstractSet<K> {
         final Map<K, V> map;
 
         KeySet( Map<K, V> map ) {
@@ -3989,7 +3989,7 @@ public final class Maps {
             try {
                 return super.removeAll(checkNotNull(c));
             } catch (UnsupportedOperationException e) {
-                Set<K> toRemove = Sets.newHashSet();
+                Set<K> toRemove = SetUtil.newHashSet();
                 for (Entry<K, V> entry : map().entrySet()) {
                     if (c.contains(entry.getValue())) {
                         toRemove.add(entry.getKey());
@@ -4004,7 +4004,7 @@ public final class Maps {
             try {
                 return super.retainAll(checkNotNull(c));
             } catch (UnsupportedOperationException e) {
-                Set<K> toRetain = Sets.newHashSet();
+                Set<K> toRetain = SetUtil.newHashSet();
                 for (Entry<K, V> entry : map().entrySet()) {
                     if (c.contains(entry.getValue())) {
                         toRetain.add(entry.getKey());
@@ -4036,7 +4036,7 @@ public final class Maps {
     }
 
     abstract static class EntrySet<K extends Object, V extends Object>
-            extends Sets.ImprovedAbstractSet<Entry<K, V>> {
+            extends SetUtil.ImprovedAbstractSet<Entry<K, V>> {
         abstract Map<K, V> map();
 
         @Override
@@ -4084,7 +4084,7 @@ public final class Maps {
                 return super.removeAll(checkNotNull(c));
             } catch (UnsupportedOperationException e) {
                 // if the iterators don't support remove
-                return Sets.removeAllImpl(this, c.iterator());
+                return SetUtil.removeAllImpl(this, c.iterator());
             }
         }
 
@@ -4094,7 +4094,7 @@ public final class Maps {
                 return super.retainAll(checkNotNull(c));
             } catch (UnsupportedOperationException e) {
                 // if the iterators don't support remove
-                Set<Object> keys = Sets.newHashSetWithExpectedSize(c.size());
+                Set<Object> keys = SetUtil.newHashSetWithExpectedSize(c.size());
                 for (Object o : c) {
                     /*
                      * `o instanceof Entry` is guaranteed by `contains`, but we check it here to satisfy our

@@ -199,7 +199,7 @@ final class RegularContiguousSet<C extends Comparable> extends ContiguousSet<C> 
     // copied to make sure not to use the GWT-emulated version
     @Override
     public int hashCode() {
-        return Sets.hashCodeImpl(this);
+        return SetUtil.hashCodeImpl(this);
     }
 
     // serialization

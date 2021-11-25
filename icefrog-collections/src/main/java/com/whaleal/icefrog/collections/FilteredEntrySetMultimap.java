@@ -42,7 +42,7 @@ final class FilteredEntrySetMultimap<K extends Object, V extends Object>
 
     @Override
     Set<Entry<K, V>> createEntries() {
-        return Sets.filter(unfiltered().entries(), entryPredicate());
+        return SetUtil.filter(unfiltered().entries(), entryPredicate());
     }
 
     @Override

@@ -37,7 +37,7 @@ abstract class AbstractSortedSetMultimap<K extends Object, V extends Object>
     <E extends Object> SortedSet<E> unmodifiableCollectionSubclass(
             Collection<E> collection ) {
         if (collection instanceof NavigableSet) {
-            return Sets.unmodifiableNavigableSet((NavigableSet<E>) collection);
+            return SetUtil.unmodifiableNavigableSet((NavigableSet<E>) collection);
         } else {
             return Collections.unmodifiableSortedSet((SortedSet<E>) collection);
         }

@@ -34,7 +34,7 @@ final class UnmodifiableSortedMultiset<E extends Object> extends Multisets.Unmod
 
     @Override
     NavigableSet<E> createElementSet() {
-        return Sets.unmodifiableNavigableSet(delegate().elementSet());
+        return SetUtil.unmodifiableNavigableSet(delegate().elementSet());
     }
 
     @Override

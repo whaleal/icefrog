@@ -287,7 +287,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
      * clear()} clears all table mappings.
      */
 
-    private abstract class TableSet<T> extends Sets.ImprovedAbstractSet<T> {
+    private abstract class TableSet<T> extends SetUtil.ImprovedAbstractSet<T> {
         @Override
         public boolean isEmpty() {
             return backingMap.isEmpty();
@@ -557,7 +557,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
             return new Values();
         }
 
-        private class EntrySet extends Sets.ImprovedAbstractSet<Entry<R, V>> {
+        private class EntrySet extends SetUtil.ImprovedAbstractSet<Entry<R, V>> {
             @Override
             public Iterator<Entry<R, V>> iterator() {
                 return new EntrySetIterator();
@@ -957,7 +957,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
                  * which is unsupported.
                  */
                 checkNotNull(c);
-                return Sets.removeAllImpl(this, c.iterator());
+                return SetUtil.removeAllImpl(this, c.iterator());
             }
 
             @Override

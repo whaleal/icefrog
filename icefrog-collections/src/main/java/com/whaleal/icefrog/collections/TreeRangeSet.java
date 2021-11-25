@@ -816,12 +816,12 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
 
         @Override
         public int hashCode() {
-            return Sets.hashCodeImpl(this);
+            return SetUtil.hashCodeImpl(this);
         }
 
         @Override
         public boolean equals( @CheckForNull Object o ) {
-            return Sets.equalsImpl(this, o);
+            return SetUtil.equalsImpl(this, o);
         }
     }
 

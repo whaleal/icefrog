@@ -720,7 +720,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
 
     @Override
     public int hashCode() {
-        return Sets.hashCodeImpl(entrySet());
+        return SetUtil.hashCodeImpl(entrySet());
     }
 
     boolean isHashCodeFast() {

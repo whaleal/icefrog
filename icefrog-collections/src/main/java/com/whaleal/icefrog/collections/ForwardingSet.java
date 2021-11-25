@@ -57,7 +57,7 @@ public abstract class ForwardingSet<E extends Object> extends ForwardingCollecti
      */
     @Override
     protected boolean standardRemoveAll( Collection<?> collection ) {
-        return Sets.removeAllImpl(this, checkNotNull(collection)); // for GWT
+        return SetUtil.removeAllImpl(this, checkNotNull(collection)); // for GWT
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class ForwardingSet<E extends Object> extends ForwardingCollecti
      * this implementation.
      */
     protected boolean standardEquals( @CheckForNull Object object ) {
-        return Sets.equalsImpl(this, object);
+        return SetUtil.equalsImpl(this, object);
     }
 
     /**
@@ -74,6 +74,6 @@ public abstract class ForwardingSet<E extends Object> extends ForwardingCollecti
      * {@link #iterator}, you may wish to override {@link #equals} to forward to this implementation.
      */
     protected int standardHashCode() {
-        return Sets.hashCodeImpl(this);
+        return SetUtil.hashCodeImpl(this);
     }
 }

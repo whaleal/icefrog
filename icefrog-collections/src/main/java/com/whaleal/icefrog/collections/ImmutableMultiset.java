@@ -311,7 +311,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableMultisetGwtSerializa
 
     @Override
     public int hashCode() {
-        return Sets.hashCodeImpl(entrySet());
+        return SetUtil.hashCodeImpl(entrySet());
     }
 
     @Override
