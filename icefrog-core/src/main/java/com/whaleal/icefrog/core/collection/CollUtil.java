@@ -3776,7 +3776,7 @@ public class CollUtil {
      *
      */
     public static <T> List<List<T>> cartesianProduct(Collection<T> coll1, Collection<T> coll2 ) {
-        
+
         // 判断非空  当有一个为空时则该笛卡尔积为空的笛卡尔积
         if (isEmpty(coll1)||isEmpty(coll2)) {
             return newArrayList();
