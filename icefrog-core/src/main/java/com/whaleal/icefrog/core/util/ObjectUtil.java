@@ -27,7 +27,6 @@ public class ObjectUtil {
     private static final String ARRAY_END = "}";
     private static final String EMPTY_ARRAY = ARRAY_START + ARRAY_END;
     private static final String ARRAY_ELEMENT_SEPARATOR = ", ";
-    private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
     private ObjectUtil() {
     }
@@ -690,27 +689,24 @@ public class ObjectUtil {
     }
 
     /**
-     * Determine whether the given object is an array:
-     * either an Object array or a primitive array.
+     * 对象是否为数组对象
      *
-     * @param obj the object to check
-     * @return boolean
+     * @param obj 对象
+     * @return 是否为数组对象，如果为{@code null} 返回false
      */
     public static boolean isArray( Object obj ) {
-        return (obj != null && obj.getClass().isArray());
+        return ArrayUtil.isArray(obj);
     }
 
     /**
-     * Determine whether the given array is empty:
-     * i.e. {@code null} or of zero length.
+     * 数组是否为空
      *
-     * 该方法应当调整至  ArrayUtil 中
-     * @param array the array to check
-     * @return boolean
-     * @see #isEmpty(Object)
+     * @param <T>   数组元素类型
+     * @param array 数组
+     * @return 是否为空
      */
-    public static boolean isEmpty( Object[] array ) {
-        return (array == null || array.length == 0);
+    public static <T> boolean isEmpty( T[] array ) {
+        return ArrayUtil.isEmpty(array);
     }
 
 
@@ -833,35 +829,14 @@ public class ObjectUtil {
     }
 
     /**
-     * Convert the given array (which may be a primitive array) to an
-     * object array (if necessary of primitive wrapper objects).
-     * <p>A {@code null} source value will be converted to an
-     * empty Object array.
+     * 将一个对象转为 Object[] 对象数组
      *
-     * @param source the (potentially primitive) array
-     * @return the corresponding object array (never {@code null})
-     * @throws IllegalArgumentException if the parameter is not an array
+     * @param value 对象
+     * @return 对象数组
+     * @since 1.2.0
      */
-    public static Object[] toObjectArray( Object source ) {
-        if (source instanceof Object[]) {
-            return (Object[]) source;
-        }
-        if (source == null) {
-            return EMPTY_OBJECT_ARRAY;
-        }
-        if (!source.getClass().isArray()) {
-            throw new IllegalArgumentException("Source is not an array: " + source);
-        }
-        int length = Array.getLength(source);
-        if (length == 0) {
-            return EMPTY_OBJECT_ARRAY;
-        }
-        Class<?> wrapperType = Array.get(source, 0).getClass();
-        Object[] newArray = (Object[]) Array.newInstance(wrapperType, length);
-        for (int i = 0; i < length; i++) {
-            newArray[i] = Array.get(source, i);
-        }
-        return newArray;
+    public static Object[] toArray( Object value ) {
+        return  ArrayUtil.toArray(value);
     }
 
 

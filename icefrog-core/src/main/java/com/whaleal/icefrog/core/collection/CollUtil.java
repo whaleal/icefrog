@@ -2927,13 +2927,13 @@ public class CollUtil {
      * value that might be an {@code Object[]} or a primitive array at runtime.
      * <p>A {@code null} source value will be converted to an empty List.
      *
-     * @param source the (potentially primitive) array
+     * @param value the (potentially primitive) array
      * @return the converted List result
-     * @see ObjectUtil#toObjectArray(Object)
+     * @see ArrayUtil#toArray(Object)
      * @see Arrays#asList(Object[])
      */
-    public static List<?> arrayToList( Object source ) {
-        return Arrays.asList(ObjectUtil.toObjectArray(source));
+    public static List<?> arrayToList( Object value ) {
+        return Arrays.asList(ArrayUtil.toArray(value));
     }
 
     /**
@@ -2945,7 +2945,7 @@ public class CollUtil {
      */
     @SuppressWarnings("unchecked")
     public static <E> void mergeArrayIntoCollection( Object array, Collection<E> collection ) {
-        Object[] arr = ObjectUtil.toObjectArray(array);
+        Object[] arr = ArrayUtil.toArray(array);
         for (Object elem : arr) {
             collection.add((E) elem);
         }
