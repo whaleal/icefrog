@@ -26,6 +26,7 @@ public class StopWatchTest {
         state1.stop();
 
         long totalTimeMillis = state1.getTotalTimeMillis();
+
         System.out.println(totalTimeMillis);
     }
 }
