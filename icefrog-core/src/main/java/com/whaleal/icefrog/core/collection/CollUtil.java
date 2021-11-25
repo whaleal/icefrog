@@ -2223,12 +2223,56 @@ public class CollUtil {
         if (isEmpty(collection)) {
             return null;
         }
-        if (collection instanceof SortedSet) {
+        if (collection instanceof Set) {
 
-            return ((SortedSet<T>) collection).last();
+            return getLast((Set<T>) collection);
+        }else if(collection instanceof List){
+            return getLast((List<T>) collection);
         }
         return get(collection, -1);
     }
+    /**
+     * 使用 {@link SortedSet#last()} 检索给定 Set 的最后一个元素
+     * 或以其他方式迭代所有元素。
+     *
+     * @param set the Set to check (may be {@code null} or empty)
+     * @param <T> 传入的set 的泛型参数
+     * @return the last element, or {@code null} if none
+     * @see SortedSet
+     * @see LinkedHashMap#keySet()
+     * @see LinkedHashSet
+     */
+    public static <T> T getLast( Set<T> set ) {
+        if (isEmpty(set)) {
+            return null;
+        }
+        if (set instanceof SortedSet) {
+            return ((SortedSet<T>) set).last();
+        }
+
+        // Full iteration necessary...
+        Iterator<T> it = set.iterator();
+        T last = null;
+        while (it.hasNext()) {
+            last = it.next();
+        }
+        return last;
+    }
+
+    /**
+     * 检索给定 List 的最后一个元素。
+     *
+     * @param list the List to check (may be {@code null} or empty)
+     * @param <T>  传入的List 泛型参数
+     * @return the last element, or {@code null} if none
+     */
+    public static <T> T getLast( List<T> list ) {
+        if (isEmpty(list)) {
+            return null;
+        }
+        return list.get(list.size() - 1);
+    }
+
 
     /**
      * 获得{@link Iterable}对象的元素类型（通过第一个非空元素判断）
