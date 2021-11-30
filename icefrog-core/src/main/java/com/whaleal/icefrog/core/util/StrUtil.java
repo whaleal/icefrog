@@ -1307,7 +1307,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param path the file path (may be {@code null})
      * @return the extracted filename extension, or {@code null} if none
      */
-
     public static String getFilenameExtension( String path ) {
         if (path == null) {
             return null;

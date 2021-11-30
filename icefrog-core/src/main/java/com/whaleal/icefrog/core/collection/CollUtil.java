@@ -41,6 +41,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  * @since 1.0.0
  */
 public class CollUtil {
+    public static final float DEFAULT_LOAD_FACTOR = 0.75f ;
 
 
     /**
