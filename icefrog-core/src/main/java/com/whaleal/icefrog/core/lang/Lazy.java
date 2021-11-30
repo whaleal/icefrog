@@ -37,7 +37,11 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-
+/**
+ * @author wh
+ * @date 2021-12-01
+ * @param <T>
+ */
 public class Lazy<T> implements Supplier<T> {
 
     private static final Lazy<?> EMPTY = new Lazy<>(() -> null, null, true);
