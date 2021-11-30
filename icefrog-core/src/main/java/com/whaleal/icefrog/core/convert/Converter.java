@@ -7,6 +7,7 @@ package com.whaleal.icefrog.core.convert;
  * @author Looly
  * @author wh
  */
+@FunctionalInterface
 public interface Converter<T> {
 
     /**
