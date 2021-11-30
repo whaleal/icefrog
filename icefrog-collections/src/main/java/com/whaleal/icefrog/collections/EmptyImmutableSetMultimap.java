@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 /**
@@ -10,15 +8,14 @@ package com.whaleal.icefrog.collections;
 
 
 class EmptyImmutableSetMultimap extends ImmutableSetMultimap<Object, Object> {
-  static final EmptyImmutableSetMultimap INSTANCE = new EmptyImmutableSetMultimap();
+    static final EmptyImmutableSetMultimap INSTANCE = new EmptyImmutableSetMultimap();
+    private static final long serialVersionUID = 0;
 
-  private EmptyImmutableSetMultimap() {
-    super(ImmutableMap.of(), 0, null);
-  }
+    private EmptyImmutableSetMultimap() {
+        super(ImmutableMap.of(), 0, null);
+    }
 
-  private Object readResolve() {
-    return INSTANCE; // preserve singleton property
-  }
-
-  private static final long serialVersionUID = 0;
+    private Object readResolve() {
+        return INSTANCE; // preserve singleton property
+    }
 }

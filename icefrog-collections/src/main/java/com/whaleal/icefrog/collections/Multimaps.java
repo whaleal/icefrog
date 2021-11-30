@@ -1198,7 +1198,7 @@ public final class Multimaps {
         <E extends Object> Collection<E> unmodifiableCollectionSubclass(
                 Collection<E> collection ) {
             if (collection instanceof NavigableSet) {
-                return Sets.unmodifiableNavigableSet((NavigableSet<E>) collection);
+                return SetUtil.unmodifiableNavigableSet((NavigableSet<E>) collection);
             } else if (collection instanceof SortedSet) {
                 return Collections.unmodifiableSortedSet((SortedSet<E>) collection);
             } else if (collection instanceof Set) {
@@ -1324,7 +1324,7 @@ public final class Multimaps {
         <E extends Object> Collection<E> unmodifiableCollectionSubclass(
                 Collection<E> collection ) {
             if (collection instanceof NavigableSet) {
-                return Sets.unmodifiableNavigableSet((NavigableSet<E>) collection);
+                return SetUtil.unmodifiableNavigableSet((NavigableSet<E>) collection);
             } else if (collection instanceof SortedSet) {
                 return Collections.unmodifiableSortedSet((SortedSet<E>) collection);
             } else {
@@ -1684,7 +1684,7 @@ public final class Multimaps {
 
         @Override
         public Set<V> get( @ParametricNullness final K key ) {
-            return new Sets.ImprovedAbstractSet<V>() {
+            return new SetUtil.ImprovedAbstractSet<V>() {
                 @Override
                 public Iterator<V> iterator() {
                     return new Iterator<V>() {

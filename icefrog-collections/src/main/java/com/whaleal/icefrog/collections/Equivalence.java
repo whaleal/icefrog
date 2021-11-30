@@ -2,6 +2,7 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.HashUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import javax.annotation.CheckForNull;
@@ -353,7 +354,7 @@ public abstract class Equivalence<T> implements BiPredicate<T, T> {
 
         @Override
         protected int doHash( Object o ) {
-            return System.identityHashCode(o);
+            return HashUtil.identityHashCode(o);
         }
 
         private Object readResolve() {

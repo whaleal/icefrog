@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import javax.annotation.CheckForNull;
@@ -16,33 +14,35 @@ import java.util.List;
  * invoke methods, they invoke methods on the {@code ForwardingListMultimap}.
  *
  * @author Kurt Alfred Kluever
- * 
  */
 
 
 public abstract class ForwardingListMultimap<K extends Object, V extends Object>
-    extends ForwardingMultimap<K, V> implements ListMultimap<K, V> {
+        extends ForwardingMultimap<K, V> implements ListMultimap<K, V> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingListMultimap() {}
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingListMultimap() {
+    }
 
-  @Override
-  protected abstract ListMultimap<K, V> delegate();
+    @Override
+    protected abstract ListMultimap<K, V> delegate();
 
-  @Override
-  public List<V> get(@ParametricNullness K key) {
-    return delegate().get(key);
-  }
-
-
-  @Override
-  public List<V> removeAll(@CheckForNull Object key) {
-    return delegate().removeAll(key);
-  }
+    @Override
+    public List<V> get( @ParametricNullness K key ) {
+        return delegate().get(key);
+    }
 
 
-  @Override
-  public List<V> replaceValues(@ParametricNullness K key, Iterable<? extends V> values) {
-    return delegate().replaceValues(key, values);
-  }
+    @Override
+    public List<V> removeAll( @CheckForNull Object key ) {
+        return delegate().removeAll(key);
+    }
+
+
+    @Override
+    public List<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values ) {
+        return delegate().replaceValues(key, values);
+    }
 }

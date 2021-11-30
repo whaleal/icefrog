@@ -1,10 +1,10 @@
 package com.whaleal.icefrog.extra.pinyin.engine.jpinyin;
 
-import com.whaleal.icefrog.core.util.ArrayUtil;
-import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
+import com.whaleal.icefrog.core.util.ArrayUtil;
+import com.whaleal.icefrog.extra.pinyin.PinyinEngine;
 
 /**
  * 封装了Jpinyin的引擎。
@@ -27,38 +27,38 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
  */
 public class JPinyinEngine implements PinyinEngine {
 
-	//设置汉子拼音输出的格式
-	PinyinFormat format;
+    //设置汉子拼音输出的格式
+    PinyinFormat format;
 
-	public JPinyinEngine(){
-		this(null);
-	}
+    public JPinyinEngine() {
+        this(null);
+    }
 
-	public JPinyinEngine(PinyinFormat format){
-		init(format);
-	}
+    public JPinyinEngine( PinyinFormat format ) {
+        init(format);
+    }
 
-	public void init(PinyinFormat format){
-		if(null == format){
-			// 不加声调
-			format = PinyinFormat.WITHOUT_TONE;
-		}
-		this.format = format;
-	}
+    public void init( PinyinFormat format ) {
+        if (null == format) {
+            // 不加声调
+            format = PinyinFormat.WITHOUT_TONE;
+        }
+        this.format = format;
+    }
 
 
-	@Override
-	public String getPinyin(char c) {
-		String[] results = PinyinHelper.convertToPinyinArray(c, format);
-		return ArrayUtil.isEmpty(results) ? String.valueOf(c) : results[0];
-	}
+    @Override
+    public String getPinyin( char c ) {
+        String[] results = PinyinHelper.convertToPinyinArray(c, format);
+        return ArrayUtil.isEmpty(results) ? String.valueOf(c) : results[0];
+    }
 
-	@Override
-	public String getPinyin(String str, String separator) {
-		try {
-			return PinyinHelper.convertToPinyinString(str, separator, format);
-		} catch (PinyinException e) {
-			throw new com.whaleal.icefrog.extra.pinyin.PinyinException(e);
-		}
-	}
+    @Override
+    public String getPinyin( String str, String separator ) {
+        try {
+            return PinyinHelper.convertToPinyinString(str, separator, format);
+        } catch (PinyinException e) {
+            throw new com.whaleal.icefrog.extra.pinyin.PinyinException(e);
+        }
+    }
 }

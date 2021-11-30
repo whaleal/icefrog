@@ -3,6 +3,5 @@
  * 项目地址：https://github.com/mayabot/mynlp/
  *
  * @author Looly
- *
  */
 package com.whaleal.icefrog.extra.tokenizer.engine.mynlp;

@@ -199,7 +199,7 @@ public final class Multisets {
 
             @Override
             Set<E> createElementSet() {
-                return Sets.union(multiset1.elementSet(), multiset2.elementSet());
+                return SetUtil.union(multiset1.elementSet(), multiset2.elementSet());
             }
 
             @Override
@@ -261,7 +261,7 @@ public final class Multisets {
 
             @Override
             Set<E> createElementSet() {
-                return Sets.intersection(multiset1.elementSet(), multiset2.elementSet());
+                return SetUtil.intersection(multiset1.elementSet(), multiset2.elementSet());
             }
 
             @Override
@@ -332,7 +332,7 @@ public final class Multisets {
 
             @Override
             Set<E> createElementSet() {
-                return Sets.union(multiset1.elementSet(), multiset2.elementSet());
+                return SetUtil.union(multiset1.elementSet(), multiset2.elementSet());
             }
 
             @Override
@@ -904,7 +904,7 @@ public final class Multisets {
 
         @Override
         Set<E> createElementSet() {
-            return Sets.filter(unfiltered.elementSet(), predicate);
+            return SetUtil.filter(unfiltered.elementSet(), predicate);
         }
 
         @Override
@@ -914,7 +914,7 @@ public final class Multisets {
 
         @Override
         Set<Entry<E>> createEntrySet() {
-            return Sets.filter(
+            return SetUtil.filter(
                     unfiltered.entrySet(),
                     new Predicate<Entry<E>>() {
                         @Override
@@ -1001,7 +1001,7 @@ public final class Multisets {
         }
     }
 
-    abstract static class ElementSet<E extends Object> extends Sets.ImprovedAbstractSet<E> {
+    abstract static class ElementSet<E extends Object> extends SetUtil.ImprovedAbstractSet<E> {
         abstract Multiset<E> multiset();
 
         @Override
@@ -1039,7 +1039,7 @@ public final class Multisets {
     }
 
     abstract static class EntrySet<E extends Object>
-            extends Sets.ImprovedAbstractSet<Entry<E>> {
+            extends SetUtil.ImprovedAbstractSet<Entry<E>> {
         abstract Multiset<E> multiset();
 
         @Override

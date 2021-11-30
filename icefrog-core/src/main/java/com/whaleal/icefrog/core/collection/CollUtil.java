@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static com.whaleal.icefrog.core.collection.ListUtil.of;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
@@ -40,6 +41,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  * @since 1.0.0
  */
 public class CollUtil {
+    public static final float DEFAULT_LOAD_FACTOR = 0.75f ;
 
 
     /**
@@ -389,17 +391,30 @@ public class CollUtil {
      * @param collection 集合
      * @param value      需要查找的值
      * @return 如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
-     * @throws ClassCastException   if the type of the specified element
-     *                              is incompatible with this collection
-     *                              (<a href="#optional-restrictions">optional</a>)
-     * @throws NullPointerException if the specified element is null and this
-     *                              collection does not permit null elements
-     *                              (<a href="#optional-restrictions">optional</a>)
+     * @throws ClassCastException 如果类型不一致会抛出转换异常
+     * @throws NullPointerException 当指定的元素 值为 null ,或集合类不支持null 时抛出该异常
+     * @see Collection#contains(Object)
      * @see CollUtil#safeContains(Collection, Object)
      * @since 1.0.0
      */
     public static boolean contains( Collection<?> collection, Object value ) {
         return isNotEmpty(collection) && collection.contains(value);
+    }
+
+
+    /**
+     * 判断指定集合是否包含指定值，如果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+     * @param collection 集合
+     * @param value  需要查找的值
+     * @return 果集合为空（null或者空），返回{@code false}，否则找到元素返回{@code true}
+     */
+    public static boolean safeContains(Collection<?> collection, Object value) {
+
+        try {
+            return contains(collection ,value);
+        } catch (ClassCastException | NullPointerException e) {
+            return false;
+        }
     }
 
     /**
@@ -2104,14 +2119,12 @@ public class CollUtil {
      * @since 1.0.0
      */
     public static <T> T get( Collection<T> collection, int index ) {
-        if (null == collection) {
-            return null;
+
+        if(isEmpty(collection)) {
+            return null ;
         }
 
         final int size = collection.size();
-        if (0 == size) {
-            return null;
-        }
 
         if (index < 0) {
             index += size;
@@ -2122,6 +2135,7 @@ public class CollUtil {
             return null;
         }
 
+        // 如果是List 相关实现
         if (collection instanceof List) {
             final List<T> list = ((List<T>) collection);
             return list.get(index);
@@ -2207,8 +2221,59 @@ public class CollUtil {
      * @since 1.0.0
      */
     public static <T> T getLast( Collection<T> collection ) {
+        if (isEmpty(collection)) {
+            return null;
+        }
+        if (collection instanceof Set) {
+
+            return getLast((Set<T>) collection);
+        }else if(collection instanceof List){
+            return getLast((List<T>) collection);
+        }
         return get(collection, -1);
     }
+    /**
+     * 使用 {@link SortedSet#last()} 检索给定 Set 的最后一个元素
+     * 或以其他方式迭代所有元素。
+     *
+     * @param set the Set to check (may be {@code null} or empty)
+     * @param <T> 传入的set 的泛型参数
+     * @return the last element, or {@code null} if none
+     * @see SortedSet
+     * @see LinkedHashMap#keySet()
+     * @see LinkedHashSet
+     */
+    public static <T> T getLast( Set<T> set ) {
+        if (isEmpty(set)) {
+            return null;
+        }
+        if (set instanceof SortedSet) {
+            return ((SortedSet<T>) set).last();
+        }
+
+        // Full iteration necessary...
+        Iterator<T> it = set.iterator();
+        T last = null;
+        while (it.hasNext()) {
+            last = it.next();
+        }
+        return last;
+    }
+
+    /**
+     * 检索给定 List 的最后一个元素。
+     *
+     * @param list the List to check (may be {@code null} or empty)
+     * @param <T>  传入的List 泛型参数
+     * @return the last element, or {@code null} if none
+     */
+    public static <T> T getLast( List<T> list ) {
+        if (isEmpty(list)) {
+            return null;
+        }
+        return list.get(list.size() - 1);
+    }
+
 
     /**
      * 获得{@link Iterable}对象的元素类型（通过第一个非空元素判断）
@@ -2914,13 +2979,13 @@ public class CollUtil {
      * value that might be an {@code Object[]} or a primitive array at runtime.
      * <p>A {@code null} source value will be converted to an empty List.
      *
-     * @param source the (potentially primitive) array
+     * @param value the (potentially primitive) array
      * @return the converted List result
-     * @see ObjectUtil#toObjectArray(Object)
+     * @see ArrayUtil#toArray(Object)
      * @see Arrays#asList(Object[])
      */
-    public static List<?> arrayToList( Object source ) {
-        return Arrays.asList(ObjectUtil.toObjectArray(source));
+    public static List<?> arrayToList( Object value ) {
+        return Arrays.asList(ArrayUtil.toArray(value));
     }
 
     /**
@@ -2932,7 +2997,7 @@ public class CollUtil {
      */
     @SuppressWarnings("unchecked")
     public static <E> void mergeArrayIntoCollection( Object array, Collection<E> collection ) {
-        Object[] arr = ObjectUtil.toObjectArray(array);
+        Object[] arr = ArrayUtil.toArray(array);
         for (Object elem : arr) {
             collection.add((E) elem);
         }
@@ -2949,8 +3014,6 @@ public class CollUtil {
      * @param <K>   键
      * @param <V>   值
      */
-
-
     @SuppressWarnings("unchecked")
     public static <K, V> void mergePropertiesIntoMap( Properties props, Map<K, V> map ) {
         if (props != null) {
@@ -3107,7 +3170,6 @@ public class CollUtil {
      * @return the common element type, or {@code null} if no clear
      * common type has been found (or the collection was empty)
      */
-
     public static Class<?> findCommonElementType( Collection<?> collection ) {
         if (isEmpty(collection)) {
             return null;
@@ -3137,7 +3199,7 @@ public class CollUtil {
      * @see LinkedHashSet
      */
 
-    public static <T> T firstElement( Set<T> set ) {
+    public static <T> T getFirst( Set<T> set ) {
         if (isEmpty(set)) {
             return null;
         }
@@ -3160,54 +3222,14 @@ public class CollUtil {
      * @param <T>  返回的list  泛型参数
      * @return the first element, or {@code null} if none
      */
-    public static <T> T firstElement( List<T> list ) {
+    public static <T> T getFirst( List<T> list ) {
         if (isEmpty(list)) {
             return null;
         }
         return list.get(0);
     }
 
-    /**
-     * Retrieve the last element of the given Set, using {@link SortedSet#last()}
-     * or otherwise iterating over all elements (assuming a linked set).
-     *
-     * @param set the Set to check (may be {@code null} or empty)
-     * @param <T> 传入的set 的泛型参数
-     * @return the last element, or {@code null} if none
-     * @see SortedSet
-     * @see LinkedHashMap#keySet()
-     * @see LinkedHashSet
-     */
-    public static <T> T lastElement( Set<T> set ) {
-        if (isEmpty(set)) {
-            return null;
-        }
-        if (set instanceof SortedSet) {
-            return ((SortedSet<T>) set).last();
-        }
 
-        // Full iteration necessary...
-        Iterator<T> it = set.iterator();
-        T last = null;
-        while (it.hasNext()) {
-            last = it.next();
-        }
-        return last;
-    }
-
-    /**
-     * Retrieve the last element of the given List, accessing the highest index.
-     *
-     * @param list the List to check (may be {@code null} or empty)
-     * @param <T>  传入的List 泛型参数
-     * @return the last element, or {@code null} if none
-     */
-    public static <T> T lastElement( List<T> list ) {
-        if (isEmpty(list)) {
-            return null;
-        }
-        return list.get(list.size() - 1);
-    }
 
     /**
      * Marshal the elements from the given enumeration into an array of the given type.
@@ -3479,10 +3501,22 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个 LinkedHashSet
+     * @param <T> 泛型参数
+     * @return 返回一个新的 LinkedHashSet
+     */
     public static <T> LinkedHashSet<T> createLinkedHashSet() {
         return new LinkedHashSet();
     }
 
+    /**
+     * 创建一个 LinkedHashSet
+     * @param args 参数列表
+     * @param <T> 泛型
+     * @param <V> 泛型
+     * @return  新的LinkedHashSet
+     */
     public static <T, V extends T> LinkedHashSet<T> createLinkedHashSet( V... args ) {
         if ((args == null) || (args.length == 0)) {
             return new LinkedHashSet();
@@ -3494,6 +3528,12 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个 LinkedHashSet
+     * @param c 参数列表
+     * @param <T> 泛型
+     * @return  新的LinkedHashSet
+     */
     public static <T> LinkedHashSet<T> createLinkedHashSet( Iterable<? extends T> c ) {
         LinkedHashSet<T> set;
         if ((c instanceof Collection)) {
@@ -3505,22 +3545,47 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet() {
         return new TreeSet();
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T, V extends T> TreeSet<T> createTreeSet( V... args ) {
         return createTreeSet(null, args);
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet( Iterable<? extends T> c ) {
         return createTreeSet(null, c);
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet( Comparator<? super T> comparator ) {
         return new TreeSet(comparator);
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T, V extends T> TreeSet<T> createTreeSet( Comparator<? super T> comparator, V... args ) {
         TreeSet<T> set = new TreeSet(comparator);
         if (args != null) {
@@ -3531,13 +3596,17 @@ public class CollUtil {
         return set;
     }
 
+    /**
+     * 创建一个TreeSet
+     * @param <T>  泛型参数
+     * @return 返回新创建的TreeSet
+     */
     public static <T> TreeSet<T> createTreeSet( Comparator<? super T> comparator, Iterable<? extends T> c ) {
         TreeSet<T> set = new TreeSet(comparator);
-
         iterableToCollection(c, set);
-
         return set;
     }
+
 
     private static <T> void iterableToCollection( Iterable<? extends T> c, Collection<T> list ) {
         for (T element : c) {
@@ -3552,7 +3621,8 @@ public class CollUtil {
         return toNoNullStringArray(collection.toArray());
     }
 
-    static String[] toNoNullStringArray( Object[] array ) {
+
+    public static String[] toNoNullStringArray( Object[] array ) {
         ArrayList list = new ArrayList(array.length);
         for (int i = 0; i < array.length; i++) {
             Object e = array[i];
@@ -3590,47 +3660,50 @@ public class CollUtil {
     }
 
     /**
-     * Delegates to {@link Collection#remove}. Returns {@code false} if the {@code remove} method
-     * throws a {@code ClassCastException} or {@code NullPointerException}.
+     * 集合类的委托执行 {@link Collection#remove}
+     * 有异常时 返回为false ;
+     * 否则 返回 remove  的结果
+     * @see Collection#remove(Object)
      *
+     * @see CollUtil#remove(Collection, Object)
      * @param collection collection
      * @param object     object
-     * @return return
+     * @return 是否删除
+     *
      */
     public static boolean safeRemove( Collection<?> collection, @CheckForNull Object object ) {
         checkNotNull(collection);
         try {
-            return collection.remove(object);
+            return remove(collection ,object);
         } catch (ClassCastException | NullPointerException e) {
             return false;
         }
     }
 
     /**
-     * Delegates to {@link Collection#contains}. Returns {@code false} if the {@code contains} method
-     * throws a {@code ClassCastException} or {@code NullPointerException}.
-     * 安全的判断包含 contains ，在 collection 接口中调用  contains  方法的过程中 会抛出 两个异常
-     * {@code ClassCastException } 和 {@code NullPointerException} 详见jdk
+     * 集合类的委托执行 {@link Collection#remove}
+     * 有异常时 返回为false ;
+     * 否则 返回 remove  的结果
+     * @see Collection#remove(Object)
      *
      * @param collection collection
      * @param object     object
-     * @return return
+     * @return 是否删除
+     * @throws NullPointerException   当对象为null 时强转类型可能会抛出该错误
+     * @throws ClassCastException  类型转换错误
+     *
      */
-    public static boolean safeContains( Collection<?> collection, @CheckForNull Object object ) {
+    public static boolean remove( Collection<?> collection, @CheckForNull Object object ) {
         checkNotNull(collection);
-        try {
-            return collection.contains(object);
-        } catch (ClassCastException | NullPointerException e) {
-            return false;
-        }
+        return collection.remove(object);
     }
 
     /**
-     * An implementation of {@link Collection#toString()}.
+     * 集合类toString方法的一个实现 {@link Collection#toString()}.
      * 将集合类相关转为 String
      *
      * @param collection collection
-     * @return return return
+     * @return 返回字符串
      */
     public static String toString( final Collection<?> collection ) {
         StringBuilder sb = StrUtil.builder((int) Math.min(collection.size() * 8L, 1 << (Integer.SIZE - 2)));
@@ -3651,30 +3724,40 @@ public class CollUtil {
         return sb.append(']').toString();
     }
 
-    /**
-     * An implementation of {@link List#hashCode()}.
-     */
-    public static int hashCode( List<?> list ) {
-        // TODO(lowasser): worth optimizing for RandomAccess?
-        int hashCode = 1;
-        for (Object o : list) {
-            hashCode = 31 * hashCode + (o == null ? 0 : o.hashCode());
 
-            hashCode = ~~hashCode;
+    /**
+     * 
+     * 集合类相关的 hashCode 实现{@link Collection#hashCode()}.
+     * @see ObjectUtil#hashCode(Object...) 
+     * @param list  非空集合
+     * @return hashcode值
+     *
+     */
+    public static int hashCode( Collection<?> list ) {
+        if(list ==null){
+            return  0;
+        }
+        int result = 1;
+        for (Object o : list) {
+            result = 31 * result + (o == null ? 0 : o.hashCode());
+
+            result = ~~result;
             // needed to deal with GWT integer overflow
         }
-        return hashCode;
+        return result;
     }
 
     /**
-     * Returns every possible list that can be formed by choosing one element from each of the given
-     * lists in order; the "n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">Cartesian
-     * product</a>" of the lists. For example:
+     * 笛卡尔积
+     * 两个集合X和Y的笛卡尔积（Cartesian product），又称直积，表示为X × Y，第一个对象是X的成员而第二个对象是Y的所有可能有序对的其中一个成员 [1]  。
+     * 返回可以通过从每个给定的元素中选择一个元素来形成的每个可能的列表
+     * 按顺序列出； “n-ary <a href="http://en.wikipedia.org/wiki/Cartesian_product">笛卡尔
+     * product</a>" 的列表。例如：
      *
      * <pre>{@code
-     * CollUtil.cartesianProduct(List.of(
+     * CollUtil.cartesianProduct(
      *     List.of(1, 2),
-     *     List.of("A", "B", "C")))
+     *     List.of("A", "B", "C"))
      * }</pre>
      *
      * <p>returns a list containing six lists in the following order:
@@ -3687,74 +3770,90 @@ public class CollUtil {
      *   <li>{@code List.of(2, "B")}
      *   <li>{@code List.of(2, "C")}
      * </ul>
+     * 请注意，如果任何输入列表为空，则笛卡尔积也将为空。如果没有列表
+     * 提供（一个空列表），生成的笛卡尔积只有一个元素，一个空的
+     * 列表（违反直觉，但在数学上是一致的）。
+     * 性能说明：虽然大小为 {@code m, n, p} 的列表的笛卡尔积是一个
+     * 大小为 {@code m x n x p} 的列表，其实际内存消耗要小得多。当构造笛卡尔乘积的时候，只是复制输入列表。仅作为结果列表。
+     * 迭代的是创建的单个列表，迭代后不会保留这些列表。
      *
-     * <p>The result is guaranteed to be in the "traditional", lexicographical order for Cartesian
-     * products that you would get from nesting for loops:
-     *
-     * <pre>{@code
-     * for (B b0 : lists.get(0)) {
-     *   for (B b1 : lists.get(1)) {
-     *     ...
-     *     List<B> tuple = List.of(b0, b1, ...);
-     *     // operate on tuple
-     *   }
-     * }
-     * }</pre>
-     *
-     * <p>Note that if any input list is empty, the Cartesian product will also be empty. If no lists
-     * at all are provided (an empty list), the resulting Cartesian product has one element, an empty
-     * list (counter-intuitive, but mathematically consistent).
-     *
-     * <p><i>Performance notes:</i> while the cartesian product of lists of size {@code m, n, p} is a
-     * list of size {@code m x n x p}, its actual memory consumption is much smaller. When the
-     * cartesian product is constructed, the input lists are merely copied. Only as the resulting list
-     * is iterated are the individual lists created, and these are not retained after iteration.
-     * <p>
-     * 笛卡尔
-     *
-     * @param lists the lists to choose elements from, in the order that the elements chosen from
-     *              those lists should appear in the resulting lists
-     * @param <B>   any common base class shared by all axes (often just {@link Object})
-     * @return the Cartesian product, as an immutable list containing immutable lists
+     * @param coll1  集合1
+     * @param coll2  集合2
+     * @param <T>  any common base class shared by all axes (often just {@link Object})
+     * @return  笛卡尔积，作为包含不可变列表的不可变列表
      * @throws IllegalArgumentException if the size of the cartesian product would be greater than
      *                                  {@link Integer#MAX_VALUE}
      * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
      *                                  a provided list is null
      *
      */
-    public static <B> Collection<List<B>> cartesianProduct( List<? extends Collection<B>> lists ) {
+    public static <T> List<List<T>> cartesianProduct(Collection<T> coll1, Collection<T> coll2 ) {
 
-        notNull(lists);
-        if (lists.isEmpty()) {
-            return list(false);
-        }
-        Collection<List<B>> result = null;
-        if (lists.get(0) instanceof Set) {
-
-            result = newHashSet();
-        } else {
-            result = list(false);
+        // 判断非空  当有一个为空时则该笛卡尔积为空的笛卡尔积
+        if (isEmpty(coll1)||isEmpty(coll2)) {
+            return newArrayList();
         }
 
-        for (Collection<B> listinner : lists) {
-            List<B> copy = list(false, listinner);
-            if (copy.isEmpty()) {
-                return of();
-            }
-            result.add(copy);
-        }
-        return result;
+        List<List<T>> collect = coll1.stream().flatMap(s1 -> coll2.stream().map(s2 -> CollUtil.newArrayList(s1, s2)))
+                .collect(Collectors.toList());
+
+        return collect ;
 
     }
 
+    /**
+     *
+     * @param coll1  集合1
+     * @param coll2  集合2
+     * @param <T>  any common base class shared by all axes (often just {@link Object})
+     * @return  笛卡尔积，作为包含不可变列表的不可变列表
+     * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+     *                                  {@link Integer#MAX_VALUE}
+     * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
+     *                                  a provided list is null
+     *
+     */
+    public static <T> List<List<T>> cartesianProduct(Collection<T> coll1, Collection<T> coll2, Collection<T>... otherColls ) {
+        List<List<T>> header = cartesianProduct(coll1, coll2);
+        if(header.isEmpty()){
+            return newArrayList();
+        }
+
+        for(Collection<T> coll :otherColls){
+
+            if(isEmpty(coll)){
+                return newArrayList();
+            }
+            header = header.stream().flatMap(l1-> coll.stream().map( s2-> {List<T> l2 = CollUtil.newArrayList(l1);l2.add(s2);return l2;})).collect(Collectors.toList());
+        }
+
+        return header;
+
+    }
+
+    /**
+     * @param coll1  集合1
+     * @param coll2  集合2
+     * @param <T>  any common base class shared by all axes (often just {@link Object})
+     * @return  笛卡尔积，作为包含不可变列表的不可变列表
+     * @throws IllegalArgumentException if the size of the cartesian product would be greater than
+     *                                  {@link Integer#MAX_VALUE}
+     * @throws NullPointerException     if {@code lists}, any one of the {@code lists}, or any element of
+     *                                  a provided list is null
+     *
+     */
+    public static <T> Set<List<T>> cartesianProductDistinct( Collection<T> coll1, Collection<T> coll2, Collection<T>... otherColls) {
+
+        List<List<T>> lists = cartesianProduct(coll1, coll2, otherColls);
+
+        return CollUtil.newHashSet(true,lists);
+    }
 
     /**
      * 针对一个参数做相应的操作<br>
      * 此函数接口与JDK8中Consumer不同是多提供了index参数，用于标记遍历对象是第几个。
      *
      * @param <T> 处理参数类型
-     *
-     *
      */
     @FunctionalInterface
     public interface Consumer<T> extends Serializable {
@@ -3788,7 +3887,6 @@ public class CollUtil {
      *
      * @param <E>
      */
-
     private static class EnumerationIterator<E> implements Iterator<E> {
 
         private final Enumeration<E> enumeration;

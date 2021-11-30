@@ -4,10 +4,9 @@
  * ar, arj, cpio, dump, tar and zip等格式。
  *
  * <p>
- *     见：https://commons.apache.org/proper/commons-compress/
+ * 见：https://commons.apache.org/proper/commons-compress/
  * </p>
- * 
- * @author looly
  *
+ * @author looly
  */
 package com.whaleal.icefrog.extra.compress;

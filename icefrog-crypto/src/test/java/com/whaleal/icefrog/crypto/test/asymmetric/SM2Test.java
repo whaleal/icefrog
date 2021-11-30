@@ -117,7 +117,7 @@ public class SM2Test {
     }
 
     @Test
-    public void sm2SignTest(){
+    public void sm2SignTest() {
         //需要签名的明文,得到明文对应的字节数组
         byte[] dataBytes = "我是一段测试aaaa".getBytes(StandardCharsets.UTF_8);
 
@@ -263,21 +263,21 @@ public class SM2Test {
     }
 
     @Test
-    public void encryptAndSignTest(){
+    public void encryptAndSignTest() {
         SM2 sm2 = SmUtil.sm2();
 
         String src = "Sm2Test";
         byte[] data = sm2.encrypt(src, KeyType.PublicKey);
-        byte[] sign =  sm2.sign(src.getBytes(StandardCharsets.UTF_8));
+        byte[] sign = sm2.sign(src.getBytes(StandardCharsets.UTF_8));
 
-        Assert.assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
+        Assert.assertTrue(sm2.verify(src.getBytes(StandardCharsets.UTF_8), sign));
 
-        byte[] dec =  sm2.decrypt(data, KeyType.PrivateKey);
+        byte[] dec = sm2.decrypt(data, KeyType.PrivateKey);
         Assert.assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
-    public void getPublicKeyByPrivateKeyTest(){
+    public void getPublicKeyByPrivateKeyTest() {
         // issue#I38SDP，openSSL生成的PKCS#1格式私钥
         String priKey = "MHcCAQEEIE29XqAFV/rkJbnJzCoQRJLTeAHG2TR0h9ZCWag0+ZMEoAoGCCqBHM9VAYItoUQDQgAESkOzNigIsH5ehFvr9y" +
                 "QNQ66genyOrm+Q4umCA4aWXPeRzmcTAWSlTineiReTFN2lqor2xaulT8u3a4w3AM/F6A==";
@@ -289,16 +289,16 @@ public class SM2Test {
 
         String src = "Sm2Test";
         byte[] data = sm2.encrypt(src, KeyType.PublicKey);
-        byte[] sign =  sm2.sign(src.getBytes(StandardCharsets.UTF_8));
+        byte[] sign = sm2.sign(src.getBytes(StandardCharsets.UTF_8));
 
-        Assert.assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
+        Assert.assertTrue(sm2.verify(src.getBytes(StandardCharsets.UTF_8), sign));
 
-        byte[] dec =  sm2.decrypt(data, KeyType.PrivateKey);
+        byte[] dec = sm2.decrypt(data, KeyType.PrivateKey);
         Assert.assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
     }
 
     @Test
-    public void readPublicKeyTest(){
+    public void readPublicKeyTest() {
         String priKey = "MHcCAQEEIE29XqAFV/rkJbnJzCoQRJLTeAHG2TR0h9ZCWag0+ZMEoAoGCCqBHM9VAYItoUQDQgAESkOzNigIsH5ehFvr9y" +
                 "QNQ66genyOrm+Q4umCA4aWXPeRzmcTAWSlTineiReTFN2lqor2xaulT8u3a4w3AM/F6A==";
         String pubKey = "MFkwEwYHKoZIzj0CAQYIKoEcz1UBgi0DQgAESkOzNigIsH5ehFvr9yQNQ66genyOrm+Q4umCA4aWXPeRzmcTAWSlTineiReTFN2lqor2xaulT8u3a4w3AM/F6A==";
@@ -307,11 +307,11 @@ public class SM2Test {
 
         String src = "Sm2Test中文";
         byte[] data = sm2.encrypt(src, KeyType.PublicKey);
-        byte[] sign =  sm2.sign(src.getBytes(StandardCharsets.UTF_8));
+        byte[] sign = sm2.sign(src.getBytes(StandardCharsets.UTF_8));
 
-        Assert.assertTrue(sm2.verify( src.getBytes(StandardCharsets.UTF_8), sign));
+        Assert.assertTrue(sm2.verify(src.getBytes(StandardCharsets.UTF_8), sign));
 
-        byte[] dec =  sm2.decrypt(data, KeyType.PrivateKey);
+        byte[] dec = sm2.decrypt(data, KeyType.PrivateKey);
         Assert.assertArrayEquals(dec, src.getBytes(StandardCharsets.UTF_8));
     }
 }

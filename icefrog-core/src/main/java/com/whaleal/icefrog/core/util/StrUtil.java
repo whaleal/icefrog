@@ -21,6 +21,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  *
  * @author Looly
  * @author wh
+ *
  */
 public class StrUtil extends CharSequenceUtil implements StrPool {
     private static final String[] EMPTY_STRING_ARRAY = {};
@@ -473,19 +474,14 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
 
 
     /**
-     * Returns {@code true} if the given string is null or is the empty string.
-     *
-     * <p>Consider normalizing your string references with {@link #nullToEmpty}. If you do, you can
-     * use {@link String#isEmpty()} instead of this method, and you won't need special null-safe forms
-     * of methods like {@link String#toUpperCase} either. Or, if you'd like to normalize "in the other
-     * direction," converting empty strings to {@code null}, you can use {@link #emptyToNull}.
-     *
-     * @param string a string reference to check
-     * @return {@code true} if the string is null or is the empty string
+     * 判断一个字符串是 null 或者为空的字符串
+     * null  或者 ""
+     * 如果你已经知道该字符串 不为null  也可以直接直 使用 isEmpty() 方法去校验。
+     * @param string 待校验的字符串
+     * @return {@code true}  返回 string == null || string.isEmpty();的结果
      */
     public static boolean isNullOrEmpty( String string ) {
-        return isEmptyIfStr(string);
-        //return string == null || string.isEmpty();
+        return string == null || string.isEmpty();
     }
 
 
@@ -1311,7 +1307,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param path the file path (may be {@code null})
      * @return the extracted filename extension, or {@code null} if none
      */
-
     public static String getFilenameExtension( String path ) {
         if (path == null) {
             return null;
@@ -1463,7 +1458,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     public static boolean pathEquals( String path1, String path2 ) {
         return cleanPath(path1).equals(cleanPath(path2));
     }
-
 
 
     /**
@@ -1629,7 +1623,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param array2 the second array (can be {@code null})
      * @return the new array ({@code null} if both given arrays were {@code null})
      */
-
     public static String[] concatenateStringArrays( String[] array1, String[] array2 ) {
         if (ObjectUtil.isEmpty(array1)) {
             return array2;
@@ -1677,10 +1670,10 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     }
 
     /**
-     * Sort the given {@code String} array if necessary.
+     * 对给定的字符串数组进行排序
      *
-     * @param array the original array (potentially empty)
-     * @return the array in sorted form (never {@code null})
+     * @param array 原始的数组
+     * @return 返回的重排序的数组
      */
     public static String[] sortStringArray( String[] array ) {
         if (ObjectUtil.isEmpty(array)) {
@@ -1692,11 +1685,11 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     }
 
     /**
-     * Trim the elements of the given {@code String} array, calling
-     * {@code String.trim()} on each non-null element.
+     * 对给定的数组的每个非null  元素 进行 trim() 操作
+     * {@code String.trim()}
      *
-     * @param array the original {@code String} array (potentially empty)
-     * @return the resulting array (of the same size) with trimmed elements
+     * @param array 原始字符串数组 {@code String}  元素的内容可以为null，
+     * @return 返回被 trim() 的数组
      */
     public static String[] trimArrayElements( String[] array ) {
         if (ObjectUtil.isEmpty(array)) {
@@ -1712,8 +1705,8 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     }
 
     /**
-     * Remove duplicate strings from the given array.
-     * <p> it preserves the original order, as it uses a {@link LinkedHashSet}.
+     * 将数组中的重复的元素去除
+     * 表现和原始的元素顺序相同 {@link LinkedHashSet}.
      *
      * @param array the {@code String} array (potentially empty)
      * @return an array without duplicates, in natural sort order
@@ -1930,29 +1923,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
     }
 
     /**
-     * Convert a {@code String} array into a delimited {@code String} (e.g. CSV).
-     * <p>Useful for {@code toString()} implementations.
-     *
-     * @param arr   the array to display (potentially {@code null} or empty)
-     * @param delim the delimiter to use (typically a ",")
-     * @return the delimited {@code String}
-     */
-    public static String arrayToDelimitedString( Object[] arr, String delim ) {
-        if (ObjectUtil.isEmpty(arr)) {
-            return "";
-        }
-        if (arr.length == 1) {
-            return ObjectUtil.nullSafeToString(arr[0]);
-        }
-
-        StringJoiner sj = new StringJoiner(delim);
-        for (Object o : arr) {
-            sj.add(String.valueOf(o));
-        }
-        return sj.toString();
-    }
-
-    /**
      * Convert a {@code String} array into a comma delimited {@code String}
      * (i.e., CSV).
      * <p>Useful for {@code toString()} implementations.
@@ -1961,7 +1931,7 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return the delimited {@code String}
      */
     public static String arrayToCommaDelimitedString( Object[] arr ) {
-        return arrayToDelimitedString(arr, ",");
+        return ArrayUtil.join(arr,",");
     }
 
 }

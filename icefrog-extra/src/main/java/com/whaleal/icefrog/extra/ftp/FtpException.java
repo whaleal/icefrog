@@ -9,29 +9,29 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * @author xiaoleilu
  */
 public class FtpException extends RuntimeException {
-	private static final long serialVersionUID = -8490149159895201756L;
+    private static final long serialVersionUID = -8490149159895201756L;
 
-	public FtpException(Throwable e) {
-		super(ExceptionUtil.getMessage(e), e);
-	}
+    public FtpException( Throwable e ) {
+        super(ExceptionUtil.getMessage(e), e);
+    }
 
-	public FtpException(String message) {
-		super(message);
-	}
+    public FtpException( String message ) {
+        super(message);
+    }
 
-	public FtpException(String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params));
-	}
+    public FtpException( String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params));
+    }
 
-	public FtpException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+    public FtpException( String message, Throwable throwable ) {
+        super(message, throwable);
+    }
 
-	public FtpException(String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, throwable, enableSuppression, writableStackTrace);
-	}
+    public FtpException( String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace ) {
+        super(message, throwable, enableSuppression, writableStackTrace);
+    }
 
-	public FtpException(Throwable throwable, String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params), throwable);
-	}
+    public FtpException( Throwable throwable, String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params), throwable);
+    }
 }

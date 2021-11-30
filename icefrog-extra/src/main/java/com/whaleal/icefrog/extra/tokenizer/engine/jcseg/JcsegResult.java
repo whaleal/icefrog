@@ -13,31 +13,31 @@ import java.io.IOException;
  * 项目地址：https://gitee.com/lionsoul/jcseg
  *
  * @author looly
- *
  */
 public class JcsegResult extends AbstractResult {
 
-	private final ISegment result;
+    private final ISegment result;
 
-	/**
-	 * 构造
-	 * @param segment 分词结果
-	 */
-	public JcsegResult(ISegment segment) {
-		this.result = segment;
-	}
+    /**
+     * 构造
+     *
+     * @param segment 分词结果
+     */
+    public JcsegResult( ISegment segment ) {
+        this.result = segment;
+    }
 
-	@Override
-	protected Word nextWord() {
-		IWord word;
-		try {
-			word = this.result.next();
-		} catch (IOException e) {
-			throw new TokenizerException(e);
-		}
-		if(null == word){
-			return null;
-		}
-		return new JcsegWord(word);
-	}
+    @Override
+    protected Word nextWord() {
+        IWord word;
+        try {
+            word = this.result.next();
+        } catch (IOException e) {
+            throw new TokenizerException(e);
+        }
+        if (null == word) {
+            return null;
+        }
+        return new JcsegWord(word);
+    }
 }

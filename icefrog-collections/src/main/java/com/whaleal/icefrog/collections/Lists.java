@@ -18,7 +18,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 /**
  * Static utility methods pertaining to {@link List} instances. Also see this class's counterparts
- * {@link Sets}, {@link MapUtil} and {@link QueueUtil}.
+ * {@link SetUtil}, {@link MapUtil} and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#lists"> {@code Lists}</a>.

@@ -62,37 +62,37 @@ public abstract class AbstractImmutableSetTest extends TestCase {
 
   public void testCreation_twoElements() {
     Set<String> set = of("a", "b");
-    assertEquals(Sets.newHashSet("a", "b"), set);
+    assertEquals(SetUtil.newHashSet("a", "b"), set);
   }
 
   public void testCreation_threeElements() {
     Set<String> set = of("a", "b", "c");
-    assertEquals(Sets.newHashSet("a", "b", "c"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c"), set);
   }
 
   public void testCreation_fourElements() {
     Set<String> set = of("a", "b", "c", "d");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d"), set);
   }
 
   public void testCreation_fiveElements() {
     Set<String> set = of("a", "b", "c", "d", "e");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e"), set);
   }
 
   public void testCreation_sixElements() {
     Set<String> set = of("a", "b", "c", "d", "e", "f");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e", "f"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e", "f"), set);
   }
 
   public void testCreation_sevenElements() {
     Set<String> set = of("a", "b", "c", "d", "e", "f", "g");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e", "f", "g"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e", "f", "g"), set);
   }
 
   public void testCreation_eightElements() {
     Set<String> set = of("a", "b", "c", "d", "e", "f", "g", "h");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e", "f", "g", "h"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e", "f", "g", "h"), set);
   }
 
   public void testCopyOf_emptyArray() {

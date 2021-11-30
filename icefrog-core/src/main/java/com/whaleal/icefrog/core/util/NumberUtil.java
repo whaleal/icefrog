@@ -1627,7 +1627,7 @@ public class NumberUtil {
      * @return 结果
      */
     public static long factorial( int n ) {
-        return  factorial((long) n);
+        return factorial((long) n);
     }
 
     /**
@@ -2769,7 +2769,7 @@ public class NumberUtil {
     /**
      * Convert the given number into an instance of the given target class.
      * <p>
-     * 将指定Number 转换为 具体的类 {@link Number} 对象
+     * 将指定Number 及子类 转换为 具体的类型对象 {@link Number} 对象
      *
      * @param number      the number to convert
      * @param targetClass the target class to convert to
@@ -3127,7 +3127,6 @@ public class NumberUtil {
                 return (int) result;
         }
     }
-
 
 
     /**

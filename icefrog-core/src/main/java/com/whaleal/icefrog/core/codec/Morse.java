@@ -84,6 +84,7 @@ public class Morse {
     private final char dit; // short mark or dot
     private final char dah; // longer mark or dash
     private final char split;
+
     /**
      * 构造
      */

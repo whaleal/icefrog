@@ -37,4 +37,5 @@ import static javax.annotation.meta.When.UNKNOWN;
 @Target({FIELD, METHOD, PARAMETER})
 @TypeQualifierNickname
 @Nonnull(when = UNKNOWN)
-@interface ParametricNullness {}
+@interface ParametricNullness {
+}

@@ -321,6 +321,7 @@ public class SpliteratorUtil {
         OutSpliteratorT prefix;
         int characteristics;
         long estimatedSize;
+
         FlatMapSpliterator(
                 @CheckForNull OutSpliteratorT prefix,
                 Spliterator<InElementT> from,

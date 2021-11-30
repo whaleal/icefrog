@@ -32,86 +32,107 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 public class FileCopier extends SrcToDestCopier<File, FileCopier> {
     private static final long serialVersionUID = 1L;
 
-    /** 是否覆盖目标文件 */
+    /**
+     * 是否覆盖目标文件
+     */
     private boolean isOverride;
-    /** 是否拷贝所有属性 */
+    /**
+     * 是否拷贝所有属性
+     */
     private boolean isCopyAttributes;
-    /** 当拷贝来源是目录时是否只拷贝目录下的内容 */
+    /**
+     * 当拷贝来源是目录时是否只拷贝目录下的内容
+     */
     private boolean isCopyContentIfDir;
-    /** 当拷贝来源是目录时是否只拷贝文件而忽略子目录 */
+    /**
+     * 当拷贝来源是目录时是否只拷贝文件而忽略子目录
+     */
     private boolean isOnlyCopyFile;
 
     //-------------------------------------------------------------------------------------------------------- static method start
+
     /**
-     * 新建一个文件复制器
-     * @param srcPath 源文件路径（相对ClassPath路径或绝对路径）
-     * @param destPath 目标文件路径（相对ClassPath路径或绝对路径）
-     * @return this
+     * 构造
+     *
+     * @param src  源文件
+     * @param dest 目标文件
      */
-    public static FileCopier create(String srcPath, String destPath) {
-        return new FileCopier(FileUtil.file(srcPath), FileUtil.file(destPath));
+    public FileCopier( File src, File dest ) {
+        this.src = src;
+        this.dest = dest;
     }
 
     /**
      * 新建一个文件复制器
-     * @param src 源文件
-     * @param dest 目标文件
+     *
+     * @param srcPath  源文件路径（相对ClassPath路径或绝对路径）
+     * @param destPath 目标文件路径（相对ClassPath路径或绝对路径）
      * @return this
      */
-    public static FileCopier create(File src, File dest) {
-        return new FileCopier(src, dest);
+    public static FileCopier create( String srcPath, String destPath ) {
+        return new FileCopier(FileUtil.file(srcPath), FileUtil.file(destPath));
     }
     //-------------------------------------------------------------------------------------------------------- static method end
 
     //-------------------------------------------------------------------------------------------------------- Constructor start
+
     /**
-     * 构造
-     * @param src 源文件
+     * 新建一个文件复制器
+     *
+     * @param src  源文件
      * @param dest 目标文件
+     * @return this
      */
-    public FileCopier(File src, File dest) {
-        this.src = src;
-        this.dest = dest;
+    public static FileCopier create( File src, File dest ) {
+        return new FileCopier(src, dest);
     }
     //-------------------------------------------------------------------------------------------------------- Constructor end
 
     //-------------------------------------------------------------------------------------------------------- Getters and Setters start
+
     /**
      * 是否覆盖目标文件
+     *
      * @return 是否覆盖目标文件
      */
     public boolean isOverride() {
         return isOverride;
     }
+
     /**
      * 设置是否覆盖目标文件
+     *
      * @param isOverride 是否覆盖目标文件
      * @return this
      */
-    public FileCopier setOverride(boolean isOverride) {
+    public FileCopier setOverride( boolean isOverride ) {
         this.isOverride = isOverride;
         return this;
     }
 
     /**
      * 是否拷贝所有属性
+     *
      * @return 是否拷贝所有属性
      */
     public boolean isCopyAttributes() {
         return isCopyAttributes;
     }
+
     /**
      * 设置是否拷贝所有属性
+     *
      * @param isCopyAttributes 是否拷贝所有属性
      * @return this
      */
-    public FileCopier setCopyAttributes(boolean isCopyAttributes) {
+    public FileCopier setCopyAttributes( boolean isCopyAttributes ) {
         this.isCopyAttributes = isCopyAttributes;
         return this;
     }
 
     /**
      * 当拷贝来源是目录时是否只拷贝目录下的内容
+     *
      * @return 当拷贝来源是目录时是否只拷贝目录下的内容
      */
     public boolean isCopyContentIfDir() {
@@ -120,10 +141,11 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
 
     /**
      * 当拷贝来源是目录时是否只拷贝目录下的内容
+     *
      * @param isCopyContentIfDir 是否只拷贝目录下的内容
      * @return this
      */
-    public FileCopier setCopyContentIfDir(boolean isCopyContentIfDir) {
+    public FileCopier setCopyContentIfDir( boolean isCopyContentIfDir ) {
         this.isCopyContentIfDir = isCopyContentIfDir;
         return this;
     }
@@ -132,7 +154,6 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
      * 当拷贝来源是目录时是否只拷贝文件而忽略子目录
      *
      * @return 当拷贝来源是目录时是否只拷贝文件而忽略子目录
-     *
      */
     public boolean isOnlyCopyFile() {
         return isOnlyCopyFile;
@@ -143,9 +164,8 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
      *
      * @param isOnlyCopyFile 当拷贝来源是目录时是否只拷贝文件而忽略子目录
      * @return this
-     *
      */
-    public FileCopier setOnlyCopyFile(boolean isOnlyCopyFile) {
+    public FileCopier setOnlyCopyFile( boolean isOnlyCopyFile ) {
         this.isOnlyCopyFile = isOnlyCopyFile;
         return this;
     }
@@ -168,7 +188,7 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
      * @throws IORuntimeException IO异常
      */
     @Override
-    public File copy() throws IORuntimeException{
+    public File copy() throws IORuntimeException {
         final File src = this.src;
         final File dest = this.dest;
         // check
@@ -182,11 +202,11 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
         }
 
         if (src.isDirectory()) {// 复制目录
-            if(dest.exists() && false == dest.isDirectory()) {
+            if (dest.exists() && false == dest.isDirectory()) {
                 //源为目录，目标为文件，抛出IO异常
                 throw new IORuntimeException("Src is a directory but dest is a file!");
             }
-            if(FileUtil.isSub(src, dest)) {
+            if (FileUtil.isSub(src, dest)) {
                 throw new IORuntimeException("Dest is a sub directory of src !");
             }
 
@@ -199,15 +219,16 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
     }
 
     //----------------------------------------------------------------------------------------- Private method start
+
     /**
      * 拷贝目录内容，只用于内部，不做任何安全检查<br>
      * 拷贝内容的意思为源目录下的所有文件和目录拷贝到另一个目录下，而不拷贝源目录本身
      *
-     * @param src 源目录
+     * @param src  源目录
      * @param dest 目标目录
      * @throws IORuntimeException IO异常
      */
-    private void internalCopyDirContent(File src, File dest) throws IORuntimeException {
+    private void internalCopyDirContent( File src, File dest ) throws IORuntimeException {
         if (null != copyFilter && false == copyFilter.accept(src)) {
             //被过滤的目录跳过
             return;
@@ -222,7 +243,7 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
         }
 
         final String[] files = src.list();
-        if(ArrayUtil.isNotEmpty(files)){
+        if (ArrayUtil.isNotEmpty(files)) {
             File srcFile;
             File destFile;
             for (String file : files) {
@@ -246,11 +267,11 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
      * 2、如果目标是一个已存在的目录，则文件拷贝到此目录下，文件名与原文件名一致
      * </pre>
      *
-     * @param src 源文件，必须为文件
+     * @param src  源文件，必须为文件
      * @param dest 目标文件，如果非覆盖模式必须为目录
      * @throws IORuntimeException IO异常
      */
-    private void internalCopyFile(File src, File dest) throws IORuntimeException {
+    private void internalCopyFile( File src, File dest ) throws IORuntimeException {
         if (null != copyFilter && false == copyFilter.accept(src)) {
             //被过滤的文件跳过
             return;
@@ -258,26 +279,26 @@ public class FileCopier extends SrcToDestCopier<File, FileCopier> {
 
         // 如果已经存在目标文件，切为不覆盖模式，跳过之
         if (dest.exists()) {
-            if(dest.isDirectory()) {
+            if (dest.isDirectory()) {
                 //目标为目录，目录下创建同名文件
                 dest = new File(dest, src.getName());
             }
 
-            if(dest.exists() && false == isOverride) {
+            if (dest.exists() && false == isOverride) {
                 //非覆盖模式跳过
                 return;
             }
-        }else {
+        } else {
             //路径不存在则创建父目录
             //noinspection ResultOfMethodCallIgnored
             dest.getParentFile().mkdirs();
         }
 
         final ArrayList<CopyOption> optionList = new ArrayList<>(2);
-        if(isOverride) {
+        if (isOverride) {
             optionList.add(StandardCopyOption.REPLACE_EXISTING);
         }
-        if(isCopyAttributes) {
+        if (isCopyAttributes) {
             optionList.add(StandardCopyOption.COPY_ATTRIBUTES);
         }
 

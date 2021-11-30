@@ -51,6 +51,31 @@ import static com.whaleal.icefrog.core.math.MathUtil.log2;
 final class TopKSelector<
         T extends Object> {
 
+    private final int k;
+    private final Comparator<? super T> comparator;
+    /*
+     * We are currently considering the elements in buffer in the range [0, bufferSize) as candidates
+     * for the top k elements. Whenever the buffer is filled, we quickselect the top k elements to the
+     * range [0, k) and ignore the remaining elements.
+     */
+    private final T[] buffer;
+    private int bufferSize;
+    /**
+     * The largest of the lowest k elements we've seen so far relative to this comparator. If
+     * bufferSize ≥ k, then we can ignore any elements greater than this value.
+     */
+    @CheckForNull
+    private T threshold;
+    private TopKSelector( Comparator<? super T> comparator, int k ) {
+        this.comparator = checkNotNull(comparator, "comparator");
+        this.k = k;
+        checkArgument(k >= 0, "k (%s) must be >= 0", k);
+        checkArgument(k <= Integer.MAX_VALUE / 2, "k (%s) must be <= Integer.MAX_VALUE / 2", k);
+        this.buffer = (T[]) new Object[checkedMultiply(k, 2)];
+        this.bufferSize = 0;
+        this.threshold = null;
+    }
+
     /**
      * Returns a {@code TopKSelector} that collects the lowest {@code k} elements added to it,
      * relative to the natural ordering of the elements, and returns them via {@link #topK} in
@@ -93,34 +118,6 @@ final class TopKSelector<
     public static <T extends Object> TopKSelector<T> greatest(
             int k, Comparator<? super T> comparator ) {
         return new TopKSelector<T>(Ordering.from(comparator).reverse(), k);
-    }
-
-    private final int k;
-    private final Comparator<? super T> comparator;
-
-    /*
-     * We are currently considering the elements in buffer in the range [0, bufferSize) as candidates
-     * for the top k elements. Whenever the buffer is filled, we quickselect the top k elements to the
-     * range [0, k) and ignore the remaining elements.
-     */
-    private final T[] buffer;
-    private int bufferSize;
-
-    /**
-     * The largest of the lowest k elements we've seen so far relative to this comparator. If
-     * bufferSize ≥ k, then we can ignore any elements greater than this value.
-     */
-    @CheckForNull
-    private T threshold;
-
-    private TopKSelector( Comparator<? super T> comparator, int k ) {
-        this.comparator = checkNotNull(comparator, "comparator");
-        this.k = k;
-        checkArgument(k >= 0, "k (%s) must be >= 0", k);
-        checkArgument(k <= Integer.MAX_VALUE / 2, "k (%s) must be <= Integer.MAX_VALUE / 2", k);
-        this.buffer = (T[]) new Object[checkedMultiply(k, 2)];
-        this.bufferSize = 0;
-        this.threshold = null;
     }
 
     /**

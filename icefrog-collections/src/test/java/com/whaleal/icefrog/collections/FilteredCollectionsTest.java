@@ -200,7 +200,7 @@ public class FilteredCollectionsTest extends TestCase {
       extends AbstractFilteredCollectionTest<C> {
     public void testEqualsAndHashCode() {
       for (List<Integer> contents : SAMPLE_INPUTS) {
-        Set<Integer> expected = Sets.newHashSet();
+        Set<Integer> expected = SetUtil.newHashSet();
         for (Integer i : contents) {
           if (EVEN.apply(i)) {
             expected.add(i);

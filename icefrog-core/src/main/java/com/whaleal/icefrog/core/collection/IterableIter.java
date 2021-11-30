@@ -7,11 +7,10 @@ import java.util.Iterator;
  *
  * @param <T> 节点类型
  * @author looly
- *
  */
 public interface IterableIter<T> extends Iterable<T>, Iterator<T> {
-	@Override
-	default Iterator<T> iterator() {
-		return this;
-	}
+    @Override
+    default Iterator<T> iterator() {
+        return this;
+    }
 }

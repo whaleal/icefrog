@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import java.util.ListIterator;
@@ -16,50 +14,50 @@ import java.util.ListIterator;
  * default} methods were introduced</a>. For newer methods, like {@code forEachRemaining}, it
  * inherits their default implementations. When those implementations invoke methods, they invoke
  * methods on the {@code ForwardingListIterator}.
- *
- *
- *
  */
 
 
 public abstract class ForwardingListIterator<E extends Object>
-    extends ForwardingIterator<E> implements ListIterator<E> {
+        extends ForwardingIterator<E> implements ListIterator<E> {
 
-  /** Constructor for use by subclasses. */
-  protected ForwardingListIterator() {}
+    /**
+     * Constructor for use by subclasses.
+     */
+    protected ForwardingListIterator() {
+    }
 
-  @Override
-  protected abstract ListIterator<E> delegate();
+    @Override
+    protected abstract ListIterator<E> delegate();
 
-  @Override
-  public void add(@ParametricNullness E element) {
-    delegate().add(element);
-  }
+    @Override
+    public void add( @ParametricNullness E element ) {
+        delegate().add(element);
+    }
 
-  @Override
-  public boolean hasPrevious() {
-    return delegate().hasPrevious();
-  }
+    @Override
+    public boolean hasPrevious() {
+        return delegate().hasPrevious();
+    }
 
-  @Override
-  public int nextIndex() {
-    return delegate().nextIndex();
-  }
+    @Override
+    public int nextIndex() {
+        return delegate().nextIndex();
+    }
 
-  
-  @Override
-  @ParametricNullness
-  public E previous() {
-    return delegate().previous();
-  }
 
-  @Override
-  public int previousIndex() {
-    return delegate().previousIndex();
-  }
+    @Override
+    @ParametricNullness
+    public E previous() {
+        return delegate().previous();
+    }
 
-  @Override
-  public void set(@ParametricNullness E element) {
-    delegate().set(element);
-  }
+    @Override
+    public int previousIndex() {
+        return delegate().previousIndex();
+    }
+
+    @Override
+    public void set( @ParametricNullness E element ) {
+        delegate().set(element);
+    }
 }
