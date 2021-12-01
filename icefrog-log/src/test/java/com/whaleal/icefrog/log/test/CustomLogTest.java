@@ -22,7 +22,7 @@ import org.junit.Test;
 public class CustomLogTest {
 
     private static final String LINE = "----------------------------------------------------------------------";
-
+    
     @Test
     public void consoleLogTest() {
         LogFactory factory = new ConsoleLogFactory();
@@ -43,7 +43,7 @@ public class CustomLogTest {
     }
 
     @Test
-    public void icefrogsLogTest() {
+    public void icefrogLogTest() {
         LogFactory factory = new ApacheCommonsLogFactory();
         LogFactory.setCurrentLogFactory(factory);
         Log log = LogFactory.get();
