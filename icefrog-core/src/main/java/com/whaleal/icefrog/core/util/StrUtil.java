@@ -1501,7 +1501,6 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @return a corresponding {@code Locale} instance, or {@code null} if none
      * @throws IllegalArgumentException in case of an invalid locale specification
      */
-
     public static Locale parseLocaleString( String localeString ) {
         return parseLocaleTokens(localeString, tokenizeLocaleSource(localeString));
     }
@@ -1647,11 +1646,10 @@ public class StrUtil extends CharSequenceUtil implements StrPool {
      * @param array1 the first array (can be {@code null})
      * @param array2 the second array (can be {@code null})
      * @return the new array ({@code null} if both given arrays were {@code null})
-     * @deprecated as of 4.3.15, in favor of manual merging via {@link LinkedHashSet}
+     * , in favor of manual merging via {@link LinkedHashSet}
      * (with every entry included at most once, even entries within the first array)
      */
     @Deprecated
-
     public static String[] mergeStringArrays( String[] array1, String[] array2 ) {
         if (ObjectUtil.isEmpty(array1)) {
             return array2;

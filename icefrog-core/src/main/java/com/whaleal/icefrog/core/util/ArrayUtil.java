@@ -1792,7 +1792,6 @@ public class ArrayUtil extends PrimitiveArrayUtil {
         if (isEmpty(array) || isEmpty(subArray) || subArray.length > array.length || endInclude < 0) {
             return INDEX_NOT_FOUND;
         }
-
         int firstIndex = lastIndexOf(array, subArray[0]);
         if (firstIndex < 0 || firstIndex + subArray.length > array.length) {
             return INDEX_NOT_FOUND;
@@ -1803,7 +1802,6 @@ public class ArrayUtil extends PrimitiveArrayUtil {
                 return lastIndexOfSub(array, firstIndex - 1, subArray);
             }
         }
-
         return firstIndex;
     }
 
@@ -1859,7 +1857,6 @@ public class ArrayUtil extends PrimitiveArrayUtil {
         if (array == null) {
             return false;
         }
-
         for (int i = 0; i < array.length - 1; i++) {
             if (array[i].compareTo(array[i + 1]) < 0) {
                 return false;

@@ -12,6 +12,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  * Utility methods for {@link String} parsing.
  * <p>
  * String 相关的 转换工具类
+ * 主要是 驼峰相关的切分
  *
  * @author wh
  * @since 1.1
@@ -66,6 +67,8 @@ public class StrParsingUtil extends StrUtil {
         return StrUtil.collectionToDelimitedString(splitCamelCaseToLower(source), delimiter);
     }
 
+
+    //-----------------------私有方法区开始---------------------------------
     private static List<String> split( String source, boolean toLower ) {
 
         notNull(source, "Source string must not be null!");
@@ -79,4 +82,6 @@ public class StrParsingUtil extends StrUtil {
 
         return Collections.unmodifiableList(result);
     }
+
+    //-----------------------私有方法区结束---------------------------------
 }
