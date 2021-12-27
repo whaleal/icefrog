@@ -1,7 +1,8 @@
 package com.whaleal.icefrog.extra.unit;
 
 
-import org.apache.commons.lang3.StringUtils;
+import com.whaleal.icefrog.core.util.StrUtil;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -75,7 +76,7 @@ public enum UnitUtil {
     }
 
     public static UnitUtil fromString(String pDisplayName) {
-        if (StringUtils.isBlank(pDisplayName)) {
+        if (StrUtil.isBlank(pDisplayName)) {
             return RAW;
         } else {
             UnitUtil units = (UnitUtil) _displayNameMap.get(pDisplayName);

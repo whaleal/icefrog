@@ -1,7 +1,7 @@
 package com.whaleal.icefrog.core.util;
 
 
-import com.sun.tools.javac.util.StringUtils;
+
 import com.whaleal.icefrog.core.collection.CollectionUtil;
 import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.text.*;

@@ -9,7 +9,7 @@ import java.util.TimeZone;
  * 国家列表
  * 国家时区
  */
-public class TZUtils {
+public class TZUtil {
     private static final Map<String, String> tzDisplayMap = new HashMap<>();
     private static final Map<String, String> tzCanonicalMap = new HashMap<>();
     private static final Map<String, Boolean> tzNoLongerSupported = new HashMap<>();
