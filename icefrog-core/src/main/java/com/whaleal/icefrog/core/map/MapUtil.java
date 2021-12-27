@@ -306,7 +306,7 @@ public class MapUtil {
     public static <K, V> Map<K, V> of( Pair<K, V>... pairs ) {
         final Map<K, V> map = new HashMap<>();
         for (Pair<K, V> pair : pairs) {
-            map.put(pair.getKey(), pair.getValue());
+            map.put(pair.left(), pair.right());
         }
         return map;
     }

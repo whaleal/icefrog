@@ -8,40 +8,40 @@ import java.util.Objects;
 /**
  * 键值对对象，只能在构造时传入键值
  *
- * @param <K> 键类型 第一个事物类型
- * @param <V> 值类型 第二个事物类型
+ * @param <L> 键类型 第一个事物类型
+ * @param <R> 值类型 第二个事物类型
  * @author Looly
  * @author wh
  * @since 1.0.0
  */
-public class Pair<K, V> extends CloneSupport<Pair<K, V>> implements Serializable {
+public class Pair< L, R > extends CloneSupport<Pair< L, R >> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private final K key;
-    private final V value;
+    private final L left;
+    private final R right;
 
     /**
      * 构造
      *
-     * @param key   键
+     * @param left   键
      * @param value 值
      */
-    public Pair( K key, V value ) {
-        this.key = key;
-        this.value = value;
+    public Pair( L left, R value ) {
+        this.left = left;
+        this.right = value;
     }
 
     /**
      * 构建{@link Pair}对象
      *
-     * @param <K>   键类型
-     * @param <V>   值类型
+     * @param <L>   键类型
+     * @param <R>   值类型
      * @param key   键
      * @param value 值
      * @return {@link Pair}
      * @since 1.0.0
      */
-    public static <K, V> Pair<K, V> of( K key, V value ) {
+    public static <L, R> Pair<L, R> of( L key, R value ) {
         return new Pair<>(key, value);
     }
 
@@ -50,8 +50,8 @@ public class Pair<K, V> extends CloneSupport<Pair<K, V>> implements Serializable
      *
      * @return 键
      */
-    public K getKey() {
-        return this.key;
+    public L left() {
+        return this.left;
     }
 
     /**
@@ -59,30 +59,32 @@ public class Pair<K, V> extends CloneSupport<Pair<K, V>> implements Serializable
      *
      * @return 值
      */
-    public V getValue() {
-        return this.value;
+    public R right() {
+        return this.right;
     }
 
     @Override
     public String toString() {
-        return "Pair [key=" + key + ", value=" + value + "]";
+        return "Pair [left=" + left + ", right=" + right + "]";
     }
 
     @Override
     public boolean equals( Object o ) {
-        if (this == o)
+        if (o == null) {
+            return false;
+        } else if (this == o) {
             return true;
-        if (o instanceof Pair) {
-            Pair<?, ?> pair = (Pair<?, ?>) o;
-            return Objects.equals(getKey(), pair.getKey()) &&
-                    Objects.equals(getValue(), pair.getValue());
+        }else if (o.getClass() != this.getClass()) {
+            return false;
+        } else {
+            Pair<?, ?> that = (Pair)o;
+            return Objects.equals(this.left, that.left) && Objects.equals(this.right, that.right);
         }
-        return false;
     }
 
     @Override
     public int hashCode() {
         //copy from 1.8 HashMap.Node
-        return Objects.hashCode(key) ^ Objects.hashCode(value);
+        return Objects.hashCode(left) ^ Objects.hashCode(right);
     }
 }
