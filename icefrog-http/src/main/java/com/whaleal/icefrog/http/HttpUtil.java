@@ -392,9 +392,10 @@ public class HttpUtil {
      * @param url        请求的url
      * @param out        将下载内容写到输出流中 {@link OutputStream}
      * @param isCloseOut 是否关闭输出流
+     * @return 文件大小
      */
-    public static void download(String url, OutputStream out, boolean isCloseOut ) {
-        download(url, out, isCloseOut, null);
+    public static long download( String url, OutputStream out, boolean isCloseOut ) {
+        return download(url, out, isCloseOut, null);
     }
 
     /**
