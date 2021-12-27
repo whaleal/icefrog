@@ -392,10 +392,9 @@ public class HttpUtil {
      * @param url        请求的url
      * @param out        将下载内容写到输出流中 {@link OutputStream}
      * @param isCloseOut 是否关闭输出流
-     * @return 文件大小
      */
-    public static long download( String url, OutputStream out, boolean isCloseOut ) {
-        return download(url, out, isCloseOut, null);
+    public static void download(String url, OutputStream out, boolean isCloseOut ) {
+        download(url, out, isCloseOut, null);
     }
 
     /**
@@ -488,7 +487,7 @@ public class HttpUtil {
                 // 无参数，返回url
                 return urlPart;
             }
-        } else if (false == StrUtil.contains(urlWithParams, '=')) {
+        } else if (!StrUtil.contains(urlWithParams, '=')) {
             // 无参数的URL
             return urlWithParams;
         } else {
@@ -833,4 +832,7 @@ public class HttpUtil {
     public static void closeCookie() {
         GlobalCookieManager.setCookieManager(null);
     }
+
+
+
 }

@@ -12,9 +12,11 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.PosixFilePermission;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 import static java.nio.file.FileVisitOption.FOLLOW_LINKS;
@@ -32,9 +34,9 @@ public class PathUtil {
      * @return 是否为空
      * @throws IORuntimeException IOException
      */
-    public static boolean isDirEmpty( Path dirPath ) {
+    public static boolean isDirEmpty(Path dirPath) {
         try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(dirPath)) {
-            return false == dirStream.iterator().hasNext();
+            return !dirStream.iterator().hasNext();
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
@@ -48,7 +50,7 @@ public class PathUtil {
      * @param fileFilter 文件过滤规则对象，选择要保留的文件，只对文件有效，不过滤目录，null表示接收全部文件
      * @return 文件列表
      */
-    public static List<File> loopFiles( Path path, FileFilter fileFilter ) {
+    public static List<File> loopFiles(Path path, FileFilter fileFilter) {
         return loopFiles(path, -1, fileFilter);
     }
 
@@ -61,12 +63,12 @@ public class PathUtil {
      * @param fileFilter 文件过滤规则对象，选择要保留的文件，只对文件有效，不过滤目录，null表示接收全部文件
      * @return 文件列表
      */
-    public static List<File> loopFiles( Path path, int maxDepth, FileFilter fileFilter ) {
+    public static List<File> loopFiles(Path path, int maxDepth, FileFilter fileFilter) {
         final List<File> fileList = new ArrayList<>();
 
-        if (null == path || false == Files.exists(path)) {
+        if (null == path || !Files.exists(path)) {
             return fileList;
-        } else if (false == isDirectory(path)) {
+        } else if (!isDirectory(path)) {
             final File file = path.toFile();
             if (null == fileFilter || fileFilter.accept(file)) {
                 fileList.add(file);
@@ -77,7 +79,7 @@ public class PathUtil {
         walkFiles(path, maxDepth, new SimpleFileVisitor<Path>() {
 
             @Override
-            public FileVisitResult visitFile( Path path, BasicFileAttributes attrs ) {
+            public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                 final File file = path.toFile();
                 if (null == fileFilter || fileFilter.accept(file)) {
                     fileList.add(file);
@@ -96,7 +98,7 @@ public class PathUtil {
      * @param visitor {@link FileVisitor} 接口，用于自定义在访问文件时，访问目录前后等节点做的操作
      * @see Files#walkFileTree(Path, java.util.Set, int, FileVisitor)
      */
-    public static void walkFiles( Path start, FileVisitor<? super Path> visitor ) {
+    public static void walkFiles(Path start, FileVisitor<? super Path> visitor) {
         walkFiles(start, -1, visitor);
     }
 
@@ -108,7 +110,7 @@ public class PathUtil {
      * @param visitor  {@link FileVisitor} 接口，用于自定义在访问文件时，访问目录前后等节点做的操作
      * @see Files#walkFileTree(Path, java.util.Set, int, FileVisitor)
      */
-    public static void walkFiles( Path start, int maxDepth, FileVisitor<? super Path> visitor ) {
+    public static void walkFiles(Path start, int maxDepth, FileVisitor<? super Path> visitor) {
         if (maxDepth < 0) {
             // < 0 表示遍历到最底层
             maxDepth = Integer.MAX_VALUE;
@@ -130,7 +132,7 @@ public class PathUtil {
      * @return 成功与否
      * @throws IORuntimeException IO异常
      */
-    public static boolean del( Path path ) throws IORuntimeException {
+    public static boolean del(Path path) throws IORuntimeException {
         if (Files.notExists(path)) {
             return true;
         }
@@ -157,7 +159,7 @@ public class PathUtil {
      * @return Path
      * @throws IORuntimeException IO异常
      */
-    public static Path copyFile( Path src, Path dest, StandardCopyOption... options ) throws IORuntimeException {
+    public static Path copyFile(Path src, Path dest, StandardCopyOption... options) throws IORuntimeException {
         return copyFile(src, dest, (CopyOption[]) options);
     }
 
@@ -171,7 +173,7 @@ public class PathUtil {
      * @return Path
      * @throws IORuntimeException IO异常
      */
-    public static Path copyFile( Path src, Path target, CopyOption... options ) throws IORuntimeException {
+    public static Path copyFile(Path src, Path target, CopyOption... options) throws IORuntimeException {
         notNull(src, "Source File is null !");
         notNull(target, "Destination File or directory is null !");
 
@@ -200,7 +202,7 @@ public class PathUtil {
      * @return Path
      * @throws IORuntimeException IO异常
      */
-    public static Path copy( Path src, Path target, CopyOption... options ) throws IORuntimeException {
+    public static Path copy(Path src, Path target, CopyOption... options) throws IORuntimeException {
         notNull(src, "Src path must be not null !");
         notNull(target, "Target path must be not null !");
 
@@ -223,7 +225,7 @@ public class PathUtil {
      * @return Path
      * @throws IORuntimeException IO异常
      */
-    public static Path copyContent( Path src, Path target, CopyOption... options ) throws IORuntimeException {
+    public static Path copyContent(Path src, Path target, CopyOption... options) throws IORuntimeException {
         notNull(src, "Src path must be not null !");
         notNull(target, "Target path must be not null !");
 
@@ -242,7 +244,7 @@ public class PathUtil {
      * @param path {@link Path}
      * @return 如果为目录true
      */
-    public static boolean isDirectory( Path path ) {
+    public static boolean isDirectory(Path path) {
         return isDirectory(path, false);
     }
 
@@ -253,7 +255,7 @@ public class PathUtil {
      * @param isFollowLinks 是否追踪到软链对应的真实地址
      * @return 如果为目录true
      */
-    public static boolean isDirectory( Path path, boolean isFollowLinks ) {
+    public static boolean isDirectory(Path path, boolean isFollowLinks) {
         if (null == path) {
             return false;
         }
@@ -268,7 +270,7 @@ public class PathUtil {
      * @param index 路径节点位置，支持负数（负数从后向前计数）
      * @return 获取的子路径
      */
-    public static Path getPathEle( Path path, int index ) {
+    public static Path getPathEle(Path path, int index) {
         return subPath(path, index, index == -1 ? path.getNameCount() : index + 1);
     }
 
@@ -278,7 +280,7 @@ public class PathUtil {
      * @param path 路径
      * @return 获取的最后一个子路径
      */
-    public static Path getLastPathEle( Path path ) {
+    public static Path getLastPathEle(Path path) {
         return getPathEle(path, path.getNameCount() - 1);
     }
 
@@ -290,7 +292,7 @@ public class PathUtil {
      * @param toIndex   结束路径节点（不包括）
      * @return 获取的子路径
      */
-    public static Path subPath( Path path, int fromIndex, int toIndex ) {
+    public static Path subPath(Path path, int fromIndex, int toIndex) {
         if (null == path) {
             return null;
         }
@@ -334,7 +336,7 @@ public class PathUtil {
      * @return {@link BasicFileAttributes}
      * @throws IORuntimeException IO异常
      */
-    public static BasicFileAttributes getAttributes( Path path, boolean isFollowLinks ) throws IORuntimeException {
+    public static BasicFileAttributes getAttributes(Path path, boolean isFollowLinks) throws IORuntimeException {
         if (null == path) {
             return null;
         }
@@ -354,7 +356,7 @@ public class PathUtil {
      * @return 输入流
      * @throws IORuntimeException 文件未找到
      */
-    public static BufferedInputStream getInputStream( Path path ) throws IORuntimeException {
+    public static BufferedInputStream getInputStream(Path path) throws IORuntimeException {
         final InputStream in;
         try {
             in = Files.newInputStream(path);
@@ -371,7 +373,7 @@ public class PathUtil {
      * @return BufferedReader对象
      * @throws IORuntimeException IO异常
      */
-    public static BufferedReader getUtf8Reader( Path path ) throws IORuntimeException {
+    public static BufferedReader getUtf8Reader(Path path) throws IORuntimeException {
         return getReader(path, CharsetUtil.CHARSET_UTF_8);
     }
 
@@ -383,7 +385,7 @@ public class PathUtil {
      * @return BufferedReader对象
      * @throws IORuntimeException IO异常
      */
-    public static BufferedReader getReader( Path path, Charset charset ) throws IORuntimeException {
+    public static BufferedReader getReader(Path path, Charset charset) throws IORuntimeException {
         return IoUtil.getReader(getInputStream(path), charset);
     }
 
@@ -393,7 +395,7 @@ public class PathUtil {
      * @param path 文件
      * @return byte数组
      */
-    public static byte[] readBytes( Path path ) {
+    public static byte[] readBytes(Path path) {
         try {
             return Files.readAllBytes(path);
         } catch (IOException e) {
@@ -408,7 +410,7 @@ public class PathUtil {
      * @return 输入流
      * @throws IORuntimeException 文件未找到
      */
-    public static BufferedOutputStream getOutputStream( Path path ) throws IORuntimeException {
+    public static BufferedOutputStream getOutputStream(Path path) throws IORuntimeException {
         final OutputStream in;
         try {
             in = Files.newOutputStream(path);
@@ -430,7 +432,7 @@ public class PathUtil {
      * @param isOverride 是否覆盖目标文件
      * @return 目标文件Path
      */
-    public static Path rename( Path path, String newName, boolean isOverride ) {
+    public static Path rename(Path path, String newName, boolean isOverride) {
         return move(path, path.resolveSibling(newName), isOverride);
     }
 
@@ -448,7 +450,7 @@ public class PathUtil {
      * @param isOverride 是否覆盖目标文件
      * @return 目标文件Path
      */
-    public static Path move( Path src, Path target, boolean isOverride ) {
+    public static Path move(Path src, Path target, boolean isOverride) {
         notNull(src, "Src path must be not null !");
         notNull(target, "Target path must be not null !");
 
@@ -470,7 +472,7 @@ public class PathUtil {
      * @param isOverride 是否覆盖目标文件
      * @return 目标文件Path
      */
-    public static Path moveContent( Path src, Path target, boolean isOverride ) {
+    public static Path moveContent(Path src, Path target, boolean isOverride) {
         notNull(src, "Src path must be not null !");
         notNull(target, "Target path must be not null !");
         final CopyOption[] options = isOverride ? new CopyOption[]{StandardCopyOption.REPLACE_EXISTING} : new CopyOption[]{};
@@ -502,7 +504,7 @@ public class PathUtil {
      * @throws IORuntimeException IO异常
      * @see Files#isSameFile(Path, Path)
      */
-    public static boolean equals( Path file1, Path file2 ) throws IORuntimeException {
+    public static boolean equals(Path file1, Path file2) throws IORuntimeException {
         try {
             return Files.isSameFile(file1, file2);
         } catch (IOException e) {
@@ -518,7 +520,7 @@ public class PathUtil {
      * @return 如果为文件true
      * @see Files#isRegularFile(Path, LinkOption...)
      */
-    public static boolean isFile( Path path, boolean isFollowLinks ) {
+    public static boolean isFile(Path path, boolean isFollowLinks) {
         if (null == path) {
             return false;
         }
@@ -532,7 +534,7 @@ public class PathUtil {
      * @param path 被检查的文件
      * @return 是否为符号链接文件
      */
-    public static boolean isSymlink( Path path ) {
+    public static boolean isSymlink(Path path) {
         return Files.isSymbolicLink(path);
     }
 
@@ -543,7 +545,7 @@ public class PathUtil {
      * @param isFollowLinks 是否跟踪软链（快捷方式）
      * @return 是否存在
      */
-    public static boolean exists( Path path, boolean isFollowLinks ) {
+    public static boolean exists(Path path, boolean isFollowLinks) {
         final LinkOption[] options = isFollowLinks ? new LinkOption[0] : new LinkOption[]{LinkOption.NOFOLLOW_LINKS};
         return Files.exists(path, options);
     }
@@ -555,7 +557,7 @@ public class PathUtil {
      * @param sub    子目录
      * @return 子目录是否为父目录的子目录
      */
-    public static boolean isSub( Path parent, Path sub ) {
+    public static boolean isSub(Path parent, Path sub) {
         return toAbsNormal(sub).startsWith(toAbsNormal(parent));
     }
 
@@ -565,7 +567,7 @@ public class PathUtil {
      * @param path 文件或目录Path
      * @return 转换后的Path
      */
-    public static Path toAbsNormal( Path path ) {
+    public static Path toAbsNormal(Path path) {
         notNull(path);
         return path.toAbsolutePath().normalize();
     }
@@ -577,7 +579,7 @@ public class PathUtil {
      * @return MimeType
      * @see Files#probeContentType(Path)
      */
-    public static String getMimeType( Path file ) {
+    public static String getMimeType(Path file) {
         try {
             return Files.probeContentType(file);
         } catch (IOException e) {
@@ -591,7 +593,7 @@ public class PathUtil {
      * @param dir 目录
      * @return 目录
      */
-    public static Path mkdir( Path dir ) {
+    public static Path mkdir(Path dir) {
         if (null != dir && false == exists(dir, false)) {
             try {
                 Files.createDirectories(dir);
@@ -608,7 +610,7 @@ public class PathUtil {
      * @param path 文件或目录
      * @return 父目录
      */
-    public static Path mkParentDirs( Path path ) {
+    public static Path mkParentDirs(Path path) {
         return mkdir(path.getParent());
     }
 
@@ -618,7 +620,7 @@ public class PathUtil {
      * @param path {@link Path}
      * @return 文件名
      */
-    public static String getName( Path path ) {
+    public static String getName(Path path) {
         if (null == path) {
             return null;
         }
@@ -631,7 +633,7 @@ public class PathUtil {
      * @param path 文件对象
      * @throws IOException IO异常
      */
-    protected static void delFile( Path path ) throws IOException {
+    protected static void delFile(Path path) throws IOException {
         try {
             Files.delete(path);
         } catch (AccessDeniedException e) {
@@ -657,7 +659,7 @@ public class PathUtil {
      * @return {@code true} if the {@code File} was successfully deleted,
      * otherwise {@code false}
      */
-    public static boolean deleteRecursively( File root) {
+    public static boolean deleteRecursively(File root) {
         if (root == null) {
             return false;
         }
@@ -678,7 +680,7 @@ public class PathUtil {
      * or {@code false} if it did not exist
      * @throws IOException in the case of I/O errors
      */
-    public static boolean deleteRecursively( Path root) throws IOException {
+    public static boolean deleteRecursively(Path root) throws IOException {
         if (root == null) {
             return false;
         }
@@ -749,4 +751,16 @@ public class PathUtil {
             throw new IllegalArgumentException("Source File must denote a directory or file");
         }
     }
+
+    /**
+     * 修改文件权限
+     *
+     * @param path  文件路径
+     * @param perms 权限
+     * @throws IOException the io exception
+     */
+    public static void setFilePosixFilePermissions(File path, Set<PosixFilePermission> perms) throws IOException {
+        Files.setPosixFilePermissions(FileSystems.getDefault().getPath(path.getAbsolutePath()), perms);
+    }
+
 }
