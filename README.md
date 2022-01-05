@@ -103,13 +103,13 @@ icefrog的存在就是为了减少代码搜索成本，避免网络上参差不�
 <dependency>
     <groupId>com.whaleal.icefrog</groupId>
     <artifactId>icefrog-all</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.7</version>
 </dependency>
 ```
 
 ### 🍐Gradle
 ```
-implementation 'com.whaleal.icefrog:icefrog-all:1.1.4'
+implementation 'com.whaleal.icefrog:icefrog-all:1.1.7'
 ```
 
 ### 📥下载jar
