@@ -537,7 +537,7 @@ public class JSONObjectTest {
                 .set("c", "value3")
                 .set("d", true);
 
-        final String s = json1.toJSONString(0, ( pair ) -> pair.getKey().equals("b"));
+        final String s = json1.toJSONString(0, ( pair ) -> pair.left().equals("b"));
         Assert.assertEquals("{\"b\":\"value2\"}", s);
     }
 
@@ -549,7 +549,7 @@ public class JSONObjectTest {
                 .set("c", "value3")
                 .set("d", true);
 
-        final String s = json1.toJSONString(0, ( pair ) -> false == pair.getKey().equals("b"));
+        final String s = json1.toJSONString(0, ( pair ) -> false == pair.left().equals("b"));
         Assert.assertEquals("{\"a\":\"value1\",\"c\":\"value3\",\"d\":true}", s);
     }
 
