@@ -180,5 +180,10 @@ icefrog欢迎任何人为icefrog添砖加瓦，贡献代码，不过维护者是
 如果你觉得本项目还不错，欢迎持续关注，在此表示感谢^_^。
 
 
+## 其他相关项目  
+[Project](https://docs.whaleal.com/project)  
+
+
+
 
 ![whaleal](https://github.com/whaleal/whaleal.github.io/blob/main/images/logo1.png)
