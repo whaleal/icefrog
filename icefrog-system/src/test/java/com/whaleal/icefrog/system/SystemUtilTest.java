@@ -46,7 +46,7 @@ public class SystemUtilTest {
 
     @Test
     public void getUserInfoTest() {
-        // https://github.com/whaleal/icefrog/issues/I3NM39
+
         final UserInfo userInfo = SystemUtil.getUserInfo();
         Assert.assertTrue(userInfo.getTempDir().endsWith(File.separator));
     }
