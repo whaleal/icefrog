@@ -312,7 +312,7 @@ public class ImmutableListMultimap<K, V> extends ImmutableMultimap<K, V>
     @Deprecated
     @Override
 
-    public final ImmutableList<V> replaceValues( K key, Iterable<? extends V> values ) {
+    public final ImmutableList<V> replaceValues( K key, Iterable< V > values ) {
         throw new UnsupportedOperationException();
     }
 

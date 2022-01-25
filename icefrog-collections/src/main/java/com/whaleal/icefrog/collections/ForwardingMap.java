@@ -1,6 +1,5 @@
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import javax.annotation.CheckForNull;
@@ -8,7 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
+import com.whaleal.icefrog.core.map.MapUtil;
 
 /**
  * A map which forwards all its method calls to another map. Subclasses should override one or more
@@ -129,7 +128,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * to this implementation.
      */
     protected void standardPutAll( Map<? extends K, ? extends V> map ) {
-        Maps.putAllImpl(this, map);
+        MapUtil.putAllImpl(this, map);
     }
 
     /**
@@ -161,7 +160,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * implementation.
      */
     protected void standardClear() {
-        Iterators.clear(entrySet().iterator());
+        IterUtil.clear(entrySet().iterator());
     }
 
     /**
@@ -171,7 +170,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      */
 
     protected boolean standardContainsKey( @CheckForNull Object key ) {
-        return MapUtil.containsKeyImpl(this, key);
+        return com.whaleal.icefrog.core.map.MapUtil.containsKeyImpl(this, key);
     }
 
     /**
@@ -180,7 +179,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * #containsValue} to forward to this implementation.
      */
     protected boolean standardContainsValue( @CheckForNull Object value ) {
-        return MapUtil.containsValueImpl(this, value);
+        return com.whaleal.icefrog.core.map.MapUtil.containsValueImpl(this, value);
     }
 
     /**
@@ -198,7 +197,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * forward to this implementation.
      */
     protected boolean standardEquals( @CheckForNull Object object ) {
-        return MapUtil.equalsImpl(this, object);
+        return com.whaleal.icefrog.core.map.MapUtil.equalsImpl(this, object);
     }
 
     /**
@@ -216,7 +215,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * forward to this implementation.
      */
     protected String standardToString() {
-        return Maps.toStringImpl(this);
+        return MapUtil.toString(this);
     }
 
     /**
@@ -227,7 +226,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * ForwardingMap#keySet} to forward to this implementation or a subclass thereof.
      */
 
-    protected class StandardKeySet extends Maps.KeySet<K, V> {
+    protected class StandardKeySet extends CKeySet<K, V> {
         /**
          * Constructor for use by subclasses.
          */
@@ -244,7 +243,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * to forward to this implementation or a subclass thereof.
      */
 
-    protected class StandardValues extends Maps.Values<K, V> {
+    protected class StandardValues extends MapUtil.Values<K, V> {
         /**
          * Constructor for use by subclasses.
          */
@@ -261,7 +260,7 @@ public abstract class ForwardingMap<K extends Object, V extends Object>
      * subclass thereof.
      */
 
-    protected abstract class StandardEntrySet extends Maps.EntrySet<K, V> {
+    protected abstract class StandardEntrySet extends MapUtil.EntrySet<K, V> {
         /**
          * Constructor for use by subclasses.
          */

@@ -22,7 +22,7 @@ import java.util.Set;
  * <p>This class is not threadsafe when any concurrent operations update the multimap. Concurrent
  * read operations will work correctly if the last write <i>happens-before</i> any reads. To allow
  * concurrent update operations, wrap your multimap with a call to {@link
- * Multimaps#synchronizedSetMultimap}.
+ * MultimapUtil#synchronizedSetMultimap}.
  *
  * <p><b>Warning:</b> Do not modify either a key <i>or a value</i> of a {@code HashMultimap} in a
  * way that affects its {@link Object#equals} behavior. Undefined behavior and bugs will result.

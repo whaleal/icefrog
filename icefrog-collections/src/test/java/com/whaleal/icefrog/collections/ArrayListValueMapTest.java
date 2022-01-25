@@ -16,14 +16,14 @@ import static java.util.Arrays.asList;
  *
  */
 
-public class ArrayListMultimapTest extends TestCase {
+public class ArrayListValueMapTest extends TestCase {
   @Test
   public void test(){
   }
 
 
   protected ListMultimap<String, Integer> create() {
-    return ArrayListMultimap.create();
+    return ArrayListValueMap.create();
   }
 
   /** Confirm that get() returns a List implementing RandomAccess. */
@@ -59,29 +59,29 @@ public class ArrayListMultimapTest extends TestCase {
     multimap.put("foo", 1);
     multimap.put("foo", 3);
     multimap.put("bar", 2);
-    ArrayListMultimap<String, Integer> copy = ArrayListMultimap.create(multimap);
+    ArrayListValueMap<String, Integer> copy = ArrayListValueMap.create(multimap);
     assertEquals(multimap, copy);
   }
 
   public void testCreate() {
-    ArrayListMultimap<String, Integer> multimap = ArrayListMultimap.create();
+    ArrayListValueMap<String, Integer> multimap = ArrayListValueMap.create();
     assertEquals(3, multimap.expectedValuesPerKey);
   }
 
   public void testCreateFromSizes() {
-    ArrayListMultimap<String, Integer> multimap = ArrayListMultimap.create(15, 20);
+    ArrayListValueMap<String, Integer> multimap = ArrayListValueMap.create(15, 20);
     assertEquals(20, multimap.expectedValuesPerKey);
   }
 
   public void testCreateFromIllegalSizes() {
     try {
-      ArrayListMultimap.create(15, -2);
+      ArrayListValueMap.create(15, -2);
       fail();
     } catch (IllegalArgumentException expected) {
     }
 
     try {
-      ArrayListMultimap.create(-15, 2);
+      ArrayListValueMap.create(-15, 2);
       fail();
     } catch (IllegalArgumentException expected) {
     }
@@ -89,13 +89,13 @@ public class ArrayListMultimapTest extends TestCase {
 
   public void testCreateFromHashMultimap() {
     Multimap<String, Integer> original = HashMultimap.create();
-    ArrayListMultimap<String, Integer> multimap = ArrayListMultimap.create(original);
+    ArrayListValueMap<String, Integer> multimap = ArrayListValueMap.create(original);
     assertEquals(3, multimap.expectedValuesPerKey);
   }
 
   public void testCreateFromArrayListMultimap() {
-    ArrayListMultimap<String, Integer> original = ArrayListMultimap.create(15, 20);
-    ArrayListMultimap<String, Integer> multimap = ArrayListMultimap.create(original);
+    ArrayListValueMap<String, Integer> original = ArrayListValueMap.create(15, 20);
+    ArrayListValueMap<String, Integer> multimap = ArrayListValueMap.create(original);
     assertEquals(20, multimap.expectedValuesPerKey);
   }
 

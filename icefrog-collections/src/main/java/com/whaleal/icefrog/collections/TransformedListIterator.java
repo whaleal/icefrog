@@ -11,13 +11,13 @@ import java.util.function.Function;
 
 
 abstract class TransformedListIterator<F extends Object, T extends Object>
-        extends TransformedIterator<F, T> implements ListIterator<T> {
+        extends TransIter<F, T> implements ListIterator<T> {
     TransformedListIterator( ListIterator<? extends F> backingIterator ) {
         super(backingIterator);
     }
 
     private ListIterator<? extends F> backingIterator() {
-        return Iterators.cast(backingIterator);
+        return (ListIterator<F>)(backingIterator);
     }
 
     @Override

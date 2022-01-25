@@ -289,7 +289,7 @@ class MapMakerInternalMap<
     private static <E> ArrayList<E> toArrayList( Collection<E> c ) {
         // Avoid calling ArrayList(Collection), which may call back into toArray.
         ArrayList<E> result = new ArrayList<>(c.size());
-        Iterators.addAll(result, c.iterator());
+        IterUtil.addAll(result, c.iterator());
         return result;
     }
 

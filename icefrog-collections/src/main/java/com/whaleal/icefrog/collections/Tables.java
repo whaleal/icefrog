@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
@@ -53,12 +54,12 @@ public final class Tables {
             R extends Object,
             C extends Object,
             V extends Object,
-            I extends Table<R, C, V>>
+            I extends Table<R, C, V> >
     Collector<T, ?, I> toTable(
-            java.util.function.Function<? super T, ? extends R> rowFunction,
-            java.util.function.Function<? super T, ? extends C> columnFunction,
-            java.util.function.Function<? super T, ? extends V> valueFunction,
-            java.util.function.Supplier<I> tableSupplier ) {
+            Function<? super T, ? extends R> rowFunction,
+            Function<? super T, ? extends C> columnFunction,
+            Function<? super T, ? extends V> valueFunction,
+            Supplier<I> tableSupplier ) {
         return TableCollectors.toTable(rowFunction, columnFunction, valueFunction, tableSupplier);
     }
 
@@ -69,8 +70,8 @@ public final class Tables {
      *
      * <p>If multiple input elements map to the same row and column, the specified merging function is
      * used to combine the values. Like {@link
-     * java.util.stream.Collectors#toMap(java.util.function.Function, java.util.function.Function,
-     * BinaryOperator, java.util.function.Supplier)}, this Collector throws a {@code
+     * java.util.stream.Collectors#toMap(Function, Function,
+     * BinaryOperator, Supplier)}, this Collector throws a {@code
      * NullPointerException} on null values returned from {@code valueFunction}, and treats nulls
      * returned from {@code mergeFunction} as removals of that row/column pair.
      */
@@ -81,11 +82,11 @@ public final class Tables {
             V extends Object,
             I extends Table<R, C, V>>
     Collector<T, ?, I> toTable(
-            java.util.function.Function<? super T, ? extends R> rowFunction,
-            java.util.function.Function<? super T, ? extends C> columnFunction,
-            java.util.function.Function<? super T, ? extends V> valueFunction,
+            Function<? super T, ? extends R> rowFunction,
+            Function<? super T, ? extends C> columnFunction,
+            Function<? super T, ? extends V> valueFunction,
             BinaryOperator<V> mergeFunction,
-            java.util.function.Supplier<I> tableSupplier ) {
+            Supplier<I> tableSupplier ) {
         return TableCollectors.toTable(
                 rowFunction, columnFunction, valueFunction, mergeFunction, tableSupplier);
     }
@@ -472,7 +473,7 @@ public final class Tables {
         @SuppressWarnings("unchecked")
         @Override
         Iterator<Cell<C, R, V>> cellIterator() {
-            return Iterators.transform(original.cellSet().iterator(), (Function) TRANSPOSE_CELL);
+            return IterUtil.transform(original.cellSet().iterator(), (Function) TRANSPOSE_CELL);
         }
 
         @SuppressWarnings("unchecked")
@@ -567,7 +568,7 @@ public final class Tables {
 
         @Override
         Iterator<Cell<R, C, V2>> cellIterator() {
-            return Iterators.transform(fromTable.cellSet().iterator(), cellFunction());
+            return IterUtil.transform(fromTable.cellSet().iterator(), cellFunction());
         }
 
         @Override
@@ -587,7 +588,7 @@ public final class Tables {
 
         @Override
         Collection<V2> createValues() {
-            return Collections2.transform(fromTable.values(), function);
+            return CollUtil.trans(fromTable.values(), function);
         }
 
         @Override

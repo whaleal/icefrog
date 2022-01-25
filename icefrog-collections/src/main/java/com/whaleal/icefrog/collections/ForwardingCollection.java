@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.collection.CollUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.Collection;
@@ -118,7 +119,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * implementation.
      */
     protected boolean standardContains( @CheckForNull Object object ) {
-        return Iterators.contains(iterator(), object);
+        return IterUtil.contains(iterator(), object);
     }
 
     /**
@@ -127,7 +128,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * implementation.
      */
     protected boolean standardContainsAll( Collection<?> collection ) {
-        return Collections2.containsAllImpl(this, collection);
+        return CollUtil.containsAll(this, collection);
     }
 
     /**
@@ -135,7 +136,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * #add}, you may wish to override {@link #addAll} to forward to this implementation.
      */
     protected boolean standardAddAll( Collection<? extends E> collection ) {
-        return Iterators.addAll(this, collection.iterator());
+        return IterUtil.addAll(this, collection.iterator());
     }
 
     /**
@@ -160,7 +161,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * #removeAll} to forward to this implementation.
      */
     protected boolean standardRemoveAll( Collection<?> collection ) {
-        return Iterators.removeAll(iterator(), collection);
+        return IterUtil.removeAll(iterator(), collection);
     }
 
     /**
@@ -169,7 +170,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * #retainAll} to forward to this implementation.
      */
     protected boolean standardRetainAll( Collection<?> collection ) {
-        return Iterators.retainAll(iterator(), collection);
+        return IterUtil.retainAll(iterator(), collection);
     }
 
     /**
@@ -178,7 +179,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * #clear} to forward to this implementation.
      */
     protected void standardClear() {
-        Iterators.clear(iterator());
+        IterUtil.clear(iterator());
     }
 
     /**
@@ -196,7 +197,7 @@ public abstract class ForwardingCollection<E extends Object> extends ForwardingO
      * implementation.
      */
     protected String standardToString() {
-        return Collections2.toStringImpl(this);
+        return CollUtil.toString(this);
     }
 
     /**

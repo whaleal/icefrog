@@ -84,7 +84,7 @@ public interface SetMultimap<K extends Object, V extends Object>
      *
      * <p><b>Note:</b> The returned map's values are guaranteed to be of type {@link Set}. To obtain
      * this map with the more specific generic type {@code Map<K, Set<V>>}, call {@link
-     * Multimaps#asMap(SetMultimap)} instead.
+     * MultimapUtil#asMap(SetMultimap)} instead.
      */
     @Override
     Map<K, Collection<V>> asMap();

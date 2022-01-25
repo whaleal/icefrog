@@ -2,7 +2,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.CollUtil;
-import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
@@ -77,7 +76,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
      */
     public static <E> ConcurrentHashMultiset<E> create( Iterable<? extends E> elements ) {
         ConcurrentHashMultiset<E> multiset = ConcurrentHashMultiset.create();
-        IterUtil.addAll(multiset, elements);
+        com.whaleal.icefrog.core.collection.IterUtil.addAll(multiset, elements);
         return multiset;
     }
 
@@ -427,7 +426,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
             @Override
             public boolean contains( @CheckForNull Object object ) {
-                return object != null && Collections2.safeContains(delegate, object);
+                return object != null && CollUtil.safeContains(delegate, object);
             }
 
             @Override
@@ -437,7 +436,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
 
             @Override
             public boolean remove( @CheckForNull Object object ) {
-                return object != null && Collections2.safeRemove(delegate, object);
+                return object != null && CollUtil.safeRemove(delegate, object);
             }
 
             @Override
@@ -579,7 +578,7 @@ public final class ConcurrentHashMultiset<E> extends AbstractMultiset<E> impleme
             List<Entry<E>> list = CollUtil.newArrayList();
             ;
             // Not IterUtil.addAll(list, this), because that'll forward right back here.
-            Iterators.addAll(list, iterator());
+            IterUtil.addAll(list, iterator());
             return list;
         }
     }

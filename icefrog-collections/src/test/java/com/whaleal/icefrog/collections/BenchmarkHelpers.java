@@ -97,7 +97,7 @@ final class BenchmarkHelpers {
     ArrayListMultimapImpl {
       @Override
       <K, V> ListMultimap<K, V> create(Multimap<K, V> contents) {
-        return ArrayListMultimap.create(contents);
+        return ArrayListValueMap.create(contents);
       }
     },
     LinkedListMultimapImpl {
@@ -171,13 +171,13 @@ final class BenchmarkHelpers {
     HashMapImpl {
       @Override
       public <K extends Comparable<K>, V> Map<K, V> create(Map<K, V> map) {
-        return Maps.newHashMap(map);
+        return MapUtil.newHashMap(map);
       }
     },
     LinkedHashMapImpl {
       @Override
       public <K extends Comparable<K>, V> Map<K, V> create(Map<K, V> map) {
-        return Maps.newLinkedHashMap(map);
+        return MapUtil.newLinkedHashMap(map);
       }
     },
     ConcurrentHashMapImpl {
@@ -235,7 +235,7 @@ final class BenchmarkHelpers {
     TreeMapImpl {
       @Override
       public <K extends Comparable<K>, V> SortedMap<K, V> create(Map<K, V> map) {
-        SortedMap<K, V> result = Maps.newTreeMap();
+        SortedMap<K, V> result = MapUtil.newTreeMap();
         result.putAll(map);
         return result;
       }

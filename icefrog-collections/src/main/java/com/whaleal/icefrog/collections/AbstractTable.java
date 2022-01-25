@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
@@ -71,7 +72,7 @@ abstract class AbstractTable<
 
     @Override
     public void clear() {
-        Iterators.clear(cellSet().iterator());
+        IterUtil.clear(cellSet().iterator());
     }
 
     @Override
@@ -120,7 +121,7 @@ abstract class AbstractTable<
     }
 
     Iterator<V> valuesIterator() {
-        return new TransformedIterator<Cell<R, C, V>, V>(cellSet().iterator()) {
+        return new TransIter<Cell<R, C, V>, V>(cellSet().iterator()) {
             @Override
             @ParametricNullness
             V transform( Cell<R, C, V> cell ) {
@@ -158,7 +159,7 @@ abstract class AbstractTable<
                 Cell<?, ?, ?> cell = (Cell<?, ?, ?>) o;
                 Map<C, V> row = MapUtil.safeGet(rowMap(), cell.getRowKey());
                 return row != null
-                        && Collections2.safeContains(
+                        && CollUtil.safeContains(
                         row.entrySet(), new ImmutableEntry(cell.getColumnKey(), cell.getValue()));
 
             }
@@ -171,7 +172,7 @@ abstract class AbstractTable<
                 Cell<?, ?, ?> cell = (Cell<?, ?, ?>) o;
                 Map<C, V> row = MapUtil.safeGet(rowMap(), cell.getRowKey());
                 return row != null
-                        && Collections2.safeRemove(
+                        && CollUtil.safeRemove(
                         row.entrySet(), new ImmutableEntry(cell.getColumnKey(), cell.getValue()));
             }
             return false;

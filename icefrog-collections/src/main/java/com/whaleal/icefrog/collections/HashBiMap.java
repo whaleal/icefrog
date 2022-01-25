@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.map.BiMap;
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -17,7 +16,7 @@ import java.util.function.BiFunction;
 
 import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
-
+import com.whaleal.icefrog.core.map.MapUtil;
 
 /**
  * 本质 是个HasMap + BiMap
@@ -54,7 +53,7 @@ public final class HashBiMap<K extends Object, V extends Object>
     private transient BiMap<V, K> inverse;
 
     private HashBiMap( int expectedSize ) {
-        super(MapUtil.newHashMap(expectedSize));
+        super(com.whaleal.icefrog.core.map.MapUtil.newHashMap(expectedSize));
         init(expectedSize);
     }
 
@@ -237,7 +236,7 @@ public final class HashBiMap<K extends Object, V extends Object>
     @Override
     @CheckForNull
     public V get( @CheckForNull Object key ) {
-        return MapUtil.valueOrNull(seekByKey(key, ObjectUtil.hashCode(key)));
+        return com.whaleal.icefrog.core.map.MapUtil.valueOrNull(seekByKey(key, ObjectUtil.hashCode(key)));
     }
 
     @Override
@@ -323,7 +322,7 @@ public final class HashBiMap<K extends Object, V extends Object>
             oldEntryForValue.nextInKeyInsertionOrder = null;
         }
         rehashIfNecessary();
-        return MapUtil.keyOrNull(oldEntryForValue);
+        return com.whaleal.icefrog.core.map.MapUtil.keyOrNull(oldEntryForValue);
     }
 
     private void rehashIfNecessary() {
@@ -568,7 +567,7 @@ public final class HashBiMap<K extends Object, V extends Object>
         abstract T output( BiEntry<K, V> entry );
     }
 
-    private final class KeySet extends Maps.KeySet<K, V> {
+    private final class KeySet extends CKeySet<K, V> {
         KeySet() {
             super(HashBiMap.this);
         }

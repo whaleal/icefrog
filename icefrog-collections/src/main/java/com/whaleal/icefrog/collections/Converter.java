@@ -9,6 +9,7 @@ import java.util.function.Function;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.lang.Precondition.notNull;
 
+import com.whaleal.icefrog.core.map.MapUtil;
 
 /**
  * A function from {@code A} to {@code B} with an associated <i>reverse</i> function from {@code B}
@@ -47,8 +48,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  * <ul>
  *   <li>Use a provided converter implementation, such as ,  or the {@linkplain
  *       #reverse reverse} views of these.
- *   <li>Convert between specific preset values using {@link
- *       Maps#asConverter Maps.asConverter}. For example, use this to
+ *   <li>Convert between specific preset values using . For example, use this to
  *       create a "fake" converter for a unit test. It is unnecessary (and confusing) to <i>mock</i>
  *       the {@code Converter} type using a mocking framework.
  *   <li>Extend this class and implement its {@link #doForward} and {@link #doBackward} methods.
@@ -120,6 +120,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  *
  * [*] In annotating this class, we're ignoring LegacyConverter.
  */
+
 
 @Deprecated
 public abstract class Converter<A, B> implements Function<A, B> {

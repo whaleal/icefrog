@@ -4,7 +4,6 @@ import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.BiFunction;
 
-import static com.whaleal.icefrog.collections.Maps.keyOrNull;
 
 
 /**
@@ -73,7 +72,8 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected K standardLowerKey( @ParametricNullness K key ) {
-        return keyOrNull(lowerEntry(key));
+        Entry< K, V > kvEntry = lowerEntry(key);
+        return kvEntry ==null?null :kvEntry.getKey();
     }
 
     @Override
@@ -105,7 +105,8 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected K standardFloorKey( @ParametricNullness K key ) {
-        return keyOrNull(floorEntry(key));
+        Entry< K, V > entry = floorEntry(key);
+        return entry ==null? null:entry.getKey();
     }
 
     @Override
@@ -137,7 +138,9 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected K standardCeilingKey( @ParametricNullness K key ) {
-        return keyOrNull(ceilingEntry(key));
+        Entry< K, V > kvEntry = ceilingEntry(key);
+        return kvEntry ==null?null :kvEntry.getKey();
+
     }
 
     @Override
@@ -169,7 +172,9 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected K standardHigherKey( @ParametricNullness K key ) {
-        return keyOrNull(higherEntry(key));
+        Entry< K, V > kvEntry = higherEntry(key);
+
+        return  kvEntry ==null ? null :kvEntry.getKey();
     }
 
     @Override
@@ -185,7 +190,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected Entry<K, V> standardFirstEntry() {
-        return Iterables.getFirst(entrySet(), null);
+        return IterUtil.getFirst(entrySet(), null);
     }
 
     /**
@@ -215,7 +220,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected Entry<K, V> standardLastEntry() {
-        return Iterables.getFirst(descendingMap().entrySet(), null);
+        return IterUtil.getFirst(descendingMap().entrySet(), null);
     }
 
     /**
@@ -244,7 +249,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected Entry<K, V> standardPollFirstEntry() {
-        return Iterators.pollNext(entrySet().iterator());
+        return IterUtil.pollNext(entrySet().iterator());
     }
 
     @Override
@@ -260,7 +265,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected Entry<K, V> standardPollLastEntry() {
-        return Iterators.pollNext(descendingMap().entrySet().iterator());
+        return IterUtil.pollNext(descendingMap().entrySet().iterator());
     }
 
     @Override
@@ -348,7 +353,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      * override the {@code entryIterator()} method of this class.
      */
 
-    protected class StandardDescendingMap extends Maps.DescendingMap<K, V> {
+    protected class StandardDescendingMap extends MapUtil.DescendingMap<K, V> {
         /**
          * Constructor for use by subclasses.
          */
@@ -410,7 +415,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      * thereof.
      */
 
-    protected class StandardNavigableKeySet extends Maps.NavigableKeySet<K, V> {
+    protected class StandardNavigableKeySet extends AbstractMapBasedMultimap.NavigableKeySet<K, V> {
         /**
          * Constructor for use by subclasses.
          */

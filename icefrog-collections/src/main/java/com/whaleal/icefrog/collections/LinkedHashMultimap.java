@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
-
+import com.whaleal.icefrog.core.map.MapUtil;
 
 /**
  * Implementation of {@code Multimap} that does not allow duplicate key-value entries and that
@@ -41,7 +41,7 @@ import static java.util.Objects.requireNonNull;
  *
  * <p>This class is not threadsafe when any concurrent operations update the multimap. Concurrent
  * read operations will work correctly. To allow concurrent update operations, wrap your multimap
- * with a call to {@link Multimaps#synchronizedSetMultimap}.
+ * with a call to {@link MultimapUtil#synchronizedSetMultimap}.
  *
  * <p><b>Warning:</b> Do not modify either a key <i>or a value</i> of a {@code LinkedHashMultimap}
  * in a way that affects its {@link Object#equals} behavior. Undefined behavior and bugs will
@@ -93,7 +93,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
     public static <K extends Object, V extends Object>
     LinkedHashMultimap<K, V> create( int expectedKeys, int expectedValuesPerKey ) {
         return new LinkedHashMultimap<>(
-                Maps.capacity(expectedKeys), Maps.capacity(expectedValuesPerKey));
+                MapUtil.capacity(expectedKeys), MapUtil.capacity(expectedValuesPerKey));
     }
 
     /**
@@ -254,7 +254,7 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
 
     @Override
     Iterator<V> valueIterator() {
-        return Maps.valueIterator(entryIterator());
+        return MapUtil.valueIterator(entryIterator());
     }
 
     @Override

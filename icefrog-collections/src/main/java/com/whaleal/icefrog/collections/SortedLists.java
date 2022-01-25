@@ -1,6 +1,9 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
+import com.whaleal.icefrog.core.collection.TransCollection;
+import com.whaleal.icefrog.core.collection.TransRandomAccessList;
+import com.whaleal.icefrog.core.collection.TransSequentialList;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -62,7 +65,7 @@ final class SortedLists {
      * Binary searches the list for the specified key, using the specified key function.
      *
      * <p>Equivalent to {@link #binarySearch(List, Object, Comparator, KeyPresentBehavior,
-     * KeyAbsentBehavior)} using {@link Lists#transform(List, Function) Lists.transform(list,
+     * KeyAbsentBehavior)} using {@link ListUtil#trans(List, Function) Lists.transform(list,
      * keyFunction)}.
      */
     public static <E extends Object, K extends Object> int binarySearch(
@@ -72,8 +75,10 @@ final class SortedLists {
             Comparator<? super K> keyComparator,
             KeyPresentBehavior presentBehavior,
             KeyAbsentBehavior absentBehavior ) {
-        return binarySearch(
-                Lists.transform(list, keyFunction), key, keyComparator, presentBehavior, absentBehavior);
+
+
+        return binarySearch(ListUtil.trans(list,keyFunction)
+                , key, keyComparator, presentBehavior, absentBehavior);
     }
 
     /**

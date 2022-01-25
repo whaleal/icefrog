@@ -7,7 +7,7 @@ import java.util.*;
 
 /**
  * Basic implementation of the {@link SortedSetMultimap} interface. It's a wrapper around {@link
- * AbstractMapBasedMultimap} that converts the returned collections into sorted sets. The {@link
+ * AbstractMapBasedMultimap} that converts the returned collections into sorted SetUtil. The {@link
  * #createCollection} method must return a {@code SortedSet}.
  */
 

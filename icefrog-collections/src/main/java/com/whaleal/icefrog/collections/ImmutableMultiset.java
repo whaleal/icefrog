@@ -170,7 +170,7 @@ public abstract class ImmutableMultiset<E> extends ImmutableMultisetGwtSerializa
      */
     public static <E> ImmutableMultiset<E> copyOf( Iterator<? extends E> elements ) {
         Multiset<E> multiset = LinkedHashMultiset.create();
-        Iterators.addAll(multiset, elements);
+        IterUtil.addAll(multiset, elements);
         return copyFromEntries(multiset.entrySet());
     }
 

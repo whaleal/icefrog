@@ -21,7 +21,7 @@ final class TableCollectors {
     }
 
     static <T extends Object, R, C, V>
-    Collector<T, ?, ImmutableTable<R, C, V>> toImmutableTable(
+    Collector<T, ?, ImmutableTable<R, C, V> > toImmutableTable(
             Function<? super T, ? extends R> rowFunction,
             Function<? super T, ? extends C> columnFunction,
             Function<? super T, ? extends V> valueFunction ) {
@@ -71,7 +71,7 @@ final class TableCollectors {
             R extends Object,
             C extends Object,
             V extends Object,
-            I extends Table<R, C, V>>
+            I extends Table<R, C, V> >
     Collector<T, ?, I> toTable(
             Function<? super T, ? extends R> rowFunction,
             Function<? super T, ? extends C> columnFunction,
@@ -92,7 +92,7 @@ final class TableCollectors {
             R extends Object,
             C extends Object,
             V extends Object,
-            I extends Table<R, C, V>>
+            I extends Table<R, C, V> >
     Collector<T, ?, I> toTable(
             Function<? super T, ? extends R> rowFunction,
             Function<? super T, ? extends C> columnFunction,

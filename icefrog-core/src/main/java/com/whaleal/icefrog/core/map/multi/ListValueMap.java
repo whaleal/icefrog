@@ -1,6 +1,11 @@
 package com.whaleal.icefrog.core.map.multi;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
+
 import java.util.*;
+
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * 值作为集合List的Map实现，通过调用putValue可以在相同key时加入多个值，多个值用集合表示
@@ -66,5 +71,53 @@ public class ListValueMap<K, V> extends AbsCollValueMap<K, V, List<V>> {
     @Override
     protected List<V> createCollection() {
         return new ArrayList<>(DEFAULT_COLLECTION_INITIAL_CAPACITY);
+    }
+
+    @Override
+    public boolean containsEntry( Object key, Object value ) {
+        Collection< V > collection = this.get(key);
+        return collection != null && collection.contains(value);
+    }
+
+    @Override
+    public boolean putAll( K key, Iterable< V > values ) {
+        checkNotNull(values);
+        Collection<? extends V> valueCollection = (Collection<? extends V>) values;
+        if(valueCollection ==null){
+            try{
+                this.put(key,CollUtil.newArrayList(values));
+                return true ;
+            }catch (Exception e){
+                return false ;
+            }
+        }
+
+        // make sure we only call values.iterator() once
+        // and we only call get(key) if values is nonempty
+        if (values instanceof Collection) {
+
+            return !valueCollection.isEmpty() && get(key).addAll(valueCollection);
+        } else {
+            Iterator<? extends V> valueItr = values.iterator();
+            return valueItr.hasNext() && IterUtil.addAll(get(key), valueItr);
+        }
+    }
+
+    @Override
+    public List< V > replaceValues( K key, Iterable< V > values ) {
+        Iterator<? extends V> iterator = values.iterator();
+        if (!iterator.hasNext()) {
+            return this.remove(key);
+        }
+        List< V > coll = this.get(key);
+        if(null != coll){
+            coll.clear();
+            IterUtil.addAll(coll,values);
+            return coll ;
+        }else {
+            List< V > list = CollUtil.newArrayList(values);
+            this.put(key,list);
+            return list ;
+        }
     }
 }

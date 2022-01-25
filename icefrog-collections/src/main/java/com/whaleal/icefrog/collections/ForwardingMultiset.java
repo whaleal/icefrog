@@ -105,7 +105,7 @@ public abstract class ForwardingMultiset<E extends Object> extends ForwardingCol
      */
     @Override
     protected void standardClear() {
-        Iterators.clear(entrySet().iterator());
+        IterUtil.clear(entrySet().iterator());
     }
 
     /**

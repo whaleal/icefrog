@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 
 import javax.annotation.CheckForNull;
@@ -341,7 +340,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
                     map.entrySet().iterator();
             @CheckForNull
             K currentKey = null;
-            Iterator<V> valueItr = Iterators.emptyIterator();
+            Iterator<V> valueItr = IterUtil.emptyIterator();
 
             @Override
             public boolean hasNext() {
@@ -359,7 +358,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
                  * requireNonNull is safe: The first call to this method always enters the !hasNext() case
                  * and populates currentKey, after which it's never cleared.
                  */
-                return Maps.immutableEntry(requireNonNull(currentKey), valueItr.next());
+                return new ImmutableEntry<K,V>(requireNonNull(currentKey), valueItr.next());
             }
         };
     }
@@ -419,7 +418,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
     UnmodifiableIterator<V> valueIterator() {
         return new UnmodifiableIterator<V>() {
             final Iterator<? extends ImmutableCollection<V>> valueCollectionItr = map.values().iterator();
-            Iterator<V> valueItr = Iterators.emptyIterator();
+            Iterator<V> valueItr = IterUtil.emptyIterator();
 
             @Override
             public boolean hasNext() {
@@ -516,7 +515,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
 
         public Builder<K, V> putAll( K key, Iterable<? extends V> values ) {
             if (key == null) {
-                throw new NullPointerException("null key in entry: null=" + IterUtil.toString(values));
+                throw new NullPointerException("null key in entry: null=" + com.whaleal.icefrog.core.collection.IterUtil.toString(values));
             }
             Collection<V> valueCollection = builderMap.get(key);
             if (valueCollection != null) {

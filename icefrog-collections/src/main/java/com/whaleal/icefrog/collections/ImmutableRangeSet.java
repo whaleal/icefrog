@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
-import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 
@@ -317,7 +316,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
      * returns an {@code ImmutableRangeSet}.
      */
     public ImmutableRangeSet<C> union( RangeSet<C> other ) {
-        return unionOf(Iterables.concat(asRanges(), other.asRanges()));
+        return unionOf(IterUtil.concat(asRanges(), other.asRanges()));
     }
 
     /**
@@ -496,7 +495,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
     }
 
     /**
-     * A builder for immutable range sets.
+     * A builder for immutable range SetUtil.
      */
     public static class Builder<C extends Comparable<?>> {
         private final List<Range<C>> ranges;
@@ -559,7 +558,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
             ImmutableList.Builder<Range<C>> mergedRangesBuilder =
                     new ImmutableList.Builder<>(ranges.size());
             Collections.sort(ranges, Range.rangeLexOrdering());
-            PeekingIterator<Range<C>> peekingItr = Iterators.peekingIterator(ranges.iterator());
+            PeekingIterator<Range<C>> peekingItr = IterUtil.peekingIterator(ranges.iterator());
             while (peekingItr.hasNext()) {
                 Range<C> range = peekingItr.next();
                 while (peekingItr.hasNext()) {
@@ -581,7 +580,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
             if (mergedRanges.isEmpty()) {
                 return of();
             } else if (mergedRanges.size() == 1
-                    && IterUtil.getOnlyElement(mergedRanges).equals(Range.all())) {
+                    && com.whaleal.icefrog.core.collection.IterUtil.getOnlyElement(mergedRanges).equals(Range.all())) {
                 return all();
             } else {
                 return new ImmutableRangeSet<C>(mergedRanges);
@@ -618,7 +617,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
 
         ComplementRanges() {
             this.positiveBoundedBelow = ranges.get(0).hasLowerBound();
-            this.positiveBoundedAbove = Iterables.getLast(ranges).hasUpperBound();
+            this.positiveBoundedAbove = IterUtil.getLast(ranges).hasUpperBound();
 
             int size = ranges.size() - 1;
             if (positiveBoundedBelow) {
@@ -693,7 +692,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
         public Iterator<C> iterator() {
             return new AbstractIterator<C>() {
                 final Iterator<Range<C>> rangeItr = ranges.iterator();
-                Iterator<C> elemItr = Iterators.emptyIterator();
+                Iterator<C> elemItr = IterUtil.emptyIterator();
 
                 @Override
                 @CheckForNull
@@ -715,7 +714,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
         public Iterator<C> descendingIterator() {
             return new AbstractIterator<C>() {
                 final Iterator<Range<C>> rangeItr = ranges.reverse().iterator();
-                Iterator<C> elemItr = Iterators.emptyIterator();
+                Iterator<C> elemItr = IterUtil.emptyIterator();
 
                 @Override
                 @CheckForNull

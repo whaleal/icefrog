@@ -3,6 +3,9 @@ package com.whaleal.icefrog.collections;
 import javax.annotation.CheckForNull;
 import java.util.*;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
+import com.whaleal.icefrog.core.map.MapUtil;
+
 
 /**
  * Skeletal implementation of {@link NavigableMap}.
@@ -10,7 +13,7 @@ import java.util.*;
 
 
 abstract class AbstractNavigableMap<K extends Object, V extends Object>
-        extends Maps.IteratorBasedAbstractMap<K, V> implements NavigableMap<K, V> {
+        implements NavigableMap<K, V> {
 
     @Override
     @CheckForNull
@@ -19,25 +22,25 @@ abstract class AbstractNavigableMap<K extends Object, V extends Object>
     @Override
     @CheckForNull
     public Entry<K, V> firstEntry() {
-        return Iterators.getNext(entryIterator(), null);
+        return IterUtil.getNext(this.entrySet().iterator(), null);
     }
 
     @Override
     @CheckForNull
     public Entry<K, V> lastEntry() {
-        return Iterators.getNext(descendingEntryIterator(), null);
+        return IterUtil.getNext(this.entrySet().iterator(), null);
     }
 
     @Override
     @CheckForNull
     public Entry<K, V> pollFirstEntry() {
-        return Iterators.pollNext(entryIterator());
+        return IterUtil.getFirst(this.entrySet().iterator());
     }
 
     @Override
     @CheckForNull
     public Entry<K, V> pollLastEntry() {
-        return Iterators.pollNext(descendingEntryIterator());
+        return IterUtil.getFirst(this.entrySet().iterator());
     }
 
     @Override
@@ -89,25 +92,25 @@ abstract class AbstractNavigableMap<K extends Object, V extends Object>
     @Override
     @CheckForNull
     public K lowerKey( @ParametricNullness K key ) {
-        return Maps.keyOrNull(lowerEntry(key));
+        return MapUtil.keyOrNull(lowerEntry(key));
     }
 
     @Override
     @CheckForNull
     public K floorKey( @ParametricNullness K key ) {
-        return Maps.keyOrNull(floorEntry(key));
+        return MapUtil.keyOrNull(floorEntry(key));
     }
 
     @Override
     @CheckForNull
     public K ceilingKey( @ParametricNullness K key ) {
-        return Maps.keyOrNull(ceilingEntry(key));
+        return MapUtil.keyOrNull(ceilingEntry(key));
     }
 
     @Override
     @CheckForNull
     public K higherKey( @ParametricNullness K key ) {
-        return Maps.keyOrNull(higherEntry(key));
+        return MapUtil.keyOrNull(higherEntry(key));
     }
 
     abstract Iterator<Entry<K, V>> descendingEntryIterator();
@@ -129,7 +132,7 @@ abstract class AbstractNavigableMap<K extends Object, V extends Object>
 
     @Override
     public NavigableSet<K> navigableKeySet() {
-        return new Maps.NavigableKeySet<>(this);
+        return new NavigableKeySet<>(this);
     }
 
     @Override
@@ -144,10 +147,10 @@ abstract class AbstractNavigableMap<K extends Object, V extends Object>
 
     @Override
     public NavigableMap<K, V> descendingMap() {
-        return new DescendingMap();
+        return new IDescendingMap();
     }
 
-    private final class DescendingMap extends Maps.DescendingMap<K, V> {
+    private final class IDescendingMap extends DescendingMap<K, V> {
         @Override
         NavigableMap<K, V> forward() {
             return AbstractNavigableMap.this;
@@ -158,4 +161,5 @@ abstract class AbstractNavigableMap<K extends Object, V extends Object>
             return descendingEntryIterator();
         }
     }
+
 }

@@ -193,6 +193,53 @@ public class MapUtil {
     }
 
     /**
+     * 创建键枚举Map
+     *
+     * @param <K>  key的类型
+     * @param <V>  value的类型
+     * @param type  class  值
+     *
+     * @return {@link EnumMap}
+     * @throws IllegalArgumentException  参数不合法异常
+     * @since 1.2.0
+     */
+    public static <K extends Enum<K>, V extends Object> EnumMap<K, V> newEnumMap(
+            Class<K> type ) {
+        return new EnumMap<>(checkNotNull(type));
+    }
+
+
+    /**
+     * 创建键枚举Map
+     *
+     * @param <K>  key的类型
+     * @param <V>  value的类型
+     * @param map  map 值
+     *
+     * @return {@link EnumMap}
+     * @throws IllegalArgumentException 参数不合法异常
+     * @since 1.2.0
+     */
+    public static <K extends Enum<K>, V extends Object> EnumMap<K, V> newEnumMap(
+            Map<K, ? extends V> map ) {
+        return new EnumMap<>(map);
+    }
+
+    /**
+     * 创建键不重复Map
+     *
+     * @param <K>  key的类型
+     * @param <V>  value的类型
+     *
+     * @return {@link IdentityHashMap}
+     * @since 1.2.0
+     */
+    public static <K extends Object, V extends Object>
+    IdentityHashMap<K, V> newIdentityMap() {
+        return new IdentityHashMap<>();
+    }
+
+    /**
      * 创建键不重复Map
      *
      * @param <K>  key的类型
@@ -1573,6 +1620,23 @@ public class MapUtil {
                 return entry.getValue();
             }
         };
+    }
+
+
+    /**
+     * An implementation of {@link Map#toString}.
+     */
+    public static String toString( Map<?, ?> map ) {
+        StringBuilder sb = StrUtil.builder(map.size()).append('{');
+        boolean first = true;
+        for (Entry<?, ?> entry : map.entrySet()) {
+            if (!first) {
+                sb.append(", ");
+            }
+            first = false;
+            sb.append(entry.getKey()).append('=').append(entry.getValue());
+        }
+        return sb.append('}').toString();
     }
 
 

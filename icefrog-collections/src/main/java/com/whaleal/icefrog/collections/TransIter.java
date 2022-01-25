@@ -12,11 +12,11 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
  */
 
 
-abstract class TransformedIterator<F extends Object, T extends Object>
+abstract class TransIter<F extends Object, T extends Object>
         implements Iterator<T> {
     final Iterator<? extends F> backingIterator;
 
-    TransformedIterator( Iterator<? extends F> backingIterator ) {
+    TransIter( Iterator<? extends F> backingIterator ) {
         this.backingIterator = checkNotNull(backingIterator);
     }
 

@@ -499,21 +499,21 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     @Override
     @CheckForNull
     public E lower( E e ) {
-        return Iterators.getNext(headSet(e, false).descendingIterator(), null);
+        return IterUtil.getNext(headSet(e, false).descendingIterator(), null);
     }
 
 
     @Override
     @CheckForNull
     public E floor( E e ) {
-        return Iterators.getNext(headSet(e, true).descendingIterator(), null);
+        return IterUtil.getNext(headSet(e, true).descendingIterator(), null);
     }
 
 
     @Override
     @CheckForNull
     public E ceiling( E e ) {
-        return Iterables.getFirst(tailSet(e, true), null);
+        return IterUtil.getFirst(tailSet(e, true), null);
     }
 
 
@@ -521,7 +521,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     @Override
     @CheckForNull
     public E higher( E e ) {
-        return Iterables.getFirst(tailSet(e, false), null);
+        return IterUtil.getFirst(tailSet(e, false), null);
     }
 
     @Override

@@ -12,6 +12,8 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndex;
 import static com.whaleal.icefrog.core.map.MapUtil.keyPredicateOnEntries;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.map.MapUtil;
 
 
 /**
@@ -20,7 +22,7 @@ import static java.util.Collections.emptySet;
 
 
 class FilteredKeyMultimap<K extends Object, V extends Object>
-        extends AbstractMultimap<K, V> implements FilteredMultimap<K, V> {
+        extends AbsCollValueMap<K, V> implements FilteredMultimap<K, V> {
     final Multimap<K, V> unfiltered;
     final Predicate<? super K> keyPredicate;
 
@@ -36,7 +38,7 @@ class FilteredKeyMultimap<K extends Object, V extends Object>
 
     @Override
     public Predicate<? super Entry<K, V>> entryPredicate() {
-        return keyPredicateOnEntries(keyPredicate);
+        return keyPredicateOnEntries( keyPredicate);
     }
 
     @Override
@@ -109,8 +111,7 @@ class FilteredKeyMultimap<K extends Object, V extends Object>
 
     @Override
     Map<K, Collection<V>> createAsMap() {
-
-        return Maps.filterKeys(unfiltered.asMap(), keyPredicate);
+        return MapUtil.filter(unfiltered.asMap(), (Predicate< Entry<K, Collection<V>>>) keyPredicate);
     }
 
     @Override
@@ -188,7 +189,7 @@ class FilteredKeyMultimap<K extends Object, V extends Object>
     class Entries extends ForwardingCollection<Entry<K, V>> {
         @Override
         protected Collection<Entry<K, V>> delegate() {
-            return Collections2.filter(unfiltered.entries(), entryPredicate());
+            return CollUtil.filter(unfiltered.entries(),(Predicate<Entry<K,V>>) entryPredicate());
         }
 
         @Override

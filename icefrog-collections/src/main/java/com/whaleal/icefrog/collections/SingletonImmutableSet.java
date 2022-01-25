@@ -36,7 +36,7 @@ final class SingletonImmutableSet<E> extends ImmutableSet<E> {
 
     @Override
     public UnmodifiableIterator<E> iterator() {
-        return Iterators.singletonIterator(element);
+        return IterUtil.singletonIterator(element);
     }
 
     @Override

@@ -104,7 +104,7 @@ public final class TreeMultiset<E extends Object> extends AbstractSortedMultiset
      */
     public static <E extends Comparable> TreeMultiset<E> create( Iterable<? extends E> elements ) {
         TreeMultiset<E> multiset = create();
-        IterUtil.addAll(multiset, elements);
+        com.whaleal.icefrog.core.collection.IterUtil.addAll(multiset, elements);
         return multiset;
     }
 
@@ -320,7 +320,7 @@ public final class TreeMultiset<E extends Object> extends AbstractSortedMultiset
             rootReference.clear();
         } else {
             // TODO(cpovirk): Perhaps we can optimize in this case, too?
-            Iterators.clear(entryIterator());
+            IterUtil.clear(entryIterator());
         }
     }
 
@@ -553,7 +553,7 @@ public final class TreeMultiset<E extends Object> extends AbstractSortedMultiset
     /*
      * TODO(jlevy): Decide whether entrySet() should return entries with an equals() method that
      * calls the comparator to compare the two keys. If that change is made,
-     * AbstractMultiset.equals() can simply check whether two multisets have equal entry sets.
+     * AbstractMultiset.equals() can simply check whether two multisets have equal entry SetUtil.
      */
 
     /**

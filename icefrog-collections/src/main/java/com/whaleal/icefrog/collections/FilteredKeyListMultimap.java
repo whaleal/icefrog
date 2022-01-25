@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * Implementation of {@link Multimaps#filterKeys(ListMultimap, Predicate)}.
+ * Implementation of {@link MultimapUtil#filterKeys(ListMultimap, Predicate)}.
  */
 
 
@@ -34,7 +34,7 @@ final class FilteredKeyListMultimap<K extends Object, V extends Object>
     }
 
     @Override
-    public List<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values ) {
+    public List<V> replaceValues( @ParametricNullness K key, Iterable< V > values ) {
         return (List<V>) super.replaceValues(key, values);
     }
 }

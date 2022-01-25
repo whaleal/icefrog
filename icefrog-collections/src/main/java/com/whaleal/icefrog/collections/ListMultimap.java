@@ -1,5 +1,7 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.map.multi.Multimap;
+
 import javax.annotation.CheckForNull;
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +32,7 @@ public interface ListMultimap<K extends Object, V extends Object>
      * this method returns a {@link List}, instead of the {@link Collection} specified in
      * the {@link Multimap} interface.
      */
-    @Override
+
     List<V> get( @ParametricNullness K key );
 
     /**
@@ -41,7 +43,7 @@ public interface ListMultimap<K extends Object, V extends Object>
      * the {@link Multimap} interface.
      */
 
-    @Override
+
     List<V> removeAll( @CheckForNull Object key );
 
     /**
@@ -53,16 +55,16 @@ public interface ListMultimap<K extends Object, V extends Object>
      */
 
     @Override
-    List<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values );
+    List<V> replaceValues( K key, Iterable< V > values );
 
     /**
      * {@inheritDoc}
      *
      * <p><b>Note:</b> The returned map's values are guaranteed to be of type {@link List}. To obtain
      * this map with the more specific generic type {@code Map<K, List<V>>}, call {@link
-     * Multimaps#asMap(ListMultimap)} instead.
+     * MultimapUtil#asMap(ListMultimap)} instead.
      */
-    @Override
+
     Map<K, Collection<V>> asMap();
 
     /**

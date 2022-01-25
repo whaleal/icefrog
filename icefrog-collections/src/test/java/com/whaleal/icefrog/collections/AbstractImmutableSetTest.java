@@ -142,26 +142,26 @@ public abstract class AbstractImmutableSetTest extends TestCase {
   }
 
   public void testCopyOf_iterator_empty() {
-    Iterator<String> iterator = Iterators.emptyIterator();
+    Iterator<String> iterator = IterUtil.emptyIterator();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.<String>emptySet(), set);
     assertSame(of(), set);
   }
 
   public void testCopyOf_iterator_oneElement() {
-    Iterator<String> iterator = Iterators.singletonIterator("a");
+    Iterator<String> iterator = IterUtil.singletonIterator("a");
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.singleton("a"), set);
   }
 
   public void testCopyOf_iterator_oneElementRepeated() {
-    Iterator<String> iterator = Iterators.forArray("a", "a", "a");
+    Iterator<String> iterator = IterUtil.forArray("a", "a", "a");
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.singleton("a"), set);
   }
 
   public void testCopyOf_iterator_general() {
-    Iterator<String> iterator = Iterators.forArray("a", "b", "a");
+    Iterator<String> iterator = IterUtil.forArray("a", "b", "a");
     Set<String> set = copyOf(iterator);
     assertEquals(2, set.size());
     assertTrue(set.contains("a"));
@@ -169,7 +169,7 @@ public abstract class AbstractImmutableSetTest extends TestCase {
   }
 
   public void testCopyOf_iteratorContainingNull() {
-    Iterator<String> c = Iterators.forArray("a", null, "b");
+    Iterator<String> c = IterUtil.forArray("a", null, "b");
     try {
       copyOf(c);
       fail();
@@ -183,7 +183,7 @@ public abstract class AbstractImmutableSetTest extends TestCase {
     @Override
     public Iterator<String> iterator() {
       count++;
-      return Iterators.forArray("a", "b", "a");
+      return IterUtil.forArray("a", "b", "a");
     }
   }
 

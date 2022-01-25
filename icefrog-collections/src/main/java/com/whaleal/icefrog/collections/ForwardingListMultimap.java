@@ -42,7 +42,7 @@ public abstract class ForwardingListMultimap<K extends Object, V extends Object>
 
 
     @Override
-    public List<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values ) {
+    public List<V> replaceValues( @ParametricNullness K key, Iterable< V > values ) {
         return delegate().replaceValues(key, values);
     }
 }

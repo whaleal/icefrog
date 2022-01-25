@@ -1,14 +1,15 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.core.collection.IterUtil;
-
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+
+import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 /**
  * Implementation of {@link ImmutableSet} backed by a non-empty {@link EnumSet}.
@@ -38,7 +39,7 @@ final class ImmutableEnumSet<E extends Enum<E>> extends ImmutableSet<E> {
             case 0:
                 return ImmutableSet.of();
             case 1:
-                return ImmutableSet.of(IterUtil.getOnlyElement(set));
+                return ImmutableSet.of(com.whaleal.icefrog.core.collection.IterUtil.getOnlyElement(set));
             default:
                 return new ImmutableEnumSet(set);
         }
@@ -51,7 +52,26 @@ final class ImmutableEnumSet<E extends Enum<E>> extends ImmutableSet<E> {
 
     @Override
     public UnmodifiableIterator<E> iterator() {
-        return Iterators.unmodifiableIterator(delegate.iterator());
+
+        Iterator< E > iterator = delegate.iterator();
+        checkNotNull(iterator);
+        if (iterator instanceof UnmodifiableIterator) {
+            @SuppressWarnings("unchecked") // Since it's unmodifiable, the covariant cast is safe
+            UnmodifiableIterator<E> result = (UnmodifiableIterator<E>) iterator;
+            return result;
+        }
+        return new UnmodifiableIterator<E>() {
+            @Override
+            public boolean hasNext() {
+                return iterator.hasNext();
+            }
+
+            @Override
+
+            public E next() {
+                return iterator.next();
+            }
+        };
     }
 
     @Override

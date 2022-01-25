@@ -2,7 +2,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.PredicateUtil;
 
@@ -30,7 +29,7 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
 
     @Override
     public Iterator<V> iterator() {
-        return Maps.valueIterator(multimap.entries().iterator());
+        return  multimap.values().iterator();
     }
 
     @Override
@@ -63,7 +62,7 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
                 multimap.unfiltered().entries(),
                 // explicit <Entry<K, V>> is required to build with JDK6
                 PredicateUtil.and(
-                        multimap.entryPredicate(), MapUtil.valuePredicateOnEntries(PredicateUtil.in(c))));
+                        multimap.entryPredicate(), com.whaleal.icefrog.core.map.MapUtil.valuePredicateOnEntries(PredicateUtil.in(c))));
     }
 
     @Override
@@ -73,7 +72,7 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
                 // explicit <Entry<K, V>> is required to build with JDK6
                 PredicateUtil.and(
                         multimap.entryPredicate(),
-                        MapUtil.valuePredicateOnEntries(PredicateUtil.not(PredicateUtil.in(c)))));
+                        com.whaleal.icefrog.core.map.MapUtil.valuePredicateOnEntries(PredicateUtil.not(PredicateUtil.in(c)))));
     }
 
     @Override

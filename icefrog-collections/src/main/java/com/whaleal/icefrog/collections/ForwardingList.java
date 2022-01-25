@@ -1,5 +1,8 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.AbstractListWrapper;
+import com.whaleal.icefrog.core.util.ObjectUtil;
+
 import javax.annotation.CheckForNull;
 import java.util.Collection;
 import java.util.Iterator;
@@ -125,7 +128,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * wish to override {@link #addAll(int, Collection)} to forward to this implementation.
      */
     protected boolean standardAddAll( int index, Iterable<? extends E> elements ) {
-        return Lists.addAllImpl(this, index, elements);
+        return ListUtil.addAllImpl(this, index, elements);
     }
 
     /**
@@ -134,7 +137,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * this implementation.
      */
     protected int standardIndexOf( @CheckForNull Object element ) {
-        return Lists.indexOfImpl(this, element);
+        return ListUtil.indexOfImpl(this, element);
     }
 
     /**
@@ -143,7 +146,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * {@link #lastIndexOf} to forward to this implementation.
      */
     protected int standardLastIndexOf( @CheckForNull Object element ) {
-        return Lists.lastIndexOfImpl(this, element);
+        return ListUtil.lastIndexOfImpl(this, element);
     }
 
     /**
@@ -172,7 +175,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      */
 
     protected ListIterator<E> standardListIterator( int start ) {
-        return Lists.listIteratorImpl(this, start);
+        return new AbstractListWrapper<>(this).listIterator(start);
     }
 
     /**
@@ -181,7 +184,8 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      */
 
     protected List<E> standardSubList( int fromIndex, int toIndex ) {
-        return Lists.subListImpl(this, fromIndex, toIndex);
+        return com.whaleal.icefrog.core.collection.ListUtil.sub(this,fromIndex,toIndex)
+
     }
 
     /**
@@ -191,7 +195,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      */
 
     protected boolean standardEquals( @CheckForNull Object object ) {
-        return Lists.equalsImpl(this, object);
+        return ListUtil.equalsImpl(this, object);
     }
 
     /**
@@ -201,6 +205,6 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      */
 
     protected int standardHashCode() {
-        return Lists.hashCodeImpl(this);
+        return ObjectUtil.hashCode(this);
     }
 }

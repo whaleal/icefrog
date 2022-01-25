@@ -3,7 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.collections.Table.Cell;
 import junit.framework.TestCase;
 import org.junit.Test;
 

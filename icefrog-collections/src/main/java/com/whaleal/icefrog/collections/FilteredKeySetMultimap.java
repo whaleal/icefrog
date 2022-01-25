@@ -9,7 +9,7 @@ import java.util.Set;
 
 
 /**
- * Implementation of {@link Multimaps#filterKeys(SetMultimap, Predicate)}.
+ * Implementation of {@link MultimapUtil#filterKeys(SetMultimap, Predicate)}.
  */
 
 

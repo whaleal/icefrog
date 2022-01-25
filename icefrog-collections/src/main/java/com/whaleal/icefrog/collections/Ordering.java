@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
 
@@ -227,7 +228,9 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
      */
     // TODO(kevinb): provide replacement
     public static <T> Ordering<T> explicit( T leastValue, T... remainingValuesInOrder ) {
-        return explicit(Lists.asList(leastValue, remainingValuesInOrder));
+        List< T > of = ListUtil.<T>of(leastValue);
+        CollUtil.addAll(of,remainingValuesInOrder);
+        return explicit(of);
     }
 
     /**
@@ -670,7 +673,7 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
             return Collections.emptyList();
         } else if (k >= Integer.MAX_VALUE / 2) {
             // k is really large; just do a straightforward sorted-copy-and-sublist
-            ArrayList<E> list = (ArrayList<E>) ListUtil.list(false, iterator);
+            ArrayList<E> list = (ArrayList<E>) com.whaleal.icefrog.core.collection.ListUtil.list(false, iterator);
             Collections.sort(list, this);
             if (list.size() > k) {
                 list.subList(k, list.size()).clear();
@@ -742,9 +745,10 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
     // TODO(kevinb): rerun benchmarks including new options
     public <E extends T> List<E> sortedCopy( Iterable<E> elements ) {
         @SuppressWarnings("unchecked") // does not escape, and contains only E's
-        E[] array = (E[]) Iterables.toArray(elements);
+        E[] array = (E[])CollUtil.newArrayList(elements).toArray();
+
         Arrays.sort(array, this);
-        return ListUtil.list(false, Arrays.asList(array));
+        return com.whaleal.icefrog.core.collection.ListUtil.list(false, Arrays.asList(array));
     }
 
     /**

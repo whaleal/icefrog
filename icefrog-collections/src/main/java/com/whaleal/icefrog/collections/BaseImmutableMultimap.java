@@ -7,5 +7,5 @@ package com.whaleal.icefrog.collections;
  */
 
 
-abstract class BaseImmutableMultimap<K, V> extends AbstractMultimap<K, V> {
+abstract class BaseImmutableMultimap<K, V> extends AbsCollValueMap<K, V> {
 }

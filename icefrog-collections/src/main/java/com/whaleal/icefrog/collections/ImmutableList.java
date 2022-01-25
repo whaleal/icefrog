@@ -415,14 +415,14 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
 
     @Override
     public int indexOf( @CheckForNull Object object ) {
-        return (object == null) ? -1 : Lists.indexOfImpl(this, object);
+        return (object == null) ? -1 : ListUtil.indexOfImpl(this, object);
     }
 
     // constrain the return type to ImmutableList<E>
 
     @Override
     public int lastIndexOf( @CheckForNull Object object ) {
-        return (object == null) ? -1 : Lists.lastIndexOfImpl(this, object);
+        return (object == null) ? -1 : ListUtil.lastIndexOfImpl(this, object);
     }
 
     @Override
@@ -578,7 +578,7 @@ public abstract class ImmutableList<E> extends ImmutableCollection<E>
 
     @Override
     public boolean equals( @CheckForNull Object obj ) {
-        return Lists.equalsImpl(this, obj);
+        return ListUtil.equalsImpl(this, obj);
     }
 
     @Override

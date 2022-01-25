@@ -56,7 +56,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      */
     @CheckForNull
     protected E standardLower( @ParametricNullness E e ) {
-        return Iterators.getNext(headSet(e, false).descendingIterator(), null);
+        return IterUtil.getNext(headSet(e, false).descendingIterator(), null);
     }
 
     @Override
@@ -72,7 +72,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      */
     @CheckForNull
     protected E standardFloor( @ParametricNullness E e ) {
-        return Iterators.getNext(headSet(e, true).descendingIterator(), null);
+        return IterUtil.getNext(headSet(e, true).descendingIterator(), null);
     }
 
     @Override
@@ -88,7 +88,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      */
     @CheckForNull
     protected E standardCeiling( @ParametricNullness E e ) {
-        return Iterators.getNext(tailSet(e, true).iterator(), null);
+        return IterUtil.getNext(tailSet(e, true).iterator(), null);
     }
 
     @Override
@@ -104,7 +104,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      */
     @CheckForNull
     protected E standardHigher( @ParametricNullness E e ) {
-        return Iterators.getNext(tailSet(e, false).iterator(), null);
+        return IterUtil.getNext(tailSet(e, false).iterator(), null);
     }
 
     @Override
@@ -120,7 +120,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      */
     @CheckForNull
     protected E standardPollFirst() {
-        return Iterators.pollNext(iterator());
+        return IterUtil.pollNext(iterator());
     }
 
     @Override
@@ -136,7 +136,7 @@ public abstract class ForwardingNavigableSet<E extends Object>
      */
     @CheckForNull
     protected E standardPollLast() {
-        return Iterators.pollNext(descendingIterator());
+        return IterUtil.pollNext(descendingIterator());
     }
 
     @ParametricNullness

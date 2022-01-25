@@ -124,13 +124,13 @@ public class ImmutableMultisetTest extends TestCase {
   }
 
   public void testCopyOf_iterator_empty() {
-    Iterator<String> iterator = Iterators.emptyIterator();
+    Iterator<String> iterator = IterUtil.emptyIterator();
     Multiset<String> multiset = ImmutableMultiset.copyOf(iterator);
     assertTrue(multiset.isEmpty());
   }
 
   public void testCopyOf_iterator_oneElement() {
-    Iterator<String> iterator = Iterators.singletonIterator("a");
+    Iterator<String> iterator = IterUtil.singletonIterator("a");
     Multiset<String> multiset = ImmutableMultiset.copyOf(iterator);
     assertEquals(HashMultiset.create(asList("a")), multiset);
   }

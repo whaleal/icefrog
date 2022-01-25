@@ -1,30 +1,32 @@
 package com.whaleal.icefrog.collections;
 
 
-import javax.annotation.CheckForNull;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.CheckForNull;
 
 
 /**
  * Basic implementation of the {@link ListMultimap} interface. It's a wrapper around {@link
  * AbstractMapBasedMultimap} that converts the returned collections into {@code Lists}. The {@link
  * #createCollection} method must return a {@code List}.
+ *
+ * @author Jared Levy
+ * @since 2.0
  */
 
-
-abstract class AbstractListMultimap<K extends Object, V extends Object>
+@ElementTypesAreNonnullByDefault
+abstract class AbstractListMultimap<K extends  Object, V extends  Object>
         extends AbstractMapBasedMultimap<K, V> implements ListMultimap<K, V> {
-    private static final long serialVersionUID = 6588350623831699109L;
-
     /**
      * Creates a new multimap that uses the provided map.
      *
      * @param map place to store the mapping from each key to its corresponding values
      */
-    protected AbstractListMultimap( Map<K, Collection<V>> map ) {
+    protected AbstractListMultimap(Map<K, Collection<V>> map) {
         super(map);
     }
 
@@ -37,17 +39,17 @@ abstract class AbstractListMultimap<K extends Object, V extends Object>
     }
 
     @Override
-    <E extends Object> Collection<E> unmodifiableCollectionSubclass(
-            Collection<E> collection ) {
+    <E extends  Object> Collection<E> unmodifiableCollectionSubclass(
+            Collection<E> collection) {
         return Collections.unmodifiableList((List<E>) collection);
     }
 
-    // Following Javadoc copied from ListMultimap.
-
     @Override
-    Collection<V> wrapCollection( @ParametricNullness K key, Collection<V> collection ) {
+    Collection<V> wrapCollection(@ParametricNullness K key, Collection<V> collection) {
         return wrapList(key, (List<V>) collection, null);
     }
+
+    // Following Javadoc copied from ListMultimap.
 
     /**
      * {@inheritDoc}
@@ -57,7 +59,7 @@ abstract class AbstractListMultimap<K extends Object, V extends Object>
      * Multimap} interface.
      */
     @Override
-    public List<V> get( @ParametricNullness K key ) {
+    public List<V> get(@ParametricNullness K key) {
         return (List<V>) super.get(key);
     }
 
@@ -70,7 +72,7 @@ abstract class AbstractListMultimap<K extends Object, V extends Object>
      */
 
     @Override
-    public List<V> removeAll( @CheckForNull Object key ) {
+    public List<V> removeAll(@CheckForNull Object key) {
         return (List<V>) super.removeAll(key);
     }
 
@@ -83,20 +85,20 @@ abstract class AbstractListMultimap<K extends Object, V extends Object>
      */
 
     @Override
-    public List<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values ) {
+    public List<V> replaceValues(@ParametricNullness K key, Iterable<? extends V> values) {
         return (List<V>) super.replaceValues(key, values);
     }
 
     /**
      * Stores a key-value pair in the multimap.
      *
-     * @param key   key to store in the multimap
+     * @param key key to store in the multimap
      * @param value value to store in the multimap
      * @return {@code true} always
      */
 
     @Override
-    public boolean put( @ParametricNullness K key, @ParametricNullness V value ) {
+    public boolean put(@ParametricNullness K key, @ParametricNullness V value) {
         return super.put(key, value);
     }
 
@@ -115,10 +117,12 @@ abstract class AbstractListMultimap<K extends Object, V extends Object>
      * Compares the specified object to this multimap for equality.
      *
      * <p>Two {@code ListMultimap} instances are equal if, for each key, they contain the same values
-     * in the same order. If the value orderings disagree, the Multimaps will not be considered equal.
+     * in the same order. If the value orderings disagree, the multimaps will not be considered equal.
      */
     @Override
-    public boolean equals( @CheckForNull Object object ) {
+    public boolean equals(@CheckForNull Object object) {
         return super.equals(object);
     }
+
+    private static final long serialVersionUID = 6588350623831699109L;
 }

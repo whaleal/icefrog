@@ -77,13 +77,13 @@ final class EmptyContiguousSet<C extends Comparable> extends ContiguousSet<C> {
 
     @Override
     public UnmodifiableIterator<C> iterator() {
-        return Iterators.emptyIterator();
+        return IterUtil.emptyIterator();
     }
 
     // NavigableSet
     @Override
     public Iterator<C> descendingIterator() {
-        return Iterators.emptyIterator();
+        return IterUtil.emptyIterator();
     }
 
     @Override

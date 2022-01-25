@@ -1,6 +1,6 @@
 package com.whaleal.icefrog.collections;
 
-import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.collection.CollUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.IOException;
@@ -876,7 +876,7 @@ final class Synchronized {
         }
 
         @Override
-        public List<V> replaceValues( K key, Iterable<? extends V> values ) {
+        public List<V> replaceValues( K key, Iterable< V > values ) {
             synchronized (mutex) {
                 return delegate().replaceValues(key, values); // copy not synchronized
             }
@@ -990,7 +990,7 @@ final class Synchronized {
         @Override
         public Iterator<Map.Entry<K, Collection<V>>> iterator() {
             // Must be manually synchronized.
-            return new TransformedIterator<Map.Entry<K, Collection<V>>, Map.Entry<K, Collection<V>>>(
+            return new TransIter<Map.Entry<K, Collection<V>>, Map.Entry<K, Collection<V>>>(
                     super.iterator()) {
                 @Override
                 Map.Entry<K, Collection<V>> transform( final Map.Entry<K, Collection<V>> entry ) {
@@ -1034,14 +1034,14 @@ final class Synchronized {
         @Override
         public boolean contains( @CheckForNull Object o ) {
             synchronized (mutex) {
-                return Maps.containsEntryImpl(delegate(), o);
+                return MapUtil.containsEntryImpl(delegate(), o);
             }
         }
 
         @Override
         public boolean containsAll( Collection<?> c ) {
             synchronized (mutex) {
-                return Collections2.containsAllImpl(delegate(), c);
+                return CollUtil.containsAll(delegate(), c);
             }
         }
 
@@ -1058,21 +1058,21 @@ final class Synchronized {
         @Override
         public boolean remove( @CheckForNull Object o ) {
             synchronized (mutex) {
-                return Maps.removeEntryImpl(delegate(), o);
+                return MapUtil.removeEntryImpl(delegate(), o);
             }
         }
 
         @Override
         public boolean removeAll( Collection<?> c ) {
             synchronized (mutex) {
-                return Iterators.removeAll(delegate().iterator(), c);
+                return IterUtil.removeAll(delegate().iterator(), c);
             }
         }
 
         @Override
         public boolean retainAll( Collection<?> c ) {
             synchronized (mutex) {
-                return Iterators.retainAll(delegate().iterator(), c);
+                return IterUtil.retainAll(delegate().iterator(), c);
             }
         }
     }
@@ -1412,7 +1412,7 @@ final class Synchronized {
         @Override
         public Iterator<Collection<V>> iterator() {
             // Must be manually synchronized.
-            return new TransformedIterator<Collection<V>, Collection<V>>(super.iterator()) {
+            return new TransIter<Collection<V>, Collection<V>>(super.iterator()) {
                 @Override
                 Collection<V> transform( Collection<V> from ) {
                     return typePreservingCollection(from, mutex);
@@ -2111,7 +2111,7 @@ final class Synchronized {
         public Map<R, Map<C, V>> rowMap() {
             synchronized (mutex) {
                 return map(
-                        MapUtil.transformValues(
+                        com.whaleal.icefrog.core.map.MapUtil.transformValues(
                                 delegate().rowMap(),
                                 new Function<Map<C, V>, Map<C, V>>() {
                                     @Override
@@ -2127,7 +2127,7 @@ final class Synchronized {
         public Map<C, Map<R, V>> columnMap() {
             synchronized (mutex) {
                 return map(
-                        MapUtil.transformValues(
+                        com.whaleal.icefrog.core.map.MapUtil.transformValues(
                                 delegate().columnMap(),
                                 new Function<Map<R, V>, Map<R, V>>() {
                                     @Override

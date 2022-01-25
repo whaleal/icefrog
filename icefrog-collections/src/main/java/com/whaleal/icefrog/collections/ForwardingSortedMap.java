@@ -124,7 +124,7 @@ public abstract class ForwardingSortedMap<K extends Object, V extends Object>
      * ForwardingSortedMap#keySet} to forward to this implementation or a subclass thereof.
      */
 
-    protected class StandardKeySet extends Maps.SortedKeySet<K, V> {
+    protected class StandardKeySet extends MapUtil.SortedKeySet<K, V> {
         /**
          * Constructor for use by subclasses.
          */

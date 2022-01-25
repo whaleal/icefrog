@@ -2,7 +2,6 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
-import com.whaleal.icefrog.core.collection.IterUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -158,8 +157,8 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
 
         //(Map<C, V> input) -> input.keySet().iterator()
         Iterator<C> merged =
-                Iterators.mergeSorted(
-                        IterUtil.trans(
+                IterUtil.mergeSorted(
+                        com.whaleal.icefrog.core.collection.IterUtil.trans(
                                 backingMap.values(), new Function<Map<C, V>, Iterator<C>>() {
                                     @Override
                                     public Iterator<C> apply( Map<C, V> cvMap ) {
@@ -229,7 +228,7 @@ public class TreeBasedTable<R, C, V> extends StandardRowSortedTable<R, C, V> {
 
         @Override
         public SortedSet<C> keySet() {
-            return new Maps.SortedKeySet<>(this);
+            return new MapUtil.SortedKeySet<>(this);
         }
 
         @Override

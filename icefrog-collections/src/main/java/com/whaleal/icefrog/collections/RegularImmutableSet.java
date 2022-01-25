@@ -56,7 +56,7 @@ final class RegularImmutableSet<E> extends ImmutableSet.CachingAsList<E> {
 
     @Override
     public UnmodifiableIterator<E> iterator() {
-        return (UnmodifiableIterator<E>) Iterators.forArray(elements);
+        return (UnmodifiableIterator<E>) IterUtil.forArray(elements);
     }
 
     @Override

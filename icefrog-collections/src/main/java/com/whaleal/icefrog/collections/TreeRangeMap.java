@@ -3,7 +3,6 @@ package com.whaleal.icefrog.collections;
 import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.map.MapUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -107,7 +106,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
     private final NavigableMap<Cut<K>, RangeMapEntry<K, V>> entriesByLowerBound;
 
     private TreeRangeMap() {
-        this.entriesByLowerBound = Maps.newTreeMap();
+        this.entriesByLowerBound = MapUtil.newTreeMap();
     }
 
     public static <K extends Comparable, V> TreeRangeMap<K, V> create() {
@@ -415,7 +414,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
         }
     }
 
-    private final class AsMapOfRanges extends Maps.IteratorBasedAbstractMap<Range<K>, V> {
+    private final class AsMapOfRanges extends MapUtil.IteratorBasedAbstractMap<Range<K>, V> {
 
         final Iterable<Entry<Range<K>, V>> entryIterable;
 
@@ -587,7 +586,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
                 @Override
                 Iterator<Entry<Range<K>, V>> entryIterator() {
                     if (subRange.isEmpty()) {
-                        return Iterators.emptyIterator();
+                        return IterUtil.emptyIterator();
                     }
                     final Iterator<RangeMapEntry<K, V>> backingItr =
                             entriesByLowerBound
@@ -708,7 +707,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
 
             @Override
             public Set<Range<K>> keySet() {
-                return new Maps.KeySet<Range<K>, V>(SubRangeMapAsMap.this) {
+                return new CKeySet<Range<K>, V>(SubRangeMapAsMap.this) {
                     @Override
                     public boolean remove( @CheckForNull Object o ) {
                         return SubRangeMapAsMap.this.remove(o) != null;
@@ -716,14 +715,14 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
 
                     @Override
                     public boolean retainAll( Collection<?> c ) {
-                        return removeEntryIf(compose(not(in(c)), MapUtil.keyFunction()));
+                        return removeEntryIf(compose(not(in(c)), com.whaleal.icefrog.core.map.MapUtil.keyFunction()));
                     }
                 };
             }
 
             @Override
             public Set<Entry<Range<K>, V>> entrySet() {
-                return new Maps.EntrySet<Range<K>, V>() {
+                return new MapUtil.EntrySet<Range<K>, V>() {
                     @Override
                     Map<Range<K>, V> map() {
                         return SubRangeMapAsMap.this;
@@ -741,7 +740,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
 
                     @Override
                     public int size() {
-                        return Iterators.size(iterator());
+                        return IterUtil.size(iterator());
                     }
 
                     @Override
@@ -753,7 +752,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
 
             Iterator<Entry<Range<K>, V>> entryIterator() {
                 if (subRange.isEmpty()) {
-                    return Iterators.emptyIterator();
+                    return IterUtil.emptyIterator();
                 }
                 Cut<K> cutToStart =
                         firstNonNull(
@@ -781,15 +780,15 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
 
             @Override
             public Collection<V> values() {
-                return new Maps.Values<Range<K>, V>(this) {
+                return new MapUtil.Values<Range<K>, V>(this) {
                     @Override
                     public boolean removeAll( Collection<?> c ) {
-                        return removeEntryIf(compose(in(c), MapUtil.valueFunction()));
+                        return removeEntryIf(compose(in(c), com.whaleal.icefrog.core.map.MapUtil.valueFunction()));
                     }
 
                     @Override
                     public boolean retainAll( Collection<?> c ) {
-                        return removeEntryIf(compose(not(in(c)), MapUtil.valueFunction()));
+                        return removeEntryIf(compose(not(in(c)), com.whaleal.icefrog.core.map.MapUtil.valueFunction()));
                     }
                 };
             }

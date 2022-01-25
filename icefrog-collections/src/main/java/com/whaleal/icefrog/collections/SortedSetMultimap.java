@@ -77,7 +77,7 @@ public interface SortedSetMultimap<K extends Object, V extends Object>
      *
      * <p><b>Note:</b> The returned map's values are guaranteed to be of type {@link SortedSet}. To
      * obtain this map with the more specific generic type {@code Map<K, SortedSet<V>>}, call {@link
-     * Multimaps#asMap(SortedSetMultimap)} instead. <b>However</b>, the returned map <i>itself</i> is
+     * MultimapUtil#asMap(SortedSetMultimap)} instead. <b>However</b>, the returned map <i>itself</i> is
      * not necessarily a {@link SortedMap}: A {@code SortedSetMultimap} must expose the <i>values</i>
      * for a given key in sorted order, but it need not expose the <i>keys</i> in sorted order.
      * Individual {@code SortedSetMultimap} implementations, like those built with {@link

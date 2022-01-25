@@ -63,6 +63,6 @@ public abstract class AbstractRangeSetTest extends TestCase {
     }
 
     // test that asDescendingSetOfRanges is the reverse of asRanges
-    assertEquals(Lists.reverse(asRanges), ImmutableList.copyOf(rangeSet.asDescendingSetOfRanges()));
+    assertEquals(ListUtil.reverse(asRanges), ImmutableList.copyOf(rangeSet.asDescendingSetOfRanges()));
   }
 }

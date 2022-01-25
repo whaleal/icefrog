@@ -2,7 +2,6 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.*;
 import com.whaleal.icefrog.core.lang.Predicate;
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.PredicateUtil;
 
@@ -20,7 +19,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 /**
  * Static utility methods pertaining to {@link Set} instances. Also see this class's counterparts
- * {@link Lists}, {@link MapUtil} and {@link QueueUtil}.
+ * {@link ListUtil}, {@link com.whaleal.icefrog.core.map.MapUtil} and {@link QueueUtil}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/CollectionUtilitiesExplained#sets"> {@code Sets}</a>.
@@ -73,7 +72,7 @@ public final class SetUtil {
             Iterator<E> itr = elements.iterator();
             if (itr.hasNext()) {
                 EnumSet<E> enumSet = EnumSet.of(itr.next());
-                Iterators.addAll(enumSet, itr);
+                IterUtil.addAll(enumSet, itr);
                 return ImmutableEnumSet.asImmutable(enumSet);
             } else {
                 return ImmutableSet.of();
@@ -98,7 +97,7 @@ public final class SetUtil {
     public static <E extends Enum<E>> EnumSet<E> newEnumSet(
             Iterable<E> iterable, Class<E> elementType ) {
         EnumSet<E> set = EnumSet.noneOf(elementType);
-        IterUtil.addAll(set, iterable);
+        com.whaleal.icefrog.core.collection.IterUtil.addAll(set, iterable);
         return set;
     }
 
@@ -142,7 +141,7 @@ public final class SetUtil {
     /**
      * Creates a <i>mutable</i> {@code HashSet} instance containing the given elements. A very thin
      * convenience for creating an empty set then calling {@link Collection#addAll} or {@link
-     * IterUtil#addAll}.
+     * com.whaleal.icefrog.core.collection.IterUtil#addAll}.
      *
      * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
      * ImmutableSet#copyOf(Iterable)} instead. (Or, change {@code elements} to be a {@link
@@ -165,7 +164,7 @@ public final class SetUtil {
 
     /**
      * Creates a <i>mutable</i> {@code HashSet} instance containing the given elements. A very thin
-     * convenience for creating an empty set and then calling {@link Iterators#addAll}.
+     * convenience for creating an empty set and then calling {@link IterUtil#addAll}.
      *
      * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
      * ImmutableSet#copyOf(Iterator)} instead.
@@ -177,7 +176,7 @@ public final class SetUtil {
      */
     public static <E extends Object> HashSet<E> newHashSet( Iterator<? extends E> elements ) {
         HashSet<E> set = newHashSet();
-        Iterators.addAll(set, elements);
+        IterUtil.addAll(set, elements);
         return set;
     }
 
@@ -195,7 +194,7 @@ public final class SetUtil {
      */
     public static <E extends Object> HashSet<E> newHashSetWithExpectedSize(
             int expectedSize ) {
-        return new HashSet<E>(Maps.capacity(expectedSize));
+        return new HashSet<E>(MapUtil.capacity(expectedSize));
     }
 
     /**
@@ -225,7 +224,7 @@ public final class SetUtil {
      */
     public static <E> Set<E> newConcurrentHashSet( Iterable<? extends E> elements ) {
         Set<E> set = newConcurrentHashSet();
-        IterUtil.addAll(set, elements);
+        com.whaleal.icefrog.core.collection.IterUtil.addAll(set, elements);
         return set;
     }
 
@@ -267,7 +266,7 @@ public final class SetUtil {
             return new LinkedHashSet<E>((Collection<? extends E>) elements);
         }
         LinkedHashSet<E> set = newLinkedHashSet();
-        IterUtil.addAll(set, elements);
+        com.whaleal.icefrog.core.collection.IterUtil.addAll(set, elements);
         return set;
     }
 
@@ -284,7 +283,7 @@ public final class SetUtil {
      */
     public static <E extends Object> LinkedHashSet<E> newLinkedHashSetWithExpectedSize(
             int expectedSize ) {
-        return new LinkedHashSet<E>(Maps.capacity(expectedSize));
+        return new LinkedHashSet<E>(MapUtil.capacity(expectedSize));
     }
 
     /**
@@ -321,14 +320,14 @@ public final class SetUtil {
      * <a href="http://goo.gl/iz2Wi">"diamond" syntax</a>.
      *
      * <p>This method is just a small convenience for creating an empty set and then calling {@link
-     * IterUtil#addAll}. This method is not very useful and will likely be deprecated in the future.
+     * com.whaleal.icefrog.core.collection.IterUtil#addAll}. This method is not very useful and will likely be deprecated in the future.
      *
      * @param elements the elements that the set should contain
      * @return a new {@code TreeSet} containing those elements (minus duplicates)
      */
     public static <E extends Comparable> TreeSet<E> newTreeSet( Iterable<? extends E> elements ) {
         TreeSet<E> set = newTreeSet();
-        IterUtil.addAll(set, elements);
+        com.whaleal.icefrog.core.collection.IterUtil.addAll(set, elements);
         return set;
     }
 
@@ -361,7 +360,7 @@ public final class SetUtil {
      * way {@code IdentityHashMap} handles key lookups.
      */
     public static <E extends Object> Set<E> newIdentityHashSet() {
-        return Collections.newSetFromMap(Maps.newIdentityHashMap());
+        return Collections.newSetFromMap(MapUtil.newIdentityHashMap());
     }
 
     /**
@@ -391,7 +390,7 @@ public final class SetUtil {
         Collection<? extends E> elementsCollection =
                 (elements instanceof Collection)
                         ? (Collection<? extends E>) elements
-                        : ListUtil.list(false, elements);
+                        : com.whaleal.icefrog.core.collection.ListUtil.list(false, elements);
         return new CopyOnWriteArraySet<E>(elementsCollection);
     }
 
@@ -461,7 +460,7 @@ public final class SetUtil {
      * in the following code fragment:
      *
      * <pre>{@code
-     * Set<Object> identityHashSet = Sets.newSetFromMap(
+     * Set<Object> identityHashSet = SetUtil.newSetFromMap(
      *     new IdentityHashMap<Object, Boolean>());
      * }</pre>
      *
@@ -479,7 +478,7 @@ public final class SetUtil {
     }
 
     /**
-     * Returns an unmodifiable <b>view</b> of the union of two sets. The returned set contains all
+     * Returns an unmodifiable <b>view</b> of the union of two SetUtil. The returned set contains all
      * elements that are contained in either backing set. Iterating over the returned set iterates
      * first over all the elements of {@code set1}, then over each element of {@code set2}, in order,
      * that is not contained in {@code set1}.
@@ -564,8 +563,8 @@ public final class SetUtil {
     }
 
     /**
-     * Returns an unmodifiable <b>view</b> of the intersection of two sets. The returned set contains
-     * all elements that are contained by both backing sets. The iteration order of the returned set
+     * Returns an unmodifiable <b>view</b> of the intersection of two SetUtil. The returned set contains
+     * all elements that are contained by both backing SetUtil. The iteration order of the returned set
      * matches that of {@code set1}.
      *
      * <p>Results are undefined if {@code set1} and {@code set2} are sets based on different
@@ -573,7 +572,7 @@ public final class SetUtil {
      * {@link TreeSet} or the {@link Map#keySet} of an {@code IdentityHashMap}.
      *
      * <p><b>Note:</b> The returned view performs slightly better when {@code set1} is the smaller of
-     * the two sets. If you have reason to believe one of your sets will generally be smaller than the
+     * the two SetUtil. If you have reason to believe one of your sets will generally be smaller than the
      * other, pass it first. Unfortunately, since this method sets the generic type of the returned
      * set based on the type of the first set passed, this could in rare cases force you to make a
      * cast, for example:
@@ -584,7 +583,7 @@ public final class SetUtil {
      *
      * // impossible for a non-String to be in the intersection
      * SuppressWarnings("unchecked")
-     * Set<String> badStrings = (Set) Sets.intersection(
+     * Set<String> badStrings = (Set) SetUtil.intersection(
      *     aFewBadObjects, manyBadStrings);
      * }</pre>
      *
@@ -654,7 +653,7 @@ public final class SetUtil {
     }
 
     /**
-     * Returns an unmodifiable <b>view</b> of the difference of two sets. The returned set contains
+     * Returns an unmodifiable <b>view</b> of the difference of two SetUtil. The returned set contains
      * all elements that are contained by {@code set1} and not contained by {@code set2}. {@code set2}
      * may also contain elements not present in {@code set1}; these are simply ignored. The iteration
      * order of the returned set matches that of {@code set1}.
@@ -722,7 +721,7 @@ public final class SetUtil {
     }
 
     /**
-     * Returns an unmodifiable <b>view</b> of the symmetric difference of two sets. The returned set
+     * Returns an unmodifiable <b>view</b> of the symmetric difference of two SetUtil. The returned set
      * contains all elements that are contained in either {@code set1} or {@code set2} but not in
      * both. The iteration order of the returned set is undefined.
      *
@@ -959,7 +958,7 @@ public final class SetUtil {
      */
 
     public static <E> Set<Set<E>> combinations( Set<E> set, final int size ) {
-        final ImmutableMap<E, Integer> index = Maps.indexMap(set);
+        final ImmutableMap<E, Integer> index = MapUtil.indexMap(set);
         checkNonnegative(size, "size");
         checkArgument(size <= index.size(), "size (%s) must be <= set.size() (%s)", size, index.size());
         if (size == 0) {
@@ -1093,7 +1092,7 @@ public final class SetUtil {
 
     /**
      * Returns an unmodifiable view of the specified navigable set. This method allows modules to
-     * provide users with "read-only" access to internal navigable sets. Query operations on the
+     * provide users with "read-only" access to internal navigable SetUtil. Query operations on the
      * returned set "read through" to the specified set, and attempts to modify the returned set,
      * whether direct or via its collection views, result in an {@code UnsupportedOperationException}.
      *
@@ -1185,7 +1184,7 @@ public final class SetUtil {
          * http://code.google.com/p/guava-libraries/issues/detail?id=1013
          */
         if (collection instanceof Set && collection.size() > set.size()) {
-            return Iterators.removeAll(set.iterator(), collection);
+            return IterUtil.removeAll(set.iterator(), collection);
         } else {
             return removeAllImpl(set, collection.iterator());
         }
@@ -1389,7 +1388,7 @@ public final class SetUtil {
         public abstract AbstractIterator<E> iterator();
     }
 
-    private static class FilteredSet<E extends Object> extends Collections2.FilteredCollection<E>
+    private static class FilteredSet<E extends Object> extends CollUtil.FilteredCollection<E>
             implements Set<E> {
         FilteredSet( Set<E> unfiltered, Predicate<? super E> predicate ) {
             super(unfiltered, predicate);
@@ -1438,7 +1437,7 @@ public final class SetUtil {
         @Override
         @ParametricNullness
         public E first() {
-            return Iterators.find(unfiltered.iterator(), predicate);
+            return IterUtil.find(unfiltered.iterator(), predicate);
         }
 
         @Override
@@ -1469,37 +1468,37 @@ public final class SetUtil {
         @Override
         @CheckForNull
         public E lower( @ParametricNullness E e ) {
-            return Iterators.find(unfiltered().headSet(e, false).descendingIterator(), predicate, null);
+            return IterUtil.find(unfiltered().headSet(e, false).descendingIterator(), predicate, null);
         }
 
         @Override
         @CheckForNull
         public E floor( @ParametricNullness E e ) {
-            return Iterators.find(unfiltered().headSet(e, true).descendingIterator(), predicate, null);
+            return IterUtil.find(unfiltered().headSet(e, true).descendingIterator(), predicate, null);
         }
 
         @Override
         @CheckForNull
         public E ceiling( @ParametricNullness E e ) {
-            return IterUtil.find(unfiltered().tailSet(e, true), predicate, null);
+            return com.whaleal.icefrog.core.collection.IterUtil.find(unfiltered().tailSet(e, true), predicate, null);
         }
 
         @Override
         @CheckForNull
         public E higher( @ParametricNullness E e ) {
-            return IterUtil.find(unfiltered().tailSet(e, false), predicate, null);
+            return com.whaleal.icefrog.core.collection.IterUtil.find(unfiltered().tailSet(e, false), predicate, null);
         }
 
         @Override
         @CheckForNull
         public E pollFirst() {
-            return IterUtil.removeFirstMatching(unfiltered(), predicate);
+            return com.whaleal.icefrog.core.collection.IterUtil.removeFirstMatching(unfiltered(), predicate);
         }
 
         @Override
         @CheckForNull
         public E pollLast() {
-            return IterUtil.removeFirstMatching(unfiltered().descendingSet(), predicate);
+            return com.whaleal.icefrog.core.collection.IterUtil.removeFirstMatching(unfiltered().descendingSet(), predicate);
         }
 
         @Override
@@ -1509,13 +1508,13 @@ public final class SetUtil {
 
         @Override
         public Iterator<E> descendingIterator() {
-            return Iterators.filter(unfiltered().descendingIterator(), predicate);
+            return IterUtil.filter(unfiltered().descendingIterator(), predicate);
         }
 
         @Override
         @ParametricNullness
         public E last() {
-            return Iterators.find(unfiltered().descendingIterator(), predicate);
+            return IterUtil.find(unfiltered().descendingIterator(), predicate);
         }
 
         @Override
@@ -1589,7 +1588,7 @@ public final class SetUtil {
         PowerSet( Set<E> input ) {
             checkArgument(
                     input.size() <= 30, "Too many elements to create power set: %s > 30", input.size());
-            this.inputSet = Maps.indexMap(input);
+            this.inputSet = MapUtil.indexMap(input);
         }
 
         @Override
@@ -1734,7 +1733,7 @@ public final class SetUtil {
 
         @Override
         public Iterator<E> descendingIterator() {
-            return Iterators.unmodifiableIterator(delegate.descendingIterator());
+            return IterUtil.unmodifiableIterator(delegate.descendingIterator());
         }
 
         @Override

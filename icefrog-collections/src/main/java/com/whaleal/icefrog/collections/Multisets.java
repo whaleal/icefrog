@@ -138,7 +138,7 @@ public final class Multisets {
      * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
      * {@link Predicate#apply}. Do not provide a predicate such as {@code
      * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-     * Iterables#filter(Iterable, Class)} for related functionality.)
+     * )} for related functionality.)
      */
 
     public static <E extends Object> Multiset<E> filter(
@@ -438,7 +438,7 @@ public final class Multisets {
 
             @Override
             int distinctElements() {
-                return Iterators.size(entryIterator());
+                return IterUtil.size(entryIterator());
             }
         };
     }
@@ -627,7 +627,7 @@ public final class Multisets {
         } else if (elements.isEmpty()) {
             return false;
         } else {
-            return Iterators.addAll(self, elements.iterator());
+            return IterUtil.addAll(self, elements.iterator());
         }
     }
 
@@ -705,7 +705,7 @@ public final class Multisets {
 
     static <E extends Object> Iterator<E> elementIterator(
             Iterator<Entry<E>> entryIterator ) {
-        return new TransformedIterator<Entry<E>, E>(entryIterator) {
+        return new TransIter<Entry<E>, E>(entryIterator) {
             @Override
             @ParametricNullness
             E transform( Entry<E> entry ) {
@@ -804,7 +804,7 @@ public final class Multisets {
 
         @Override
         public Iterator<E> iterator() {
-            return Iterators.<E>unmodifiableIterator(delegate.iterator());
+            return IterUtil.<E>unmodifiableIterator(delegate.iterator());
         }
 
         @Override
@@ -899,7 +899,7 @@ public final class Multisets {
 
         @Override
         public Iterator<E> iterator() {
-            return Iterators.filter(unfiltered.iterator(), predicate);
+            return IterUtil.filter(unfiltered.iterator(), predicate);
         }
 
         @Override

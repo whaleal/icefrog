@@ -17,7 +17,7 @@ import static com.whaleal.icefrog.collections.NullnessCasts.unsafeNull;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.lang.Precondition.checkRemove;
 import static java.util.Objects.requireNonNull;
-
+import com.whaleal.icefrog.core.map.MapUtil;
 
 /**
  * CompactHashMap is an implementation of a Map. All optional operations (put and remove) are
@@ -909,7 +909,7 @@ class CompactHashMap<K extends Object, V extends Object>
         }
     }
 
-    class KeySetView extends Maps.KeySet<K, V> {
+    class KeySetView extends CKeySet<K, V> {
         KeySetView() {
             super(CompactHashMap.this);
         }
@@ -980,7 +980,7 @@ class CompactHashMap<K extends Object, V extends Object>
         }
     }
 
-    class EntrySetView extends Maps.EntrySet<K, V> {
+    class EntrySetView extends MapUtil.EntrySet<K, V> {
         @Override
         Map<K, V> map() {
             return CompactHashMap.this;
@@ -1114,7 +1114,7 @@ class CompactHashMap<K extends Object, V extends Object>
         }
     }
 
-    class ValuesView extends Maps.Values<K, V> {
+    class ValuesView extends MapUtil.Values<K, V> {
         ValuesView() {
             super(CompactHashMap.this);
         }

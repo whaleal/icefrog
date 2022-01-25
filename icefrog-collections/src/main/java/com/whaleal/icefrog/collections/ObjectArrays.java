@@ -202,7 +202,7 @@ public final class ObjectArrays {
         return array;
     }
 
-    // We do this instead of Preconditions.checkNotNull to save boxing and array
+    // We do this instead of Precondition.checkNotNull to save boxing and array
     // creation cost.
 
     static Object checkElementNotNull( Object element, int index ) {

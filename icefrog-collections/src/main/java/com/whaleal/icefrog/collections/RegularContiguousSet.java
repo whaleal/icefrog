@@ -5,6 +5,7 @@ import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.Collection;
 
+import com.whaleal.icefrog.core.collection.CollUtil;
 import static com.whaleal.icefrog.collections.BoundType.CLOSED;
 import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
@@ -148,7 +149,7 @@ final class RegularContiguousSet<C extends Comparable> extends ContiguousSet<C> 
 
     @Override
     public boolean containsAll( Collection<?> targets ) {
-        return Collections2.containsAllImpl(this, targets);
+        return CollUtil.containsAll(this, targets);
     }
 
     @Override

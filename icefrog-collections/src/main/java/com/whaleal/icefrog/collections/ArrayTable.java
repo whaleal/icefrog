@@ -11,6 +11,7 @@ import java.util.*;
 
 import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Collections.emptyMap;
+import com.whaleal.icefrog.core.map.MapUtil;
 
 
 /**
@@ -574,7 +575,7 @@ public final class ArrayTable<R, C, V> extends AbstractTable<R, C, V>
     }
 
     private abstract static class ArrayMap<K, V extends Object>
-            extends Maps.IteratorBasedAbstractMap<K, V> {
+            extends MapUtil.IteratorBasedAbstractMap<K, V> {
         private final ImmutableMap<K, Integer> keyIndex;
 
         private ArrayMap( ImmutableMap<K, Integer> keyIndex ) {

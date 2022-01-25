@@ -99,7 +99,7 @@ public final class EvictingQueue<E> extends ForwardingQueue<E> implements Serial
         int size = collection.size();
         if (size >= maxSize) {
             clear();
-            return IterUtil.addAll(this, Iterables.skip(collection, size - maxSize));
+            return com.whaleal.icefrog.core.collection.IterUtil.addAll(this, IterUtil.skip(collection, size - maxSize));
         }
         return standardAddAll(collection);
     }

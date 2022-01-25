@@ -13,7 +13,6 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndex;
  * {@link #set}, or {@link #add}.
  */
 
-
 abstract class AbstractIndexedListIterator<E extends Object>
         extends UnmodifiableListIterator<E> {
     private final int size;

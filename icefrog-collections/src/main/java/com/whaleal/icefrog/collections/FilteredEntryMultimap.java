@@ -5,7 +5,9 @@ import com.whaleal.icefrog.core.collection.AbstractIterator;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.ArrayUtil;
+import com.whaleal.icefrog.core.collection.CollUtil;
 
+import com.whaleal.icefrog.core.map.MapUtil;
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
@@ -17,12 +19,12 @@ import static com.whaleal.icefrog.core.util.PredicateUtil.not;
 
 
 /**
- * Implementation of {@link Multimaps#filterEntries(Multimap, Predicate)}.
+ * Implementation of {@link MultimapUtil#filterEntries(Multimap, Predicate)}.
  */
 
 
 class FilteredEntryMultimap<K extends Object, V extends Object>
-        extends AbstractMultimap<K, V> implements FilteredMultimap<K, V> {
+        extends AbsCollValueMap<K, V> implements FilteredMultimap<K, V> {
     final Multimap<K, V> unfiltered;
     final Predicate<? super Entry<K, V>> predicate;
 
@@ -36,7 +38,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
         if (collection instanceof Set) {
             return SetUtil.filter((Set<E>) collection, predicate);
         } else {
-            return Collections2.filter(collection, predicate);
+            return CollUtil.filter(collection, (Predicate<E>) predicate);
         }
     }
 
@@ -56,7 +58,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
     }
 
     private boolean satisfies( @ParametricNullness K key, @ParametricNullness V value ) {
-        return predicate.apply(Maps.immutableEntry(key, value));
+        return predicate.apply(MapUtil.immutableEntry(key, value));
     }
 
     @Override
@@ -118,7 +120,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
             Entry<K, Collection<V>> entry = entryIterator.next();
             K key = entry.getKey();
             Collection<V> collection = filterCollection(entry.getValue(), new ValuePredicate(key));
-            if (!collection.isEmpty() && predicate.apply(Maps.immutableEntry(key, collection))) {
+            if (!collection.isEmpty() && predicate.apply(MapUtil.immutableEntry(key, collection))) {
                 if (collection.size() == entry.getValue().size()) {
                     entryIterator.remove();
                 } else {
@@ -132,7 +134,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
 
     @Override
     Multiset<K> createKeys() {
-        return new Keys();
+        return new CKeys();
     }
 
     final class ValuePredicate implements Predicate<V> {
@@ -149,7 +151,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
         }
     }
 
-    class AsMap extends Maps.ViewCachingAbstractMap<K, Collection<V>> {
+    class AsMap extends MapUtil.ViewCachingAbstractMap<K, Collection<V>> {
         @Override
         public boolean containsKey( @CheckForNull Object key ) {
             return get(key) != null;
@@ -203,19 +205,19 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
         @Override
         Set<K> createKeySet() {
 
-            class KeySetImpl extends Maps.KeySet<K, Collection<V>> {
+            class KeySetImpl extends CKeySet<K, Collection<V>> {
                 KeySetImpl() {
                     super(AsMap.this);
                 }
 
                 @Override
                 public boolean removeAll( Collection<?> c ) {
-                    return removeEntriesIf(Maps.keyPredicateOnEntries(in(c)));
+                    return removeEntriesIf(MapUtil.keyPredicateOnEntries(in(c)));
                 }
 
                 @Override
                 public boolean retainAll( Collection<?> c ) {
-                    return removeEntriesIf(Maps.keyPredicateOnEntries(not(in(c))));
+                    return removeEntriesIf(MapUtil.keyPredicateOnEntries(not(in(c))));
                 }
 
                 @Override
@@ -229,7 +231,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
         @Override
         Set<Entry<K, Collection<V>>> createEntrySet() {
 
-            class EntrySetImpl extends Maps.EntrySet<K, Collection<V>> {
+            class EntrySetImpl extends MapUtil.EntrySet<K, Collection<V>> {
                 @Override
                 Map<K, Collection<V>> map() {
                     return AsMap.this;
@@ -270,7 +272,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
 
                 @Override
                 public int size() {
-                    return Iterators.size(iterator());
+                    return IterUtil.size(iterator());
                 }
             }
             return new EntrySetImpl();
@@ -279,7 +281,7 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
         @Override
         Collection<Collection<V>> createValues() {
 
-            class ValuesImpl extends Maps.Values<K, Collection<V>> {
+            class ValuesImpl extends MapUtil.Values<K, Collection<V>> {
                 ValuesImpl() {
                     super(AsMap.this);
                 }
@@ -310,20 +312,20 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
 
                 @Override
                 public boolean removeAll( Collection<?> c ) {
-                    return removeEntriesIf(Maps.valuePredicateOnEntries(in(c)));
+                    return removeEntriesIf(MapUtil.valuePredicateOnEntries(in(c)));
                 }
 
                 @Override
                 public boolean retainAll( Collection<?> c ) {
-                    return removeEntriesIf(Maps.valuePredicateOnEntries(not(in(c))));
+                    return removeEntriesIf(MapUtil.valuePredicateOnEntries(not(in(c))));
                 }
             }
             return new ValuesImpl();
         }
     }
 
-    class Keys extends Multimaps.Keys<K, V> {
-        Keys() {
+    class CKeys extends com.whaleal.icefrog.collections.CKeys<K, V> {
+        CKeys() {
             super(FilteredEntryMultimap.this);
         }
 
@@ -359,12 +361,12 @@ class FilteredEntryMultimap<K extends Object, V extends Object>
 
                 @Override
                 Multiset<K> multiset() {
-                    return Keys.this;
+                    return CKeys.this;
                 }
 
                 @Override
                 public Iterator<Multiset.Entry<K>> iterator() {
-                    return Keys.this.entryIterator();
+                    return CKeys.this.entryIterator();
                 }
 
                 @Override

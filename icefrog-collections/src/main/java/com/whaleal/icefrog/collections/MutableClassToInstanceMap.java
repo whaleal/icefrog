@@ -95,7 +95,7 @@ public final class MutableClassToInstanceMap<B> extends ForwardingMap<Class<? ex
 
             @Override
             public Iterator<Entry<Class<? extends B>, B>> iterator() {
-                return new TransformedIterator<Entry<Class<? extends B>, B>, Entry<Class<? extends B>, B>>(
+                return new TransIter<Entry<Class<? extends B>, B>, Entry<Class<? extends B>, B>>(
                         delegate().iterator()) {
                     @Override
                     Entry<Class<? extends B>, B> transform( Entry<Class<? extends B>, B> from ) {

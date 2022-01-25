@@ -407,7 +407,7 @@ public final class Range<C extends Comparable> extends RangeGwtSerializationDepe
      * this range.
      */
     public boolean containsAll( Iterable<? extends C> values ) {
-        if (Iterables.isEmpty(values)) {
+        if (IterUtil.isEmpty(values)) {
             return true;
         }
 

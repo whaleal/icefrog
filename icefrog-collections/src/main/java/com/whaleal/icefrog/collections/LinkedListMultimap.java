@@ -60,7 +60,7 @@ import static java.util.Objects.requireNonNull;
  *
  * <p>This class is not threadsafe when any concurrent operations update the multimap. Concurrent
  * read operations will work correctly. To allow concurrent update operations, wrap your multimap
- * with a call to {@link Multimaps#synchronizedListMultimap}.
+ * with a call to {@link MultimapUtil#synchronizedListMultimap}.
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
@@ -69,7 +69,7 @@ import static java.util.Objects.requireNonNull;
 
 
 public class LinkedListMultimap<K extends Object, V extends Object>
-        extends AbstractMultimap<K, V> implements ListMultimap<K, V>, Serializable {
+        extends AbsCollValueMap<K, V> implements ListMultimap<K, V>, Serializable {
     /*
      * Order is maintained using a linked list containing all key-value pairs. In
      * addition, a series of disjoint linked lists of "siblings", each containing
@@ -87,7 +87,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
     private transient int size;
     /*
      * Tracks modifications to keyToKeyList so that addition or removal of keys invalidates
-     * preexisting iterators. This does *not* track simple additions and removals of values
+     * preexisting IterUtil. This does *not* track simple additions and removals of values
      * that are not the first to be added or last to be removed for their key.
      */
     private transient int modCount;
@@ -247,7 +247,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
      * Removes all nodes for the specified key.
      */
     private void removeAllNodes( @ParametricNullness K key ) {
-        Iterators.clear(new ValueForKeyIterator(key));
+        IterUtil.clear(new ValueForKeyIterator(key));
     }
 
     @Override
@@ -296,7 +296,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
      */
 
     @Override
-    public List<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values ) {
+    public List<V> replaceValues( @ParametricNullness K key, Iterable< V > values ) {
         List<V> oldValues = getCopy(key);
         ListIterator<V> keyValues = new ValueForKeyIterator(key);
         Iterator<? extends V> newValues = values.iterator();
@@ -412,7 +412,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
 
     @Override
     Multiset<K> createKeys() {
-        return new Multimaps.Keys<K, V>(this);
+        return new CKeys<K, V>(this);
     }
 
     /**
@@ -512,7 +512,7 @@ public class LinkedListMultimap<K extends Object, V extends Object>
 
     @Override
     Map<K, Collection<V>> createAsMap() {
-        return new Multimaps.AsMap<>(this);
+        return new AsMap<>(this);
     }
 
     /**

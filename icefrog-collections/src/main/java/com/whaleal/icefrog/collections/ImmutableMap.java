@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
-import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
@@ -15,6 +14,7 @@ import java.util.stream.Collectors;
 
 import static com.whaleal.icefrog.core.lang.Precondition.*;
 import static java.util.Objects.requireNonNull;
+import com.whaleal.icefrog.core.map.MapUtil;
 
 
 /**
@@ -44,6 +44,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
     private transient ImmutableSetMultimap<K, V> multimapView;
 
     ImmutableMap() {
+
     }
 
     /**
@@ -104,7 +105,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
     }
 
     public static <K, V> ImmutableMap<K, V> of( K k1, V v1 ) {
-        HashMap<Object, Object> hashMap = MapUtil.newHashMap();
+        HashMap<Object, Object> hashMap = com.whaleal.icefrog.core.map.MapUtil.newHashMap();
         hashMap.put(k1, v1);
         ImmutableMap build = new Builder().build();
         build.put(k1, v1);
@@ -713,7 +714,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
 
     @Override
     public boolean equals( @CheckForNull Object object ) {
-        return MapUtil.equalsImpl(this, object);
+        return com.whaleal.icefrog.core.map.MapUtil.equalsImpl(this, object);
     }
 
     abstract boolean isPartialView();
@@ -729,7 +730,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
 
     @Override
     public String toString() {
-        return Maps.toStringImpl(this);
+        return MapUtil.toString(this);
     }
 
     /**
@@ -918,7 +919,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
                     entries = Arrays.copyOf(entries, size);
                 }
                 Arrays.sort(
-                        entries, 0, size, Ordering.from(valueComparator).onResultOf(Maps.valueFunction()));
+                        entries, 0, size, Ordering.from(valueComparator).onResultOf(MapUtil.valueFunction()));
             }
             switch (size) {
                 case 0:

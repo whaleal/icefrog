@@ -14,7 +14,13 @@ final class ExplicitOrdering<T> extends Ordering<T> implements Serializable {
     final ImmutableMap<T, Integer> rankMap;
 
     ExplicitOrdering( List<T> valuesInOrder ) {
-        this(Maps.indexMap(valuesInOrder));
+        ImmutableMap.Builder<T, Integer> builder = new ImmutableMap.Builder<>(valuesInOrder.size());
+        int i = 0;
+        for (T e : valuesInOrder) {
+            builder.put(e, i++);
+        }
+        ImmutableMap< T, Integer > build = builder.build();
+        this.rankMap = build;
     }
 
     ExplicitOrdering( ImmutableMap<T, Integer> rankMap ) {
