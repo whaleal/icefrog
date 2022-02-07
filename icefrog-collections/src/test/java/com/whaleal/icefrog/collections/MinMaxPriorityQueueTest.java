@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.map.MapUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -150,7 +151,7 @@ public class MinMaxPriorityQueueTest extends TestCase {
      * this map would contain the same exact elements as the MinMaxHeap; the
      * value in the map is the number of occurrences of the key.
      */
-    SortedMap<Integer, AtomicInteger> replica = MapUtil.newTreeMap();
+    SortedMap<Integer, AtomicInteger> replica = null ;//MapUtil.newTreeMap();
     assertTrue("Empty heap should be OK", mmHeap.isIntact());
     for (int i = 0; i < heapSize; i++) {
       int randomInt = random.nextInt();

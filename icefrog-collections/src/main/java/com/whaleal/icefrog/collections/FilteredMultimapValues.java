@@ -30,7 +30,8 @@ final class FilteredMultimapValues<K extends Object, V extends Object>
 
     @Override
     public Iterator<V> iterator() {
-        return Maps.valueIterator(multimap.entries().iterator());
+        return multimap.values().iterator();
+
     }
 
     @Override

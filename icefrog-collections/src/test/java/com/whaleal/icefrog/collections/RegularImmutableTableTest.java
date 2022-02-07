@@ -12,7 +12,7 @@ public class RegularImmutableTableTest extends AbstractImmutableTableTest {
   @Test
   public void test(){
   }
-  private static final ImmutableSet<Cell<Character, Integer, String>> CELLS =
+  private static final ImmutableSet< Table.Cell<Character, Integer, String> > CELLS =
       ImmutableSet.of(
           Tables.immutableCell('a', 1, "foo"),
           Tables.immutableCell('b', 1, "bar"),

@@ -57,7 +57,7 @@ public class SimpleAbstractMultisetTest extends TestCase {
   }
 
   private static class NoRemoveMultiset<E> extends AbstractMultiset<E> implements Serializable {
-    final Map<E, Integer> backingMap = MapUtil.newHashMap();
+    final Map<E, Integer> backingMap = Maps.newHashMap();
 
     @Override
     public int size() {

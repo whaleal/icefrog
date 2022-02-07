@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
@@ -254,7 +255,8 @@ public final class LinkedHashMultimap<K extends Object, V extends Object>
 
     @Override
     Iterator<V> valueIterator() {
-        return Maps.valueIterator(entryIterator());
+        return new TransIter<Entry<K,V>,V>(entryIterator(),x ->x.getValue());
+
     }
 
     @Override

@@ -918,7 +918,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
                     entries = Arrays.copyOf(entries, size);
                 }
                 Arrays.sort(
-                        entries, 0, size, Ordering.from(valueComparator).onResultOf(Maps.valueFunction()));
+                        entries, 0, size, Ordering.from(valueComparator).onResultOf(MapUtil.valueFunction()));
             }
             switch (size) {
                 case 0:

@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -142,26 +144,26 @@ public abstract class AbstractImmutableSetTest extends TestCase {
   }
 
   public void testCopyOf_iterator_empty() {
-    Iterator<String> iterator = IterUtil.emptyIterator();
+    Iterator<String> iterator = IterUtil.empty();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.<String>emptySet(), set);
     assertSame(of(), set);
   }
 
   public void testCopyOf_iterator_oneElement() {
-    Iterator<String> iterator = IterUtil.singletonIterator("a");
+    Iterator<String> iterator = CollUtil.newArrayList("a").iterator();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.singleton("a"), set);
   }
 
   public void testCopyOf_iterator_oneElementRepeated() {
-    Iterator<String> iterator = IterUtil.forArray("a", "a", "a");
+    Iterator<String> iterator =CollUtil.newArrayList("a", "a", "a").iterator();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.singleton("a"), set);
   }
 
   public void testCopyOf_iterator_general() {
-    Iterator<String> iterator = IterUtil.forArray("a", "b", "a");
+    Iterator<String> iterator = CollUtil.newArrayList("a", "b", "a").iterator();
     Set<String> set = copyOf(iterator);
     assertEquals(2, set.size());
     assertTrue(set.contains("a"));
@@ -169,7 +171,7 @@ public abstract class AbstractImmutableSetTest extends TestCase {
   }
 
   public void testCopyOf_iteratorContainingNull() {
-    Iterator<String> c = IterUtil.forArray("a", null, "b");
+    Iterator<String> c = CollUtil.newArrayList("a", null, "b").iterator();
     try {
       copyOf(c);
       fail();
@@ -183,7 +185,7 @@ public abstract class AbstractImmutableSetTest extends TestCase {
     @Override
     public Iterator<String> iterator() {
       count++;
-      return IterUtil.forArray("a", "b", "a");
+      return CollUtil.newArrayList("a", "b", "a").iterator();
     }
   }
 

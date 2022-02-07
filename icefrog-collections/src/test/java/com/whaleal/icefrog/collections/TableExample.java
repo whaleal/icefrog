@@ -41,7 +41,7 @@ public class TableExample extends TestCase {
 
     System.out.println(java);
 
-    Set<Cell<String, String, String>> cells = table.cellSet();
+    Set< Table.Cell<String, String, String> > cells = table.cellSet();
 
     System.out.println(cells);
 

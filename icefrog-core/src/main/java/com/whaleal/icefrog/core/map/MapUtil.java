@@ -1605,23 +1605,6 @@ public class MapUtil {
         return (entry == null) ? null : entry.getKey();
     }
 
-    private enum EntryFunction implements Function<Entry<?, ?>, Object> {
-        KEY {
-            @Override
-            @CheckForNull
-            public Object apply( Entry<?, ?> entry ) {
-                return entry.getKey();
-            }
-        },
-        VALUE {
-            @Override
-            @CheckForNull
-            public Object apply( Entry<?, ?> entry ) {
-                return entry.getValue();
-            }
-        };
-    }
-
 
     /**
      * An implementation of {@link Map#toString}.

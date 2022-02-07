@@ -1,11 +1,14 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.*;
+
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.map.BiMap;
+import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.FunctionUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.PredicateUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -41,35 +44,7 @@ public final class Maps {
     private Maps() {
     }
 
-    @SuppressWarnings("unchecked")
-    static <K extends Object> Function<Entry<K, ?>, K> keyFunction() {
-        return (Function) EntryFunction.KEY;
-    }
 
-    @SuppressWarnings("unchecked")
-    static <V extends Object> Function<Entry<?, V>, V> valueFunction() {
-        return (Function) EntryFunction.VALUE;
-    }
-
-    static <K extends Object, V extends Object> Iterator<K> keyIterator(
-            Iterator<Entry<K, V>> entryIterator ) {
-        return new TransformedIterator<Entry<K, V>, K>(entryIterator) {
-            @Override
-            K transform( Entry<K, V> entry ) {
-                return entry.getKey();
-            }
-        };
-    }
-
-    static <K extends Object, V extends Object> Iterator<V> valueIterator(
-            Iterator<Entry<K, V>> entryIterator ) {
-        return new TransformedIterator<Entry<K, V>, V>(entryIterator) {
-            @Override
-            V transform( Entry<K, V> entry ) {
-                return entry.getValue();
-            }
-        };
-    }
 
     /**
      * Returns a {@link Collector} that accumulates elements into an {@code ImmutableMap} whose keys
@@ -599,12 +574,20 @@ public final class Maps {
 
     static <K extends Object, V extends Object>
     Iterator<Entry<K, V>> asMapEntryIterator( Set<K> set, final Function<? super K, V> function ) {
-        return new TransformedIterator<K, Entry<K, V>>(set.iterator()) {
+
+
+        Function< K, Entry< K, V > > function1 = new Function< K, Entry< K, V > >() {
+
+
             @Override
-            Entry<K, V> transform( final K key ) {
-                return immutableEntry(key, function.apply(key));
+            public Entry< K, V > apply( K k ) {
+                V value = function.apply(k);
+
+                return immutableEntry(k, value);
             }
         };
+
+        return new TransIter<K, Entry<K, V>>(set.iterator(),function1);
     }
 
     private static <E extends Object> Set<E> removeOnlySet( final Set<E> set ) {
@@ -1397,12 +1380,12 @@ public final class Maps {
 
     static <K extends Object> Predicate<Entry<K, ?>> keyPredicateOnEntries(
             Predicate<? super K> keyPredicate ) {
-        return compose(keyPredicate, Maps.keyFunction());
+        return compose(keyPredicate, MapUtil.keyFunction());
     }
 
     static <V extends Object> Predicate<Entry<?, V>> valuePredicateOnEntries(
             Predicate<? super V> valuePredicate ) {
-        return compose(valuePredicate, Maps.valueFunction());
+        return compose(valuePredicate, MapUtil.valueFunction());
     }
 
     /**
@@ -1944,19 +1927,6 @@ public final class Maps {
         }
     }
 
-    /**
-     * An admittedly inefficient implementation of {@link Map#containsKey}.
-     */
-    static boolean containsKeyImpl( Map<?, ?> map, @CheckForNull Object key ) {
-        return Iterators.contains(keyIterator(map.entrySet().iterator()), key);
-    }
-
-    /**
-     * An implementation of {@link Map#containsValue}.
-     */
-    static boolean containsValueImpl( Map<?, ?> map, @CheckForNull Object value ) {
-        return Iterators.contains(valueIterator(map.entrySet().iterator()), value);
-    }
 
     /**
      * Implements {@code Collection.contains} safely for forwarding collections of map entries. If
@@ -2098,22 +2068,7 @@ public final class Maps {
         return checkNotNull(map);
     }
 
-    private enum EntryFunction implements Function<Entry<?, ?>, Object> {
-        KEY {
-            @Override
-            @CheckForNull
-            public Object apply( Entry<?, ?> entry ) {
-                return entry.getKey();
-            }
-        },
-        VALUE {
-            @Override
-            @CheckForNull
-            public Object apply( Entry<?, ?> entry ) {
-                return entry.getValue();
-            }
-        }
-    }
+
 
     /**
      * A transformation of the value of a key-value pair, using both key and value as inputs. To apply
@@ -3199,24 +3154,25 @@ public final class Maps {
 
             @Override
             public Iterator<Entry<K, V>> iterator() {
-                return new TransformedIterator<Entry<K, V>, Entry<K, V>>(filteredEntrySet.iterator()) {
+
+                return new TransIter<Entry<K, V>, Entry<K, V>>(filteredEntrySet.iterator(), new Function< Entry< K, V >, Entry< K, V > >() {
                     @Override
-                    Entry<K, V> transform( final Entry<K, V> entry ) {
-                        return new ForwardingMapEntry<K, V>() {
+                    public Entry< K, V > apply( Entry< K, V > entry ) {
+                        return new ForwardingMapEntry< K, V >() {
                             @Override
-                            protected Entry<K, V> delegate() {
+                            protected Entry< K, V > delegate() {
                                 return entry;
                             }
 
                             @Override
 
                             public V setValue( V newValue ) {
-                                checkArgument(apply(getKey(), newValue));
+                                checkArgument(FilteredEntryMap.super.apply(getKey(), newValue));
                                 return super.setValue(newValue);
                             }
                         };
                     }
-                };
+                }) ;
             }
         }
 
@@ -3767,7 +3723,7 @@ public final class Maps {
 
         @Override
         public Iterator<K> iterator() {
-            return keyIterator(map().entrySet().iterator());
+            return map().keySet().iterator();
         }
 
         @Override
@@ -3959,7 +3915,7 @@ public final class Maps {
 
         @Override
         public Iterator<V> iterator() {
-            return valueIterator(map().entrySet().iterator());
+            return map().values().iterator();
         }
 
         @Override

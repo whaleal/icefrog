@@ -8,7 +8,7 @@ import java.util.function.Function;
  */
 public class TransListIter<F extends Object, T extends Object> extends TransIter<F, T> implements ListIterator<T> {
 
-    TransListIter( ListIterator<? extends F> backingIterator , Function<? super F, ? extends T> func ) {
+    public TransListIter( ListIterator<? extends F> backingIterator , Function<? super F, ? extends T> func ) {
         super(backingIterator,func);
     }
 
