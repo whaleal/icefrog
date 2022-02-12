@@ -31,6 +31,7 @@ package com.whaleal.icefrog.core.lang;
 
 
 
+import com.whaleal.icefrog.core.lang.loader.LazyLoader;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import java.util.Optional;
@@ -38,11 +39,13 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
+ * 通过一个 Supplier 来实现的Lazy
+ *
  * @author wh
  * @date 2021-12-01
  * @param <T>
  */
-public class Lazy<T> implements Supplier<T> {
+public class Lazy<T> extends LazyLoader<T> {
 
     private static final Lazy<?> EMPTY = new Lazy<>(() -> null, null, true);
 
@@ -51,14 +54,13 @@ public class Lazy<T> implements Supplier<T> {
     private T value;
     private volatile boolean resolved;
 
+
     /**
-     * Creates a new {@link Lazy} instance for the given supplier.
-     *
-     * @param supplier
-     * @deprecated prefer {@link Lazy#of(Supplier)}, to be turned private in 2.5.
+     * 私有的构造方法
+     * 相关创建 全部通过of  来实现
+     * @param supplier  supplier
      */
-    @Deprecated
-    public Lazy(Supplier<? extends T> supplier) {
+    private Lazy(Supplier<? extends T> supplier) {
         this(supplier, null, false);
     }
 
@@ -71,14 +73,15 @@ public class Lazy<T> implements Supplier<T> {
      */
     private Lazy( Supplier<? extends T> supplier, T value, boolean resolved ) {
 
+        Precondition.checkNotNull(supplier);
         this.supplier = supplier;
         this.value = value;
         this.resolved = resolved;
     }
 
     /**
-     * Creates a new {@link Lazy} to produce an object lazily.
      *
+     * 创建一个新的 {@link Lazy} 以延迟生成对象
      * @param <T>      the type of which to produce an object of eventually.
      * @param supplier the {@link Supplier} to create the object lazily.
      * @return
@@ -112,21 +115,16 @@ public class Lazy<T> implements Supplier<T> {
         return (Lazy<T>) EMPTY;
     }
 
-    /**
-     * Returns the value created by the configured {@link Supplier}. Will return the calculated instance for subsequent
-     * lookups.
-     *
-     * @return
-     */
-    public T get() {
 
-        T value = getNullable();
 
-        if (value == null) {
+    @Override
+    protected T init() {
+        T value = this.getNullable();
+        if(value == null){
             throw new IllegalStateException("Expected lazy evaluation to yield a non-null value but got null!");
         }
+        return value ;
 
-        return value;
     }
 
     /**
