@@ -30,7 +30,7 @@ public class ReflectUtil {
      * Pre-built MethodFilter that matches all non-bridge non-synthetic methods
      * which are not declared on {@code java.lang.Object}.
      * <p>
-     * .5
+     *
      */
     public static final MethodFilter USER_DECLARED_METHODS =
             (method -> !method.isBridge() && !method.isSynthetic());
@@ -1018,10 +1018,19 @@ public class ReflectUtil {
      * @since 1.0.0
      */
     public static <T extends AccessibleObject> T setAccessible( T accessibleObject ) {
-        if (null != accessibleObject && false == accessibleObject.isAccessible()) {
+        if(accessibleObject ==null){
+            return accessibleObject ;
+        }else if(accessibleObject instanceof Member ){
+            Member method = (Member) accessibleObject;
+            if ((!Modifier.isPublic(method.getModifiers()) ||
+                         !Modifier.isPublic(method.getDeclaringClass().getModifiers())) && !accessibleObject.isAccessible()){
+                accessibleObject.setAccessible(true);
+            }
+        }else if(false == accessibleObject.isAccessible()){
             accessibleObject.setAccessible(true);
         }
         return accessibleObject;
+
     }
 
     /**
@@ -1163,29 +1172,11 @@ public class ReflectUtil {
             throws NoSuchMethodException {
 
         Constructor<T> ctor = clazz.getDeclaredConstructor(parameterTypes);
-        makeAccessible(ctor);
+        setAccessible(ctor);
         return ctor;
     }
 
 
-    // Method handling
-
-    /**
-     * Make the given constructor accessible, explicitly setting it accessible
-     * if necessary. The {@code setAccessible(true)} method is only called
-     * when actually necessary, to avoid unnecessary conflicts with a JVM
-     * SecurityManager (if active).
-     *
-     * @param ctor the constructor to make accessible
-     * @see Constructor#setAccessible
-     */
-    @SuppressWarnings("deprecation")  // on JDK 9
-    public static void makeAccessible( Constructor<?> ctor ) {
-        if ((!Modifier.isPublic(ctor.getModifiers()) ||
-                !Modifier.isPublic(ctor.getDeclaringClass().getModifiers())) && !ctor.isAccessible()) {
-            ctor.setAccessible(true);
-        }
-    }
 
     /**
      * Attempt to find a {@link Method} on the supplied class with the supplied name
@@ -1511,24 +1502,7 @@ public class ReflectUtil {
     }
 
 
-    // Projection handling
 
-    /**
-     * Make the given method accessible, explicitly setting it accessible if
-     * necessary. The {@code setAccessible(true)} method is only called
-     * when actually necessary, to avoid unnecessary conflicts with a JVM
-     * SecurityManager (if active).
-     *
-     * @param method the method to make accessible
-     * @see Method#setAccessible
-     */
-    @SuppressWarnings("deprecation")  // on JDK 9
-    public static void makeAccessible( Method method ) {
-        if ((!Modifier.isPublic(method.getModifiers()) ||
-                !Modifier.isPublic(method.getDeclaringClass().getModifiers())) && !method.isAccessible()) {
-            method.setAccessible(true);
-        }
-    }
 
     /**
      * Attempt to find a {@link Field field} on the supplied {@link Class} with the
@@ -1737,7 +1711,7 @@ public class ReflectUtil {
                     "] must be same or subclass as source class [" + src.getClass().getName() + "]");
         }
         doWithFields(src.getClass(), field -> {
-            makeAccessible(field);
+            setAccessible(field);
             Object srcValue = field.get(src);
             field.set(dest, srcValue);
         }, COPYABLE_FIELDS);
@@ -1754,25 +1728,7 @@ public class ReflectUtil {
     }
 
 
-    // Cache handling
 
-    /**
-     * Make the given field accessible, explicitly setting it accessible if
-     * necessary. The {@code setAccessible(true)} method is only called
-     * when actually necessary, to avoid unnecessary conflicts with a JVM
-     * SecurityManager (if active).
-     *
-     * @param field the field to make accessible
-     * @see Field#setAccessible
-     */
-    @SuppressWarnings("deprecation")  // on JDK 9
-    public static void makeAccessible( Field field ) {
-        if ((!Modifier.isPublic(field.getModifiers()) ||
-                !Modifier.isPublic(field.getDeclaringClass().getModifiers()) ||
-                Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
-            field.setAccessible(true);
-        }
-    }
 
     /**
      * Clear the internal method/field cache.
