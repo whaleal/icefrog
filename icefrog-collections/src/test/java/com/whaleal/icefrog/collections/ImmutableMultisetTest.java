@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.whaleal.icefrog.collections.Iterators.singletonIterator;
 import static java.util.Arrays.asList;
 
 /**
@@ -124,13 +126,13 @@ public class ImmutableMultisetTest extends TestCase {
   }
 
   public void testCopyOf_iterator_empty() {
-    Iterator<String> iterator = Iterators.emptyIterator();
+    Iterator<String> iterator = IterUtil.empty();
     Multiset<String> multiset = ImmutableMultiset.copyOf(iterator);
     assertTrue(multiset.isEmpty());
   }
 
   public void testCopyOf_iterator_oneElement() {
-    Iterator<String> iterator = Iterators.singletonIterator("a");
+    Iterator<String> iterator = singletonIterator("a");
     Multiset<String> multiset = ImmutableMultiset.copyOf(iterator);
     assertEquals(HashMultiset.create(asList("a")), multiset);
   }

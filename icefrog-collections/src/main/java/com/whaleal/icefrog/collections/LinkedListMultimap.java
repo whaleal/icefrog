@@ -2,6 +2,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.util.FunctionUtil;
 
 import javax.annotation.CheckForNull;
 import java.io.IOException;
@@ -442,18 +443,14 @@ public class LinkedListMultimap<K extends Object, V extends Object>
             @Override
             public ListIterator<V> listIterator( int index ) {
                 final NodeIterator nodeItr = new NodeIterator(index);
-                return new TransformedListIterator<Entry<K, V>, V>(nodeItr) {
-                    @Override
-                    @ParametricNullness
-                    V transform( Entry<K, V> entry ) {
-                        return entry.getValue();
-                    }
 
+                return  new com.whaleal.icefrog.core.collection.TransListIter<Entry<K, V>, V>(nodeItr,x->x.getValue()){
                     @Override
                     public void set( @ParametricNullness V value ) {
                         nodeItr.setValue(value);
                     }
                 };
+
             }
         }
         return new ValuesImpl();

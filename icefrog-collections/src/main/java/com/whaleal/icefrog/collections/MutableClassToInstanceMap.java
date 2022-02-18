@@ -2,17 +2,18 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.util.ClassUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.*;
+import java.util.function.Function;
 
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 /**
- * A mutable class-to-instance map backed by an arbitrary user-provided map. See also {@link
- * ImmutableClassToInstanceMap}.
+ * A mutable class-to-instance map backed by an arbitrary user-provided map. See also
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#classtoinstancemap">{@code
@@ -95,13 +96,14 @@ public final class MutableClassToInstanceMap<B> extends ForwardingMap<Class<? ex
 
             @Override
             public Iterator<Entry<Class<? extends B>, B>> iterator() {
-                return new TransformedIterator<Entry<Class<? extends B>, B>, Entry<Class<? extends B>, B>>(
-                        delegate().iterator()) {
+                return new TransIter<Entry<Class<? extends B>, B>, Entry<Class<? extends B>, B>>(
+                        delegate().iterator(),new Function<Entry<Class<? extends B>, B> , Entry<Class<? extends B>, B>>(){
+
                     @Override
-                    Entry<Class<? extends B>, B> transform( Entry<Class<? extends B>, B> from ) {
+                    public Entry< Class< ? extends B >, B > apply( Entry< Class< ? extends B >, B > from ) {
                         return checkedEntry(from);
                     }
-                };
+                }) ;
             }
 
             @Override

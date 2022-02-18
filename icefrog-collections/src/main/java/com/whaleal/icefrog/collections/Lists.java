@@ -438,13 +438,7 @@ public final class Lists {
 
         @Override
         public ListIterator<T> listIterator( final int index ) {
-            return new TransformedListIterator<F, T>(fromList.listIterator(index)) {
-                @Override
-                @ParametricNullness
-                T transform( @ParametricNullness F from ) {
-                    return function.apply(from);
-                }
-            };
+            return new com.whaleal.icefrog.core.collection.TransListIter<F,T>(fromList.listIterator(index),function);
         }
 
         @Override
@@ -492,12 +486,8 @@ public final class Lists {
 
         @Override
         public ListIterator<T> listIterator( int index ) {
-            return new TransformedListIterator<F, T>(fromList.listIterator(index)) {
-                @Override
-                T transform( F from ) {
-                    return function.apply(from);
-                }
-            };
+            return  new com.whaleal.icefrog.core.collection.TransListIter<F,T>(fromList.listIterator(index),function);
+
         }
 
         @Override

@@ -8,6 +8,7 @@ import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.PredicateUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -705,13 +706,14 @@ public final class Multisets {
 
     static <E extends Object> Iterator<E> elementIterator(
             Iterator<Entry<E>> entryIterator ) {
-        return new TransformedIterator<Entry<E>, E>(entryIterator) {
+
+        return new TransIter<Entry<E>, E>(entryIterator,new Function< Entry<E>,E>(){
+
             @Override
-            @ParametricNullness
-            E transform( Entry<E> entry ) {
+            public E apply( Entry< E > entry ) {
                 return entry.getElement();
             }
-        };
+        }) ;
     }
 
     /**

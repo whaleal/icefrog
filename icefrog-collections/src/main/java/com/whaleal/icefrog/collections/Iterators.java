@@ -5,6 +5,7 @@ import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -765,13 +766,9 @@ public final class Iterators {
     public static <F extends Object, T extends Object> Iterator<T> transform(
             Iterator<F> fromIterator, Function<? super F, ? extends T> function ) {
         checkNotNull(function);
-        return new TransformedIterator<F, T>(fromIterator) {
 
-            @Override
-            T transform( @ParametricNullness F from ) {
-                return function.apply(from);
-            }
-        };
+        return new TransIter<F,T>(fromIterator,function);
+
     }
 
     /**

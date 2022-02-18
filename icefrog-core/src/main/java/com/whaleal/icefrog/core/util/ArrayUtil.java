@@ -5254,10 +5254,39 @@ public class ArrayUtil extends PrimitiveArrayUtil {
     }
 
     /**
+     * Append the given object to the given array, returning a new array
+     * consisting of the input array contents plus the given object.
+     *
+     * @param array the array to append to (can be {@code null})
+     * @param obj   the object to append
+     * @param <A>   A
+     * @param <O>   O
+     * @return the new array (of the same component type; never {@code null})
+     * @since 1.2.0
+     */
+    public static <A, O extends A> A[] addObjectToArray( A[] array, O obj ) {
+        Class<?> compType = Object.class;
+        if (array != null) {
+            compType = array.getClass().getComponentType();
+        } else if (obj != null) {
+            compType = obj.getClass();
+        }
+        int newArrLength = (array != null ? array.length + 1 : 1);
+        @SuppressWarnings("unchecked")
+        A[] newArr = (A[]) Array.newInstance(compType, newArrLength);
+        if (array != null) {
+            System.arraycopy(array, 0, newArr, 0, array.length);
+        }
+        newArr[newArr.length - 1] = obj;
+        return newArr;
+    }
+
+    /**
      * 将一个对象转为 Object[] 对象数组
      *
      * @param value 对象
      * @return 对象数组
+     * @since 1.2.0
      */
     @SuppressWarnings("unchecked")
     public static Object[] toArray( Object value ) {

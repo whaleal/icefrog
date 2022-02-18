@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * 国家枚举值
  *
+ * 国家/地区，全称，缩写
  *
  * @author wh
  * @since 1.2

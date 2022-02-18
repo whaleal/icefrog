@@ -27,10 +27,11 @@
  *    exception statement from all source files in the program, then also delete
  *    it in the license file.
  */
-package com.whaleal.icefrog.core.lang;
+package com.whaleal.icefrog.core.lang.loader;
 
 
 
+import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 
 import java.util.Optional;
@@ -38,11 +39,16 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
+ *  一种 来实现的Lazy 的实现
+ *
+ * @see LazyLoader
+ * @see Supplier
+ *
  * @author wh
  * @date 2021-12-01
  * @param <T>
  */
-public class Lazy<T> implements Supplier<T> {
+public class Lazy<T> extends LazyLoader<T> {
 
     private static final Lazy<?> EMPTY = new Lazy<>(() -> null, null, true);
 
@@ -52,18 +58,16 @@ public class Lazy<T> implements Supplier<T> {
     private volatile boolean resolved;
 
     /**
-     * Creates a new {@link Lazy} instance for the given supplier.
-     *
-     * @param supplier
-     * @deprecated prefer {@link Lazy#of(Supplier)}, to be turned private in 2.5.
+     * 私有的构造方法
+     * 相关创建 全部通过of  来实现
+     * @param supplier  supplier
      */
-    @Deprecated
-    public Lazy(Supplier<? extends T> supplier) {
+    private Lazy(Supplier<? extends T> supplier) {
         this(supplier, null, false);
     }
 
     /**
-     * Creates a new {@link Lazy} for the given {@link Supplier}, value and whether it has been resolved or not.
+     * 为给定的 {@link Supplier} 创建一个新的 {@link Lazy}，值以及它是否已解决。
      *
      * @param supplier must not be {@literal null}.
      * @param value    can be {@literal null}.
@@ -71,14 +75,15 @@ public class Lazy<T> implements Supplier<T> {
      */
     private Lazy( Supplier<? extends T> supplier, T value, boolean resolved ) {
 
+        Precondition.checkNotNull(supplier);
         this.supplier = supplier;
         this.value = value;
         this.resolved = resolved;
     }
 
     /**
-     * Creates a new {@link Lazy} to produce an object lazily.
      *
+     * 创建一个新的 {@link Lazy} 以延迟生成对象
      * @param <T>      the type of which to produce an object of eventually.
      * @param supplier the {@link Supplier} to create the object lazily.
      * @return
@@ -88,7 +93,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Creates a new {@link Lazy} to return the given value.
+     *  通过传入的值 来生成一个新的Lazy
      *
      * @param <T>   the type of the value to return eventually.
      * @param value the value to return.
@@ -102,7 +107,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Creates a pre-resolved empty {@link Lazy}.
+     * 创建一个预解析的空的 {@link Lazy}。
      *
      * @return
      *
@@ -112,26 +117,22 @@ public class Lazy<T> implements Supplier<T> {
         return (Lazy<T>) EMPTY;
     }
 
-    /**
-     * Returns the value created by the configured {@link Supplier}. Will return the calculated instance for subsequent
-     * lookups.
-     *
-     * @return
-     */
-    public T get() {
 
-        T value = getNullable();
 
-        if (value == null) {
+    @Override
+    protected T init() {
+        T value = this.getNullable();
+        if(value == null){
             throw new IllegalStateException("Expected lazy evaluation to yield a non-null value but got null!");
         }
 
-        return value;
+        return value ;
+
     }
 
     /**
-     * Returns the {@link Optional} value created by the configured {@link Supplier}, allowing the absence of values in
-     * contrast to {@link #get()}. Will return the calculated instance for subsequent lookups.
+     * 返回由配置的 {@link Supplier} 创建的 {@link Optional} 值，允许在
+     * 与 {@link #get()} 形成对比。 将返回计算的实例以供后续查找。
      *
      * @return
      */
@@ -140,8 +141,8 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Returns a new Lazy that will consume the given supplier in case the current one does not yield in a result.
      *
+     * 返回一个新的 Lazy，如果当前的Supplier 没有产生结果 将处理新的 supplier
      * @param supplier must not be {@literal null}.
      * @return
      */
@@ -153,7 +154,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Returns a new Lazy that will return the given value in case the current one does not yield in a result.
+     * 返回一个新的 Lazy，如果当前的值没有在结果中产生，它将返回给定的值。
      *
      * @return
      */
@@ -165,7 +166,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Returns the value of the lazy computation or the given default value in case the computation yields
+     * 返回惰性计算的值或给定的默认值，以防计算产生
      * {@literal null}.
      *
      * @param value
@@ -180,7 +181,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Returns the value of the lazy computation or the value produced by the given {@link Supplier} in case the original
+     * 返回惰性计算的值或给定 {@link Supplier} 产生的值，以防原始异常
      * value is {@literal null}.
      *
      * @param supplier must not be {@literal null}.
@@ -197,7 +198,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Creates a new {@link Lazy} with the given {@link Function} lazily applied to the current one.
+     * 创建一个新的 {@link Lazy} 并将给定的 {@link Function} 延迟应用于当前。
      *
      * @param function must not be {@literal null}.
      * @return
@@ -210,7 +211,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Creates a new {@link Lazy} with the given {@link Function} lazily applied to the current one.
+     * 创建一个新的 {@link Lazy} 并将给定的 {@link Function} 延迟应用于当前。
      *
      * @param function must not be {@literal null}.
      * @return
@@ -223,7 +224,7 @@ public class Lazy<T> implements Supplier<T> {
     }
 
     /**
-     * Returns the value of the lazy evaluation.
+     * 返回惰性求值的值。
      *
      * @return
      *
@@ -241,10 +242,7 @@ public class Lazy<T> implements Supplier<T> {
         return value;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
+
     @Override
     public boolean equals( Object o ) {
 
@@ -269,10 +267,7 @@ public class Lazy<T> implements Supplier<T> {
         return ObjectUtil.nullSafeEquals(value, lazy.value);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
+
     @Override
     public int hashCode() {
 

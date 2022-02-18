@@ -3,7 +3,6 @@
 package com.whaleal.icefrog.collections;
 
 
-import com.whaleal.icefrog.collections.Table.Cell;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -42,7 +41,7 @@ public class TableExample extends TestCase {
 
     System.out.println(java);
 
-    Set<Cell<String, String, String>> cells = table.cellSet();
+    Set< Table.Cell<String, String, String> > cells = table.cellSet();
 
     System.out.println(cells);
 

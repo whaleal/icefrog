@@ -120,13 +120,8 @@ abstract class AbstractTable<
     }
 
     Iterator<V> valuesIterator() {
-        return new TransformedIterator<Cell<R, C, V>, V>(cellSet().iterator()) {
-            @Override
-            @ParametricNullness
-            V transform( Cell<R, C, V> cell ) {
-                return cell.getValue();
-            }
-        };
+        return new com.whaleal.icefrog.core.collection.TransIter<Cell<R, C, V>, V>(cellSet().iterator(),x ->x .getValue());
+
     }
 
     Spliterator<V> valuesSpliterator() {

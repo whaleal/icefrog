@@ -4,6 +4,7 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.ListUtil;
 import junit.framework.TestCase;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -70,14 +71,14 @@ public class ConcurrentHashMultisetBasherTest extends TestCase {
       }
 
       List<Integer> actualCounts =
-          Lists.transform(
-              keys,
-              new Function<String, Integer>() {
-                @Override
-                public Integer apply(String key) {
-                  return multiset.count(key);
-                }
-              });
+              ListUtil.trans(
+                      keys,
+                      new Function< String, Integer >() {
+                        @Override
+                        public Integer apply( String key ) {
+                          return multiset.count(key);
+                        }
+                      });
       assertEquals("Counts not as expected", CollUtil.newArrayList(deltas), actualCounts);
     } finally {
       pool.shutdownNow();

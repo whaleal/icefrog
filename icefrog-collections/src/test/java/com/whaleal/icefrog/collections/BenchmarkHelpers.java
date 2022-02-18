@@ -4,6 +4,8 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.map.BiMap;
+import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.map.multi.ListValueMap;
 import org.junit.Test;
 
 import java.util.*;
@@ -97,7 +99,7 @@ final class BenchmarkHelpers {
     ArrayListMultimapImpl {
       @Override
       <K, V> ListMultimap<K, V> create(Multimap<K, V> contents) {
-        return ArrayListMultimap.create(contents);
+        return null ; // ListValueMap.create(contents);
       }
     },
     LinkedListMultimapImpl {
@@ -171,13 +173,17 @@ final class BenchmarkHelpers {
     HashMapImpl {
       @Override
       public <K extends Comparable<K>, V> Map<K, V> create(Map<K, V> map) {
-        return Maps.newHashMap(map);
+        HashMap< K, V > objectObjectHashMap = MapUtil.newHashMap();
+        objectObjectHashMap.putAll(map);
+        return objectObjectHashMap;
       }
     },
     LinkedHashMapImpl {
       @Override
       public <K extends Comparable<K>, V> Map<K, V> create(Map<K, V> map) {
-        return Maps.newLinkedHashMap(map);
+        LinkedHashMap< K, V > objectObjectLinkedHashMap = MapUtil.newLinkedHashMap(map.size());
+        objectObjectLinkedHashMap.putAll(map);
+        return objectObjectLinkedHashMap;
       }
     },
     ConcurrentHashMapImpl {
@@ -235,8 +241,8 @@ final class BenchmarkHelpers {
     TreeMapImpl {
       @Override
       public <K extends Comparable<K>, V> SortedMap<K, V> create(Map<K, V> map) {
-        SortedMap<K, V> result = Maps.newTreeMap();
-        result.putAll(map);
+        SortedMap<K, V> result = null ;//MapUtil.newTreeMap(map);
+
         return result;
       }
     },

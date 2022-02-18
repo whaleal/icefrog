@@ -10,8 +10,11 @@ import java.util.TimeZone;
  * 国家时区
  */
 public class TZUtil {
+    //  时区 --> 展示时区
     private static final Map<String, String> tzDisplayMap = new HashMap<>();
+    //  展示时区 --> 时区
     private static final Map<String, String> tzCanonicalMap = new HashMap<>();
+    //  是否支持
     private static final Map<String, Boolean> tzNoLongerSupported = new HashMap<>();
 
     static {
