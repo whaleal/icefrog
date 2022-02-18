@@ -17,7 +17,16 @@ import com.whaleal.icefrog.core.lang.Precondition;
 @FunctionalInterface
 public interface Converter2<S, T> {
 
-    T convert(S var1);
+
+    /**
+     * 转换为指定类型<br>
+     * 如果类型无法确定，将读取默认值的类型做为目标类型
+     *
+     * @param var1        原始值
+     * @return 转换后的值
+     * @throws IllegalArgumentException 无法确定目标类型，且默认值为{@code null}，无法确定类型
+     */
+    T convert(S var1)  throws IllegalArgumentException;
 
     default <U> Converter2<S, U> andThen(Converter2<? super T, ? extends U> after) {
         Precondition.notNull(after, "After Converter must not be null");
