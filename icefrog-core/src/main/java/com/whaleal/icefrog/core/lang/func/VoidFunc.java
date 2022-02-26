@@ -29,6 +29,7 @@ public interface VoidFunc<P> extends Serializable {
      * 执行函数，异常包装为RuntimeException
      *
      * @param parameters 参数列表
+     *                    @throws RuntimeException e 抛出的异常 
      */
     @SuppressWarnings("unchecked")
     default void applyWithRuntimeException( P... parameters ) {
