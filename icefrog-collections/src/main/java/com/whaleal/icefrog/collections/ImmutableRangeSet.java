@@ -317,7 +317,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
      * returns an {@code ImmutableRangeSet}.
      */
     public ImmutableRangeSet<C> union( RangeSet<C> other ) {
-        return unionOf(Iterables.concat(asRanges(), other.asRanges()));
+        return unionOf(IterUtil.concat(asRanges(), other.asRanges()));
     }
 
     /**
@@ -618,7 +618,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
 
         ComplementRanges() {
             this.positiveBoundedBelow = ranges.get(0).hasLowerBound();
-            this.positiveBoundedAbove = Iterables.getLast(ranges).hasUpperBound();
+            this.positiveBoundedAbove = IterUtil.getLast(ranges).hasUpperBound();
 
             int size = ranges.size() - 1;
             if (positiveBoundedBelow) {
@@ -693,7 +693,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
         public Iterator<C> iterator() {
             return new AbstractIterator<C>() {
                 final Iterator<Range<C>> rangeItr = ranges.iterator();
-                Iterator<C> elemItr = Iterators.emptyIterator();
+                Iterator<C> elemItr = IterUtil.<C>empty();
 
                 @Override
                 @CheckForNull
@@ -715,7 +715,7 @@ public final class ImmutableRangeSet<C extends Comparable> extends AbstractRange
         public Iterator<C> descendingIterator() {
             return new AbstractIterator<C>() {
                 final Iterator<Range<C>> rangeItr = ranges.reverse().iterator();
-                Iterator<C> elemItr = Iterators.emptyIterator();
+                Iterator<C> elemItr = IterUtil.empty();
 
                 @Override
                 @CheckForNull

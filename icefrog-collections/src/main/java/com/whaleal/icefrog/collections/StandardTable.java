@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
@@ -776,7 +777,7 @@ class StandardTable<R, C, V> extends AbstractTable<R, C, V> implements Serializa
         // consistent with equals().
         final Map<C, V> seen = factory.get();
         final Iterator<Map<C, V>> mapIterator = backingMap.values().iterator();
-        Iterator<Entry<C, V>> entryIterator = Iterators.emptyIterator();
+        Iterator<Entry<C, V>> entryIterator = IterUtil.empty();
 
         @Override
         @CheckForNull

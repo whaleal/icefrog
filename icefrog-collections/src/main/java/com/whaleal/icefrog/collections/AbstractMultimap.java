@@ -1,6 +1,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
+
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
@@ -69,7 +71,7 @@ abstract class AbstractMultimap<K extends Object, V extends Object>
             return !valueCollection.isEmpty() && get(key).addAll(valueCollection);
         } else {
             Iterator<? extends V> valueItr = values.iterator();
-            return valueItr.hasNext() && Iterators.addAll(get(key), valueItr);
+            return valueItr.hasNext() && IterUtil.addAll(get(key), valueItr);
         }
     }
 

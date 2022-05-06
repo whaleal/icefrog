@@ -49,7 +49,7 @@ public abstract class AbstractIterator<T extends Object> implements Iterator<T> 
     private T next;
 
     /**
-     * Constructor for use by subclasses.
+     * 用于继承的构造方法
      */
     protected AbstractIterator() {
     }

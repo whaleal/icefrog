@@ -46,5 +46,6 @@ public class NioServerTest {
         response = "收到消息：" + response;
         //将缓冲数据写入渠道，返回给客户端
         channel.write(BufferUtil.createUtf8(response));
+
     }
 }

@@ -1,6 +1,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
+
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
 import java.util.Iterator;
@@ -77,13 +79,13 @@ final class EmptyContiguousSet<C extends Comparable> extends ContiguousSet<C> {
 
     @Override
     public UnmodifiableIterator<C> iterator() {
-        return Iterators.emptyIterator();
+        return (UnmodifiableListIterator<C>) IterUtil.<C>empty();
     }
 
     // NavigableSet
     @Override
     public Iterator<C> descendingIterator() {
-        return Iterators.emptyIterator();
+        return IterUtil.empty();
     }
 
     @Override

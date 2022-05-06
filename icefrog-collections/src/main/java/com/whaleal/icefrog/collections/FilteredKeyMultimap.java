@@ -2,6 +2,8 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -10,6 +12,7 @@ import java.util.Map.Entry;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 import static com.whaleal.icefrog.core.lang.Precondition.checkPositionIndex;
 import static com.whaleal.icefrog.core.map.MapUtil.keyPredicateOnEntries;
+import static com.whaleal.icefrog.core.util.PredicateUtil.compose;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.emptySet;
 
@@ -110,7 +113,9 @@ class FilteredKeyMultimap<K extends Object, V extends Object>
     @Override
     Map<K, Collection<V>> createAsMap() {
 
-        return Maps.filterKeys(unfiltered.asMap(), keyPredicate);
+
+        return  new Maps.FilteredKeyMap<K, Collection<V>>(unfiltered.asMap(), keyPredicate, compose(keyPredicate, MapUtil.keyFunction()));
+
     }
 
     @Override

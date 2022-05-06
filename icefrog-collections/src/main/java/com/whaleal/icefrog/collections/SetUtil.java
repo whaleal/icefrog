@@ -361,7 +361,7 @@ public final class SetUtil {
      * way {@code IdentityHashMap} handles key lookups.
      */
     public static <E extends Object> Set<E> newIdentityHashSet() {
-        return Collections.newSetFromMap(Maps.newIdentityHashMap());
+        return Collections.newSetFromMap(MapUtil.newIdentityMap());
     }
 
     /**

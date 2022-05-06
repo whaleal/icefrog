@@ -341,7 +341,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
                     map.entrySet().iterator();
             @CheckForNull
             K currentKey = null;
-            Iterator<V> valueItr = Iterators.emptyIterator();
+            Iterator<V> valueItr = IterUtil.empty();
 
             @Override
             public boolean hasNext() {
@@ -419,7 +419,7 @@ public abstract class ImmutableMultimap<K, V> extends BaseImmutableMultimap<K, V
     UnmodifiableIterator<V> valueIterator() {
         return new UnmodifiableIterator<V>() {
             final Iterator<? extends ImmutableCollection<V>> valueCollectionItr = map.values().iterator();
-            Iterator<V> valueItr = Iterators.emptyIterator();
+            Iterator<V> valueItr = IterUtil.<V>empty();
 
             @Override
             public boolean hasNext() {

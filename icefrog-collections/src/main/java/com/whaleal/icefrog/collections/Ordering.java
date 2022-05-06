@@ -2,6 +2,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -742,7 +743,7 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
     // TODO(kevinb): rerun benchmarks including new options
     public <E extends T> List<E> sortedCopy( Iterable<E> elements ) {
         @SuppressWarnings("unchecked") // does not escape, and contains only E's
-        E[] array = (E[]) Iterables.toArray(elements);
+        E[] array = (E[]) ArrayUtil.toArray(elements);
         Arrays.sort(array, this);
         return ListUtil.list(false, Arrays.asList(array));
     }

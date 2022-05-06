@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.map.MapUtil;
@@ -107,7 +108,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
     private final NavigableMap<Cut<K>, RangeMapEntry<K, V>> entriesByLowerBound;
 
     private TreeRangeMap() {
-        this.entriesByLowerBound = Maps.newTreeMap();
+        this.entriesByLowerBound = MapUtil.newTreeMap();
     }
 
     public static <K extends Comparable, V> TreeRangeMap<K, V> create() {
@@ -587,7 +588,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
                 @Override
                 Iterator<Entry<Range<K>, V>> entryIterator() {
                     if (subRange.isEmpty()) {
-                        return Iterators.emptyIterator();
+                        return IterUtil.empty();
                     }
                     final Iterator<RangeMapEntry<K, V>> backingItr =
                             entriesByLowerBound
@@ -753,7 +754,7 @@ public final class TreeRangeMap<K extends Comparable, V> implements RangeMap<K, 
 
             Iterator<Entry<Range<K>, V>> entryIterator() {
                 if (subRange.isEmpty()) {
-                    return Iterators.emptyIterator();
+                    return IterUtil.empty();
                 }
                 Cut<K> cutToStart =
                         firstNonNull(

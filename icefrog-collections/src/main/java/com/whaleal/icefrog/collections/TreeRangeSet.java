@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
@@ -499,7 +500,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
             } else if (positiveItr.hasNext()) {
                 firstComplementRangeLowerBound = positiveItr.next().upperBound;
             } else {
-                return Iterators.emptyIterator();
+                return IterUtil.empty();
             }
             return new AbstractIterator<Entry<Cut<C>, Range<C>>>() {
                 Cut<C> nextComplementRangeLowerBound = firstComplementRangeLowerBound;
@@ -557,7 +558,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
                                 : positiveRangesByLowerBound.higherKey(positiveItr.peek().upperBound);
             } else if (!complementLowerBoundWindow.contains(Cut.belowAll())
                     || positiveRangesByLowerBound.containsKey(Cut.belowAll())) {
-                return Iterators.emptyIterator();
+                return IterUtil.empty();
             } else {
                 cut = positiveRangesByLowerBound.higherKey(Cut.belowAll());
             }
@@ -718,11 +719,11 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
         @Override
         Iterator<Entry<Cut<C>, Range<C>>> entryIterator() {
             if (restriction.isEmpty()) {
-                return Iterators.emptyIterator();
+                return IterUtil.empty();
             }
             Iterator<Range<C>> completeRangeItr;
             if (lowerBoundWindow.upperBound.isLessThan(restriction.lowerBound)) {
-                return Iterators.emptyIterator();
+                return IterUtil.empty();
             } else if (lowerBoundWindow.lowerBound.isLessThan(restriction.lowerBound)) {
                 // starts at the first range with upper bound strictly greater than restriction.lowerBound
                 completeRangeItr =
@@ -761,7 +762,7 @@ public class TreeRangeSet<C extends Comparable<?>> extends AbstractRangeSet<C>
         @Override
         Iterator<Entry<Cut<C>, Range<C>>> descendingEntryIterator() {
             if (restriction.isEmpty()) {
-                return Iterators.emptyIterator();
+                return IterUtil.empty();
             }
             Cut<Cut<C>> upperBoundOnLowerBounds =
                     Ordering.natural()

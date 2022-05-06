@@ -160,6 +160,18 @@ public class MapUtil {
         return new LinkedHashMap<>((int) (expectedSize / DEFAULT_LOAD_FACTOR), DEFAULT_LOAD_FACTOR);
     }
 
+    /**
+     * 新建TreeMap，Key有序的Map
+     *
+     * @param <K>        key的类型,必须为可比较类型
+     * @param <V>        value的类型
+     * @return TreeMap
+     * @since 1.2.0
+     */
+    public static <K extends Comparable, V> TreeMap<K, V> newTreeMap() {
+        return new TreeMap<>();
+    }
+
 
     /**
      * 新建TreeMap，Key有序的Map
