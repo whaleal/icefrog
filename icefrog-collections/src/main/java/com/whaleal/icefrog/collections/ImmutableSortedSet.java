@@ -1,6 +1,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
@@ -513,7 +514,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     @Override
     @CheckForNull
     public E ceiling( E e ) {
-        return Iterables.getFirst(tailSet(e, true), null);
+        return IterUtil.getFirst(tailSet(e, true), null);
     }
 
 
@@ -521,7 +522,7 @@ public abstract class ImmutableSortedSet<E> extends ImmutableSortedSetFauxveride
     @Override
     @CheckForNull
     public E higher( E e ) {
-        return Iterables.getFirst(tailSet(e, false), null);
+        return IterUtil.getFirst(tailSet(e, false), null);
     }
 
     @Override

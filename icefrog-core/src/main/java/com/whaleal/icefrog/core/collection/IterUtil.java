@@ -11,6 +11,7 @@ import com.whaleal.icefrog.core.stream.StreamUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
 import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 
 import javax.annotation.CheckForNull;
@@ -697,7 +698,32 @@ public class IterUtil {
      * @return 编辑后的集合
      * @since 1.0.0
      */
-    public static <T extends Iterable<E>, E> T filter( T iter, Predicate<E> predicate ) {
+    public static < T extends Collection<E>, E> T filter( T iter, Predicate<E> predicate ) {
+        if (null == iter) {
+            return null;
+        }
+
+        filter(iter.iterator(), predicate);
+
+        return iter;
+    }
+
+    /**
+     * 过滤集合，此方法在原集合上直接修改<br>
+     * 通过实现Filter接口，完成元素的过滤，这个Filter实现可以实现以下功能：
+     *
+     * <pre>
+     * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
+     * </pre>
+     *
+     *
+     * @param <E>       迭代器中的元素类型
+     * @param iter      可迭代的 Iterable
+     * @param predicate 过滤器接口
+     * @return 编辑后的集合
+     * @since 1.2.0
+     */
+    public static <E> Iterable<E> filter( Iterable<E> iter, Predicate<E> predicate ) {
         if (null == iter) {
             return null;
         }
@@ -1784,6 +1810,28 @@ public class IterUtil {
         Iterable [] cc = {a,b};
         ArrayIter<T> arrayIter = new ArrayIter<T>( cc);
         return arrayIter;
+    }
+
+    /**
+     * Returns a view of {@code unfiltered} containing all elements that are of the type {@code
+     * desiredType}. The returned iterable's iterator does not support {@code remove()}.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@code stream.filter(type::isInstance).map(type::cast)}.
+     * This does perform a little more work than necessary, so another option is to insert an
+     * unchecked cast at some later point:
+     *
+     * <pre>
+     * {@code @SuppressWarnings("unchecked") // safe because of ::isInstance check
+     * ImmutableList<NewType> result =
+     *     (ImmutableList) stream.filter(NewType.class::isInstance).collect(toImmutableList());}
+     * </pre>
+     */
+    @SuppressWarnings("unchecked")
+    // Class.isInstance
+    public static <T> Iterable<T> filter( final Iterable<?> unfiltered, final Class<T> desiredType ) {
+        checkNotNull(unfiltered);
+        checkNotNull(desiredType);
+        return (Iterable<T>) IterUtil.filter(unfiltered, PredicateUtil.instanceOf(desiredType));
     }
 
 

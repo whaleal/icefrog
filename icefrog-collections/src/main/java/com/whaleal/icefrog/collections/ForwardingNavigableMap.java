@@ -1,5 +1,7 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
+
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.function.BiFunction;
@@ -185,7 +187,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected Entry<K, V> standardFirstEntry() {
-        return Iterables.getFirst(entrySet(), null);
+        return IterUtil.getFirst(entrySet(), null);
     }
 
     /**
@@ -215,7 +217,7 @@ public abstract class ForwardingNavigableMap<K extends Object, V extends Object>
      */
     @CheckForNull
     protected Entry<K, V> standardLastEntry() {
-        return Iterables.getFirst(descendingMap().entrySet(), null);
+        return IterUtil.getFirst(descendingMap().entrySet(), null);
     }
 
     /**

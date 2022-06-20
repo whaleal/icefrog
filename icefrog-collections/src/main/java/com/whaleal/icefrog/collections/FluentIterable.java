@@ -2,6 +2,7 @@ package com.whaleal.icefrog.collections;
 
 
 import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterChain;
 import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.text.StrJoiner;
@@ -12,6 +13,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
+import static com.whaleal.icefrog.collections.Iterators.emptyModifiableIterator;
 import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
@@ -32,7 +34,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
  * </ul>
  *
  * <p>Several lesser-used features are currently available only as static methods on the {@link
- * Iterables} class.
+ * IterUtil} class.
  *
  * <p><a id="streams"></a>
  *
@@ -89,7 +91,7 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
 
 
 public abstract class FluentIterable<E extends Object> implements Iterable<E> {
-    // We store 'iterable' and use it instead of 'this' to allow Iterables to perform instanceof
+    // We store 'iterable' and use it instead of 'this' to allow IterUtil to perform instanceof
     // checks on the _original_ iterable when FluentIterable.from is used.
     // To avoid a self retain cycle under j2objc, we store Optional.empty() instead of
     // Optional.of(this). To access the delegate iterable, call #getDelegate(), which converts to
@@ -139,7 +141,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
     }
 
     /**
-     * Returns a fluent iterable that combines two iterables. The returned iterable has an iterator
+     * Returns a fluent iterable that combines two IterUtil. The returned iterable has an iterator
      * that traverses the elements in {@code a}, followed by the elements in {@code b}. The source
      * iterators are not polled until necessary.
      *
@@ -150,12 +152,12 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      */
 
     public static <T extends Object> FluentIterable<T> concat(
-            Iterable<? extends T> a, Iterable<? extends T> b ) {
+            Iterable<T> a, Iterable<T> b ) {
         return concatNoDefensiveCopy(a, b);
     }
 
     /**
-     * Returns a fluent iterable that combines three iterables. The returned iterable has an iterator
+     * Returns a fluent iterable that combines three IterUtil. The returned iterable has an iterator
      * that traverses the elements in {@code a}, followed by the elements in {@code b}, followed by
      * the elements in {@code c}. The source iterators are not polled until necessary.
      *
@@ -167,12 +169,12 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      */
 
     public static <T extends Object> FluentIterable<T> concat(
-            Iterable<? extends T> a, Iterable<? extends T> b, Iterable<? extends T> c ) {
+            Iterable<T> a, Iterable<T> b, Iterable<T> c ) {
         return concatNoDefensiveCopy(a, b, c);
     }
 
     /**
-     * Returns a fluent iterable that combines four iterables. The returned iterable has an iterator
+     * Returns a fluent iterable that combines four IterUtil. The returned iterable has an iterator
      * that traverses the elements in {@code a}, followed by the elements in {@code b}, followed by
      * the elements in {@code c}, followed by the elements in {@code d}. The source iterators are not
      * polled until necessary.
@@ -185,15 +187,15 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      */
 
     public static <T extends Object> FluentIterable<T> concat(
-            Iterable<? extends T> a,
-            Iterable<? extends T> b,
-            Iterable<? extends T> c,
-            Iterable<? extends T> d ) {
+            Iterable<T> a,
+            Iterable<T> b,
+            Iterable<T> c,
+            Iterable<T> d ) {
         return concatNoDefensiveCopy(a, b, c, d);
     }
 
     /**
-     * Returns a fluent iterable that combines several iterables. The returned iterable has an
+     * Returns a fluent iterable that combines several IterUtil. The returned iterable has an
      * iterator that traverses the elements of each iterable in {@code inputs}. The input iterators
      * are not polled until necessary.
      *
@@ -201,19 +203,19 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * iterator supports it.
      *
      * <p><b>{@code Stream} equivalent:</b> to concatenate an arbitrary number of streams, use {@code
-     * Stream.of(stream1, stream2, ...).flatMap(s -> s)}. If the sources are iterables, use {@code
+     * Stream.of(stream1, stream2, ...).flatMap(s -> s)}. If the sources are IterUtil, use {@code
      * Stream.of(iter1, iter2, ...).flatMap(Streams::stream)}.
      *
-     * @throws NullPointerException if any of the provided iterables is {@code null}
+     * @throws NullPointerException if any of the provided IterUtil is {@code null}
      */
 
     public static <T extends Object> FluentIterable<T> concat(
-            Iterable<? extends T>... inputs ) {
+            Iterable<T>... inputs ) {
         return concatNoDefensiveCopy(Arrays.copyOf(inputs, inputs.length));
     }
 
     /**
-     * Returns a fluent iterable that combines several iterables. The returned iterable has an
+     * Returns a fluent iterable that combines several IterUtil. The returned iterable has an
      * iterator that traverses the elements of each iterable in {@code inputs}. The input iterators
      * are not polled until necessary.
      *
@@ -222,18 +224,18 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * NullPointerException} if any of the input iterators is {@code null}.
      *
      * <p><b>{@code Stream} equivalent:</b> {@code streamOfStreams.flatMap(s -> s)} or {@code
-     * streamOfIterables.flatMap(Streams::stream)}. (See {@link Streams#stream}.)
+     * streamOfIterUtil.flatMap(Streams::stream)}. (See {@link Streams#stream}.)
      */
 
     public static <T extends Object> FluentIterable<T> concat(
-            final Iterable<? extends Iterable<? extends T>> inputs ) {
+            final Iterable<? extends Iterable<T>> inputs ) {
         checkNotNull(inputs);
         return new FluentIterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                return Iterators.concat(IterUtil.trans(inputs.iterator(), new Function<Iterable<? extends T>, Iterator<? extends T>>() {
+                return Iterators.concat(IterUtil.trans(inputs.iterator(), new Function<Iterable<T>, Iterator<T>>() {
                     @Override
-                    public Iterator<? extends T> apply( Iterable<? extends T> iterable ) {
+                    public Iterator<T> apply( Iterable<T> iterable ) {
                         return iterable.iterator();
                     }
                 }));
@@ -242,24 +244,19 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
     }
 
     /**
-     * Concatenates a varargs array of iterables without making a defensive copy of the array.
+     * Concatenates a varargs array of IterUtil without making a defensive copy of the array.
      */
     private static <T extends Object> FluentIterable<T> concatNoDefensiveCopy(
-            final Iterable<? extends T>... inputs ) {
-        for (Iterable<? extends T> input : inputs) {
+            final Iterable<T>... inputs ) {
+        List< Iterator<T> >  litor = new ArrayList<>();
+        for (Iterable<T> input : inputs) {
             checkNotNull(input);
+            litor.add(input.iterator());
         }
         return new FluentIterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                return Iterators.concat(
-                        /* lazily generate the iterators on each input only as needed */
-                        new AbstractIndexedListIterator<Iterator<? extends T>>(inputs.length) {
-                            @Override
-                            public Iterator<? extends T> get( int i ) {
-                                return inputs[i].iterator();
-                            }
-                        });
+                return new IterChain<T>((Iterator<T>[])litor.toArray());
             }
         };
     }
@@ -340,7 +337,60 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * use {@code Stream.generate(() -> collection).flatMap(Collection::stream)}.
      */
     public final FluentIterable<E> cycle() {
-        return from(Iterables.cycle(getDelegate()));
+        Iterable< E > delegate = getDelegate();
+
+        FluentIterable< E > es = new FluentIterable< E >() {
+            @Override
+            public Iterator< E > iterator() {
+                return new Iterator<E>() {
+                    Iterator<E> iterator = emptyModifiableIterator();
+
+                    @Override
+                    public boolean hasNext() {
+                        /*
+                         * Don't store a new Iterator until we know the user can't remove() the last returned
+                         * element anymore. Otherwise, when we remove from the old iterator, we may be invalidating
+                         * the new one. The result is a ConcurrentModificationException or other bad behavior.
+                         *
+                         * (If we decide that we really, really hate allocating two Iterators per cycle instead of
+                         * one, we can optimistically store the new Iterator and then be willing to throw it out if
+                         * the user calls remove().)
+                         */
+                        return iterator.hasNext() || delegate.iterator().hasNext();
+                    }
+
+                    @Override
+
+                    public E next() {
+                        if (!iterator.hasNext()) {
+                            iterator = delegate.iterator();
+                            if (!iterator.hasNext()) {
+                                throw new NoSuchElementException();
+                            }
+                        }
+                        return iterator.next();
+                    }
+
+                    @Override
+                    public void remove() {
+                        iterator.remove();
+                    }
+                };
+            }
+
+            @Override
+            public Spliterator< E > spliterator() {
+                return Stream.generate(() -> delegate).flatMap(Streams::stream).spliterator();
+            }
+
+            @Override
+            public String toString() {
+                return delegate.toString() + " (cycled)";
+            }
+        };
+
+
+        return from(es);
     }
 
     /**
@@ -353,7 +403,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * <p><b>{@code Stream} equivalent:</b> {@link Stream#concat}.
      */
 
-    public final FluentIterable<E> append( Iterable<? extends E> other ) {
+    public final FluentIterable<E> append( Iterable<E> other ) {
         return FluentIterable.concat(getDelegate(), other);
     }
 
@@ -374,8 +424,8 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      *
      * <p><b>{@code Stream} equivalent:</b> {@link Stream#filter} (same).
      */
-    public final FluentIterable<E> filter( Predicate<? super E> predicate ) {
-        return from(Iterables.filter(getDelegate(), predicate));
+    public final FluentIterable<E> filter( Predicate< E> predicate ) {
+        return from(IterUtil.filter(getDelegate(), predicate));
     }
 
     /**
@@ -393,7 +443,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      */
     // Class.isInstance
     public final <T> FluentIterable<T> filter( Class<T> type ) {
-        return from(Iterables.filter(getDelegate(), type));
+        return from(IterUtil.filter(getDelegate(), type));
     }
 
     /**
@@ -402,7 +452,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * <p><b>{@code Stream} equivalent:</b> {@link Stream#anyMatch} (same).
      */
     public final boolean anyMatch( Predicate<? super E> predicate ) {
-        return Iterables.any(getDelegate(), predicate);
+        return IterUtil.any(getDelegate(), predicate);
     }
 
     /**
@@ -412,7 +462,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * <p><b>{@code Stream} equivalent:</b> {@link Stream#allMatch} (same).
      */
     public final boolean allMatch( Predicate<? super E> predicate ) {
-        return Iterables.all(getDelegate(), predicate);
+        return IterUtil.all(getDelegate(), predicate);
     }
 
     /**
@@ -449,14 +499,14 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * with the concatenated combination of results. {@code function} returns an Iterable of results.
      *
      * <p>The returned fluent iterable's iterator supports {@code remove()} if this function-returned
-     * iterables' iterator does. After a successful {@code remove()} call, the returned fluent
+     * IterUtil' iterator does. After a successful {@code remove()} call, the returned fluent
      * iterable no longer contains the corresponding element.
      *
      * <p><b>{@code Stream} equivalent:</b> {@link Stream#flatMap} (using a function that produces
-     * streams, not iterables).
+     * streams, not IterUtil).
      */
     public <T extends Object> FluentIterable<T> transformAndConcat(
-            Function<? super E, ? extends Iterable<? extends T>> function ) {
+            Function<? super E, ? extends Iterable<T>> function ) {
         return FluentIterable.concat(transform(function));
     }
 
@@ -468,7 +518,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * Stream#findAny}; if it must specifically be the <i>first</i> element, {@code Stream#findFirst}.
      *
      * @throws NullPointerException if the first element is null; if this is a possibility, use {@code
-     *                              iterator().next()} or {@link Iterables#getFirst} instead.
+     *                              iterator().next()} or {@link IterUtil#getFirst} instead.
      */
     @SuppressWarnings("nullness") // Unsafe, but we can't do much about it now.
     public final Optional<E> first() {
@@ -485,11 +535,11 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * <p><b>{@code Stream} equivalent:</b> {@code stream.reduce((a, b) -> b)}.
      *
      * @throws NullPointerException if the last element is null; if this is a possibility, use {@link
-     *                              Iterables#getLast} instead.
+     *                              IterUtil#getLast} instead.
      */
     @SuppressWarnings("nullness") // Unsafe, but we can't do much about it now.
     public final Optional<E> last() {
-        // Iterables#getLast was inlined here so we don't have to throw/catch a NSEE
+        // IterUtil#getLast was inlined here so we don't have to throw/catch a NSEE
 
         // TODO(kevinb): Support a concurrently modified collection?
         Iterable<E> iterable = getDelegate();
@@ -540,7 +590,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * <p><b>{@code Stream} equivalent:</b> {@link Stream#skip} (same).
      */
     public final FluentIterable<E> skip( int numberToSkip ) {
-        return from(Iterables.skip(getDelegate(), numberToSkip));
+        return from(IterUtil.skip(getDelegate(), numberToSkip));
     }
 
     /**
@@ -555,7 +605,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      * @throws IllegalArgumentException if {@code size} is negative
      */
     public final FluentIterable<E> limit( int maxSize ) {
-        return from(Iterables.limit(getDelegate(), maxSize));
+        return from(IterUtil.limit(getDelegate(), maxSize));
     }
 
     /**
@@ -731,7 +781,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      */
     // Array.newArray(Class, int)
     /*
-     * Both the declaration of our Class<E> parameter and its usage in a call to Iterables.toArray
+     * Both the declaration of our Class<E> parameter and its usage in a call to IterUtil.toArray
      * produce a nullness error: E may be a nullable type, and our nullness checker has Class's type
      * parameter bounded to non-null types. To avoid that, we'd use Class<@Nonnull E> if we could.
      * (Granted, this is only one of many nullness-checking problems that arise from letting
@@ -793,7 +843,7 @@ public abstract class FluentIterable<E extends Object> implements Iterable<E> {
      */
     @ParametricNullness
     public final E get( int position ) {
-        return Iterables.get(getDelegate(), position);
+        return IterUtil.get(getDelegate(), position);
     }
 
     /**

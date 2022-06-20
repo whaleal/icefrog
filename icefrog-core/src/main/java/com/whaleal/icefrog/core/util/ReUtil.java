@@ -949,7 +949,7 @@ public class ReUtil {
      * @param path  字符串
      * @return
      */
-    public boolean isPattern(String path) {
+    public static boolean isPattern(String path) {
         String path0 = stripPrefix(path);
         return (path0.indexOf('*') != -1 || path0.indexOf('?') != -1);
     }

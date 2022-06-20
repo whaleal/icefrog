@@ -1,8 +1,10 @@
 package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.AbstractIterator;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.collection.TransIter;
@@ -35,14 +37,6 @@ public final class Iterators {
     private Iterators() {
     }
 
-    /**
-     * Returns the empty iterator.
-     *
-     * <p>The {@link Iterable} equivalent of this method is {@link ImmutableSet#of()}.
-     */
-    static <T extends Object> UnmodifiableIterator<T> emptyIterator() {
-        return emptyListIterator();
-    }
 
     /**
      * Returns the empty iterator.
@@ -280,21 +274,7 @@ public final class Iterators {
         return iterator.hasNext() ? getOnlyElement(iterator) : defaultValue;
     }
 
-    /**
-     * Copies an iterator's elements into an array. The iterator will be left exhausted: its {@code
-     * hasNext()} method will return {@code false}.
-     *
-     * @param iterator the iterator to copy
-     * @param type     the type of the elements
-     * @return a newly-allocated array into which all the elements of the iterator have been copied
-     */
-    // Array.newInstance(Class, int)
-    // For discussion of this signature, see the corresponding overload of *Iterables*.toArray.
-    @Deprecated
-    public static <T> T[] toArray( Iterator<T> iterator, Class<T> type ) {
-        List<T> list = ListUtil.list(false, iterator);
-        return Iterables.toArray(list, type);
-    }
+
 
     /**
      * Adds all elements in {@code iterator} to {@code collection}. The iterator will be left
@@ -434,71 +414,11 @@ public final class Iterators {
         };
     }
 
-    /**
-     * Combines two iterators into a single iterator. The returned iterator iterates across the
-     * elements in {@code a}, followed by the elements in {@code b}. The source iterators are not
-     * polled until necessary.
-     *
-     * <p>The returned iterator supports {@code remove()} when the corresponding input iterator
-     * supports it.
-     */
-    public static <T extends Object> Iterator<T> concat(
-            Iterator<? extends T> a, Iterator<? extends T> b ) {
-        checkNotNull(a);
-        checkNotNull(b);
-        return concat(consumingForArray(a, b));
-    }
 
-    /**
-     * Combines three iterators into a single iterator. The returned iterator iterates across the
-     * elements in {@code a}, followed by the elements in {@code b}, followed by the elements in
-     * {@code c}. The source iterators are not polled until necessary.
-     *
-     * <p>The returned iterator supports {@code remove()} when the corresponding input iterator
-     * supports it.
-     */
-    public static <T extends Object> Iterator<T> concat(
-            Iterator<? extends T> a, Iterator<? extends T> b, Iterator<? extends T> c ) {
-        checkNotNull(a);
-        checkNotNull(b);
-        checkNotNull(c);
-        return concat(consumingForArray(a, b, c));
-    }
 
-    /**
-     * Combines four iterators into a single iterator. The returned iterator iterates across the
-     * elements in {@code a}, followed by the elements in {@code b}, followed by the elements in
-     * {@code c}, followed by the elements in {@code d}. The source iterators are not polled until
-     * necessary.
-     *
-     * <p>The returned iterator supports {@code remove()} when the corresponding input iterator
-     * supports it.
-     */
-    public static <T extends Object> Iterator<T> concat(
-            Iterator<? extends T> a,
-            Iterator<? extends T> b,
-            Iterator<? extends T> c,
-            Iterator<? extends T> d ) {
-        checkNotNull(a);
-        checkNotNull(b);
-        checkNotNull(c);
-        checkNotNull(d);
-        return concat(consumingForArray(a, b, c, d));
-    }
 
-    /**
-     * Combines multiple iterators into a single iterator. The returned iterator iterates across the
-     * elements of each iterator in {@code inputs}. The input iterators are not polled until
-     * necessary.
-     *
-     * <p>The returned iterator supports {@code remove()} when the corresponding input iterator
-     * supports it.
-     *
-     * @throws NullPointerException if any of the provided iterators is null
-     */
-    public static <T extends Object> Iterator<T> concat( Iterator<? extends T>... inputs ) {
-        return concatNoDefensiveCopy(Arrays.copyOf(inputs, inputs.length));
-    }
+
+
 
     /**
      * Combines multiple iterators into a single iterator. The returned iterator iterates across the
@@ -514,16 +434,7 @@ public final class Iterators {
         return new ConcatenatedIterator<>(inputs);
     }
 
-    /**
-     * Concats a varargs array of iterators without making a defensive copy of the array.
-     */
-    static <T extends Object> Iterator<T> concatNoDefensiveCopy(
-            Iterator<? extends T>... inputs ) {
-        for (Iterator<? extends T> input : checkNotNull(inputs)) {
-            checkNotNull(input);
-        }
-        return concat(consumingForArray(inputs));
-    }
+
 
     /**
      * Divides an iterator into unmodifiable sublists of the given size (the final list may be
@@ -820,48 +731,15 @@ public final class Iterators {
         }
     }
 
-    /**
-     * Returns the next element in {@code iterator} or {@code defaultValue} if the iterator is empty.
-     * The {@link Iterables} analog to this method is {@link Iterables#getFirst}.
-     *
-     * @param defaultValue the default value to return if the iterator is empty
-     * @return the next element of {@code iterator} or the default value
-     * @since 7.0
-     */
+
 
     public static <T extends Object> T getNext(
             Iterator<? extends T> iterator, T defaultValue ) {
         return iterator.hasNext() ? iterator.next() : defaultValue;
     }
 
-    /**
-     * Advances {@code iterator} to the end, returning the last element.
-     *
-     * @return the last element of {@code iterator}
-     * @throws NoSuchElementException if the iterator is empty
-     */
 
-    public static <T extends Object> T getLast( Iterator<T> iterator ) {
-        while (true) {
-            T current = iterator.next();
-            if (!iterator.hasNext()) {
-                return current;
-            }
-        }
-    }
 
-    /**
-     * Advances {@code iterator} to the end, returning the last element or {@code defaultValue} if the
-     * iterator is empty.
-     *
-     * @param defaultValue the default value to return if the iterator is empty
-     * @return the last element of {@code iterator}
-     */
-
-    public static <T extends Object> T getLast(
-            Iterator<? extends T> iterator, T defaultValue ) {
-        return iterator.hasNext() ? getLast(iterator) : defaultValue;
-    }
 
     /**
      * Calls {@code next()} on {@code iterator}, either {@code numberToAdvance} times or until {@code
@@ -881,76 +759,6 @@ public final class Iterators {
         return i;
     }
 
-    /**
-     * Returns a view containing the first {@code limitSize} elements of {@code iterator}. If {@code
-     * iterator} contains fewer than {@code limitSize} elements, the returned view contains all of its
-     * elements. The returned iterator supports {@code remove()} if {@code iterator} does.
-     *
-     * @param iterator  the iterator to limit
-     * @param limitSize the maximum number of elements in the returned iterator
-     * @throws IllegalArgumentException if {@code limitSize} is negative
-     */
-    public static <T extends Object> Iterator<T> limit(
-            Iterator<T> iterator, int limitSize ) {
-        checkNotNull(iterator);
-        checkArgument(limitSize >= 0, "limit is negative");
-        return new Iterator<T>() {
-            private int count;
-
-            @Override
-            public boolean hasNext() {
-                return count < limitSize && iterator.hasNext();
-            }
-
-            @Override
-
-            public T next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                count++;
-                return iterator.next();
-            }
-
-            @Override
-            public void remove() {
-                iterator.remove();
-            }
-        };
-    }
-
-    /**
-     * Returns a view of the supplied {@code iterator} that removes each element from the supplied
-     * {@code iterator} as it is returned.
-     *
-     * <p>The provided iterator must support {@link Iterator#remove()} or else the returned iterator
-     * will fail on the first call to {@code next}.
-     *
-     * @param iterator the iterator to remove and return elements from
-     * @return an iterator that removes and returns elements from the supplied iterator
-     */
-    public static <T extends Object> Iterator<T> consumingIterator( Iterator<T> iterator ) {
-        checkNotNull(iterator);
-        return new UnmodifiableIterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
-            }
-
-            @Override
-
-            public T next() {
-                T next = iterator.next();
-                iterator.remove();
-                return next;
-            }
-
-            @Override
-            public String toString() {
-                return "Iterators.consumingIterator(...)";
-            }
-        };
-    }
 
     /**
      * Deletes and returns the next value from the iterator, or returns {@code null} if there is no
@@ -1317,6 +1125,8 @@ public final class Iterators {
         }
     }
 
+
+    @Deprecated
     private static class ConcatenatedIterator<T extends Object> implements Iterator<T> {
         /* The last iterator to return an element.  Calls to remove() go to this iterator. */
         @CheckForNull
@@ -1340,7 +1150,7 @@ public final class Iterators {
         private Deque<Iterator<? extends Iterator<? extends T>>> metaIterators;
 
         ConcatenatedIterator( Iterator<? extends Iterator<? extends T>> metaIterator ) {
-            iterator = emptyIterator();
+            iterator = IterUtil.empty();
             topMetaIterator = checkNotNull(metaIterator);
         }
 

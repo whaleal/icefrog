@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.map.MapUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -21,8 +22,8 @@ public class SortedIterablesTest extends TestCase {
   public void testSameComparator() {
     assertTrue(SortedIterables.hasSameComparator(Ordering.natural(), SetUtil.newTreeSet()));
     // Before JDK6 (including under GWT), the TreeMap keySet is a plain Set.
-    if (Maps.newTreeMap().keySet() instanceof SortedSet) {
-      assertTrue(SortedIterables.hasSameComparator(Ordering.natural(), Maps.newTreeMap().keySet()));
+    if (MapUtil.newTreeMap().keySet() instanceof SortedSet) {
+      assertTrue(SortedIterables.hasSameComparator(Ordering.natural(), MapUtil.newTreeMap().keySet()));
     }
     assertTrue(
         SortedIterables.hasSameComparator(

@@ -116,7 +116,7 @@ implementation 'com.whaleal.icefrog:icefrog-all:1.1.7'
 
 点击以下链接，下载`icefrog-all-X.X.X.jar`即可：
 
-- [Maven中央库](https://repo1.maven.org/maven2/cn/icefrog/icefrog-all/1.1.4/)
+- [Maven中央库](https://repo1.maven.org/maven2/com/whaleal/icefrog/)
 
 > 🔔️注意
 > icefrog 1.x支持JDK8+，对Android平台没有测试，不能保证所有工具类或工具方法可用。

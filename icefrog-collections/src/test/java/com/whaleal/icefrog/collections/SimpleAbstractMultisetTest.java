@@ -3,6 +3,7 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.map.MapUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
@@ -57,7 +58,7 @@ public class SimpleAbstractMultisetTest extends TestCase {
   }
 
   private static class NoRemoveMultiset<E> extends AbstractMultiset<E> implements Serializable {
-    final Map<E, Integer> backingMap = Maps.newHashMap();
+    final Map<E, Integer> backingMap = MapUtil.newHashMap();
 
     @Override
     public int size() {

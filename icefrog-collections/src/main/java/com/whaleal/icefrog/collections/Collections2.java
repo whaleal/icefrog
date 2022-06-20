@@ -54,7 +54,7 @@ public final class Collections2 {
      * <p><b>Warning:</b> {@code predicate} must be <i>consistent with equals</i>, as documented at
      * {@link Predicate#apply}. Do not provide a predicate such as {@code
      * Predicates.instanceOf(ArrayList.class)}, which is inconsistent with equals. (See {@link
-     * Iterables#filter(Iterable, Class)} for related functionality.)
+     * IterUtil#filter(Iterable, Class)} for related functionality.)
      *
      * <p><b>{@code Stream} equivalent:</b> {@link java.util.stream.Stream#filter Stream.filter}.
      */
@@ -338,7 +338,7 @@ public final class Collections2 {
 
         @Override
         public boolean isEmpty() {
-            return !Iterables.any(unfiltered, predicate);
+            return !IterUtil.any(unfiltered, predicate);
         }
 
         @Override

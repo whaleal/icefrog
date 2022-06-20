@@ -368,7 +368,7 @@ public class ConverterRegistry implements Serializable {
         defaultConverterMap.put(SoftReference.class, new ReferenceConverter(SoftReference.class));
         defaultConverterMap.put(AtomicReference.class, new AtomicReferenceConverter());
 
-        //AtomicXXXArray，since 5.4.5
+        //AtomicIntegerArray  &&  AtomicLongArray
         defaultConverterMap.put(AtomicIntegerArray.class, new AtomicIntegerArrayConverter());
         defaultConverterMap.put(AtomicLongArray.class, new AtomicLongArrayConverter());
 
