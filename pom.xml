@@ -67,8 +67,8 @@
     <!--发布的标准，这个是按照whaleal 项目内部的标准的标准来做的-->
     <licenses>
         <license>
-            <name>GNU LESSER GENERAL PUBLIC LICENSE Version 2.1</name>
-            <url>https://docs.whaleal.com/licensing/GNU_LESSER_GENERAL_PUBLIC_LICENSE_Version_2.1</url>
+            <name>Apache License Version 2.0</name>
+            <url>https://docs.whaleal.com/licensing/Apache_License_Version_2.0</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
