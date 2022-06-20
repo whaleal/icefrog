@@ -15,7 +15,7 @@ import java.util.function.Function;
  * @author wh
  * @author Looly
  * @author wh
- * @since 1.0.0
+ * @since 1.0.0size
  */
 public class MapWrapper<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable, Cloneable {
     /**
@@ -76,6 +76,7 @@ public class MapWrapper<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, S
     public V put( K key, V value ) {
         return raw.put(key, value);
     }
+
 
     @Override
     public V remove( Object key ) {

@@ -116,9 +116,8 @@ public class Hex {
      * @param hexData 十六进制字符串
      * @return byte[]
      * @throws UtilException 如果源十六进制字符数组是一个奇怪的长度，将抛出运行时异常
-     *
      */
-    public static byte[] decodeHex(CharSequence hexData) throws DecoderException {
+    public static byte[] decodeHex( CharSequence hexData ) throws DecoderException {
         if (StrUtil.isEmpty(hexData)) {
             return null;
         }
@@ -145,7 +144,6 @@ public class Hex {
 
         return out;
     }
-
 
 
     /**

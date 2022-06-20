@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 /**
  * JSON接口
  *
- * @author looly   wh
+ * @author Looly
  */
 public interface JSON extends Cloneable, Serializable {
 
@@ -182,6 +182,6 @@ public interface JSON extends Cloneable, Serializable {
 	 *
 	 */
 	default <T> T toBean(Type type, boolean ignoreError) {
-		return JSONConverter.jsonConvert(type, this, ignoreError);
+		return com.whaleal.icefrog.json.JSONConverter.jsonConvert(type, this, ignoreError);
 	}
 }

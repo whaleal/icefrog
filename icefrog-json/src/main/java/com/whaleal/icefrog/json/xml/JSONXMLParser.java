@@ -1,6 +1,10 @@
 package com.whaleal.icefrog.json.xml;
 
-import com.whaleal.icefrog.json.*;
+import com.whaleal.icefrog.json.InternalJSONUtil;
+import com.whaleal.icefrog.json.JSONException;
+import com.whaleal.icefrog.json.JSONObject;
+import com.whaleal.icefrog.json.XML;
+import com.whaleal.icefrog.json.XMLTokener;
 
 /**
  * XML解析器，将XML解析为JSON对象

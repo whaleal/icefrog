@@ -12,7 +12,7 @@ import java.util.concurrent.locks.Lock;
  * @author wh
  * @since 1.0.0
  */
-public class NoLock implements Lock , Serializable {
+public class NoLock implements Lock, Serializable {
 
     @Override
     public void lock() {

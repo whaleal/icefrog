@@ -9,6 +9,7 @@ package com.whaleal.icefrog.core.lang.caller;
  */
 public class CallerUtil {
     private static final Caller INSTANCE;
+
     static {
         INSTANCE = tryCreateCaller();
     }
@@ -45,7 +46,7 @@ public class CallerUtil {
      * @param depth 层级。0表示{@link CallerUtil}本身，1表示调用{@link CallerUtil}的类，2表示调用者的调用者，依次类推
      * @return 第几级调用者
      */
-    public static Class<?> getCaller(int depth) {
+    public static Class<?> getCaller( int depth ) {
         return INSTANCE.getCaller(depth);
     }
 
@@ -55,7 +56,7 @@ public class CallerUtil {
      * @param clazz 调用者类
      * @return 是否被调用
      */
-    public static boolean isCalledBy(Class<?> clazz) {
+    public static boolean isCalledBy( Class<?> clazz ) {
         return INSTANCE.isCalledBy(clazz);
     }
 
@@ -64,12 +65,11 @@ public class CallerUtil {
      *
      * @param isFullName 是否返回全名，全名包括方法所在类的全路径名
      * @return 调用此方法的方法名
-     *
      */
-    public static String getCallerMethodName(boolean isFullName){
+    public static String getCallerMethodName( boolean isFullName ) {
         final StackTraceElement stackTraceElement = Thread.currentThread().getStackTrace()[2];
         final String methodName = stackTraceElement.getMethodName();
-        if(false == isFullName){
+        if (false == isFullName) {
             return methodName;
         }
 
@@ -85,7 +85,7 @@ public class CallerUtil {
         Caller caller;
         try {
             caller = new SecurityManagerCaller();
-            if(null != caller.getCaller() && null != caller.getCallerCaller()) {
+            if (null != caller.getCaller() && null != caller.getCallerCaller()) {
                 return caller;
             }
         } catch (Throwable e) {

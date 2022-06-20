@@ -16,8 +16,8 @@ import java.util.function.Function;
  */
 public class TransIter<F, T> implements Iterator<T> {
 
-    private final Iterator<? extends F> backingIterator;
-    private final Function<? super F, ? extends T> func;
+    protected final Iterator<? extends F> backingIterator;
+    protected final Function<? super F, ? extends T> func;
 
     /**
      * 构造

@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 public class ArrayIter<E> implements Iterator<E>, Iterable<E>, Serializable {
     private static final long serialVersionUID = 1L;
 
+    public ArrayIter<Object>  EMPTY  = new ArrayIter<>(new Object[0]);
     /**
      * 数组
      */

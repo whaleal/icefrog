@@ -1,31 +1,32 @@
-
 package com.whaleal.icefrog.collections;
 
 
 import java.io.Serializable;
 
-/** An ordering that uses the natural order of the string representation of the values. */
+/**
+ * An ordering that uses the natural order of the string representation of the values.
+ */
 
 
 final class UsingToStringOrdering extends Ordering<Object> implements Serializable {
-  static final UsingToStringOrdering INSTANCE = new UsingToStringOrdering();
+    static final UsingToStringOrdering INSTANCE = new UsingToStringOrdering();
+    private static final long serialVersionUID = 0;
 
-  @Override
-  public int compare(Object left, Object right) {
-    return left.toString().compareTo(right.toString());
-  }
+    private UsingToStringOrdering() {
+    }
 
-  // preserve singleton-ness, so equals() and hashCode() work correctly
-  private Object readResolve() {
-    return INSTANCE;
-  }
+    @Override
+    public int compare( Object left, Object right ) {
+        return left.toString().compareTo(right.toString());
+    }
 
-  @Override
-  public String toString() {
-    return "Ordering.usingToString()";
-  }
+    // preserve singleton-ness, so equals() and hashCode() work correctly
+    private Object readResolve() {
+        return INSTANCE;
+    }
 
-  private UsingToStringOrdering() {}
-
-  private static final long serialVersionUID = 0;
+    @Override
+    public String toString() {
+        return "Ordering.usingToString()";
+    }
 }

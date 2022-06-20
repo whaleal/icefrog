@@ -68,7 +68,7 @@ public class ObjectUtilTest {
 
         Assert.assertFalse(isNull1);
         Assert.assertFalse(equals);
-        
+
     }
 
    /* @Test

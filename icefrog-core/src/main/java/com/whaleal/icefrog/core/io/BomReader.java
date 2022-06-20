@@ -1,7 +1,6 @@
 package com.whaleal.icefrog.core.io;
 
 
-
 import java.io.*;
 
 import static com.whaleal.icefrog.core.lang.Precondition.notNull;
@@ -24,33 +23,32 @@ import static com.whaleal.icefrog.core.lang.Precondition.notNull;
  * </code>
  *
  * @author looly
- *
  */
 public class BomReader extends Reader {
 
-	private InputStreamReader reader;
+    private InputStreamReader reader;
 
-	/**
-	 * 构造
-	 *
-	 * @param in 流
-	 */
-	public BomReader( InputStream in) {
-		notNull(in, "InputStream must be not null!");
-		final BOMInputStream bin = (in instanceof BOMInputStream) ? (BOMInputStream) in : new BOMInputStream(in);
-		try {
-			this.reader = new InputStreamReader(bin, bin.getCharset());
-		} catch (UnsupportedEncodingException ignore) {
-		}
-	}
+    /**
+     * 构造
+     *
+     * @param in 流
+     */
+    public BomReader( InputStream in ) {
+        notNull(in, "InputStream must be not null!");
+        final BOMInputStream bin = (in instanceof BOMInputStream) ? (BOMInputStream) in : new BOMInputStream(in);
+        try {
+            this.reader = new InputStreamReader(bin, bin.getCharset());
+        } catch (UnsupportedEncodingException ignore) {
+        }
+    }
 
-	@Override
-	public int read(char[] cbuf, int off, int len) throws IOException {
-		return reader.read(cbuf, off, len);
-	}
+    @Override
+    public int read( char[] cbuf, int off, int len ) throws IOException {
+        return reader.read(cbuf, off, len);
+    }
 
-	@Override
-	public void close() throws IOException {
-		reader.close();
-	}
+    @Override
+    public void close() throws IOException {
+        reader.close();
+    }
 }

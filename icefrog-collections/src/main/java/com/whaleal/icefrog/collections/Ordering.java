@@ -2,6 +2,7 @@ package com.whaleal.icefrog.collections;
 
 import com.whaleal.icefrog.core.collection.ListUtil;
 import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
@@ -729,7 +730,7 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
      * only when the resulting list may need further modification, or may contain {@code null}. The
      * input is not modified. The returned list is serializable and has random access.
      *
-     * <p>Unlike {@link Sets#newTreeSet(Iterable)}, this method does not discard elements that are
+     * <p>Unlike {@link SetUtil#newTreeSet(Iterable)}, this method does not discard elements that are
      * duplicates according to the comparator. The sort performed is <i>stable</i>, meaning that such
      * elements will appear in the returned list in the same order they appeared in {@code elements}.
      *
@@ -742,7 +743,7 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
     // TODO(kevinb): rerun benchmarks including new options
     public <E extends T> List<E> sortedCopy( Iterable<E> elements ) {
         @SuppressWarnings("unchecked") // does not escape, and contains only E's
-        E[] array = (E[]) Iterables.toArray(elements);
+        E[] array = (E[]) ArrayUtil.toArray(elements);
         Arrays.sort(array, this);
         return ListUtil.list(false, Arrays.asList(array));
     }
@@ -751,7 +752,7 @@ public abstract class Ordering<T extends Object> implements Comparator<T> {
      * Returns an <b>immutable</b> list containing {@code elements} sorted by this ordering. The input
      * is not modified.
      *
-     * <p>Unlike {@link Sets#newTreeSet(Iterable)}, this method does not discard elements that are
+     * <p>Unlike {@link SetUtil#newTreeSet(Iterable)}, this method does not discard elements that are
      * duplicates according to the comparator. The sort performed is <i>stable</i>, meaning that such
      * elements will appear in the returned list in the same order they appeared in {@code elements}.
      *

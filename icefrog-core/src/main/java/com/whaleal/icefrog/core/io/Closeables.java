@@ -81,7 +81,7 @@ public final class Closeables {
      *
      * @param inputStream the input stream to be closed, or {@code null} in which case this method
      *                    does nothing
-     * .0
+     *                    .0
      */
     public static void closeQuietly( InputStream inputStream ) {
         try {
@@ -102,7 +102,7 @@ public final class Closeables {
      * flush all bytes to the underlying resource.
      *
      * @param reader the reader to be closed, or {@code null} in which case this method does nothing
-     * .0
+     *               .0
      */
     public static void closeQuietly( Reader reader ) {
         try {

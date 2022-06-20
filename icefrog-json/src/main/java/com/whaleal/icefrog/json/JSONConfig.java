@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * JSON配置项
  *
- * @author looly   wh
+ * @author looly
  *
  */
 public class JSONConfig implements Serializable {

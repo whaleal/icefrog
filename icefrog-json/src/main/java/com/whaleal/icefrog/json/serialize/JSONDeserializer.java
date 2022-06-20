@@ -5,7 +5,7 @@ import com.whaleal.icefrog.json.JSON;
 /**
  * JSON反序列话自定义实现类
  * 
- * @author looly   wh
+ * @author Looly
  *
  * @param <T> 反序列化后的类型
  */

@@ -49,7 +49,7 @@ public abstract class AbstractIterator<T extends Object> implements Iterator<T> 
     private T next;
 
     /**
-     * Constructor for use by subclasses.
+     * 用于继承的构造方法
      */
     protected AbstractIterator() {
     }
@@ -97,7 +97,7 @@ public abstract class AbstractIterator<T extends Object> implements Iterator<T> 
     /**
      * 判断是否还有下一个元素
      *
-     * @return  返回 是否有
+     * @return 返回 是否有
      */
     // TODO(kak): Should we remove this? Some people are using it to prefetch?
     @Override

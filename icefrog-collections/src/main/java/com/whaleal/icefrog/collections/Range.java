@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.collections;
 
+import com.whaleal.icefrog.core.collection.IterUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 
 import javax.annotation.CheckForNull;
@@ -407,7 +408,7 @@ public final class Range<C extends Comparable> extends RangeGwtSerializationDepe
      * this range.
      */
     public boolean containsAll( Iterable<? extends C> values ) {
-        if (Iterables.isEmpty(values)) {
+        if (IterUtil.isEmpty(values)) {
             return true;
         }
 

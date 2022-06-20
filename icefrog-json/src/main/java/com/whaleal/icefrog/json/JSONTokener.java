@@ -2,7 +2,12 @@ package com.whaleal.icefrog.json;
 
 import com.whaleal.icefrog.core.util.StrUtil;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  * JSON解析器，用于将JSON字符串解析为JSONObject或者JSONArray
@@ -40,7 +45,7 @@ public class JSONTokener {
 	/**
 	 * JSON配置
 	 */
-	private final JSONConfig config;
+	private final com.whaleal.icefrog.json.JSONConfig config;
 
 	// ------------------------------------------------------------------------------------ Constructor start
 
@@ -50,7 +55,7 @@ public class JSONTokener {
 	 * @param reader Reader
 	 * @param config JSON配置
 	 */
-	public JSONTokener(Reader reader, JSONConfig config) {
+	public JSONTokener(Reader reader, com.whaleal.icefrog.json.JSONConfig config) {
 		this.reader = reader.markSupported() ? reader : new BufferedReader(reader);
 		this.eof = false;
 		this.usePrevious = false;
@@ -67,7 +72,7 @@ public class JSONTokener {
 	 * @param inputStream InputStream
 	 * @param config      JSON配置
 	 */
-	public JSONTokener(InputStream inputStream, JSONConfig config) throws JSONException {
+	public JSONTokener(InputStream inputStream, com.whaleal.icefrog.json.JSONConfig config) throws com.whaleal.icefrog.json.JSONException {
 		this(new InputStreamReader(inputStream), config);
 	}
 
@@ -77,7 +82,7 @@ public class JSONTokener {
 	 * @param s      JSON字符串
 	 * @param config JSON配置
 	 */
-	public JSONTokener(CharSequence s, JSONConfig config) {
+	public JSONTokener(CharSequence s, com.whaleal.icefrog.json.JSONConfig config) {
 		this(new StringReader(StrUtil.str(s)), config);
 	}
 	// ------------------------------------------------------------------------------------ Constructor end
@@ -85,9 +90,9 @@ public class JSONTokener {
 	/**
 	 * 将标记回退到第一个字符，重新开始解析新的JSON
 	 */
-	public void back() throws JSONException {
+	public void back() throws com.whaleal.icefrog.json.JSONException {
 		if (this.usePrevious || this.index <= 0) {
-			throw new JSONException("Stepping back two steps is not supported");
+			throw new com.whaleal.icefrog.json.JSONException("Stepping back two steps is not supported");
 		}
 		this.index -= 1;
 		this.character -= 1;
@@ -107,7 +112,7 @@ public class JSONTokener {
 	 *
 	 * @return 如果未达到结尾返回true，否则false
 	 */
-	public boolean more() throws JSONException {
+	public boolean more() throws com.whaleal.icefrog.json.JSONException {
 		this.next();
 		if (this.end()) {
 			return false;
@@ -120,9 +125,9 @@ public class JSONTokener {
 	 * 获得源字符串中的下一个字符
 	 *
 	 * @return 下一个字符, or 0 if past the end of the source string.
-	 * @throws JSONException JSON异常，包装IO异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON异常，包装IO异常
 	 */
-	public char next() throws JSONException {
+	public char next() throws com.whaleal.icefrog.json.JSONException {
 		int c;
 		if (this.usePrevious) {
 			this.usePrevious = false;
@@ -131,7 +136,7 @@ public class JSONTokener {
 			try {
 				c = this.reader.read();
 			} catch (IOException exception) {
-				throw new JSONException(exception);
+				throw new com.whaleal.icefrog.json.JSONException(exception);
 			}
 
 			if (c <= 0) { // End of stream
@@ -158,9 +163,9 @@ public class JSONTokener {
 	 *
 	 * @param c 被匹配的字符
 	 * @return The character 匹配到的字符
-	 * @throws JSONException 如果不匹配抛出此异常
+	 * @throws com.whaleal.icefrog.json.JSONException 如果不匹配抛出此异常
 	 */
-	public char next(char c) throws JSONException {
+	public char next(char c) throws com.whaleal.icefrog.json.JSONException {
 		char n = this.next();
 		if (n != c) {
 			throw this.syntaxError("Expected '" + c + "' and instead saw '" + n + "'");
@@ -173,9 +178,9 @@ public class JSONTokener {
 	 *
 	 * @param n 字符数
 	 * @return 获得的n个字符组成的字符串
-	 * @throws JSONException 如果源中余下的字符数不足以提供所需的字符数，抛出此异常
+	 * @throws com.whaleal.icefrog.json.JSONException 如果源中余下的字符数不足以提供所需的字符数，抛出此异常
 	 */
-	public String next(int n) throws JSONException {
+	public String next(int n) throws com.whaleal.icefrog.json.JSONException {
 		if (n == 0) {
 			return "";
 		}
@@ -196,9 +201,9 @@ public class JSONTokener {
 	 * 获得下一个字符，跳过空白符
 	 *
 	 * @return 获得的字符，0表示没有更多的字符
-	 * @throws JSONException 获得下一个字符时抛出的异常
+	 * @throws com.whaleal.icefrog.json.JSONException 获得下一个字符时抛出的异常
 	 */
-	public char nextClean() throws JSONException {
+	public char nextClean() throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		while (true) {
 			c = this.next();
@@ -214,9 +219,9 @@ public class JSONTokener {
 	 *
 	 * @param quote 字符引号, 包括 <code>"</code>（双引号） 或 <code>'</code>（单引号）。
 	 * @return 截止到引号前的字符串
-	 * @throws JSONException 出现无结束的字符串时抛出此异常
+	 * @throws com.whaleal.icefrog.json.JSONException 出现无结束的字符串时抛出此异常
 	 */
-	public String nextString(char quote) throws JSONException {
+	public String nextString(char quote) throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		StringBuilder sb = new StringBuilder();
 		while (true) {
@@ -273,7 +278,7 @@ public class JSONTokener {
 	 * @param delimiter 分隔符
 	 * @return 字符串
 	 */
-	public String nextTo(char delimiter) throws JSONException {
+	public String nextTo(char delimiter) throws com.whaleal.icefrog.json.JSONException {
 		StringBuilder sb = new StringBuilder();
 		for (; ; ) {
 			char c = this.next();
@@ -293,7 +298,7 @@ public class JSONTokener {
 	 * @param delimiters A set of delimiter characters.
 	 * @return A string, trimmed.
 	 */
-	public String nextTo(String delimiters) throws JSONException {
+	public String nextTo(String delimiters) throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		StringBuilder sb = new StringBuilder();
 		for (; ; ) {
@@ -312,9 +317,9 @@ public class JSONTokener {
 	 * 获得下一个值，值类型可以是Boolean, Double, Integer, JSONArray, JSONObject, Long, or String, or the JSONObject.NULL
 	 *
 	 * @return Boolean, Double, Integer, JSONArray, JSONObject, Long, or String, or the JSONObject.NULL
-	 * @throws JSONException 语法错误
+	 * @throws com.whaleal.icefrog.json.JSONException 语法错误
 	 */
-	public Object nextValue() throws JSONException {
+	public Object nextValue() throws com.whaleal.icefrog.json.JSONException {
 		char c = this.nextClean();
 		String string;
 
@@ -327,7 +332,7 @@ public class JSONTokener {
 				return new JSONObject(this, this.config);
 			case '[':
 				this.back();
-				return new JSONArray(this, this.config);
+				return new com.whaleal.icefrog.json.JSONArray(this, this.config);
 		}
 
 		/*
@@ -347,7 +352,7 @@ public class JSONTokener {
 		if (0 == string.length()) {
 			throw this.syntaxError("Missing value");
 		}
-		return InternalJSONUtil.stringToValue(string);
+		return com.whaleal.icefrog.json.InternalJSONUtil.stringToValue(string);
 	}
 
 	/**
@@ -356,7 +361,7 @@ public class JSONTokener {
 	 * @param to 需要定位的字符
 	 * @return 定位的字符，如果字符未找到返回0
 	 */
-	public char skipTo(char to) throws JSONException {
+	public char skipTo(char to) throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		try {
 			long startIndex = this.index;
@@ -374,7 +379,7 @@ public class JSONTokener {
 				}
 			} while (c != to);
 		} catch (IOException exception) {
-			throw new JSONException(exception);
+			throw new com.whaleal.icefrog.json.JSONException(exception);
 		}
 		this.back();
 		return c;
@@ -387,17 +392,17 @@ public class JSONTokener {
 	 * @param message 错误消息
 	 * @return A JSONException object, suitable for throwing
 	 */
-	public JSONException syntaxError(String message) {
-		return new JSONException(message + this);
+	public com.whaleal.icefrog.json.JSONException syntaxError( String message) {
+		return new com.whaleal.icefrog.json.JSONException(message + this);
 	}
 
 	/**
-	 * 转为 {@link JSONArray}
+	 * 转为 {@link com.whaleal.icefrog.json.JSONArray}
 	 *
-	 * @return {@link JSONArray}
+	 * @return {@link com.whaleal.icefrog.json.JSONArray}
 	 */
-	public JSONArray toJSONArray() {
-		JSONArray jsonArray = new JSONArray(this.config);
+	public com.whaleal.icefrog.json.JSONArray toJSONArray() {
+		com.whaleal.icefrog.json.JSONArray jsonArray = new com.whaleal.icefrog.json.JSONArray(this.config);
 		if (this.nextClean() != '[') {
 			throw this.syntaxError("A JSONArray text must start with '['");
 		}

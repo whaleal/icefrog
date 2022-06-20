@@ -9,7 +9,14 @@ import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.CharUtil;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.StrUtil;
-import com.whaleal.icefrog.json.*;
+import com.whaleal.icefrog.json.JSON;
+import com.whaleal.icefrog.json.JSONArray;
+import com.whaleal.icefrog.json.JSONConfig;
+import com.whaleal.icefrog.json.JSONException;
+import com.whaleal.icefrog.json.JSONNull;
+import com.whaleal.icefrog.json.JSONObject;
+import com.whaleal.icefrog.json.JSONString;
+import com.whaleal.icefrog.json.JSONUtil;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -23,7 +30,7 @@ import java.util.Map;
  * JSON数据写出器<br>
  * 通过简单的append方式将JSON的键值对等信息写出到{@link Writer}中。
  *
- * @author looly   wh
+ * @author looly
  *
  */
 public class JSONWriter extends Writer {

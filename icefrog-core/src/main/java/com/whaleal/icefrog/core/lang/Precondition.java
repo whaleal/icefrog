@@ -16,94 +16,7 @@ import static com.whaleal.icefrog.core.util.StrUtil.lenientFormat;
 /**
  * 断言<br>
  * 断言某些对象或值是否符合规定，否则抛出异常。经常用于做变量检查
- * Static convenience methods that help a method or constructor check whether it was invoked
- * correctly (that is, whether its <i>preconditions</i> were met).
- *
- * <p>If the precondition is not met, the {@code Preconditions} method throws an unchecked exception
- * of a specified type, which helps the method in which the exception was thrown communicate that
- * its caller has made a mistake. This allows constructs such as
- *
- * <pre>{@code
- * public static double sqrt(double value) {
- *   if (value < 0) {
- *     throw new IllegalArgumentException("input is negative: " + value);
- *   }
- *   // calculate square root
- * }
- * }</pre>
- *
- * <p>to be replaced with the more compact
- *
- * <pre>{@code
- * public static double sqrt(double value) {
- *   checkArgument(value >= 0, "input is negative: %s", value);
- *   // calculate square root
- * }
- * }</pre>
- *
- * <p>so that a hypothetical bad caller of this method, such as:
- *
- * <pre>{@code
- * void exampleBadCaller() {
- *   double d = sqrt(-1.0);
- * }
- * }</pre>
- *
- * <p>would be flagged as having called {@code sqrt()} with an illegal argument.
- *
- * <h3>Performance</h3>
- *
- * <p>Avoid passing message arguments that are expensive to compute; your code will always compute
- * them, even though they usually won't be needed. If you have such arguments, use the conventional
- * if/throw idiom instead.
- *
- * <p>Depending on your message arguments, memory may be allocated for boxing and varargs array
- * creation. However, the methods of this class have a large number of overloads that prevent such
- * allocations in many icefrog cases.
- *
- * <p>The message string is not formatted unless the exception will be thrown, so the cost of the
- * string formatting itself should not be a concern.
- *
- * <p>As with any performance concerns, you should consider profiling your code (in a production
- * environment if possible) before spending a lot of effort on tweaking a particular element.
- *
- * <h3>Other types of preconditions</h3>
- *
- * <p>Not every type of precondition failure is supported by these methods. Continue to throw
- * standard JDK exceptions such as {@link java.util.NoSuchElementException} or {@link
- * UnsupportedOperationException} in the situations they are intended for.
- *
- * <h3>Non-preconditions</h3>
- *
- * <p>It is of course possible to use the methods of this class to check for invalid conditions
- * which are <i>not the caller's fault</i>. Doing so is <b>not recommended</b> because it is
- * misleading to future readers of the code and of stack traces. See <a
- * href="https://github.com/google/guava/wiki/ConditionalFailuresExplained">Conditional failures
- * explained</a> in the Guava User Guide for more advice. Notably,  offers assertions
- * similar to those in this class for non-precondition checks.
- *
- * <h3>{@code java.util.Objects.requireNonNull()}</h3>
- *
- * <p>Projects which use {@code com.google.icefrog} should generally avoid the use of {@link
- * java.util.Objects#requireNonNull(Object)}. Instead, use whichever of {@link
- * #checkNotNull(Object)} or  is appropriate to the situation.
- * (The same goes for the message-accepting overloads.)
- *
- * <h3>Only {@code %s} is supported</h3>
- *
- * <p>{@code Preconditions} uses {@link StrUtil#lenientFormat} to format error message template
- * StrUtil. This only supports the {@code "%s"} specifier, not the full range of {@link
- * java.util.Formatter} specifiers. However, note that if the number of arguments does not match the
- * number of occurrences of {@code "%s"} in the format string, {@code Preconditions} will still
- * behave as expected, and will still include all argument values in the error message; the message
- * will simply not be formatted exactly as intended.
- *
- * <h3>More information</h3>
- *
- * <p>See the Guava User Guide on <a
- * href="https://github.com/google/guava/wiki/PreconditionsExplained">using {@code
- * Preconditions}</a>.
- *
+
  * @author Looly
  * @author wh
  */
@@ -1881,7 +1794,7 @@ public class Precondition {
              * TODO(cpovirk): Consider removing  here, as we've done with the other methods'
              * errorMessageTemplate parameters: It it unlikely that callers intend for their string
              * template to be null (though we do handle that case gracefully at runtime). I've left this
-             * one as it is because one of our users has defined a wrapper API around Preconditions,
+             * one as it is because one of our users has defined a wrapper API around Precondition,
              * declaring a checkState method that accepts a possibly null template. So we'd need to update
              * that user first.
              */
@@ -2284,7 +2197,7 @@ public class Precondition {
     }
 
     /*
-     * Preconditions.checkNotNull is *intended* for performing eager null checks on parameters that a
+     * Precondition.checkNotNull is *intended* for performing eager null checks on parameters that a
      * nullness checker can already "prove" are non-null. That means that the first parameter to
      * checkNotNull *should* be annotated to require it to be non-null.
      *

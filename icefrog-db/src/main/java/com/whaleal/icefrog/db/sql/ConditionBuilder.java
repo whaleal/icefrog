@@ -28,6 +28,7 @@ public class ConditionBuilder implements Builder<String> {
      * 占位符对应的值列表
      */
     private List<Object> paramValues;
+
     /**
      * 构造
      *

@@ -4,7 +4,7 @@ package com.whaleal.icefrog.json;
  * {@code JSONString}接口定义了一个{@code toJSONString()}<br>
  * 实现此接口的类可以通过实现{@code toJSONString()}方法来改变转JSON字符串的方式。
  *
- * @author looly   wh
+ * @author Looly
  *
  */
 public interface JSONString {

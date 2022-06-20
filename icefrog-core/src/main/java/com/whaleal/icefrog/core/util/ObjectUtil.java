@@ -27,7 +27,6 @@ public class ObjectUtil {
     private static final String ARRAY_END = "}";
     private static final String EMPTY_ARRAY = ARRAY_START + ARRAY_END;
     private static final String ARRAY_ELEMENT_SEPARATOR = ", ";
-    private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
     private ObjectUtil() {
     }
@@ -215,11 +214,10 @@ public class ObjectUtil {
      * 需要两遍校验 ，因为在 json  中
      * 存在 str != null 但是 str.equals(null) when using org.json
      *
-     * @see Objects#equals(Object, Object)
-     * {@code Objects.equals(obj ,null);}
-     *
      * @param obj 对象
      * @return 是否为null
+     * @see Objects#equals(Object, Object)
+     * {@code Objects.equals(obj ,null);}
      */
     public static boolean isNull( Object obj ) {
         //noinspection ConstantConditions
@@ -691,26 +689,24 @@ public class ObjectUtil {
     }
 
     /**
-     * Determine whether the given object is an array:
-     * either an Object array or a primitive array.
+     * 对象是否为数组对象
      *
-     * @param obj the object to check
-     * @return boolean
+     * @param obj 对象
+     * @return 是否为数组对象，如果为{@code null} 返回false
      */
     public static boolean isArray( Object obj ) {
-        return (obj != null && obj.getClass().isArray());
+        return ArrayUtil.isArray(obj);
     }
 
     /**
-     * Determine whether the given array is empty:
-     * i.e. {@code null} or of zero length.
+     * 数组是否为空
      *
-     * @param array the array to check
-     * @return boolean
-     * @see #isEmpty(Object)
+     * @param <T>   数组元素类型
+     * @param array 数组
+     * @return 是否为空
      */
-    public static boolean isEmpty( Object[] array ) {
-        return (array == null || array.length == 0);
+    public static <T> boolean isEmpty( T[] array ) {
+        return ArrayUtil.isEmpty(array);
     }
 
 
@@ -805,64 +801,8 @@ public class ObjectUtil {
                 enumValues.getClass().getComponentType().getName());
     }
 
-    /**
-     * Append the given object to the given array, returning a new array
-     * consisting of the input array contents plus the given object.
-     *
-     * @param array the array to append to (can be {@code null})
-     * @param obj   the object to append
-     * @param <A>   A
-     * @param <O>   O
-     * @return the new array (of the same component type; never {@code null})
-     */
-    public static <A, O extends A> A[] addObjectToArray( A[] array, O obj ) {
-        Class<?> compType = Object.class;
-        if (array != null) {
-            compType = array.getClass().getComponentType();
-        } else if (obj != null) {
-            compType = obj.getClass();
-        }
-        int newArrLength = (array != null ? array.length + 1 : 1);
-        @SuppressWarnings("unchecked")
-        A[] newArr = (A[]) Array.newInstance(compType, newArrLength);
-        if (array != null) {
-            System.arraycopy(array, 0, newArr, 0, array.length);
-        }
-        newArr[newArr.length - 1] = obj;
-        return newArr;
-    }
 
-    /**
-     * Convert the given array (which may be a primitive array) to an
-     * object array (if necessary of primitive wrapper objects).
-     * <p>A {@code null} source value will be converted to an
-     * empty Object array.
-     *
-     * @param source the (potentially primitive) array
-     * @return the corresponding object array (never {@code null})
-     * @throws IllegalArgumentException if the parameter is not an array
-     */
-    public static Object[] toObjectArray( Object source ) {
-        if (source instanceof Object[]) {
-            return (Object[]) source;
-        }
-        if (source == null) {
-            return EMPTY_OBJECT_ARRAY;
-        }
-        if (!source.getClass().isArray()) {
-            throw new IllegalArgumentException("Source is not an array: " + source);
-        }
-        int length = Array.getLength(source);
-        if (length == 0) {
-            return EMPTY_OBJECT_ARRAY;
-        }
-        Class<?> wrapperType = Array.get(source, 0).getClass();
-        Object[] newArray = (Object[]) Array.newInstance(wrapperType, length);
-        for (int i = 0; i < length; i++) {
-            newArray[i] = Array.get(source, i);
-        }
-        return newArray;
-    }
+
 
 
     //---------------------------------------------------------------------
@@ -1256,8 +1196,7 @@ public class ObjectUtil {
             return nullSafeToString((short[]) obj);
         }
         String str = obj.toString();
-        //return (str != null ? str : EMPTY_STRING);
-        return str;
+        return (str != null ? str : EMPTY_STRING);
     }
 
     /**

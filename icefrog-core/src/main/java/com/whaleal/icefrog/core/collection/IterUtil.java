@@ -7,17 +7,20 @@ import com.whaleal.icefrog.core.lang.Precondition;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.lang.func.Func1;
 import com.whaleal.icefrog.core.map.MapUtil;
+import com.whaleal.icefrog.core.stream.StreamUtil;
 import com.whaleal.icefrog.core.text.StrJoiner;
+import com.whaleal.icefrog.core.util.ArrayUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.util.PredicateUtil;
 import com.whaleal.icefrog.core.util.ReflectUtil;
 
 import javax.annotation.CheckForNull;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.function.Function;
+import java.util.stream.Stream;
 
-import static com.whaleal.icefrog.core.lang.Precondition.checkArgument;
-import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
+import static com.whaleal.icefrog.core.lang.Precondition.*;
 
 /**
  * {@link Iterable} 和 {@link Iterator} 相关工具类
@@ -695,7 +698,32 @@ public class IterUtil {
      * @return 编辑后的集合
      * @since 1.0.0
      */
-    public static <T extends Iterable<E>, E> T filter( T iter, Predicate<E> predicate ) {
+    public static < T extends Collection<E>, E> T filter( T iter, Predicate<E> predicate ) {
+        if (null == iter) {
+            return null;
+        }
+
+        filter(iter.iterator(), predicate);
+
+        return iter;
+    }
+
+    /**
+     * 过滤集合，此方法在原集合上直接修改<br>
+     * 通过实现Filter接口，完成元素的过滤，这个Filter实现可以实现以下功能：
+     *
+     * <pre>
+     * 1、过滤出需要的对象，{@link Predicate#apply(Object)}方法返回false的对象将被使用{@link Iterator#remove()}方法移除
+     * </pre>
+     *
+     *
+     * @param <E>       迭代器中的元素类型
+     * @param iter      可迭代的 Iterable
+     * @param predicate 过滤器接口
+     * @return 编辑后的集合
+     * @since 1.2.0
+     */
+    public static <E> Iterable<E> filter( Iterable<E> iter, Predicate<E> predicate ) {
         if (null == iter) {
             return null;
         }
@@ -994,7 +1022,6 @@ public class IterUtil {
      * @param removeFrom the iterator to (potentially) remove elements from
      * @param predicate  a predicate that determines whether an element should be removed
      * @return {@code true} if any elements were removed from the iterator
-     *
      */
 
     public static <T extends Object> boolean removeIf(
@@ -1208,6 +1235,16 @@ public class IterUtil {
         return count;
     }
 
+    /**
+     * Returns {@code true} if any element in {@code iterable} satisfies the predicate.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@link Stream#anyMatch}.
+     */
+    public static <T extends Object> boolean any(
+            Iterable<T> iterable, Predicate<? super T> predicate ) {
+        return any(iterable.iterator(), predicate);
+    }
+
 
     /**
      * Returns {@code true} if one or more elements returned by {@code iterator} satisfy the given
@@ -1216,6 +1253,16 @@ public class IterUtil {
     public static <T extends Object> boolean any(
             Iterator<T> iterator, Predicate predicate ) {
         return indexOf(iterator, predicate) != -1;
+    }
+    /**
+     * Returns {@code true} if every element in {@code iterable} satisfies the predicate. If {@code
+     * iterable} is empty, {@code true} is returned.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@link Stream#allMatch}.
+     */
+    public static <T extends Object> boolean all(
+            Iterable<T> iterable, Predicate<? super T> predicate ) {
+        return all(iterable.iterator(), predicate);
     }
 
     /**
@@ -1265,8 +1312,6 @@ public class IterUtil {
      *
      * <p><b>Warning:</b> avoid using a {@code predicate} that matches {@code null}. If {@code null}
      * is matched in {@code iterator}, a NullPointerException will be thrown.
-     *
-     *
      */
     public static <T> Optional<T> tryFind( Iterator<T> iterator, Predicate predicate ) {
         checkNotNull(iterator);
@@ -1291,8 +1336,6 @@ public class IterUtil {
      * <p>If -1 is returned, the iterator will be left exhausted: its {@code hasNext()} method will
      * return {@code false}. Otherwise, the iterator will be set to the element which satisfies the
      * {@code predicate}.
-     *
-     *
      */
     public static <T extends Object> int indexOf(
             Iterator<T> iterator, Predicate predicate ) {
@@ -1392,7 +1435,6 @@ public class IterUtil {
      *
      * @param defaultValue the default value to return if the iterator is empty
      * @return the last element of {@code iterator}
-     *
      */
 
     public static <T extends Object> T getLast(
@@ -1405,7 +1447,6 @@ public class IterUtil {
      * hasNext()} returns {@code false}, whichever comes first.
      *
      * @return the number of elements the iterator was advanced
-     *
      */
 
     public static int advance( Iterator<?> iterator, int numberToAdvance ) {
@@ -1427,7 +1468,6 @@ public class IterUtil {
      * @param iterator  the iterator to limit
      * @param limitSize the maximum number of elements in the returned iterator
      * @throws IllegalArgumentException if {@code limitSize} is negative
-     *
      */
     public static <T extends Object> Iterator<T> limit(
             final Iterator<T> iterator, final int limitSize ) {
@@ -1473,6 +1513,12 @@ public class IterUtil {
     }
 
     /**
+     * Returns the first element in {@code iterable} that satisfies the given predicate, or {@code
+     * defaultValue} if none found. Note that this can usually be handled more naturally using {@code
+     * tryFind(iterable, predicate).or(defaultValue)}.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@code
+     * stream.filter(predicate).findFirst().orElse(defaultValue)}
      * @param iterable
      * @param predicate
      * @param defaultValue
@@ -1523,6 +1569,269 @@ public class IterUtil {
             }
         }
         throw new NoSuchElementException();
+    }
+
+
+    /**
+     * Returns the element at the specified position in an iterable.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@code stream.skip(position).findFirst().get()} (throws
+     * {@code NoSuchElementException} if out of bounds)
+     *
+     * @param position position of the element to return
+     * @return the element at the specified position in {@code iterable}
+     * @throws IndexOutOfBoundsException if {@code position} is negative or greater than or equal to
+     *                                   the size of {@code iterable}
+     */
+    public static <T extends Object> T get( Iterable<T> iterable, int position ) {
+        checkNotNull(iterable);
+        return (iterable instanceof List)
+                ? ((List<T>) iterable).get(position)
+                : get(iterable.iterator(), position);
+    }
+
+    /**
+     * Returns the element at the specified position in an iterable or a default value otherwise.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@code
+     * stream.skip(position).findFirst().orElse(defaultValue)} (returns the default value if the index
+     * is out of bounds)
+     *
+     * @param position     position of the element to return
+     * @param defaultValue the default value to return if {@code position} is greater than or equal to
+     *                     the size of the iterable
+     * @return the element at the specified position in {@code iterable} or {@code defaultValue} if
+     * {@code iterable} contains fewer than {@code position + 1} elements.
+     * @throws IndexOutOfBoundsException if {@code position} is negative
+     */
+
+    public static <T extends Object> T get(
+            Iterable<? extends T> iterable, int position,  T defaultValue ) {
+        checkNotNull(iterable);
+        checkNonnegative(position);
+        if (iterable instanceof List) {
+            List<? extends T> list = (List<T>)(iterable);
+            return (position < list.size()) ? list.get(position) : defaultValue;
+        } else {
+            Iterator<? extends T> iterator = iterable.iterator();
+            advance(iterator, position);
+            return getNext(iterator, defaultValue);
+        }
+    }
+
+    /**
+     * Returns the first element in {@code iterable} or {@code defaultValue} if the iterable is empty.
+     * The  analog to this method is }.
+     *
+     * <p>If no default value is desired (and the caller instead wants a {@link
+     * NoSuchElementException} to be thrown), it is recommended that {@code
+     * iterable.iterator().next()} is used instead.
+     *
+     * <p>To get the only element in a single-element {@code Iterable}, consider using  or instead.
+
+     * <p><b>{@code Stream} equivalent:</b> {@code stream.findFirst().orElse(defaultValue)}
+     *
+     * @param defaultValue the default value to return if the iterable is empty
+     * @return the first element of {@code iterable} or the default value
+     */
+
+    public static <T extends Object> T getFirst(
+            Iterable<? extends T> iterable,T defaultValue ) {
+        return getNext(iterable.iterator(), defaultValue);
+    }
+
+
+    /**
+     * Returns the last element of {@code iterable}. If {@code iterable} is a {@link List} with {@link
+     * RandomAccess} support, then this operation is guaranteed to be {@code O(1)}.
+     *
+     * <p><b>{@code Stream} equivalent:</b>
+     *
+     * @return the last element of {@code iterable}
+     * @throws NoSuchElementException if the iterable is empty
+     */
+
+    public static <T extends Object> T getLast( Iterable<T> iterable ) {
+
+        if (iterable instanceof List) {
+            List<T> list = (List<T>) iterable;
+            if (list.isEmpty()) {
+                throw new NoSuchElementException();
+            }
+            return list.get(list.size() - 1);
+        }
+
+        return getLast(iterable.iterator());
+    }
+
+    /**
+     * Returns the last element of {@code iterable} or {@code defaultValue} if the iterable is empty.
+     * If {@code iterable} is a {@link List} with {@link RandomAccess} support, then this operation is
+     * guaranteed to be {@code O(1)}.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@code Streams.findLast(stream).orElse(defaultValue)}
+     *
+     * @param defaultValue the value to return if {@code iterable} is empty
+     * @return the last element of {@code iterable} or the default value
+     */
+
+    public static <T extends Object> T getLast(
+            Iterable<? extends T> iterable,  T defaultValue ) {
+        if (iterable instanceof List) {
+            List<T> list = (List<T>) iterable;
+            if (list.isEmpty()) {
+                return defaultValue;
+            } else if (iterable instanceof List) {
+                return  list.get(list.size() - 1);
+            }
+        }
+
+        return getLast(iterable.iterator(), defaultValue);
+    }
+
+
+    /**
+     * Returns a view of {@code iterable} that skips its first {@code numberToSkip} elements. If
+     * {@code iterable} contains fewer than {@code numberToSkip} elements, the returned iterable skips
+     * all of its elements.
+     *
+     * <p>Modifications to the underlying {@link Iterable} before a call to {@code iterator()} are
+     * reflected in the returned iterator. That is, the iterator skips the first {@code numberToSkip}
+     * elements that exist when the {@code Iterator} is created, not when {@code skip()} is called.
+     *
+     * <p>The returned iterable's iterator supports {@code remove()} if the iterator of the underlying
+     * iterable supports it. Note that it is <i>not</i> possible to delete the last skipped element by
+     * immediately calling {@code remove()} on that iterator, as the {@code Iterator} contract states
+     * that a call to {@code remove()} before a call to {@code next()} will throw an {@link
+     * IllegalStateException}.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@link Stream#skip}
+     */
+    public static <T extends Object> Iterable<T> skip(
+            final Iterable<T> iterable, final int numberToSkip ) {
+        checkNotNull(iterable);
+        checkArgument(numberToSkip >= 0, "number to skip cannot be negative");
+
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                if (iterable instanceof List) {
+                    final List<T> list = (List<T>) iterable;
+                    int toSkip = Math.min(list.size(), numberToSkip);
+                    return list.subList(toSkip, list.size()).iterator();
+                }
+                final Iterator<T> iterator = iterable.iterator();
+
+                advance(iterator, numberToSkip);
+
+                /*
+                 * We can't just return the iterator because an immediate call to its
+                 * remove() method would remove one of the skipped elements instead of
+                 * throwing an IllegalStateException.
+                 */
+                return new Iterator<T>() {
+                    boolean atStart = true;
+
+                    @Override
+                    public boolean hasNext() {
+                        return iterator.hasNext();
+                    }
+
+                    @Override
+                    public T next() {
+                        T result = iterator.next();
+                        atStart = false; // not called if next() fails
+                        return result;
+                    }
+
+                    @Override
+                    public void remove() {
+                        checkRemove(!atStart);
+                        iterator.remove();
+                    }
+                };
+            }
+
+            @Override
+            public Spliterator<T> spliterator() {
+                if (iterable instanceof List) {
+                    final List<T> list = (List<T>) iterable;
+                    int toSkip = Math.min(list.size(), numberToSkip);
+                    return list.subList(toSkip, list.size()).spliterator();
+                } else {
+                    return StreamUtil.of(iterable).skip(numberToSkip).spliterator();
+                }
+            }
+        };
+    }
+
+
+    /**
+     * Returns a view of {@code iterable} containing its first {@code limitSize} elements. If {@code
+     * iterable} contains fewer than {@code limitSize} elements, the returned view contains all of its
+     * elements. The returned iterable's iterator supports {@code remove()} if {@code iterable}'s
+     * iterator does.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@link Stream#limit}
+     *
+     * @param iterable  the iterable to limit
+     * @param limitSize the maximum number of elements in the returned iterable
+     * @throws IllegalArgumentException if {@code limitSize} is negative
+     */
+    public static <T extends Object> Iterable<T> limit(
+            final Iterable<T> iterable, final int limitSize ) {
+        checkNotNull(iterable);
+        checkArgument(limitSize >= 0, "limit is negative");
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return limit(iterable.iterator(), limitSize);
+            }
+
+            @Override
+            public Spliterator<T> spliterator() {
+                return StreamUtil.of(iterable).limit(limitSize).spliterator();
+            }
+        };
+    }
+
+    public static <T> Iterator<T> concat(
+            Iterator< T> a, Iterator<T> b ) {
+        CompositeIterator< T> compositeIterator = new CompositeIterator<>();
+        compositeIterator.add(a);
+        compositeIterator.add(b);
+        return compositeIterator;
+    }
+
+
+    public static <T> Iterable<T> concat(
+            Iterable< T> a, Iterable<T> b ) {
+
+        Iterable [] cc = {a,b};
+        ArrayIter<T> arrayIter = new ArrayIter<T>( cc);
+        return arrayIter;
+    }
+
+    /**
+     * Returns a view of {@code unfiltered} containing all elements that are of the type {@code
+     * desiredType}. The returned iterable's iterator does not support {@code remove()}.
+     *
+     * <p><b>{@code Stream} equivalent:</b> {@code stream.filter(type::isInstance).map(type::cast)}.
+     * This does perform a little more work than necessary, so another option is to insert an
+     * unchecked cast at some later point:
+     *
+     * <pre>
+     * {@code @SuppressWarnings("unchecked") // safe because of ::isInstance check
+     * ImmutableList<NewType> result =
+     *     (ImmutableList) stream.filter(NewType.class::isInstance).collect(toImmutableList());}
+     * </pre>
+     */
+    @SuppressWarnings("unchecked")
+    // Class.isInstance
+    public static <T> Iterable<T> filter( final Iterable<?> unfiltered, final Class<T> desiredType ) {
+        checkNotNull(unfiltered);
+        checkNotNull(desiredType);
+        return (Iterable<T>) IterUtil.filter(unfiltered, PredicateUtil.instanceOf(desiredType));
     }
 
 

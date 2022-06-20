@@ -17,7 +17,7 @@ import java.util.Map;
  * @author wh
  * @since 1.0.0
  */
-public abstract class AbsCollValueMap<K, V, C extends Collection<V>> extends MapWrapper<K, C> {
+public abstract class AbsCollValueMap<K, V, C extends Collection<V>> extends MapWrapper< K, C > implements Multimap<K,V> {
     /**
      * 默认集合初始大小
      */

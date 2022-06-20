@@ -341,12 +341,12 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
                 && hashCode() != object.hashCode()) {
             return false;
         }
-        return Sets.equalsImpl(this, object);
+        return SetUtil.equalsImpl(this, object);
     }
 
     @Override
     public int hashCode() {
-        return Sets.hashCodeImpl(this);
+        return SetUtil.hashCodeImpl(this);
     }
 
     // This declaration is needed to make Set.iterator() and
@@ -907,7 +907,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
 
         JdkBackedSetBuilderImpl( SetBuilderImpl<E> toCopy ) {
             super(toCopy); // initializes dedupedElements and distinct
-            delegate = Sets.newHashSetWithExpectedSize(distinct);
+            delegate = SetUtil.newHashSetWithExpectedSize(distinct);
             for (int i = 0; i < distinct; i++) {
                 /*
                  * requireNonNull is safe because we ensure that the first `distinct` elements have been

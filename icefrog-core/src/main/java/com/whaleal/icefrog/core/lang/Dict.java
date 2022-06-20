@@ -129,7 +129,7 @@ public class Dict extends LinkedHashMap<String, Object> implements BasicTypeGett
     public static Dict of( Pair<String, Object>... pairs ) {
         final Dict dict = create();
         for (Pair<String, Object> pair : pairs) {
-            dict.put(pair.getKey(), pair.getValue());
+            dict.put(pair.left(), pair.right());
         }
         return dict;
     }

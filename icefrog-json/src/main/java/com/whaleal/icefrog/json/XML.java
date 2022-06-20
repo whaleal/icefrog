@@ -65,9 +65,9 @@ public class XML {
 	 *
 	 * @param string The source string.
 	 * @return A JSONObject containing the structured data from the XML string.
-	 * @throws JSONException Thrown if there is an errors while parsing the string
+	 * @throws com.whaleal.icefrog.json.JSONException Thrown if there is an errors while parsing the string
 	 */
-	public static JSONObject toJSONObject(String string) throws JSONException {
+	public static JSONObject toJSONObject(String string) throws com.whaleal.icefrog.json.JSONException {
 		return toJSONObject(string, false);
 	}
 
@@ -80,9 +80,9 @@ public class XML {
 	 * @param string      The source string.
 	 * @param keepStrings If true, then values will not be coerced into boolean or numeric values and will instead be left as strings
 	 * @return A JSONObject containing the structured data from the XML string.
-	 * @throws JSONException Thrown if there is an errors while parsing the string
+	 * @throws com.whaleal.icefrog.json.JSONException Thrown if there is an errors while parsing the string
 	 */
-	public static JSONObject toJSONObject(String string, boolean keepStrings) throws JSONException {
+	public static JSONObject toJSONObject(String string, boolean keepStrings) throws com.whaleal.icefrog.json.JSONException {
 		return toJSONObject(new JSONObject(), string, keepStrings);
 	}
 
@@ -94,10 +94,10 @@ public class XML {
 	 * @param xmlStr      XML字符串
 	 * @param keepStrings 如果为{@code true}，则值保持String类型，不转换为数字或boolean
 	 * @return A JSONObject 解析后的JSON对象，与传入的jo为同一对象
-	 * @throws JSONException 解析异常
+	 * @throws com.whaleal.icefrog.json.JSONException 解析异常
 	 *
 	 */
-	public static JSONObject toJSONObject(JSONObject jo, String xmlStr, boolean keepStrings) throws JSONException {
+	public static JSONObject toJSONObject(JSONObject jo, String xmlStr, boolean keepStrings) throws com.whaleal.icefrog.json.JSONException {
 		JSONXMLParser.parseJSONObject(jo, xmlStr, keepStrings);
 		return jo;
 	}
@@ -107,9 +107,9 @@ public class XML {
 	 *
 	 * @param object JSON对象或数组
 	 * @return XML字符串
-	 * @throws JSONException JSON解析异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON解析异常
 	 */
-	public static String toXml(Object object) throws JSONException {
+	public static String toXml(Object object) throws com.whaleal.icefrog.json.JSONException {
 		return toXml(object, null);
 	}
 
@@ -119,9 +119,9 @@ public class XML {
 	 * @param object  JSON对象或数组
 	 * @param tagName 可选标签名称，名称为空时忽略标签
 	 * @return A string.
-	 * @throws JSONException JSON解析异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON解析异常
 	 */
-	public static String toXml(Object object, String tagName) throws JSONException {
+	public static String toXml(Object object, String tagName) throws com.whaleal.icefrog.json.JSONException {
 		return toXml(object, tagName, "content");
 	}
 
@@ -132,9 +132,9 @@ public class XML {
 	 * @param tagName     可选标签名称，名称为空时忽略标签
 	 * @param contentKeys 标识为内容的key,遇到此key直接解析内容而不增加对应名称标签
 	 * @return A string.
-	 * @throws JSONException JSON解析异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON解析异常
 	 */
-	public static String toXml(Object object, String tagName, String... contentKeys) throws JSONException {
+	public static String toXml(Object object, String tagName, String... contentKeys) throws com.whaleal.icefrog.json.JSONException {
 		return JSONXMLSerializer.toXml(object, tagName, contentKeys);
 	}
 }

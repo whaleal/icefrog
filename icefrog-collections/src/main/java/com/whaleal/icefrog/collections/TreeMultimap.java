@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import java.io.IOException;
@@ -43,159 +41,149 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#multimap"> {@code
  * Multimap}</a>.
- *
- *
- * 
- * 
  */
 
 
 public class TreeMultimap<K extends Object, V extends Object>
-    extends AbstractSortedKeySortedSetMultimap<K, V> {
-  private transient Comparator<? super K> keyComparator;
-  private transient Comparator<? super V> valueComparator;
+        extends AbstractSortedKeySortedSetMultimap<K, V> {
+    // not needed in emulated source
+    private static final long serialVersionUID = 0;
+    private transient Comparator<? super K> keyComparator;
+    private transient Comparator<? super V> valueComparator;
 
-  /**
-   * Creates an empty {@code TreeMultimap} ordered by the natural ordering of its keys and values.
-   */
-  public static <K extends Comparable, V extends Comparable> TreeMultimap<K, V> create() {
-    return new TreeMultimap<>(Ordering.natural(), Ordering.natural());
-  }
-
-  /**
-   * Creates an empty {@code TreeMultimap} instance using explicit comparators. Neither comparator
-   * may be null; use {@link Ordering#natural()} to specify natural order.
-   *
-   * @param keyComparator the comparator that determines the key ordering
-   * @param valueComparator the comparator that determines the value ordering
-   */
-  public static <K extends Object, V extends Object> TreeMultimap<K, V> create(
-      Comparator<? super K> keyComparator, Comparator<? super V> valueComparator) {
-    return new TreeMultimap(checkNotNull(keyComparator), checkNotNull(valueComparator));
-  }
-
-  /**
-   * Constructs a {@code TreeMultimap}, ordered by the natural ordering of its keys and values, with
-   * the same mappings as the specified multimap.
-   *
-   * @param multimap the multimap whose contents are copied to this multimap
-   */
-  public static <K extends Comparable, V extends Comparable> TreeMultimap<K, V> create(
-      Multimap<? extends K, ? extends V> multimap) {
-    return new TreeMultimap<>(Ordering.natural(), Ordering.natural(), multimap);
-  }
-
-  TreeMultimap(Comparator<? super K> keyComparator, Comparator<? super V> valueComparator) {
-    super(new TreeMap<K, Collection<V>>(keyComparator));
-    this.keyComparator = keyComparator;
-    this.valueComparator = valueComparator;
-  }
-
-  private TreeMultimap(
-      Comparator<? super K> keyComparator,
-      Comparator<? super V> valueComparator,
-      Multimap<? extends K, ? extends V> multimap) {
-    this(keyComparator, valueComparator);
-    putAll(multimap);
-  }
-
-  @Override
-  Map<K, Collection<V>> createAsMap() {
-    return createMaybeNavigableAsMap();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Creates an empty {@code TreeSet} for a collection of values for one key.
-   *
-   * @return a new {@code TreeSet} containing a collection of values for one key
-   */
-  @Override
-  SortedSet<V> createCollection() {
-    return new TreeSet<>(valueComparator);
-  }
-
-  @Override
-  Collection<V> createCollection(@ParametricNullness K key) {
-    if (key == null) {
-      keyComparator().compare(key, key);
+    TreeMultimap( Comparator<? super K> keyComparator, Comparator<? super V> valueComparator ) {
+        super(new TreeMap<K, Collection<V>>(keyComparator));
+        this.keyComparator = keyComparator;
+        this.valueComparator = valueComparator;
     }
-    return super.createCollection(key);
-  }
 
-  /**
-   * Returns the comparator that orders the multimap keys.
-   *
-   * @deprecated Use {@code ((NavigableSet<K>) multimap.keySet()).comparator()} instead.
-   */
-  @Deprecated
-  public Comparator<? super K> keyComparator() {
-    return keyComparator;
-  }
+    private TreeMultimap(
+            Comparator<? super K> keyComparator,
+            Comparator<? super V> valueComparator,
+            Multimap<? extends K, ? extends V> multimap ) {
+        this(keyComparator, valueComparator);
+        putAll(multimap);
+    }
 
-  @Override
-  public Comparator<? super V> valueComparator() {
-    return valueComparator;
-  }
+    /**
+     * Creates an empty {@code TreeMultimap} ordered by the natural ordering of its keys and values.
+     */
+    public static <K extends Comparable, V extends Comparable> TreeMultimap<K, V> create() {
+        return new TreeMultimap<>(Ordering.natural(), Ordering.natural());
+    }
 
-  /** 
-  @Override
- // NavigableSet
-  public NavigableSet<V> get(@ParametricNullness K key) {
-    return (NavigableSet<V>) super.get(key);
-  }
+    /**
+     * Creates an empty {@code TreeMultimap} instance using explicit comparators. Neither comparator
+     * may be null; use {@link Ordering#natural()} to specify natural order.
+     *
+     * @param keyComparator   the comparator that determines the key ordering
+     * @param valueComparator the comparator that determines the value ordering
+     */
+    public static <K extends Object, V extends Object> TreeMultimap<K, V> create(
+            Comparator<? super K> keyComparator, Comparator<? super V> valueComparator ) {
+        return new TreeMultimap(checkNotNull(keyComparator), checkNotNull(valueComparator));
+    }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Because a {@code TreeMultimap} has unique sorted keys, this method returns a {@link
-   * NavigableSet}, instead of the {@link java.util.Set} specified in the {@link Multimap}
-   * interface.
-   *
-   * 
-   */
-  @Override
-  public NavigableSet<K> keySet() {
-    return (NavigableSet<K>) super.keySet();
-  }
+    /**
+     * Constructs a {@code TreeMultimap}, ordered by the natural ordering of its keys and values, with
+     * the same mappings as the specified multimap.
+     *
+     * @param multimap the multimap whose contents are copied to this multimap
+     */
+    public static <K extends Comparable, V extends Comparable> TreeMultimap<K, V> create(
+            Multimap<? extends K, ? extends V> multimap ) {
+        return new TreeMultimap<>(Ordering.natural(), Ordering.natural(), multimap);
+    }
 
-  /**
-   * {@inheritDoc}
-   *
-   * <p>Because a {@code TreeMultimap} has unique sorted keys, this method returns a {@link
-   * NavigableMap}, instead of the {@link Map} specified in the {@link Multimap}
-   * interface.
-   *
-   * 
-   */
-  @Override
-  public NavigableMap<K, Collection<V>> asMap() {
-    return (NavigableMap<K, Collection<V>>) super.asMap();
-  }
+    @Override
+    Map<K, Collection<V>> createAsMap() {
+        return createMaybeNavigableAsMap();
+    }
 
-  /**
-   * @serialData key comparator, value comparator, number of distinct keys, and then for each
-   *     distinct key: the key, number of values for that key, and key values
-   */
- // java.io.ObjectOutputStream
-  private void writeObject(ObjectOutputStream stream) throws IOException {
-    stream.defaultWriteObject();
-    stream.writeObject(keyComparator());
-    stream.writeObject(valueComparator());
-    Serialization.writeMultimap(this, stream);
-  }
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Creates an empty {@code TreeSet} for a collection of values for one key.
+     *
+     * @return a new {@code TreeSet} containing a collection of values for one key
+     */
+    @Override
+    SortedSet<V> createCollection() {
+        return new TreeSet<>(valueComparator);
+    }
 
- // java.io.ObjectInputStream
-  @SuppressWarnings("unchecked") // reading data stored by writeObject
-  private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
-    stream.defaultReadObject();
-    keyComparator = checkNotNull((Comparator<? super K>) stream.readObject());
-    valueComparator = checkNotNull((Comparator<? super V>) stream.readObject());
-    setMap(new TreeMap<K, Collection<V>>(keyComparator));
-    Serialization.populateMultimap(this, stream);
-  }
+    @Override
+    Collection<V> createCollection( @ParametricNullness K key ) {
+        if (key == null) {
+            keyComparator().compare(key, key);
+        }
+        return super.createCollection(key);
+    }
 
- // not needed in emulated source
-  private static final long serialVersionUID = 0;
+    /**
+     * Returns the comparator that orders the multimap keys.
+     *
+     * @deprecated Use {@code ((NavigableSet<K>) multimap.keySet()).comparator()} instead.
+     */
+    @Deprecated
+    public Comparator<? super K> keyComparator() {
+        return keyComparator;
+    }
+
+    @Override
+    public Comparator<? super V> valueComparator() {
+        return valueComparator;
+    }
+
+    /**
+     * @Override // NavigableSet
+     * public NavigableSet<V> get(@ParametricNullness K key) {
+     * return (NavigableSet<V>) super.get(key);
+     * }
+     * <p>
+     * /**
+     * {@inheritDoc}
+     *
+     * <p>Because a {@code TreeMultimap} has unique sorted keys, this method returns a {@link
+     * NavigableSet}, instead of the {@link java.util.Set} specified in the {@link Multimap}
+     * interface.
+     */
+    @Override
+    public NavigableSet<K> keySet() {
+        return (NavigableSet<K>) super.keySet();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * <p>Because a {@code TreeMultimap} has unique sorted keys, this method returns a {@link
+     * NavigableMap}, instead of the {@link Map} specified in the {@link Multimap}
+     * interface.
+     */
+    @Override
+    public NavigableMap<K, Collection<V>> asMap() {
+        return (NavigableMap<K, Collection<V>>) super.asMap();
+    }
+
+    /**
+     * @serialData key comparator, value comparator, number of distinct keys, and then for each
+     * distinct key: the key, number of values for that key, and key values
+     */
+    // java.io.ObjectOutputStream
+    private void writeObject( ObjectOutputStream stream ) throws IOException {
+        stream.defaultWriteObject();
+        stream.writeObject(keyComparator());
+        stream.writeObject(valueComparator());
+        Serialization.writeMultimap(this, stream);
+    }
+
+    // java.io.ObjectInputStream
+    @SuppressWarnings("unchecked") // reading data stored by writeObject
+    private void readObject( ObjectInputStream stream ) throws IOException, ClassNotFoundException {
+        stream.defaultReadObject();
+        keyComparator = checkNotNull((Comparator<? super K>) stream.readObject());
+        valueComparator = checkNotNull((Comparator<? super V>) stream.readObject());
+        setMap(new TreeMap<K, Collection<V>>(keyComparator));
+        Serialization.populateMultimap(this, stream);
+    }
 }

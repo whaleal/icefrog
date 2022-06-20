@@ -15,17 +15,17 @@ import java.util.Optional;
  * 用于JSON的Getter类，提供各种类型的Getter方法
  *
  * @param <K> Key类型
- * @author looly   wh
+ * @author Looly
  */
 public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 
 	/**
 	 * 获取JSON配置
 	 *
-	 * @return {@link JSONConfig}
+	 * @return {@link com.whaleal.icefrog.json.JSONConfig}
 	 *
 	 */
-	JSONConfig getConfig();
+	com.whaleal.icefrog.json.JSONConfig getConfig();
 
 	/**
 	 * key对应值是否为{@code null}或无此key
@@ -34,7 +34,7 @@ public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 	 * @return true 无此key或值为{@code null}或{@link JSONNull#NULL}返回{@code false}，其它返回{@code true}
 	 */
 	default boolean isNull(K key) {
-		return JSONUtil.isNull(this.getObj(key));
+		return com.whaleal.icefrog.json.JSONUtil.isNull(this.getObj(key));
 	}
 
 	/**
@@ -57,26 +57,26 @@ public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 	 *
 	 */
 	default String getStrEscaped(K key, String defaultValue) {
-		return JSONUtil.escape(getStr(key, defaultValue));
+		return com.whaleal.icefrog.json.JSONUtil.escape(getStr(key, defaultValue));
 	}
 
 	/**
 	 * 获得JSONArray对象<br>
-	 * 如果值为其它类型对象，尝试转换为{@link JSONArray}返回，否则抛出异常
+	 * 如果值为其它类型对象，尝试转换为{@link com.whaleal.icefrog.json.JSONArray}返回，否则抛出异常
 	 *
 	 * @param key KEY
 	 * @return JSONArray对象，如果值为null或者非JSONArray类型，返回null
 	 */
-	default JSONArray getJSONArray(K key) {
+	default com.whaleal.icefrog.json.JSONArray getJSONArray( K key) {
 		final Object object = this.getObj(key);
-		if (JSONUtil.isNull(object)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(object)) {
 			return null;
 		}
 
 		if (object instanceof JSON) {
-			return (JSONArray) object;
+			return (com.whaleal.icefrog.json.JSONArray) object;
 		}
-		return new JSONArray(object, getConfig());
+		return new com.whaleal.icefrog.json.JSONArray(object, getConfig());
 	}
 
 	/**
@@ -88,7 +88,7 @@ public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 	 */
 	default JSONObject getJSONObject(K key) {
 		final Object object = this.getObj(key);
-		if (JSONUtil.isNull(object)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(object)) {
 			return null;
 		}
 
@@ -117,14 +117,14 @@ public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 	default Date getDate(K key, Date defaultValue) {
 		// 默认转换
 		final Object obj = getObj(key);
-		if (JSONUtil.isNull(obj)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(obj)) {
 			return defaultValue;
 		}
 		if (obj instanceof Date) {
 			return (Date) obj;
 		}
 
-		final Optional<String> formatOps = Optional.ofNullable(getConfig()).map(JSONConfig::getDateFormat);
+		final Optional<String> formatOps = Optional.ofNullable(getConfig()).map(com.whaleal.icefrog.json.JSONConfig::getDateFormat);
 		if (formatOps.isPresent()) {
 			final String format = formatOps.get();
 			if (StrUtil.isNotBlank(format)) {
@@ -151,14 +151,14 @@ public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 	default LocalDateTime getLocalDateTime(K key, LocalDateTime defaultValue) {
 		// 默认转换
 		final Object obj = getObj(key);
-		if (JSONUtil.isNull(obj)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(obj)) {
 			return defaultValue;
 		}
 		if (obj instanceof LocalDateTime) {
 			return (LocalDateTime) obj;
 		}
 
-		final Optional<String> formatOps = Optional.ofNullable(getConfig()).map(JSONConfig::getDateFormat);
+		final Optional<String> formatOps = Optional.ofNullable(getConfig()).map(com.whaleal.icefrog.json.JSONConfig::getDateFormat);
 		if (formatOps.isPresent()) {
 			final String format = formatOps.get();
 			if (StrUtil.isNotBlank(format)) {
@@ -202,9 +202,9 @@ public interface JSONGetter<K> extends OptNullBasicTypeFromObjectGetter<K> {
 	 */
 	default <T> T get(K key, Class<T> type, boolean ignoreError) throws ConvertException {
 		final Object value = this.getObj(key);
-		if (JSONUtil.isNull(value)) {
+		if (com.whaleal.icefrog.json.JSONUtil.isNull(value)) {
 			return null;
 		}
-		return JSONConverter.jsonConvert(type, value, ignoreError);
+		return com.whaleal.icefrog.json.JSONConverter.jsonConvert(type, value, ignoreError);
 	}
 }

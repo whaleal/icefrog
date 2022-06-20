@@ -24,7 +24,11 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 /**
  * JSON对象<br>
@@ -34,9 +38,9 @@ import java.util.*;
  * json = new JSONObject().put(&quot;JSON&quot;, &quot;Hello, World!&quot;).toString();
  * </pre>
  *
- * @author looly   wh
+ * @author looly
  */
-public class JSONObject implements com.whaleal.icefrog.json.JSON, com.whaleal.icefrog.json.JSONGetter<String>, Map<String, Object> {
+public class JSONObject implements JSON, com.whaleal.icefrog.json.JSONGetter<String>, Map<String, Object> {
 	private static final long serialVersionUID = -330220388580734346L;
 
 	/**
@@ -370,7 +374,7 @@ public class JSONObject implements com.whaleal.icefrog.json.JSON, com.whaleal.ic
 			// 忽略值模式下如果值为空清除key
 			this.remove(key);
 		} else {
-			InternalJSONUtil.testValidity(value);
+			com.whaleal.icefrog.json.InternalJSONUtil.testValidity(value);
 			this.rawHashMap.put(key, com.whaleal.icefrog.json.JSONUtil.wrap(value, this.config));
 		}
 		return this;
@@ -387,7 +391,7 @@ public class JSONObject implements com.whaleal.icefrog.json.JSON, com.whaleal.ic
 	public JSONObject putOnce(String key, Object value) throws com.whaleal.icefrog.json.JSONException {
 		if (key != null) {
 			if (rawHashMap.containsKey(key)) {
-				throw new JSONException("Duplicate key \"{}\"", key);
+				throw new com.whaleal.icefrog.json.JSONException("Duplicate key \"{}\"", key);
 			}
 			this.set(key, value);
 		}
@@ -694,9 +698,9 @@ public class JSONObject implements com.whaleal.icefrog.json.JSON, com.whaleal.ic
 		final String jsonStr = StrUtil.trim(source);
 		if (StrUtil.startWith(jsonStr, '<')) {
 			// 可能为XML
-			XML.toJSONObject(this, jsonStr, false);
+			com.whaleal.icefrog.json.XML.toJSONObject(this, jsonStr, false);
 		}
-		init(new JSONTokener(StrUtil.trim(source), this.config));
+		init(new com.whaleal.icefrog.json.JSONTokener(StrUtil.trim(source), this.config));
 	}
 
 	/**

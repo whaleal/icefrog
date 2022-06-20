@@ -7,7 +7,7 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * JSON字符串格式化工具，用于简单格式化JSON字符串<br>
  * from http://blog.csdn.net/lovelong8808/article/details/54580278
  *
- * @author looly   wh
+ * @author looly
  *
  */
 public class JSONStrFormatter {

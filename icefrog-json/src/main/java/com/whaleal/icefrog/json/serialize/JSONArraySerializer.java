@@ -7,7 +7,7 @@ import com.whaleal.icefrog.json.JSONArray;
  * 
  * @param <V> 对象类型
  * 
- * @author looly   wh
+ * @author Looly
  */
 @FunctionalInterface
 public interface JSONArraySerializer<V> extends JSONSerializer<JSONArray, V>{}

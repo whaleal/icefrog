@@ -488,7 +488,7 @@ public class HttpUtil {
                 // 无参数，返回url
                 return urlPart;
             }
-        } else if (false == StrUtil.contains(urlWithParams, '=')) {
+        } else if (!StrUtil.contains(urlWithParams, '=')) {
             // 无参数的URL
             return urlWithParams;
         } else {
@@ -833,4 +833,7 @@ public class HttpUtil {
     public static void closeCookie() {
         GlobalCookieManager.setCookieManager(null);
     }
+
+
+
 }

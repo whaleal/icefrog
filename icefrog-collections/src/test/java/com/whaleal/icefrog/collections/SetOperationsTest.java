@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Unit tests for {@link Sets#union}, {@link Sets#intersection} and {@link Sets#difference}.
+ * Unit tests for {@link SetUtil#union}, {@link SetUtil#intersection} and {@link SetUtil#difference}.
  *
  *
  */
@@ -27,16 +27,16 @@ public class SetOperationsTest extends TestCase {
 
     @Override
     public void setUp() {
-      friends = Sets.newHashSet("Tom", "Joe", "Dave");
-      enemies = Sets.newHashSet("Dick", "Harry", "Tom");
+      friends = SetUtil.newHashSet("Tom", "Joe", "Dave");
+      enemies = SetUtil.newHashSet("Dick", "Harry", "Tom");
     }
 
     public void testUnion() {
-      Set<String> all = Sets.union(friends, enemies);
+      Set<String> all = SetUtil.union(friends, enemies);
       assertEquals(5, all.size());
 
-      ImmutableSet<String> immut = Sets.union(friends, enemies).immutableCopy();
-      HashSet<String> mut = Sets.union(friends, enemies).copyInto(new HashSet<String>());
+      ImmutableSet<String> immut = SetUtil.union(friends, enemies).immutableCopy();
+      HashSet<String> mut = SetUtil.union(friends, enemies).copyInto(new HashSet<String>());
 
       enemies.add("Buck");
       assertEquals(6, all.size());
@@ -45,14 +45,14 @@ public class SetOperationsTest extends TestCase {
     }
 
     public void testIntersection() {
-      Set<String> friends = Sets.newHashSet("Tom", "Joe", "Dave");
-      Set<String> enemies = Sets.newHashSet("Dick", "Harry", "Tom");
+      Set<String> friends = SetUtil.newHashSet("Tom", "Joe", "Dave");
+      Set<String> enemies = SetUtil.newHashSet("Dick", "Harry", "Tom");
 
-      Set<String> frenemies = Sets.intersection(friends, enemies);
+      Set<String> frenemies = SetUtil.intersection(friends, enemies);
       assertEquals(1, frenemies.size());
 
-      ImmutableSet<String> immut = Sets.intersection(friends, enemies).immutableCopy();
-      HashSet<String> mut = Sets.intersection(friends, enemies).copyInto(new HashSet<String>());
+      ImmutableSet<String> immut = SetUtil.intersection(friends, enemies).immutableCopy();
+      HashSet<String> mut = SetUtil.intersection(friends, enemies).copyInto(new HashSet<String>());
 
       enemies.add("Joe");
       assertEquals(2, frenemies.size());
@@ -61,14 +61,14 @@ public class SetOperationsTest extends TestCase {
     }
 
     public void testDifference() {
-      Set<String> friends = Sets.newHashSet("Tom", "Joe", "Dave");
-      Set<String> enemies = Sets.newHashSet("Dick", "Harry", "Tom");
+      Set<String> friends = SetUtil.newHashSet("Tom", "Joe", "Dave");
+      Set<String> enemies = SetUtil.newHashSet("Dick", "Harry", "Tom");
 
-      Set<String> goodFriends = Sets.difference(friends, enemies);
+      Set<String> goodFriends = SetUtil.difference(friends, enemies);
       assertEquals(2, goodFriends.size());
 
-      ImmutableSet<String> immut = Sets.difference(friends, enemies).immutableCopy();
-      HashSet<String> mut = Sets.difference(friends, enemies).copyInto(new HashSet<String>());
+      ImmutableSet<String> immut = SetUtil.difference(friends, enemies).immutableCopy();
+      HashSet<String> mut = SetUtil.difference(friends, enemies).copyInto(new HashSet<String>());
 
       enemies.add("Dave");
       assertEquals(1, goodFriends.size());
@@ -77,28 +77,28 @@ public class SetOperationsTest extends TestCase {
     }
 
     public void testSymmetricDifference() {
-      Set<String> friends = Sets.newHashSet("Tom", "Joe", "Dave");
-      Set<String> enemies = Sets.newHashSet("Dick", "Harry", "Tom");
+      Set<String> friends = SetUtil.newHashSet("Tom", "Joe", "Dave");
+      Set<String> enemies = SetUtil.newHashSet("Dick", "Harry", "Tom");
 
-      Set<String> symmetricDifferenceFriendsFirst = Sets.symmetricDifference(friends, enemies);
+      Set<String> symmetricDifferenceFriendsFirst = SetUtil.symmetricDifference(friends, enemies);
       assertEquals(4, symmetricDifferenceFriendsFirst.size());
 
-      Set<String> symmetricDifferenceEnemiesFirst = Sets.symmetricDifference(enemies, friends);
+      Set<String> symmetricDifferenceEnemiesFirst = SetUtil.symmetricDifference(enemies, friends);
       assertEquals(4, symmetricDifferenceEnemiesFirst.size());
 
       assertEquals(symmetricDifferenceFriendsFirst, symmetricDifferenceEnemiesFirst);
 
-      ImmutableSet<String> immut = Sets.symmetricDifference(friends, enemies).immutableCopy();
+      ImmutableSet<String> immut = SetUtil.symmetricDifference(friends, enemies).immutableCopy();
       HashSet<String> mut =
-          Sets.symmetricDifference(friends, enemies).copyInto(new HashSet<String>());
+          SetUtil.symmetricDifference(friends, enemies).copyInto(new HashSet<String>());
 
       enemies.add("Dave");
       assertEquals(3, symmetricDifferenceFriendsFirst.size());
       assertEquals(4, immut.size());
       assertEquals(4, mut.size());
 
-      immut = Sets.symmetricDifference(enemies, friends).immutableCopy();
-      mut = Sets.symmetricDifference(enemies, friends).copyInto(new HashSet<String>());
+      immut = SetUtil.symmetricDifference(enemies, friends).immutableCopy();
+      mut = SetUtil.symmetricDifference(enemies, friends).copyInto(new HashSet<String>());
       friends.add("Harry");
       assertEquals(2, symmetricDifferenceEnemiesFirst.size());
       assertEquals(3, immut.size());

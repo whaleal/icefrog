@@ -9,29 +9,29 @@ import com.whaleal.icefrog.core.util.StrUtil;
  * @author xiaoleilu
  */
 public class QrCodeException extends RuntimeException {
-	private static final long serialVersionUID = 8247610319171014183L;
+    private static final long serialVersionUID = 8247610319171014183L;
 
-	public QrCodeException(Throwable e) {
-		super(ExceptionUtil.getMessage(e), e);
-	}
+    public QrCodeException( Throwable e ) {
+        super(ExceptionUtil.getMessage(e), e);
+    }
 
-	public QrCodeException(String message) {
-		super(message);
-	}
+    public QrCodeException( String message ) {
+        super(message);
+    }
 
-	public QrCodeException(String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params));
-	}
+    public QrCodeException( String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params));
+    }
 
-	public QrCodeException(String message, Throwable throwable) {
-		super(message, throwable);
-	}
+    public QrCodeException( String message, Throwable throwable ) {
+        super(message, throwable);
+    }
 
-	public QrCodeException(String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, throwable, enableSuppression, writableStackTrace);
-	}
+    public QrCodeException( String message, Throwable throwable, boolean enableSuppression, boolean writableStackTrace ) {
+        super(message, throwable, enableSuppression, writableStackTrace);
+    }
 
-	public QrCodeException(Throwable throwable, String messageTemplate, Object... params) {
-		super(StrUtil.format(messageTemplate, params), throwable);
-	}
+    public QrCodeException( Throwable throwable, String messageTemplate, Object... params ) {
+        super(StrUtil.format(messageTemplate, params), throwable);
+    }
 }

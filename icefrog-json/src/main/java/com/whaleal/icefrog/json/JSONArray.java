@@ -16,7 +16,12 @@ import com.whaleal.icefrog.json.serialize.JSONWriter;
 
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.RandomAccess;
 
 import static com.whaleal.icefrog.json.JSONConverter.jsonConvert;
 
@@ -29,9 +34,9 @@ import static com.whaleal.icefrog.json.JSONConverter.jsonConvert;
  * ["a", "b", "c", 12]
  * </pre>
  *
- * @author looly   wh
+ * @author looly
  */
-public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Integer>, List<Object>, RandomAccess {
+public class JSONArray implements JSON, JSONGetter<Integer>, List<Object>, RandomAccess {
 	private static final long serialVersionUID = 2664900568717612292L;
 
 	/**
@@ -118,12 +123,12 @@ public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Inte
 	}
 
 	/**
-	 * 使用 {@link com.whaleal.icefrog.json.JSONTokener} 做为参数构造
+	 * 使用 {@link JSONTokener} 做为参数构造
 	 *
-	 * @param x A {@link com.whaleal.icefrog.json.JSONTokener}
+	 * @param x A {@link JSONTokener}
 	 * @throws JSONException If there is a syntax error.
 	 */
-	public JSONArray( com.whaleal.icefrog.json.JSONTokener x) throws JSONException {
+	public JSONArray(JSONTokener x) throws JSONException {
 		this();
 		init(x);
 	}
@@ -345,7 +350,7 @@ public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Inte
 	 *
 	 */
 	public Iterable<JSONObject> jsonIter() {
-		return new JSONObjectIter(iterator());
+		return new com.whaleal.icefrog.json.JSONObjectIter(iterator());
 	}
 
 	@Override
@@ -463,7 +468,7 @@ public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Inte
 			this.rawList.add(index, JSONUtil.wrap(element, this.config));
 		} else {
 			while (index != this.size()) {
-				this.add(com.whaleal.icefrog.json.JSONNull.NULL);
+				this.add(JSONNull.NULL);
 			}
 			this.set(element);
 		}
@@ -594,8 +599,8 @@ public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Inte
 		} else if (source instanceof CharSequence) {
 			// JSON字符串
 			init((CharSequence) source);
-		} else if (source instanceof com.whaleal.icefrog.json.JSONTokener) {
-			init((com.whaleal.icefrog.json.JSONTokener) source);
+		} else if (source instanceof JSONTokener) {
+			init((JSONTokener) source);
 		} else {
 			Iterator<?> iter;
 			if (ArrayUtil.isArray(source)) {// 数组
@@ -626,16 +631,16 @@ public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Inte
 	 */
 	private void init(CharSequence source) {
 		if (null != source) {
-			init(new com.whaleal.icefrog.json.JSONTokener(StrUtil.trim(source), this.config));
+			init(new JSONTokener(StrUtil.trim(source), this.config));
 		}
 	}
 
 	/**
 	 * 初始化
 	 *
-	 * @param x {@link com.whaleal.icefrog.json.JSONTokener}
+	 * @param x {@link JSONTokener}
 	 */
-	private void init( com.whaleal.icefrog.json.JSONTokener x) {
+	private void init(JSONTokener x) {
 		if (x.nextClean() != '[') {
 			throw x.syntaxError("A JSONArray text must start with '['");
 		}
@@ -644,7 +649,7 @@ public class JSONArray implements JSON, com.whaleal.icefrog.json.JSONGetter<Inte
 			for (; ; ) {
 				if (x.nextClean() == ',') {
 					x.back();
-					this.rawList.add(com.whaleal.icefrog.json.JSONNull.NULL);
+					this.rawList.add(JSONNull.NULL);
 				} else {
 					x.back();
 					this.rawList.add(x.nextValue());

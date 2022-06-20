@@ -6,7 +6,7 @@ import com.whaleal.icefrog.core.util.StrUtil;
 /**
  * JSON异常
  *
- * @author looly   wh
+ * @author looly
  *
  */
 public class JSONException extends RuntimeException {

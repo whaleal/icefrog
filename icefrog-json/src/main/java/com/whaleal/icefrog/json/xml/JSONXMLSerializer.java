@@ -11,7 +11,7 @@ import com.whaleal.icefrog.json.JSONObject;
 /**
  * JSON转XML字符串工具
  *
- * @author looly   wh
+ * @author looly
  *
  */
 public class JSONXMLSerializer {

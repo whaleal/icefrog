@@ -4,8 +4,7 @@ import com.whaleal.icefrog.core.io.resource.ResourceUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
 
 public class IoUtilTest {
 
@@ -22,5 +21,28 @@ public class IoUtilTest {
         } catch (IOException e) {
             throw new IORuntimeException(e);
         }
+    }
+
+    @Test
+    public void copyTest(){
+        String file = new File("").getAbsoluteFile().getParent()+"/LICENSE";
+        String file2 = new File("").getAbsoluteFile().getParent()+"/LICENSE_bak";
+
+        try {
+            InputStream  inputStream =new FileInputStream(new File(file));
+
+            OutputStream outputStream  = new FileOutputStream(new File(file2));
+
+            IoUtil.copy(inputStream,outputStream);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            new File(file2).deleteOnExit();
+
+        }
+
     }
 }

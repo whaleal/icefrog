@@ -4,8 +4,17 @@ import com.whaleal.icefrog.core.io.IORuntimeException;
 import com.whaleal.icefrog.core.io.file.FileReader;
 import com.whaleal.icefrog.core.lang.TypeReference;
 import com.whaleal.icefrog.core.map.MapWrapper;
-import com.whaleal.icefrog.core.util.*;
-import com.whaleal.icefrog.json.serialize.*;
+import com.whaleal.icefrog.core.util.ArrayUtil;
+import com.whaleal.icefrog.core.util.ClassUtil;
+import com.whaleal.icefrog.core.util.HexUtil;
+import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.util.StrUtil;
+import com.whaleal.icefrog.core.util.TypeUtil;
+import com.whaleal.icefrog.json.serialize.GlobalSerializeMapping;
+import com.whaleal.icefrog.json.serialize.JSONArraySerializer;
+import com.whaleal.icefrog.json.serialize.JSONDeserializer;
+import com.whaleal.icefrog.json.serialize.JSONObjectSerializer;
+import com.whaleal.icefrog.json.serialize.JSONSerializer;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +24,16 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.sql.SQLException;
 import java.time.temporal.TemporalAccessor;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * JSON工具类
  *
- * @author looly   wh
+ * @author Looly
  */
 public class JSONUtil {
 
@@ -42,7 +55,7 @@ public class JSONUtil {
 	 * @return JSONObject
 	 *
 	 */
-	public static JSONObject createObj(JSONConfig config) {
+	public static JSONObject createObj( com.whaleal.icefrog.json.JSONConfig config) {
 		return new JSONObject(config);
 	}
 
@@ -62,7 +75,7 @@ public class JSONUtil {
 	 * @return JSONArray
 	 *
 	 */
-	public static com.whaleal.icefrog.json.JSONArray createArray( JSONConfig config) {
+	public static com.whaleal.icefrog.json.JSONArray createArray( com.whaleal.icefrog.json.JSONConfig config) {
 		return new com.whaleal.icefrog.json.JSONArray(config);
 	}
 
@@ -96,10 +109,10 @@ public class JSONUtil {
 	 * @return JSONObject
 	 *
 	 */
-	public static JSONObject parseObj(Object obj, JSONConfig config) {
+	public static JSONObject parseObj(Object obj, com.whaleal.icefrog.json.JSONConfig config) {
 		// 默认配置，根据对象类型决定是否有序
 		if(null == config){
-			config = JSONConfig.create();
+			config = com.whaleal.icefrog.json.JSONConfig.create();
 			if(InternalJSONUtil.isOrder(obj)){
 				config.setOrder(true);
 			}
@@ -161,7 +174,7 @@ public class JSONUtil {
 	 * @return JSONArray
 	 *
 	 */
-	public static com.whaleal.icefrog.json.JSONArray parseArray( Object arrayOrCollection, JSONConfig config) {
+	public static com.whaleal.icefrog.json.JSONArray parseArray( Object arrayOrCollection, com.whaleal.icefrog.json.JSONConfig config) {
 		return new com.whaleal.icefrog.json.JSONArray(arrayOrCollection, config);
 	}
 
@@ -207,7 +220,7 @@ public class JSONUtil {
 	 * @return JSON
 	 *
 	 */
-	public static JSON parse(Object obj, JSONConfig config) {
+	public static JSON parse(Object obj, com.whaleal.icefrog.json.JSONConfig config) {
 		if (null == obj) {
 			return null;
 		}
@@ -236,7 +249,7 @@ public class JSONUtil {
 	 * @return JSONObject
 	 */
 	public static JSONObject parseFromXml(String xmlStr) {
-		return com.whaleal.icefrog.json.XML.toJSONObject(xmlStr);
+		return XML.toJSONObject(xmlStr);
 	}
 
 	// -------------------------------------------------------------------- Pause end
@@ -342,7 +355,7 @@ public class JSONUtil {
 	 * @return JSON字符串
 	 */
 	public static String toJsonStr(Object obj) {
-		return toJsonStr(obj, (JSONConfig) null);
+		return toJsonStr(obj, (com.whaleal.icefrog.json.JSONConfig) null);
 	}
 
 	/**
@@ -353,7 +366,7 @@ public class JSONUtil {
 	 * @return JSON字符串
 	 *
 	 */
-	public static String toJsonStr(Object obj, JSONConfig jsonConfig) {
+	public static String toJsonStr(Object obj, com.whaleal.icefrog.json.JSONConfig jsonConfig) {
 		if (null == obj) {
 			return null;
 		}
@@ -393,7 +406,7 @@ public class JSONUtil {
 	 * @return XML字符串
 	 */
 	public static String toXmlStr(JSON json) {
-		return com.whaleal.icefrog.json.XML.toXml(json);
+		return XML.toXml(json);
 	}
 	// -------------------------------------------------------------------- toString end
 
@@ -725,13 +738,13 @@ public class JSONUtil {
 	 * @return 包装后的值，null表示此值需被忽略
 	 */
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	public static Object wrap(Object object, JSONConfig jsonConfig) {
+	public static Object wrap(Object object, com.whaleal.icefrog.json.JSONConfig jsonConfig) {
 		if (object == null) {
-			return jsonConfig.isIgnoreNullValue() ? null : com.whaleal.icefrog.json.JSONNull.NULL;
+			return jsonConfig.isIgnoreNullValue() ? null : JSONNull.NULL;
 		}
 		if (object instanceof JSON //
-				|| com.whaleal.icefrog.json.JSONNull.NULL.equals(object) //
-				|| object instanceof JSONString //
+				|| JSONNull.NULL.equals(object) //
+				|| object instanceof com.whaleal.icefrog.json.JSONString //
 				|| object instanceof CharSequence //
 				|| object instanceof Number //
 				|| ObjectUtil.isBasicType(object) //
@@ -799,7 +812,7 @@ public class JSONUtil {
 	 *
 	 */
 	public static String formatJsonStr(String jsonStr) {
-		return com.whaleal.icefrog.json.JSONStrFormatter.format(jsonStr);
+		return JSONStrFormatter.format(jsonStr);
 	}
 
 	/**
@@ -846,7 +859,7 @@ public class JSONUtil {
 	 *
 	 * <pre>
 	 * 1. {@code null}
-	 * 2. {@link com.whaleal.icefrog.json.JSONNull}
+	 * 2. {@link JSONNull}
 	 * </pre>
 	 *
 	 * @param obj 对象
@@ -854,7 +867,7 @@ public class JSONUtil {
 	 *
 	 */
 	public static boolean isNull(Object obj) {
-		return null == obj || obj instanceof com.whaleal.icefrog.json.JSONNull;
+		return null == obj || obj instanceof JSONNull;
 	}
 
 	/**
@@ -866,7 +879,7 @@ public class JSONUtil {
 	 *
 	 */
 	public static JSONObject xmlToJson(String xml) {
-		return com.whaleal.icefrog.json.XML.toJSONObject(xml);
+		return XML.toJSONObject(xml);
 	}
 
 	/**

@@ -56,6 +56,7 @@ public final class Props extends Properties implements BasicTypeGetter<String>, 
      * issue#1701，此属性不能被序列化，故忽略序列化
      */
     private transient Charset charset = CharsetUtil.CHARSET_ISO_8859_1;
+
     /**
      * 构造
      */

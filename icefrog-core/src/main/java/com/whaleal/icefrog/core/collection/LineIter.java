@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  * }
  * </pre>
  * <p>
- * 此类来自于Apache icefrogs io
+ * 此类来自于Apache commons io
  *
  * @author Looly
  * @author wh

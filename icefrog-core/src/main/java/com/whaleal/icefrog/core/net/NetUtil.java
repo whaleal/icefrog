@@ -20,6 +20,8 @@ import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 网络相关工具
@@ -30,6 +32,8 @@ import java.util.*;
 public class NetUtil {
 
     public final static String LOCAL_IP = "127.0.0.1";
+    public static final String IPV6_LOOPBACK_ADDRESS = "0:0:0:0:0:0:0:1";
+    public static final int DEFAULT_SNMP_TRAP_PORT = 162;
     /**
      * 默认最小端口，1024
      */
@@ -834,6 +838,139 @@ public class NetUtil {
         }
         return infos;
     }
+
+
+
+
+
+
+    private static boolean hasNoExtraLeadingZeroes(String pIpV4Cidr) {
+        String[] parts = pIpV4Cidr.split("/");
+        String[] addressParts = parts[0].split("\\.");
+        return addressParts.length != 4 ? false : Stream.concat(Stream.of(parts[1]), Arrays.stream(addressParts)).noneMatch(( s) -> {
+            return s.startsWith("0") && s.length() > 1;
+        });
+    }
+
+
+
+
+    public static boolean isValidSnmpAddr(String pAddress) {
+        if (StrUtil.isBlank(pAddress)) {
+            return false;
+        } else {
+            String[] addresses = pAddress.trim().split(",", -1);
+            if (addresses.length == 0) {
+                return false;
+            } else {
+                String[] var2 = addresses;
+                int var3 = addresses.length;
+
+                for(int var4 = 0; var4 < var3; ++var4) {
+                    String address = var2[var4];
+                    address = address.trim();
+                    String[] hostAndPort = address.split(":", 2);
+                    if (hostAndPort.length == 0) {
+                        return false;
+                    }
+
+                    if (hostAndPort.length > 2) {
+                        return false;
+                    }
+
+                    if (StrUtil.isBlank(hostAndPort[0])) {
+                        return false;
+                    }
+
+                    if (hostAndPort.length == 2) {
+                        try {
+                            int port = Integer.parseInt(hostAndPort[1]);
+                            if (port != 162) {
+                                return false;
+                            }
+                        } catch (Exception var8) {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+        }
+    }
+
+
+
+
+    public static boolean isIpv4CidrMaskInvalid(int pCidrMask) {
+        return pCidrMask < 1 || pCidrMask > 32;
+    }
+
+
+
+    public static String ipv4AddressToString(int pIpAddress) {
+        return String.format("%d.%d.%d.%d", pIpAddress >> 24 & 255, pIpAddress >> 16 & 255, pIpAddress >> 8 & 255, pIpAddress & 255);
+    }
+
+    public static int findFirstOpenPort(int start, int end, String host) {
+        int i = start;
+
+        while(i <= end) {
+            try {
+                ServerSocket ignored = new ServerSocket(i, 1, InetAddress.getByName(host));
+
+                int var5;
+                try {
+                    ignored.isBound();
+                    var5 = i;
+                } catch (Throwable var8) {
+                    try {
+                        ignored.close();
+                    } catch (Throwable var7) {
+                        var8.addSuppressed(var7);
+                    }
+
+                    throw var8;
+                }
+
+                ignored.close();
+                return var5;
+            } catch (IOException var9) {
+                ++i;
+            }
+        }
+
+        throw new IllegalArgumentException("no free port found");
+    }
+
+
+
+    private static String removeBrackets(String pIpAddress) {
+        return pIpAddress.replaceAll("[\\[\\]]", "");
+    }
+
+    public static int nextPowerOf2(int pX) {
+        int n = pX - 1;
+        n |= n >> 1;
+        n |= n >> 2;
+        n |= n >> 4;
+        n |= n >> 8;
+        n |= n >> 16;
+        ++n;
+        return n;
+    }
+
+    public static int highestBit(int pX) {
+        int n = pX;
+
+        int r;
+        for(r = 0; (n >>= 1) != 0; ++r) {
+        }
+
+        return r;
+    }
+
+
 
     // ----------------------------------------------------------------------------------------- Private method start
 

@@ -20,14 +20,20 @@ import static com.whaleal.icefrog.core.lang.Precondition.checkNotNull;
  *
  * <p>See the Guava User Guide article on <a href=
  * "https://github.com/google/guava/wiki/NewCollectionTypesExplained#bimap"> {@code BiMap}</a>.
- *
- *
  */
 
 
 public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
         extends BiMap<K, V> {
+    // only needed in emulated source.
+    private static final long serialVersionUID = 0;
     private transient Class<K> keyType;
+
+    private EnumHashBiMap( Class<K> keyType ) {
+        super(
+                new EnumMap<K, V>(keyType));
+        this.keyType = keyType;
+    }
 
     /**
      * Returns a new, empty {@code EnumHashBiMap} using the specified key type.
@@ -35,9 +41,11 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
      * @param keyType the key type
      */
     public static <K extends Enum<K>, V extends Object> EnumHashBiMap<K, V> create(
-            Class<K> keyType) {
+            Class<K> keyType ) {
         return new EnumHashBiMap<>(keyType);
     }
+
+    // Overriding these 3 methods to show that values may be null (but not keys)
 
     /**
      * Constructs a new bimap with the same mappings as the specified map. If the specified map is an
@@ -50,33 +58,23 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
      *                                  instance and contains no mappings
      */
     public static <K extends Enum<K>, V extends Object> EnumHashBiMap<K, V> create(
-            Map<K, ? extends V> map) {
+            Map<K, ? extends V> map ) {
         EnumHashBiMap<K, V> bimap = create(EnumBiMap.inferKeyType(map));
         bimap.putAll(map);
         return bimap;
     }
 
-    private EnumHashBiMap(Class<K> keyType) {
-        super(
-                new EnumMap<K, V>(keyType));
-        this.keyType = keyType;
-    }
-
-    // Overriding these 3 methods to show that values may be null (but not keys)
-
-    K checkKey(K key) {
+    K checkKey( K key ) {
         return checkNotNull(key);
     }
-
 
     @Override
     @SuppressWarnings("RedundantOverride") // b/192446478: RedundantOverride ignores some annotations.
     // TODO(b/192446998): Remove this override after tools understand nullness better.
     @CheckForNull
-    public V put(K key, @ParametricNullness V value) {
+    public V put( K key, @ParametricNullness V value ) {
         return super.put(key, value);
     }
-
 
     /**
      * Returns the associated key type.
@@ -90,7 +88,7 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
      * and so on.
      */
     // java.io.ObjectOutputStream
-    private void writeObject(ObjectOutputStream stream) throws IOException {
+    private void writeObject( ObjectOutputStream stream ) throws IOException {
         stream.defaultWriteObject();
         stream.writeObject(keyType);
         Serialization.writeMap(this, stream);
@@ -98,14 +96,11 @@ public final class EnumHashBiMap<K extends Enum<K>, V extends Object>
 
     @SuppressWarnings("unchecked") // reading field populated by writeObject
     // java.io.ObjectInputStream
-    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+    private void readObject( ObjectInputStream stream ) throws IOException, ClassNotFoundException {
         stream.defaultReadObject();
         keyType = (Class<K>) stream.readObject();
         clear();
         putAll(new EnumMap<K, V>(keyType));
         Serialization.populateMap(this, stream);
     }
-
-    // only needed in emulated source.
-    private static final long serialVersionUID = 0;
 }

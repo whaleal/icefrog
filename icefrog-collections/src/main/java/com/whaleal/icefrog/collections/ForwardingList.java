@@ -27,9 +27,6 @@ import java.util.ListIterator;
  *
  * <p>The {@code standard} methods and any collection views they return are not guaranteed to be
  * thread-safe, even when all of the methods that they depend on are thread-safe.
- *
- *
- * 
  */
 
 
@@ -47,29 +44,29 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
     protected abstract List<E> delegate();
 
     @Override
-    public void add(int index, @ParametricNullness E element) {
+    public void add( int index, @ParametricNullness E element ) {
         delegate().add(index, element);
     }
 
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> elements) {
+    public boolean addAll( int index, Collection<? extends E> elements ) {
         return delegate().addAll(index, elements);
     }
 
     @Override
     @ParametricNullness
-    public E get(int index) {
+    public E get( int index ) {
         return delegate().get(index);
     }
 
     @Override
-    public int indexOf(@CheckForNull Object element) {
+    public int indexOf( @CheckForNull Object element ) {
         return delegate().indexOf(element);
     }
 
     @Override
-    public int lastIndexOf(@CheckForNull Object element) {
+    public int lastIndexOf( @CheckForNull Object element ) {
         return delegate().lastIndexOf(element);
     }
 
@@ -79,31 +76,31 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator( int index ) {
         return delegate().listIterator(index);
     }
 
 
     @Override
     @ParametricNullness
-    public E remove(int index) {
+    public E remove( int index ) {
         return delegate().remove(index);
     }
 
 
     @Override
     @ParametricNullness
-    public E set(int index, @ParametricNullness E element) {
+    public E set( int index, @ParametricNullness E element ) {
         return delegate().set(index, element);
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
+    public List<E> subList( int fromIndex, int toIndex ) {
         return delegate().subList(fromIndex, toIndex);
     }
 
     @Override
-    public boolean equals(@CheckForNull Object object) {
+    public boolean equals( @CheckForNull Object object ) {
         return object == this || delegate().equals(object);
     }
 
@@ -117,7 +114,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * Object)}. If you override {@link #add(int, Object)}, you may wish to override {@link
      * #add(Object)} to forward to this implementation.
      */
-    protected boolean standardAdd(@ParametricNullness E element) {
+    protected boolean standardAdd( @ParametricNullness E element ) {
         add(size(), element);
         return true;
     }
@@ -127,7 +124,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * add} method of {@link #listIterator(int)}. If you override {@link #listIterator(int)}, you may
      * wish to override {@link #addAll(int, Collection)} to forward to this implementation.
      */
-    protected boolean standardAddAll(int index, Iterable<? extends E> elements) {
+    protected boolean standardAddAll( int index, Iterable<? extends E> elements ) {
         return Lists.addAllImpl(this, index, elements);
     }
 
@@ -136,7 +133,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * you override {@link #listIterator()}, you may wish to override {@link #indexOf} to forward to
      * this implementation.
      */
-    protected int standardIndexOf(@CheckForNull Object element) {
+    protected int standardIndexOf( @CheckForNull Object element ) {
         return Lists.indexOfImpl(this, element);
     }
 
@@ -145,7 +142,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * #listIterator(int)}. If you override {@link #listIterator(int)}, you may wish to override
      * {@link #lastIndexOf} to forward to this implementation.
      */
-    protected int standardLastIndexOf(@CheckForNull Object element) {
+    protected int standardLastIndexOf( @CheckForNull Object element ) {
         return Lists.lastIndexOfImpl(this, element);
     }
 
@@ -174,7 +171,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * #listIterator(int)} to forward to this implementation.
      */
 
-    protected ListIterator<E> standardListIterator(int start) {
+    protected ListIterator<E> standardListIterator( int start ) {
         return Lists.listIteratorImpl(this, start);
     }
 
@@ -183,7 +180,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * methods, you may wish to override {@link #subList(int, int)} to forward to this implementation.
      */
 
-    protected List<E> standardSubList(int fromIndex, int toIndex) {
+    protected List<E> standardSubList( int fromIndex, int toIndex ) {
         return Lists.subListImpl(this, fromIndex, toIndex);
     }
 
@@ -193,7 +190,7 @@ public abstract class ForwardingList<E extends Object> extends ForwardingCollect
      * #equals(Object)} to forward to this implementation.
      */
 
-    protected boolean standardEquals(@CheckForNull Object object) {
+    protected boolean standardEquals( @CheckForNull Object object ) {
         return Lists.equalsImpl(this, object);
     }
 

@@ -18,15 +18,15 @@ import java.util.List;
 /**
  * JSON转换器
  *
- * @author looly   wh
+ * @author looly
  *
  */
-public class JSONConverter implements Converter<com.whaleal.icefrog.json.JSON> {
+public class JSONConverter implements Converter<JSON> {
 
 	static {
 		// 注册到转换中心
 		ConverterRegistry registry = ConverterRegistry.getInstance();
-		registry.putCustom(com.whaleal.icefrog.json.JSON.class, JSONConverter.class);
+		registry.putCustom(JSON.class, JSONConverter.class);
 		registry.putCustom(JSONObject.class, JSONConverter.class);
 		registry.putCustom(com.whaleal.icefrog.json.JSONArray.class, JSONConverter.class);
 	}
@@ -57,7 +57,7 @@ public class JSONConverter implements Converter<com.whaleal.icefrog.json.JSON> {
 	/**
 	 * JSON递归转换<br>
 	 * 首先尝试JDK类型转换，如果失败尝试JSON转Bean<br>
-	 * 如果遇到{@link com.whaleal.icefrog.json.JSONBeanParser}，则调用其{@link com.whaleal.icefrog.json.JSONBeanParser#parse(Object)}方法转换。
+	 * 如果遇到{@link JSONBeanParser}，则调用其{@link JSONBeanParser#parse(Object)}方法转换。
 	 *
 	 * @param <T> 转换后的对象类型
 	 * @param targetType 目标类型
@@ -75,9 +75,9 @@ public class JSONConverter implements Converter<com.whaleal.icefrog.json.JSON> {
 		// since 5.7.8，增加自定义Bean反序列化接口
 		if(targetType instanceof Class){
 			final Class<?> clazz = (Class<?>) targetType;
-			if (com.whaleal.icefrog.json.JSONBeanParser.class.isAssignableFrom(clazz)){
+			if (JSONBeanParser.class.isAssignableFrom(clazz)){
 				@SuppressWarnings("rawtypes")
-                com.whaleal.icefrog.json.JSONBeanParser target = (com.whaleal.icefrog.json.JSONBeanParser) ReflectUtil.newInstanceIfPossible(clazz);
+				JSONBeanParser target = (JSONBeanParser) ReflectUtil.newInstanceIfPossible(clazz);
 				if(null == target){
 					throw new ConvertException("Can not instance [{}]", targetType);
 				}
@@ -106,11 +106,11 @@ public class JSONConverter implements Converter<com.whaleal.icefrog.json.JSON> {
 			return null;
 		}
 
-		if(value instanceof com.whaleal.icefrog.json.JSON){
+		if(value instanceof JSON){
 			final JSONDeserializer<?> deserializer = GlobalSerializeMapping.getDeserializer(targetType);
 			if(null != deserializer) {
 				//noinspection unchecked
-				return (T) deserializer.deserialize((com.whaleal.icefrog.json.JSON) value);
+				return (T) deserializer.deserialize((JSON) value);
 			}
 		}
 
@@ -130,7 +130,7 @@ public class JSONConverter implements Converter<com.whaleal.icefrog.json.JSON> {
 	}
 
 	@Override
-	public com.whaleal.icefrog.json.JSON convert( Object value, com.whaleal.icefrog.json.JSON defaultValue) throws IllegalArgumentException {
+	public JSON convert(Object value, JSON defaultValue) throws IllegalArgumentException {
 		return com.whaleal.icefrog.json.JSONUtil.parse(value);
 	}
 }

@@ -52,6 +52,7 @@ public final class HashBiMap<K extends Object, V extends Object>
     private transient int modCount;
     @CheckForNull
     private transient BiMap<V, K> inverse;
+
     private HashBiMap( int expectedSize ) {
         super(MapUtil.newHashMap(expectedSize));
         init(expectedSize);

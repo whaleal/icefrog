@@ -3,6 +3,8 @@
 package com.whaleal.icefrog.collections;
 
 
+import com.whaleal.icefrog.core.collection.CollUtil;
+import com.whaleal.icefrog.core.collection.IterUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
@@ -62,37 +64,37 @@ public abstract class AbstractImmutableSetTest extends TestCase {
 
   public void testCreation_twoElements() {
     Set<String> set = of("a", "b");
-    assertEquals(Sets.newHashSet("a", "b"), set);
+    assertEquals(SetUtil.newHashSet("a", "b"), set);
   }
 
   public void testCreation_threeElements() {
     Set<String> set = of("a", "b", "c");
-    assertEquals(Sets.newHashSet("a", "b", "c"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c"), set);
   }
 
   public void testCreation_fourElements() {
     Set<String> set = of("a", "b", "c", "d");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d"), set);
   }
 
   public void testCreation_fiveElements() {
     Set<String> set = of("a", "b", "c", "d", "e");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e"), set);
   }
 
   public void testCreation_sixElements() {
     Set<String> set = of("a", "b", "c", "d", "e", "f");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e", "f"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e", "f"), set);
   }
 
   public void testCreation_sevenElements() {
     Set<String> set = of("a", "b", "c", "d", "e", "f", "g");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e", "f", "g"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e", "f", "g"), set);
   }
 
   public void testCreation_eightElements() {
     Set<String> set = of("a", "b", "c", "d", "e", "f", "g", "h");
-    assertEquals(Sets.newHashSet("a", "b", "c", "d", "e", "f", "g", "h"), set);
+    assertEquals(SetUtil.newHashSet("a", "b", "c", "d", "e", "f", "g", "h"), set);
   }
 
   public void testCopyOf_emptyArray() {
@@ -142,26 +144,26 @@ public abstract class AbstractImmutableSetTest extends TestCase {
   }
 
   public void testCopyOf_iterator_empty() {
-    Iterator<String> iterator = Iterators.emptyIterator();
+    Iterator<String> iterator = IterUtil.empty();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.<String>emptySet(), set);
     assertSame(of(), set);
   }
 
   public void testCopyOf_iterator_oneElement() {
-    Iterator<String> iterator = Iterators.singletonIterator("a");
+    Iterator<String> iterator = CollUtil.newArrayList("a").iterator();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.singleton("a"), set);
   }
 
   public void testCopyOf_iterator_oneElementRepeated() {
-    Iterator<String> iterator = Iterators.forArray("a", "a", "a");
+    Iterator<String> iterator =CollUtil.newArrayList("a", "a", "a").iterator();
     Set<String> set = copyOf(iterator);
     assertEquals(Collections.singleton("a"), set);
   }
 
   public void testCopyOf_iterator_general() {
-    Iterator<String> iterator = Iterators.forArray("a", "b", "a");
+    Iterator<String> iterator = CollUtil.newArrayList("a", "b", "a").iterator();
     Set<String> set = copyOf(iterator);
     assertEquals(2, set.size());
     assertTrue(set.contains("a"));
@@ -169,7 +171,7 @@ public abstract class AbstractImmutableSetTest extends TestCase {
   }
 
   public void testCopyOf_iteratorContainingNull() {
-    Iterator<String> c = Iterators.forArray("a", null, "b");
+    Iterator<String> c = CollUtil.newArrayList("a", null, "b").iterator();
     try {
       copyOf(c);
       fail();
@@ -183,7 +185,7 @@ public abstract class AbstractImmutableSetTest extends TestCase {
     @Override
     public Iterator<String> iterator() {
       count++;
-      return Iterators.forArray("a", "b", "a");
+      return CollUtil.newArrayList("a", "b", "a").iterator();
     }
   }
 

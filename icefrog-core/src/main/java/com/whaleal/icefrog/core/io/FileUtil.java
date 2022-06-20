@@ -3514,7 +3514,6 @@ public class FileUtil extends PathUtil {
      * @param file file
      * @throws IOException if an I/O error occurs, or if any necessary but nonexistent parent
      *                     directories of the specified file could not be created.
-     *
      */
 
     public static void createParentDirs( File file ) throws IOException {

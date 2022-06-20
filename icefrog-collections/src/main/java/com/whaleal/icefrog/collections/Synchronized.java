@@ -989,24 +989,26 @@ final class Synchronized {
 
         @Override
         public Iterator<Map.Entry<K, Collection<V>>> iterator() {
-            // Must be manually synchronized.
-            return new TransformedIterator<Map.Entry<K, Collection<V>>, Map.Entry<K, Collection<V>>>(
-                    super.iterator()) {
+            Function< Map.Entry< K, Collection< V > >, Map.Entry< K, Collection< V > > > function = new Function< Map.Entry< K, Collection< V > >, Map.Entry< K, Collection< V > > >() {
+
                 @Override
-                Map.Entry<K, Collection<V>> transform( final Map.Entry<K, Collection<V>> entry ) {
-                    return new ForwardingMapEntry<K, Collection<V>>() {
+                public Map.Entry< K, Collection< V > > apply( Map.Entry< K, Collection< V > > entry ) {
+                    return new ForwardingMapEntry< K, Collection< V > >() {
                         @Override
-                        protected Map.Entry<K, Collection<V>> delegate() {
+                        protected Map.Entry< K, Collection< V > > delegate() {
                             return entry;
                         }
 
                         @Override
-                        public Collection<V> getValue() {
+                        public Collection< V > getValue() {
                             return typePreservingCollection(entry.getValue(), mutex);
                         }
                     };
                 }
             };
+            // Must be manually synchronized.
+            return new com.whaleal.icefrog.core.collection.TransIter<Map.Entry<K, Collection<V>>, Map.Entry<K, Collection<V>>>( super.iterator(),function);
+
         }
 
         @Override
@@ -1051,7 +1053,7 @@ final class Synchronized {
                 return true;
             }
             synchronized (mutex) {
-                return Sets.equalsImpl(delegate(), o);
+                return SetUtil.equalsImpl(delegate(), o);
             }
         }
 
@@ -1411,13 +1413,15 @@ final class Synchronized {
 
         @Override
         public Iterator<Collection<V>> iterator() {
-            // Must be manually synchronized.
-            return new TransformedIterator<Collection<V>, Collection<V>>(super.iterator()) {
+            Function< Collection< V >, Collection< V > > function = new Function< Collection< V >, Collection< V > >() {
+
                 @Override
-                Collection<V> transform( Collection<V> from ) {
-                    return typePreservingCollection(from, mutex);
+                public Collection< V > apply( Collection< V > vs ) {
+                    return typePreservingCollection(vs, mutex);
                 }
             };
+            // Must be manually synchronized.
+            return new com.whaleal.icefrog.core.collection.TransIter<Collection<V>, Collection<V>>(super.iterator(),function);
         }
     }
 

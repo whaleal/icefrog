@@ -1,5 +1,6 @@
 package com.whaleal.icefrog.system;
 
+import com.whaleal.icefrog.core.lang.Console;
 import com.whaleal.icefrog.system.oshi.CpuInfo;
 import com.whaleal.icefrog.system.oshi.OshiUtil;
 import org.junit.Assert;
@@ -10,6 +11,12 @@ import oshi.software.os.OSProcess;
  * 测试参考：https://github.com/oshi/oshi/blob/master/oshi-core/src/test/java/oshi/SystemInfoTest.java
  */
 public class OshiTest {
+
+
+    @Test
+    public void printCpuInfo() {
+        Console.log(OshiUtil.getCpuInfo());
+    }
 
     @Test
     public void getMemoryTest() {

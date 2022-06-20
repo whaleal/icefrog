@@ -45,6 +45,7 @@ public class SqlBuilder implements Builder<String> {
     // --------------------------------------------------------------- Constructor start
     public SqlBuilder() {
     }
+
     public SqlBuilder( Wrapper wrapper ) {
         this.wrapper = wrapper;
     }

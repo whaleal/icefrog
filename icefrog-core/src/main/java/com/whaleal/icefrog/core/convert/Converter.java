@@ -7,7 +7,12 @@ package com.whaleal.icefrog.core.convert;
  * @author Looly
  * @author wh
  */
-public interface Converter<T> {
+public interface Converter<T>  extends Converter2<Object,T>{
+
+    @Override
+    default T convert( Object var1 ){
+        return this.convert(var1,null);
+    }
 
     /**
      * 转换为指定类型<br>

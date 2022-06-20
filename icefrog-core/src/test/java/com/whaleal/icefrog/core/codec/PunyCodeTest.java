@@ -7,7 +7,7 @@ public class PunyCodeTest {
 
     @Test
     public void encodeDecodeTest() throws EncoderException, DecoderException {
-        
+
         String text = "icefrog编码器";
         String strPunyCode = PunyCode.encode(text);
         Assert.assertEquals("icefrog-7v7l601w81o", strPunyCode);

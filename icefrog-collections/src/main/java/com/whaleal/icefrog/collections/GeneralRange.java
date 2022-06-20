@@ -33,6 +33,7 @@ final class GeneralRange<T extends Object> implements Serializable {
     private final BoundType upperBoundType;
     @CheckForNull
     private transient GeneralRange<T> reverse;
+
     private GeneralRange(
             Comparator<? super T> comparator,
             boolean hasLowerBound,

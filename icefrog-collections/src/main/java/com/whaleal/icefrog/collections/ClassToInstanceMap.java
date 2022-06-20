@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import javax.annotation.CheckForNull;
@@ -31,10 +29,7 @@ import java.util.Map;
  * <p>To map a generic type to an instance of that type.
  *
  * @param <B> the common supertype that all entries must share; often this is simply {@link Object}
- *
- * 
  */
-
 
 
 // If we ever support non-null projections (https://github.com/jspecify/jspecify/issues/86), we
@@ -42,22 +37,22 @@ import java.util.Map;
 // ClassToInstanceMap<B extends Object> extends Map<Class<? extends @Nonnull B>, B>
 // ...and change its methods similarly (<T extends @Nonnull B> or Class<@Nonnull T>).
 public interface ClassToInstanceMap<B> extends Map<Class<? extends B>, B> {
-  /**
-   * Returns the value the specified class is mapped to, or {@code null} if no entry for this class
-   * is present. This will only return a value that was bound to this specific class, not a value
-   * that may have been bound to a subtype.
-   */
-  @CheckForNull
-  <T extends B> T getInstance(Class<T> type);
+    /**
+     * Returns the value the specified class is mapped to, or {@code null} if no entry for this class
+     * is present. This will only return a value that was bound to this specific class, not a value
+     * that may have been bound to a subtype.
+     */
+    @CheckForNull
+    <T extends B> T getInstance( Class<T> type );
 
-  /**
-   * MapUtil the specified class to the specified value. Does <i>not</i> associate this value with any
-   * of the class's supertypes.
-   *
-   * @return the value previously associated with this class (possibly {@code null}), or {@code
-   *     null} if there was no previous entry.
-   */
+    /**
+     * MapUtil the specified class to the specified value. Does <i>not</i> associate this value with any
+     * of the class's supertypes.
+     *
+     * @return the value previously associated with this class (possibly {@code null}), or {@code
+     * null} if there was no previous entry.
+     */
 
-  @CheckForNull
-  <T extends B> T putInstance(Class<T> type, T value);
+    @CheckForNull
+    <T extends B> T putInstance( Class<T> type, T value );
 }

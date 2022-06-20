@@ -600,6 +600,7 @@ public class BeanUtilTest {
         public String name;
         public int age;
         public String openid;
+
         public Person2( String name, int age, String openid ) {
             this.name = name;
             this.age = age;

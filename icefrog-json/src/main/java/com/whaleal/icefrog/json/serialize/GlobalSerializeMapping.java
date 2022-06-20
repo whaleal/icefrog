@@ -1,17 +1,16 @@
 package com.whaleal.icefrog.json.serialize;
 
-import com.whaleal.icefrog.json.JSON;
-
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.whaleal.icefrog.json.JSON;
 
 /**
  * 全局的序列化和反序列化器映射<br>
  * 在JSON和Java对象转换过程中，优先使用注册于此处的自定义转换
  * 
- * @author looly   wh
- *
+ * @author Looly
  *
  */
 public class GlobalSerializeMapping {

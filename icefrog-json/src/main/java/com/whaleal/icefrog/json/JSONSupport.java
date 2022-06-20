@@ -6,9 +6,9 @@ import com.whaleal.icefrog.core.bean.BeanUtil;
  * JSON支持<br>
  * 继承此类实现实体类与JSON的相互转换
  *
- * @author looly   wh
+ * @author Looly
  */
-public class JSONSupport implements JSONString, com.whaleal.icefrog.json.JSONBeanParser<JSON> {
+public class JSONSupport implements com.whaleal.icefrog.json.JSONString, com.whaleal.icefrog.json.JSONBeanParser<JSON> {
 
 	/**
 	 * JSON String转Bean
@@ -26,7 +26,7 @@ public class JSONSupport implements JSONString, com.whaleal.icefrog.json.JSONBea
 	 */
 	@Override
 	public void parse(JSON json) {
-		final JSONSupport support = JSONConverter.jsonToBean(getClass(), json, false);
+		final JSONSupport support = com.whaleal.icefrog.json.JSONConverter.jsonToBean(getClass(), json, false);
 		BeanUtil.copyProperties(support, this);
 	}
 

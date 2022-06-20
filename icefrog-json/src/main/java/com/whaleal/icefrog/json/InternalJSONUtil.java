@@ -1,7 +1,11 @@
 package com.whaleal.icefrog.json;
 
 import com.whaleal.icefrog.core.convert.Convert;
-import com.whaleal.icefrog.core.util.*;
+import com.whaleal.icefrog.core.util.ArrayUtil;
+import com.whaleal.icefrog.core.util.CharUtil;
+import com.whaleal.icefrog.core.util.NumberUtil;
+import com.whaleal.icefrog.core.util.ObjectUtil;
+import com.whaleal.icefrog.core.util.StrUtil;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -12,7 +16,7 @@ import java.util.SortedMap;
 /**
  * 内部JSON工具类，仅用于JSON内部使用
  *
- * @author looly   wh
+ * @author Looly
  */
 public final class InternalJSONUtil {
 
@@ -34,8 +38,8 @@ public final class InternalJSONUtil {
 	/**
 	 * 值转为String，用于JSON中。规则为：
 	 * <ul>
-	 *     <li>对象如果实现了{@link JSONString}接口，调用{@link JSONString#toJSONString()}方法</li>
-	 *     <li>对象如果实现了{@link JSONString}接口，调用{@link JSONString#toJSONString()}方法</li>
+	 *     <li>对象如果实现了{@link com.whaleal.icefrog.json.JSONString}接口，调用{@link com.whaleal.icefrog.json.JSONString#toJSONString()}方法</li>
+	 *     <li>对象如果实现了{@link com.whaleal.icefrog.json.JSONString}接口，调用{@link com.whaleal.icefrog.json.JSONString#toJSONString()}方法</li>
 	 *     <li>对象如果是数组或Collection，包装为{@link com.whaleal.icefrog.json.JSONArray}</li>
 	 *     <li>对象如果是Map，包装为{@link JSONObject}</li>
 	 *     <li>对象如果是数字，使用{@link NumberUtil#toStr(Number)}转换为字符串</li>
@@ -47,12 +51,12 @@ public final class InternalJSONUtil {
 	 * @throws com.whaleal.icefrog.json.JSONException If the value is or contains an invalid number.
 	 */
 	static String valueToString(Object value) throws com.whaleal.icefrog.json.JSONException {
-		if (value == null || value instanceof com.whaleal.icefrog.json.JSONNull) {
-			return com.whaleal.icefrog.json.JSONNull.NULL.toString();
+		if (value == null || value instanceof JSONNull) {
+			return JSONNull.NULL.toString();
 		}
-		if (value instanceof JSONString) {
+		if (value instanceof com.whaleal.icefrog.json.JSONString) {
 			try {
-				return ((JSONString) value).toJSONString();
+				return ((com.whaleal.icefrog.json.JSONString) value).toJSONString();
 			} catch (Exception e) {
 				throw new com.whaleal.icefrog.json.JSONException(e);
 			}
@@ -82,7 +86,7 @@ public final class InternalJSONUtil {
 	public static Object stringToValue(String string) {
 		// null处理
 		if (StrUtil.isEmpty(string) || StrUtil.NULL.equalsIgnoreCase(string)) {
-			return com.whaleal.icefrog.json.JSONNull.NULL;
+			return JSONNull.NULL;
 		}
 
 		// boolean处理
@@ -159,7 +163,7 @@ public final class InternalJSONUtil {
 	 */
 	static boolean defaultIgnoreNullValue(Object obj) {
 		return (false == (obj instanceof CharSequence))//
-				&& (false == (obj instanceof com.whaleal.icefrog.json.JSONTokener))//
+				&& (false == (obj instanceof JSONTokener))//
 				&& (false == (obj instanceof Map));
 	}
 
@@ -178,8 +182,8 @@ public final class InternalJSONUtil {
 	static boolean isOrder(Object value) {
 		if (value instanceof LinkedHashMap || value instanceof SortedMap) {
 			return true;
-		} else if (value instanceof com.whaleal.icefrog.json.JSONGetter) {
-			final JSONConfig config = ((com.whaleal.icefrog.json.JSONGetter<?>) value).getConfig();
+		} else if (value instanceof JSONGetter) {
+			final com.whaleal.icefrog.json.JSONConfig config = ((JSONGetter<?>) value).getConfig();
 			if (null != config) {
 				return config.isOrder();
 			}

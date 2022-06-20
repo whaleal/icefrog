@@ -1,89 +1,91 @@
 package com.whaleal.icefrog.extra.template.engine.rythm;
 
-import java.util.Properties;
-
 import com.whaleal.icefrog.extra.template.Template;
 import com.whaleal.icefrog.extra.template.TemplateConfig;
 import com.whaleal.icefrog.extra.template.TemplateEngine;
 
+import java.util.Properties;
+
 /**
  * Rythm模板引擎<br>
  * 文档：http://rythmengine.org/doc/index
- * 
- * @author looly
  *
+ * @author looly
  */
 public class RythmEngine implements TemplateEngine {
 
-	org.rythmengine.RythmEngine engine;
+    org.rythmengine.RythmEngine engine;
 
-	// --------------------------------------------------------------------------------- Constructor start
-	/**
-	 * 默认构造
-	 */
-	public RythmEngine() {}
+    // --------------------------------------------------------------------------------- Constructor start
 
-	/**
-	 * 构造
-	 * 
-	 * @param config 模板配置
-	 */
-	public RythmEngine(TemplateConfig config) {
-		init(config);
-	}
+    /**
+     * 默认构造
+     */
+    public RythmEngine() {
+    }
 
-	/**
-	 * 构造
-	 * 
-	 * @param engine {@link org.rythmengine.RythmEngine}
-	 */
-	public RythmEngine(org.rythmengine.RythmEngine engine) {
-		init(engine);
-	}
-	// --------------------------------------------------------------------------------- Constructor end
+    /**
+     * 构造
+     *
+     * @param config 模板配置
+     */
+    public RythmEngine( TemplateConfig config ) {
+        init(config);
+    }
 
-	@Override
-	public TemplateEngine init(TemplateConfig config) {
-		if(null == config){
-			config = TemplateConfig.DEFAULT;
-		}
-		init(createEngine(config));
-		return this;
-	}
+    /**
+     * 构造
+     *
+     * @param engine {@link org.rythmengine.RythmEngine}
+     */
+    public RythmEngine( org.rythmengine.RythmEngine engine ) {
+        init(engine);
+    }
+    // --------------------------------------------------------------------------------- Constructor end
 
-	/**
-	 * 初始化引擎
-	 * @param engine 引擎
-	 */
-	private void init(org.rythmengine.RythmEngine engine){
-		this.engine = engine;
-	}
+    /**
+     * 创建引擎
+     *
+     * @param config 模板配置
+     * @return {@link org.rythmengine.RythmEngine}
+     */
+    private static org.rythmengine.RythmEngine createEngine( TemplateConfig config ) {
+        if (null == config) {
+            config = new TemplateConfig();
+        }
 
-	@Override
-	public Template getTemplate(String resource) {
-		if(null == this.engine){
-			init(TemplateConfig.DEFAULT);
-		}
-		return RythmTemplate.wrap(this.engine.getTemplate(resource));
-	}
+        final Properties props = new Properties();
+        final String path = config.getPath();
+        if (null != path) {
+            props.put("home.template", path);
+        }
 
-	/**
-	 * 创建引擎
-	 * 
-	 * @param config 模板配置
-	 * @return {@link org.rythmengine.RythmEngine}
-	 */
-	private static org.rythmengine.RythmEngine createEngine(TemplateConfig config) {
-		if (null == config) {
-			config = new TemplateConfig();
-		}
-		
-		final Properties props = new Properties();
-		final String path = config.getPath();
-		if (null != path) {
-			props.put("home.template", path);
-		}
+        return new org.rythmengine.RythmEngine(props);
+    }
 
-		return new org.rythmengine.RythmEngine(props);
-	}
+    @Override
+    public TemplateEngine init( TemplateConfig config ) {
+        if (null == config) {
+            config = TemplateConfig.DEFAULT;
+        }
+        init(createEngine(config));
+        return this;
+    }
+
+    /**
+     * 初始化引擎
+     *
+     * @param engine 引擎
+     */
+    private void init( org.rythmengine.RythmEngine engine ) {
+        this.engine = engine;
+    }
+
+    @Override
+    public Template getTemplate( String resource ) {
+        if (null == this.engine) {
+            init(TemplateConfig.DEFAULT);
+        }
+        return RythmTemplate.wrap(this.engine.getTemplate(resource));
+    }
 }

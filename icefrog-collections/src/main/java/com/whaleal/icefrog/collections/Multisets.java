@@ -8,6 +8,7 @@ import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.NumberUtil;
 import com.whaleal.icefrog.core.util.ObjectUtil;
 import com.whaleal.icefrog.core.util.PredicateUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 
 import javax.annotation.CheckForNull;
 import java.io.Serializable;
@@ -199,7 +200,7 @@ public final class Multisets {
 
             @Override
             Set<E> createElementSet() {
-                return Sets.union(multiset1.elementSet(), multiset2.elementSet());
+                return SetUtil.union(multiset1.elementSet(), multiset2.elementSet());
             }
 
             @Override
@@ -261,7 +262,7 @@ public final class Multisets {
 
             @Override
             Set<E> createElementSet() {
-                return Sets.intersection(multiset1.elementSet(), multiset2.elementSet());
+                return SetUtil.intersection(multiset1.elementSet(), multiset2.elementSet());
             }
 
             @Override
@@ -332,7 +333,7 @@ public final class Multisets {
 
             @Override
             Set<E> createElementSet() {
-                return Sets.union(multiset1.elementSet(), multiset2.elementSet());
+                return SetUtil.union(multiset1.elementSet(), multiset2.elementSet());
             }
 
             @Override
@@ -705,13 +706,14 @@ public final class Multisets {
 
     static <E extends Object> Iterator<E> elementIterator(
             Iterator<Entry<E>> entryIterator ) {
-        return new TransformedIterator<Entry<E>, E>(entryIterator) {
+
+        return new TransIter<Entry<E>, E>(entryIterator,new Function< Entry<E>,E>(){
+
             @Override
-            @ParametricNullness
-            E transform( Entry<E> entry ) {
+            public E apply( Entry< E > entry ) {
                 return entry.getElement();
             }
-        };
+        }) ;
     }
 
     /**
@@ -904,7 +906,7 @@ public final class Multisets {
 
         @Override
         Set<E> createElementSet() {
-            return Sets.filter(unfiltered.elementSet(), predicate);
+            return SetUtil.filter(unfiltered.elementSet(), predicate);
         }
 
         @Override
@@ -914,7 +916,7 @@ public final class Multisets {
 
         @Override
         Set<Entry<E>> createEntrySet() {
-            return Sets.filter(
+            return SetUtil.filter(
                     unfiltered.entrySet(),
                     new Predicate<Entry<E>>() {
                         @Override
@@ -1001,7 +1003,7 @@ public final class Multisets {
         }
     }
 
-    abstract static class ElementSet<E extends Object> extends Sets.ImprovedAbstractSet<E> {
+    abstract static class ElementSet<E extends Object> extends SetUtil.ImprovedAbstractSet<E> {
         abstract Multiset<E> multiset();
 
         @Override
@@ -1039,7 +1041,7 @@ public final class Multisets {
     }
 
     abstract static class EntrySet<E extends Object>
-            extends Sets.ImprovedAbstractSet<Entry<E>> {
+            extends SetUtil.ImprovedAbstractSet<Entry<E>> {
         abstract Multiset<E> multiset();
 
         @Override

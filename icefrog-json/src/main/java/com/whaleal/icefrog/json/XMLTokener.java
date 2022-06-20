@@ -5,7 +5,7 @@ package com.whaleal.icefrog.json;
  *
  * @author JSON.org
  */
-public class XMLTokener extends JSONTokener {
+public class XMLTokener extends com.whaleal.icefrog.json.JSONTokener {
 
 	/**
 	 * The table of entity values.
@@ -15,11 +15,11 @@ public class XMLTokener extends JSONTokener {
 
 	static {
 		entity = new java.util.HashMap<>(8);
-		entity.put("amp", XML.AMP);
-		entity.put("apos", XML.APOS);
-		entity.put("gt", XML.GT);
-		entity.put("lt", XML.LT);
-		entity.put("quot", XML.QUOT);
+		entity.put("amp", com.whaleal.icefrog.json.XML.AMP);
+		entity.put("apos", com.whaleal.icefrog.json.XML.APOS);
+		entity.put("gt", com.whaleal.icefrog.json.XML.GT);
+		entity.put("lt", com.whaleal.icefrog.json.XML.LT);
+		entity.put("quot", com.whaleal.icefrog.json.XML.QUOT);
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class XMLTokener extends JSONTokener {
 	 * @param s      A source string.
 	 * @param config JSON配置
 	 */
-	public XMLTokener(CharSequence s, JSONConfig config) {
+	public XMLTokener(CharSequence s, com.whaleal.icefrog.json.JSONConfig config) {
 		super(s, config);
 	}
 
@@ -36,9 +36,9 @@ public class XMLTokener extends JSONTokener {
 	 * Get the text in the CDATA block.
 	 *
 	 * @return The string up to the {@code ]]>}.
-	 * @throws JSONException If the {@code ]]>} is not found.
+	 * @throws com.whaleal.icefrog.json.JSONException If the {@code ]]>} is not found.
 	 */
-	public String nextCDATA() throws JSONException {
+	public String nextCDATA() throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		int i;
 		StringBuilder sb = new StringBuilder();
@@ -61,9 +61,9 @@ public class XMLTokener extends JSONTokener {
 	 * There are two kinds of tokens: the '&gt;' character which begins a markup tag, and the content text between markup tags.
 	 *
 	 * @return A string, or a '&gt;' Character, or null if there is no more source text.
-	 * @throws JSONException JSON
+	 * @throws com.whaleal.icefrog.json.JSONException JSON
 	 */
-	public Object nextContent() throws JSONException {
+	public Object nextContent() throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		StringBuilder sb;
 		do {
@@ -73,7 +73,7 @@ public class XMLTokener extends JSONTokener {
 			return null;
 		}
 		if (c == '<') {
-			return XML.LT;
+			return com.whaleal.icefrog.json.XML.LT;
 		}
 		sb = new StringBuilder();
 		for (; ; ) {
@@ -95,9 +95,9 @@ public class XMLTokener extends JSONTokener {
 	 *
 	 * @param ampersand An ampersand character.
 	 * @return A Character or an entity String if the entity is not recognized.
-	 * @throws JSONException If missing ';' in XML entity.
+	 * @throws com.whaleal.icefrog.json.JSONException If missing ';' in XML entity.
 	 */
-	public Object nextEntity(char ampersand) throws JSONException {
+	public Object nextEntity(char ampersand) throws com.whaleal.icefrog.json.JSONException {
 		StringBuilder sb = new StringBuilder();
 		for (; ; ) {
 			char c = next();
@@ -118,9 +118,9 @@ public class XMLTokener extends JSONTokener {
 	 * Returns the next XML meta token. This is used for skipping over &lt;!...&gt; and &lt;?...?&gt; structures.
 	 *
 	 * @return Syntax characters ({@code < > / = ! ?}) are returned as Character, and strings and names are returned as Boolean. We don't care what the values actually are.
-	 * @throws JSONException 字符串中属性未关闭或XML结构错误抛出此异常。If a string is not properly closed or if the XML is badly structured.
+	 * @throws com.whaleal.icefrog.json.JSONException 字符串中属性未关闭或XML结构错误抛出此异常。If a string is not properly closed or if the XML is badly structured.
 	 */
-	public Object nextMeta() throws JSONException {
+	public Object nextMeta() throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		char q;
 		do {
@@ -130,17 +130,17 @@ public class XMLTokener extends JSONTokener {
 			case 0:
 				throw syntaxError("Misshaped meta tag");
 			case '<':
-				return XML.LT;
+				return com.whaleal.icefrog.json.XML.LT;
 			case '>':
-				return XML.GT;
+				return com.whaleal.icefrog.json.XML.GT;
 			case '/':
-				return XML.SLASH;
+				return com.whaleal.icefrog.json.XML.SLASH;
 			case '=':
-				return XML.EQ;
+				return com.whaleal.icefrog.json.XML.EQ;
 			case '!':
-				return XML.BANG;
+				return com.whaleal.icefrog.json.XML.BANG;
 			case '?':
-				return XML.QUEST;
+				return com.whaleal.icefrog.json.XML.QUEST;
 			case '"':
 			case '\'':
 				q = c;
@@ -182,9 +182,9 @@ public class XMLTokener extends JSONTokener {
 	 * quotes, or it may be a name.
 	 *
 	 * @return a String or a Character.
-	 * @throws JSONException If the XML is not well formed.
+	 * @throws com.whaleal.icefrog.json.JSONException If the XML is not well formed.
 	 */
-	public Object nextToken() throws JSONException {
+	public Object nextToken() throws com.whaleal.icefrog.json.JSONException {
 		char c;
 		char q;
 		StringBuilder sb;
@@ -197,15 +197,15 @@ public class XMLTokener extends JSONTokener {
 			case '<':
 				throw syntaxError("Misplaced '<'");
 			case '>':
-				return XML.GT;
+				return com.whaleal.icefrog.json.XML.GT;
 			case '/':
-				return XML.SLASH;
+				return com.whaleal.icefrog.json.XML.SLASH;
 			case '=':
-				return XML.EQ;
+				return com.whaleal.icefrog.json.XML.EQ;
 			case '!':
-				return XML.BANG;
+				return com.whaleal.icefrog.json.XML.BANG;
 			case '?':
-				return XML.QUEST;
+				return com.whaleal.icefrog.json.XML.QUEST;
 
 			// Quoted string
 
@@ -264,9 +264,9 @@ public class XMLTokener extends JSONTokener {
 	 *
 	 * @param to A string to skip past.
 	 * @return 是否成功skip
-	 * @throws JSONException JSON异常
+	 * @throws com.whaleal.icefrog.json.JSONException JSON异常
 	 */
-	public boolean skipPast(String to) throws JSONException {
+	public boolean skipPast(String to) throws com.whaleal.icefrog.json.JSONException {
 		boolean b;
 		char c;
 		int i;

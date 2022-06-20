@@ -1,5 +1,3 @@
-
-
 package com.whaleal.icefrog.collections;
 
 import javax.annotation.CheckForNull;
@@ -17,35 +15,34 @@ import java.util.Set;
  * invoke methods, they invoke methods on the {@code ForwardingSetMultimap}.
  *
  * @author Kurt Alfred Kluever
- * 
  */
 
 
 public abstract class ForwardingSetMultimap<K extends Object, V extends Object>
-    extends ForwardingMultimap<K, V> implements SetMultimap<K, V> {
+        extends ForwardingMultimap<K, V> implements SetMultimap<K, V> {
 
-  @Override
-  protected abstract SetMultimap<K, V> delegate();
+    @Override
+    protected abstract SetMultimap<K, V> delegate();
 
-  @Override
-  public Set<Entry<K, V>> entries() {
-    return delegate().entries();
-  }
+    @Override
+    public Set<Entry<K, V>> entries() {
+        return delegate().entries();
+    }
 
-  @Override
-  public Set<V> get(@ParametricNullness K key) {
-    return delegate().get(key);
-  }
-
-
-  @Override
-  public Set<V> removeAll(@CheckForNull Object key) {
-    return delegate().removeAll(key);
-  }
+    @Override
+    public Set<V> get( @ParametricNullness K key ) {
+        return delegate().get(key);
+    }
 
 
-  @Override
-  public Set<V> replaceValues(@ParametricNullness K key, Iterable<? extends V> values) {
-    return delegate().replaceValues(key, values);
-  }
+    @Override
+    public Set<V> removeAll( @CheckForNull Object key ) {
+        return delegate().removeAll(key);
+    }
+
+
+    @Override
+    public Set<V> replaceValues( @ParametricNullness K key, Iterable<? extends V> values ) {
+        return delegate().replaceValues(key, values);
+    }
 }

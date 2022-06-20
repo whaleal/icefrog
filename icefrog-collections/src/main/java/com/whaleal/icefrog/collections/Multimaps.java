@@ -6,6 +6,7 @@ import com.whaleal.icefrog.core.collection.CollUtil;
 import com.whaleal.icefrog.core.collection.SpliteratorUtil;
 import com.whaleal.icefrog.core.lang.Predicate;
 import com.whaleal.icefrog.core.util.PredicateUtil;
+import com.whaleal.icefrog.core.collection.TransIter;
 
 import javax.annotation.CheckForNull;
 import java.io.IOException;
@@ -1198,7 +1199,7 @@ public final class Multimaps {
         <E extends Object> Collection<E> unmodifiableCollectionSubclass(
                 Collection<E> collection ) {
             if (collection instanceof NavigableSet) {
-                return Sets.unmodifiableNavigableSet((NavigableSet<E>) collection);
+                return SetUtil.unmodifiableNavigableSet((NavigableSet<E>) collection);
             } else if (collection instanceof SortedSet) {
                 return Collections.unmodifiableSortedSet((SortedSet<E>) collection);
             } else if (collection instanceof Set) {
@@ -1324,7 +1325,7 @@ public final class Multimaps {
         <E extends Object> Collection<E> unmodifiableCollectionSubclass(
                 Collection<E> collection ) {
             if (collection instanceof NavigableSet) {
-                return Sets.unmodifiableNavigableSet((NavigableSet<E>) collection);
+                return SetUtil.unmodifiableNavigableSet((NavigableSet<E>) collection);
             } else if (collection instanceof SortedSet) {
                 return Collections.unmodifiableSortedSet((SortedSet<E>) collection);
             } else {
@@ -1684,7 +1685,7 @@ public final class Multimaps {
 
         @Override
         public Set<V> get( @ParametricNullness final K key ) {
-            return new Sets.ImprovedAbstractSet<V>() {
+            return new SetUtil.ImprovedAbstractSet<V>() {
                 @Override
                 public Iterator<V> iterator() {
                     return new Iterator<V>() {
@@ -1966,10 +1967,11 @@ public final class Multimaps {
 
         @Override
         Iterator<Entry<K>> entryIterator() {
-            return new TransformedIterator<Map.Entry<K, Collection<V>>, Entry<K>>(
-                    multimap.asMap().entrySet().iterator()) {
+            return new TransIter<Map.Entry<K, Collection<V>>, Entry<K>>(
+                    multimap.asMap().entrySet().iterator(),new Function<Map.Entry<K, Collection<V>>, Entry<K>>(){
+
                 @Override
-                Entry<K> transform( final Map.Entry<K, Collection<V>> backingEntry ) {
+                public  Entry<K> apply( Map.Entry< K, Collection< V > > backingEntry ) {
                     return new Multisets.AbstractEntry<K>() {
                         @Override
                         @ParametricNullness
@@ -1983,7 +1985,7 @@ public final class Multimaps {
                         }
                     };
                 }
-            };
+            });
         }
 
         @Override
@@ -2014,7 +2016,8 @@ public final class Multimaps {
 
         @Override
         public Iterator<K> iterator() {
-            return Maps.keyIterator(multimap.entries().iterator());
+            return multimap.keySet().iterator();
+
         }
 
         @Override

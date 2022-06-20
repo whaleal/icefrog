@@ -83,7 +83,7 @@ class CollectionBenchmarkSampleData {
   }
 
   private Set<Element> createData() {
-    Set<Element> set = Sets.newHashSetWithExpectedSize(size);
+    Set<Element> set = SetUtil.newHashSetWithExpectedSize(size);
     while (set.size() < size) {
       set.add(newElement());
     }

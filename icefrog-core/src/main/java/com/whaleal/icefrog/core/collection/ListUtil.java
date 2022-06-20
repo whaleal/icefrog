@@ -10,6 +10,7 @@ import com.whaleal.icefrog.core.util.PageUtil;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * List相关工具类
@@ -620,6 +621,22 @@ public class ListUtil {
         return (list instanceof RandomAccess)
                 ? new RandomAccessAvgPartition<>(list, limit)
                 : new AvgPartition<>(list, limit);
+    }
+
+    /**
+     * 针对list  进行 转换 返回一个 TransList的实现
+     *
+     * @param fromList
+     * @param function
+     * @param <F>
+     * @param <T>
+     * @return  TransRandomAccessList 或者TransSequentialList
+     */
+    public static <F extends Object, T extends Object> List<T> trans(
+            List<F> fromList, Function<? super F, ? extends T> function ) {
+        return (fromList instanceof RandomAccess)
+                ? new TransRandomAccessList<>(fromList, function)
+                : new TransSequentialList<>(fromList, function);
     }
 
 }
